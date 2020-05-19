@@ -1,10 +1,9 @@
-import DocumentType from '../../electron/src/app/enums/document-type.enum';
 
 type Customer = {
     _id: string;
     _rev?: string;
     cnpj: string;
-    docType?: DocumentType;
+    docType?: number;
     docStatus?: number;
     fancyName: string;
     licenses: number;
