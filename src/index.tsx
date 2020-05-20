@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Icon from "./lib/components/Icon";
+import ComponentsLibrary from "./ComponentsLibrary";
 
 ReactDOM.render(
-  <div><Icon name="cog" width="100px" height="100px" /></div>,
+  <ComponentsLibrary />,
   document.getElementById('root')
 );
