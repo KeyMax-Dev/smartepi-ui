@@ -88,6 +88,8 @@ export default function ComponentsLibrary(): JSX.Element {
             </ComponentExpandable>
             <ComponentExpandable componentName="Buttons">
                 <Button styleType="solid" text="Solid" />
+                <Button styleType="solid" text="Solid with Icon" icon="account" />
+                <Button styleType="outline" text="Outline with Icon" icon="account" />
                 <Button styleType="outline" text="outline" />
                 <Button styleType="icon" icon="cog" />
             </ComponentExpandable>

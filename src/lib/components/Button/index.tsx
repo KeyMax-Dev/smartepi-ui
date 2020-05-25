@@ -26,7 +26,7 @@ export default function Button(props: ButtonProps): JSX.Element {
         case 'outline':
             return (
                 <OutlineButton {...props}>
-                    {props.icon && <Icon name={props.icon} color={props.color} invert={true} height="100%" width="unset" />}
+                    {props.icon && <Icon name={props.icon} color={props.color} invert={false} height="100%" width="unset" style={{marginRight: '15px'}} />}
                     {props.text && <span>{props.text}</span>}
                 </OutlineButton>
             );
@@ -34,7 +34,7 @@ export default function Button(props: ButtonProps): JSX.Element {
         default:
             return (
                 <SolidButton {...props}>
-                    {props.icon && <Icon name={props.icon} color={props.color} invert={true} height="100%" width="unset" />}
+                    {props.icon && <Icon name={props.icon} color={props.color} invert={true} height="100%" width="unset" style={{marginRight: '15px'}}  />}
                     {props.text && <span>{props.text}</span>}
                 </SolidButton>
             );

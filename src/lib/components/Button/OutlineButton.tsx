@@ -22,9 +22,7 @@ const OutlineButton = styled(motion.button) <ButtonProps>`
     position: relative;
 
     &:active {
-        background: ${(props): string => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
-        color: ${(props): string => props.color ? getGlobalTheme().colors[props.color].contrast : getGlobalTheme().colors['primary'].contrast};
-        border: 1px solid transparent;
+        background: ${(props): string => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal}20;
     }
 
     span {
