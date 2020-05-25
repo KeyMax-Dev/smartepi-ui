@@ -1,4 +1,5 @@
 import typescript from '@rollup/plugin-typescript';
+import postcss from 'rollup-plugin-postcss';
 
 import pkg from './package.json';
 
@@ -8,7 +9,10 @@ console.log("external packages:", external);
 
 export default {
   input: 'src/lib/index.ts',
-  plugins: [typescript({ tsconfig: './src/lib/tsconfig.json', sourceMap: true })],
+  plugins: [
+    typescript({ tsconfig: './src/lib/tsconfig.json', sourceMap: true }),
+    postcss({ plugins: [] })
+  ],
   external,
   output: [
     {
@@ -22,7 +26,8 @@ export default {
         react: 'React',
         'react-dom': 'ReactDOM',
         'styled-components': 'styled',
-      }
+      },
+      assetFileNames: 'src/lib/assets/**/*'
     }
   ]
 };

@@ -1,3 +1,4 @@
+/// <reference types="react" />
 declare const Icons: {
     [key: string]: JSX.Element;
 };

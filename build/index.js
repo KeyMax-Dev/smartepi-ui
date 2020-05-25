@@ -4,6 +4,37 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var React = _interopDefault(require('react'));
 var styled = _interopDefault(require('styled-components'));
+var framerMotion = require('framer-motion');
+
+function styleInject(css, ref) {
+  if ( ref === void 0 ) ref = {};
+  var insertAt = ref.insertAt;
+
+  if (!css || typeof document === 'undefined') { return; }
+
+  var head = document.head || document.getElementsByTagName('head')[0];
+  var style = document.createElement('style');
+  style.type = 'text/css';
+
+  if (insertAt === 'top') {
+    if (head.firstChild) {
+      head.insertBefore(style, head.firstChild);
+    } else {
+      head.appendChild(style);
+    }
+  } else {
+    head.appendChild(style);
+  }
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    style.appendChild(document.createTextNode(css));
+  }
+}
+
+var css_248z = "@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/fonts/Quicksand_300.ttf\") format(\"truetype\");\r\n  font-weight: 300;\r\n  font-style: normal;\r\n}\r\n\r\n@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/fonts/Quicksand_400.ttf\") format(\"truetype\");\r\n  font-weight: 400;\r\n  font-style: normal;\r\n}\r\n\r\n@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/fonts/Quicksand_500.ttf\") format(\"truetype\");\r\n  font-weight: 500;\r\n  font-style: normal;\r\n}\r\n\r\n@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/fonts/Quicksand_700.ttf\") format(\"truetype\");\r\n  font-weight: 700;\r\n  font-style: normal;\r\n}\r\n\r\n* {\r\n  box-sizing: border-box;\r\n}\r\n\r\nbody {\r\n  margin: 0;\r\n  font-family: -apple-system, BlinkMacSystemFont, 'Quicksand', 'Segoe UI', 'Roboto';\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  background-color: #fff;\r\n}\r\n\r\n*::-webkit-scrollbar {\r\n  width: 6px;\r\n  height: 6px;\r\n}\r\n\r\n*::-webkit-scrollbar-track {\r\n  background-color: transparent;\r\n}\r\n\r\n*::-webkit-scrollbar-thumb {\r\n  background-color: #00000033;\r\n}\r\n\r\ncode {\r\n  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;\r\n}\r\n\r\na {\r\n  text-decoration: none;\r\n}";
+styleInject(css_248z);
 
 const DefaultTheme = {
     colors: {
@@ -50,21 +81,23 @@ const DefaultTheme = {
     }
 };
 
-const CirclesSVG = (props) => React.createElement("svg", Object.assign({ width: "45", height: "45", viewBox: "0 0 45 45", xmlns: "http://www.w3.org/2000/svg", stroke: "#000" }, props),
-    React.createElement("g", { fill: "none", fillRule: "evenodd", transform: "translate(1 1)", strokeWidth: "2" },
-        React.createElement("circle", { cx: "22", cy: "22", r: "6", strokeOpacity: "0" },
-            React.createElement("animate", { attributeName: "r", begin: "1.5s", dur: "3s", values: "6;22", calcMode: "linear", repeatCount: "indefinite" }),
-            React.createElement("animate", { attributeName: "stroke-opacity", begin: "1.5s", dur: "3s", values: "1;0", calcMode: "linear", repeatCount: "indefinite" }),
-            React.createElement("animate", { attributeName: "stroke-width", begin: "1.5s", dur: "3s", values: "2;0", calcMode: "linear", repeatCount: "indefinite" })),
-        React.createElement("circle", { cx: "22", cy: "22", r: "6", strokeOpacity: "0" },
-            React.createElement("animate", { attributeName: "r", begin: "3s", dur: "3s", values: "6;22", calcMode: "linear", repeatCount: "indefinite" }),
-            React.createElement("animate", { attributeName: "stroke-opacity", begin: "3s", dur: "3s", values: "1;0", calcMode: "linear", repeatCount: "indefinite" }),
-            React.createElement("animate", { attributeName: "stroke-width", begin: "3s", dur: "3s", values: "2;0", calcMode: "linear", repeatCount: "indefinite" })),
-        React.createElement("circle", { cx: "22", cy: "22", r: "8" },
-            React.createElement("animate", { attributeName: "r", begin: "0s", dur: "1.5s", values: "6;1;2;3;4;5;6", calcMode: "linear", repeatCount: "indefinite" }))));
-const Spinners = {
-    circles: CirclesSVG
-};
+const IconElement = styled.div `
+    width: ${(props) => props.width ? props.width : '100%'};
+    height: ${(props) => props.height ? props.height : '100%'};
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    path {
+        fill: ${(props) => props.color ? DefaultTheme.colors[props.color][props.invert ? 'contrast' : 'principal'] : DefaultTheme.colors['primary'][props.invert ? 'contrast' : 'principal']};
+    }
+`;
 
 const AccountSVG = React.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React.createElement("path", { d: "M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" }));
@@ -150,30 +183,141 @@ const Icons = {
     worker: WorkerSVG
 };
 
-const IconElement = styled.div `
-    width: ${(props) => props.width ? props.width : '100%'};
-    height: ${(props) => props.height ? props.height : '100%'};
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    svg {
-        width: 100%;
-        height: 100%;
-    }
-
-    path {
-        fill: ${(props) => props.color ? DefaultTheme.colors[props.color][props.invert ? 'contrast' : 'principal'] : DefaultTheme.colors['primary'][props.invert ? 'contrast' : 'principal']};
-    }
-`;
-
 function Icon(props) {
     return (React.createElement(IconElement, Object.assign({}, props), Icons[props.name]));
 }
 
+let GlobalTheme = DefaultTheme;
+const setGlobalTheme = (theme) => {
+    GlobalTheme = theme;
+};
+const getGlobalTheme = () => {
+    return GlobalTheme;
+};
+
+const CirclesSVG = (props) => React.createElement("svg", Object.assign({ width: "45", height: "45", viewBox: "0 0 45 45", xmlns: "http://www.w3.org/2000/svg", stroke: "#000" }, props),
+    React.createElement("g", { fill: "none", fillRule: "evenodd", transform: "translate(1 1)", strokeWidth: "2" },
+        React.createElement("circle", { cx: "22", cy: "22", r: "6", strokeOpacity: "0" },
+            React.createElement("animate", { attributeName: "r", begin: "1.5s", dur: "3s", values: "6;22", calcMode: "linear", repeatCount: "indefinite" }),
+            React.createElement("animate", { attributeName: "stroke-opacity", begin: "1.5s", dur: "3s", values: "1;0", calcMode: "linear", repeatCount: "indefinite" }),
+            React.createElement("animate", { attributeName: "stroke-width", begin: "1.5s", dur: "3s", values: "2;0", calcMode: "linear", repeatCount: "indefinite" })),
+        React.createElement("circle", { cx: "22", cy: "22", r: "6", strokeOpacity: "0" },
+            React.createElement("animate", { attributeName: "r", begin: "3s", dur: "3s", values: "6;22", calcMode: "linear", repeatCount: "indefinite" }),
+            React.createElement("animate", { attributeName: "stroke-opacity", begin: "3s", dur: "3s", values: "1;0", calcMode: "linear", repeatCount: "indefinite" }),
+            React.createElement("animate", { attributeName: "stroke-width", begin: "3s", dur: "3s", values: "2;0", calcMode: "linear", repeatCount: "indefinite" })),
+        React.createElement("circle", { cx: "22", cy: "22", r: "8" },
+            React.createElement("animate", { attributeName: "r", begin: "0s", dur: "1.5s", values: "6;1;2;3;4;5;6", calcMode: "linear", repeatCount: "indefinite" }))));
+const Spinners = {
+    circles: CirclesSVG
+};
+
+const IconButton = styled(framerMotion.motion.button) `
+    all: unset;
+    background: transparent;
+    min-height: 40px;
+    min-width: 40px;
+    margin: 3px;
+    filter: drop-shadow(${() => getGlobalTheme().boxShadow.normal});
+    transition: all ${() => getGlobalTheme().transitions.fast};
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    &:active {
+        filter: drop-shadow(${() => getGlobalTheme().boxShadow.active});
+        transform: scale(0.96);
+    }
+
+    span {
+        max-width: 300px;
+        flex: 1;
+        text-align: center;
+    }
+`;
+
+const OutlineButton = styled(framerMotion.motion.button) `
+    all: unset;
+    background: transparent;
+    color: ${(props) => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
+    border: 1px solid ${(props) => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
+    padding: 10px 25px;
+    min-height: 40px;
+    border-radius: ${() => getGlobalTheme().borderRadius};
+    margin: 3px;
+    transition: all ${() => getGlobalTheme().transitions.fast};
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    &:active {
+        background: ${(props) => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
+        color: ${(props) => props.color ? getGlobalTheme().colors[props.color].contrast : getGlobalTheme().colors['primary'].contrast};
+        border: 1px solid transparent;
+    }
+
+    span {
+        max-width: 300px;
+        flex: 1;
+        text-align: center;
+    }
+`;
+
+const SolidButton = styled(framerMotion.motion.button) `
+    all: unset;
+    background: ${(props) => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
+    color: ${(props) => props.color ? getGlobalTheme().colors[props.color].contrast : getGlobalTheme().colors['primary'].contrast};
+    padding: 10px 25px;
+    min-height: 40px;
+    border-radius: ${() => getGlobalTheme().borderRadius};
+    box-shadow: ${() => getGlobalTheme().boxShadow.normal};
+    margin: 3px;
+    transition: all ${() => getGlobalTheme().transitions.fast};
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    &:active {
+        box-shadow: ${() => getGlobalTheme().boxShadow.active};
+        transform: scale(0.96);
+    }
+
+    span {
+        max-width: 300px;
+        flex: 1;
+        text-align: center;
+    }
+`;
+
+function Button(props) {
+    switch (props.styleType) {
+        case 'icon':
+            return (React.createElement(IconButton, Object.assign({}, props), props.icon && React.createElement(Icon, { name: props.icon, color: props.color, invert: false, height: "100%", width: "100%" })));
+        case 'outline':
+            return (React.createElement(OutlineButton, Object.assign({}, props),
+                props.icon && React.createElement(Icon, { name: props.icon, color: props.color, invert: true, height: "100%", width: "unset" }),
+                props.text && React.createElement("span", null, props.text)));
+        case 'solid':
+        default:
+            return (React.createElement(SolidButton, Object.assign({}, props),
+                props.icon && React.createElement(Icon, { name: props.icon, color: props.color, invert: true, height: "100%", width: "unset" }),
+                props.text && React.createElement("span", null, props.text)));
+    }
+}
+
+exports.Button = Button;
 exports.DefaultTheme = DefaultTheme;
 exports.Icon = Icon;
 exports.Icons = Icons;
 exports.Spinners = Spinners;
+exports.getGlobalTheme = getGlobalTheme;
+exports.setGlobalTheme = setGlobalTheme;
 //# sourceMappingURL=index.js.map
