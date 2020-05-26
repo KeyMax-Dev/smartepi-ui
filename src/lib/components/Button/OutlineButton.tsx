@@ -10,7 +10,7 @@ const OutlineButton = styled(motion.button) <ButtonProps>`
     color: ${(props): string => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
     border: 1px solid ${(props): string => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
     padding: 10px 25px;
-    min-height: 40px;
+    min-height: 38px;
     border-radius: ${() => getGlobalTheme().borderRadius};
     margin: 3px;
     transition: all ${() => getGlobalTheme().transitions.fast};

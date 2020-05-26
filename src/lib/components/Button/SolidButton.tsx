@@ -7,7 +7,6 @@ import { getGlobalTheme } from '../..';
 const SolidButton = styled(motion.button) <ButtonProps>`
     all: unset;
     background: ${(props): string => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
-    color: ${(props): string => props.color ? getGlobalTheme().colors[props.color].contrast : getGlobalTheme().colors['primary'].contrast};
     padding: 10px 25px;
     min-height: 40px;
     border-radius: ${() => getGlobalTheme().borderRadius};
@@ -30,6 +29,7 @@ const SolidButton = styled(motion.button) <ButtonProps>`
         max-width: 300px;
         flex: 1;
         text-align: center;
+        color: ${(props): string => props.color ? getGlobalTheme().colors[props.color].contrast : getGlobalTheme().colors['primary'].contrast};
     }
 `;
 

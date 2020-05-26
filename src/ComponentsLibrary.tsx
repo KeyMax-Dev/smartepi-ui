@@ -1,8 +1,11 @@
 import React, { useState, ReactText } from 'react';
 import styled from 'styled-components';
 import DefaultTheme from './lib/assets/themes/default-theme';
-import { Icon, Button } from './lib';
+import { Icon, Button, getGlobalTheme } from './lib';
 import Icons from './lib/assets/svgs/icons';
+import useModal from './lib/services/modal/index';
+import useToast from './lib/services/toast/index';
+import useOverflow from './lib/services/overflow/index';
 
 interface ComponentExpandableProps {
     children: ReactText | JSX.Element | JSX.Element[];
@@ -14,6 +17,12 @@ const PageBody = styled.div`
     flex-direction: column;
     align-items: center;
     width: 100%;
+
+    h1 {
+        text-align: center;
+        font-size: ${() => getGlobalTheme().font.h1.fontSize};
+        font-weight: ${() => getGlobalTheme().font.h1.fontWeight};
+    }
 `;
 
 const ComponentExpandableContainer = styled.div`
@@ -56,6 +65,10 @@ export default function ComponentsLibrary(): JSX.Element {
         const aux = { [componentName]: !!!showComponent[componentName] };
         _setShowComponent({ ...showComponent, ...aux });
     };
+    const modal = useModal(<div>Modal Service</div>);
+    const toast = useToast('Toast Service');
+    const overflowButtonRef = React.createRef<HTMLDivElement>();
+    const overflow = useOverflow(overflowButtonRef, <div>Overflow Service</div>);
 
     const ComponentExpandable = (props: ComponentExpandableProps): JSX.Element => {
         return (
@@ -92,6 +105,13 @@ export default function ComponentsLibrary(): JSX.Element {
                 <Button styleType="outline" text="Outline with Icon" icon="account" />
                 <Button styleType="outline" text="outline" />
                 <Button styleType="icon" icon="cog" />
+            </ComponentExpandable>
+            <ComponentExpandable componentName="Services">
+                <Button text="Modal" onClick={() => modal.open()} />
+                <Button text="Toast" onClick={() => toast.show()} />
+                <div ref={overflowButtonRef}>
+                    <Button text="Overflow" onClick={() => overflow.open()} />
+                </div>
             </ComponentExpandable>
         </PageBody>
     );

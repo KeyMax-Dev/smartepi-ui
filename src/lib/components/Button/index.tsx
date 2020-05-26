@@ -1,4 +1,4 @@
-import { HTMLMotionProps } from 'framer-motion';
+import { HTMLMotionProps, ForwardRefComponent } from 'framer-motion';
 import Icon from '../Icon';
 import IconButton from './IconButton';
 import OutlineButton from './OutlineButton';
@@ -20,13 +20,13 @@ export default function Button(props: ButtonProps): JSX.Element {
         case 'icon':
             return (
                 <IconButton {...props}>
-                    {props.icon && <Icon name={props.icon} color={props.color} invert={false} height="100%" width="100%" />}
+                    {props.icon && <Icon name={props.icon} color={props.color} invert={false} height="40px" width="40px" />}
                 </IconButton>
             );
         case 'outline':
             return (
                 <OutlineButton {...props}>
-                    {props.icon && <Icon name={props.icon} color={props.color} invert={false} height="100%" width="unset" style={{marginRight: '15px'}} />}
+                    {props.icon && <Icon name={props.icon} color={props.color} invert={false} height="40px" width="40px" style={{marginRight: '15px'}} />}
                     {props.text && <span>{props.text}</span>}
                 </OutlineButton>
             );
@@ -34,7 +34,7 @@ export default function Button(props: ButtonProps): JSX.Element {
         default:
             return (
                 <SolidButton {...props}>
-                    {props.icon && <Icon name={props.icon} color={props.color} invert={true} height="100%" width="unset" style={{marginRight: '15px'}}  />}
+                    {props.icon && <Icon name={props.icon} color={props.color} invert={true} height="40px" width="40px" style={{marginRight: '15px'}}  />}
                     {props.text && <span>{props.text}</span>}
                 </SolidButton>
             );
