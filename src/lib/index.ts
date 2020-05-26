@@ -18,6 +18,7 @@ import Icon from './components/Icon';
 // Services
 import useModal from './services/modal';
 import useToast from './services/toast';
+import useOverflow from './services/overflow';
 
 
 export { 
@@ -38,5 +39,6 @@ export {
 
 export {
     useModal,
+    useOverflow,
     useToast
 };

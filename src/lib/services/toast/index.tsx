@@ -95,5 +95,6 @@ class ToastController {
 }
 
 export default function useToast(child?: JSX.Element | string, options?: Partial<Config>): ToastController {
-    return useState(new ToastController(child, options))[0];
+    const [toast] = useState(new ToastController(child, options));
+    return toast;
 }

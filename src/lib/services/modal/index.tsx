@@ -137,5 +137,6 @@ class ModalController {
 
 
 export default function useModal(content: JSX.Element, options?: Partial<ModalConfig>): ModalController {
-    return useState(new ModalController(content, options))[0];
+    const [modal] = useState(new ModalController(content, options)); 
+    return modal;
 }

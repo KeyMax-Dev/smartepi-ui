@@ -369,7 +369,8 @@ class ModalController {
     }
 }
 function useModal(content, options) {
-    return React.useState(new ModalController(content, options))[0];
+    const [modal] = React.useState(new ModalController(content, options));
+    return modal;
 }
 
 const ToastElement = styled(framerMotion.motion.div) `
@@ -466,7 +467,133 @@ class ToastController {
     }
 }
 function useToast(child, options) {
-    return React.useState(new ToastController(child, options))[0];
+    const [toast] = React.useState(new ToastController(child, options));
+    return toast;
+}
+
+const OverflowElement = styled(framerMotion.motion.div) `
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+
+    border-radius: ${() => getGlobalTheme().borderRadius};
+    box-shadow: ${() => getGlobalTheme().boxShadow.normal};
+    background-color: ${() => getGlobalTheme().colors.primary.contrast};
+    padding: 5px;
+    
+    &::after {
+        content: ' ';
+        position: absolute;
+        border: 5px solid transparent;
+    }
+
+    &.__bottom {
+        top: 100%;
+        &::after {
+            left: calc(50% - 5px);
+            top: -10px;
+            border-bottom-color: ${() => getGlobalTheme().colors.primary.contrast};
+        }
+    }
+
+    &.__top {
+        bottom: 100%;
+        &::after {
+            left: calc(50% - 5px);
+            bottom: -10px;
+            border-top-color: ${() => getGlobalTheme().colors.primary.contrast};
+        }
+    }
+
+    &.__right {
+        left: 100%;
+        &::after {
+            top: calc(50% - 5px);
+            left: -10px;
+            border-right-color: ${() => getGlobalTheme().colors.primary.contrast};
+        }
+    }
+
+    &.__left {
+        right: 100%;
+        &::after {
+            top: calc(50% - 5px);
+            right: -10px;
+            border-left-color: ${() => getGlobalTheme().colors.primary.contrast};
+        }
+    }
+`;
+
+const DEFAULT_CONFIG$1 = {
+    id: '__default-pop-up',
+    rootId: 'root',
+    position: 'bottom'
+};
+class OverflowController {
+    constructor(parentRef, content, options) {
+        this.parentRef = parentRef;
+        this.content = content;
+        this.animationController = framerMotion.useAnimation();
+        this.container = document.createElement('aside');
+        this.clickListener = (event) => {
+            if (!this.container.contains(event.target) || this.container === event.target) {
+                this.close();
+            }
+        };
+        this.updateContainerListener = () => this.updateContainer();
+        this.config = Object.assign({}, DEFAULT_CONFIG$1, options);
+        this.container.setAttribute('id', this.config.id);
+        this.content = React__default.cloneElement(this.content, { controller: this });
+    }
+    open() {
+        var _a;
+        (_a = document.getElementById(this.config.rootId)) === null || _a === void 0 ? void 0 : _a.appendChild(this.container);
+        this.updateContainer();
+        ReactDOM.render(this.createReactElement(), this.container);
+        setTimeout(() => {
+            window.addEventListener('click', this.clickListener);
+            window.addEventListener('resize', this.updateContainerListener);
+            window.addEventListener('scroll', this.updateContainerListener);
+        });
+        this.animationController.start({
+            opacity: [0, 1],
+            transition: { duration: .2 }
+        });
+    }
+    close() {
+        var _a;
+        window.removeEventListener('click', this.clickListener);
+        window.removeEventListener('resize', this.updateContainerListener);
+        window.removeEventListener('scroll', this.updateContainerListener);
+        (_a = document.getElementById(this.config.rootId)) === null || _a === void 0 ? void 0 : _a.removeChild(this.container);
+    }
+    setParentRef(parentRef) {
+        this.parentRef = parentRef;
+    }
+    updateContainer() {
+        const parentBounding = this.parentRef.current.getBoundingClientRect();
+        this.container.style.position = 'fixed';
+        this.container.style.width = parentBounding.width + 'px';
+        this.container.style.height = parentBounding.height + 'px';
+        this.container.style.left = parentBounding.left + 'px';
+        this.container.style.top = parentBounding.top + 'px';
+        this.container.style.display = 'flex';
+        this.container.style.justifyContent = 'center';
+        this.container.style.alignItems = 'center';
+    }
+    createReactElement() {
+        return (React__default.createElement(OverflowElement, { className: `__${this.config.position}`, animate: this.animationController }, this.content));
+    }
+}
+function useOverflow(parentRef, content, options) {
+    const [controller] = React.useState(new OverflowController(parentRef, content, options));
+    React.useEffect(() => {
+        controller.setParentRef(parentRef);
+    });
+    return controller;
 }
 
 const IconButton = styled(framerMotion.motion.button) `
@@ -577,5 +704,6 @@ exports.Spinners = Spinners;
 exports.getGlobalTheme = getGlobalTheme;
 exports.setGlobalTheme = setGlobalTheme;
 exports.useModal = useModal;
+exports.useOverflow = useOverflow;
 exports.useToast = useToast;
 //# sourceMappingURL=index.js.map
