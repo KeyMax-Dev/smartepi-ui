@@ -265,32 +265,77 @@ const ModalCloseButton = styled(Icon) `
     }
 `;
 
+const DEFAULT_ASIDE_CONFIG = {
+    id: '__default-aside-id'
+};
+class AsideController {
+    constructor(content, options) {
+        this.content = content;
+        this.container = null;
+        this.status = 'closed';
+        this.containerControls = framerMotion.useAnimation();
+        this.config = Object.assign({}, DEFAULT_ASIDE_CONFIG, options);
+        this.injectProps({ controller: this });
+    }
+    getStatus() {
+        return this.status;
+    }
+    injectProps(props) {
+        this.content = React__default.cloneElement(this.content, Object.assign({}, props));
+        if (this.status === 'opened') {
+            this.renderReactElement();
+        }
+    }
+    createContainer() {
+        if (this.container || typeof document === 'undefined')
+            return;
+        this.container = document.createElement('aside');
+        this.container.setAttribute('id', this.config.id);
+    }
+    renderReactElement() {
+        if (this.status === 'opening' || this.status === 'opened') {
+            ReactDOM.render(this.createReactElement(), this.container);
+        }
+        else {
+            throw new Error('Bad time react element render.');
+        }
+    }
+    appendNode() {
+        var _a;
+        this.status = 'opening';
+        this.createContainer();
+        this.renderReactElement();
+        (_a = document.getElementsByTagName('body')[0]) === null || _a === void 0 ? void 0 : _a.appendChild(this.container);
+    }
+    removeNode() {
+        var _a;
+        ReactDOM.unmountComponentAtNode(this.container);
+        (_a = document.getElementsByTagName('body')[0]) === null || _a === void 0 ? void 0 : _a.removeChild(this.container);
+        this.status = 'closed';
+    }
+}
+
 const DEFAULT_MODAL_CONFIG = {
     id: '__default-modal',
     disableBackdropClose: false,
     disableCloseButton: false,
     preventScroll: true
 };
-class ModalController {
+class ModalController extends AsideController {
     constructor(content, options) {
-        this.content = content;
+        super(content, options);
         this.overlayControls = framerMotion.useAnimation();
-        this.containerControls = framerMotion.useAnimation();
-        this.container = null;
-        this.status = 'closed';
         this.config = Object.assign({}, DEFAULT_MODAL_CONFIG, options);
         this.injectProps({ controller: this });
-    }
-    getStatus() {
-        return this.status;
     }
     open() {
         if (this.status !== 'closed') {
             throw new Error('Modal isn\'t closed!');
         }
-        this.createContainer();
         this.appendNode();
-        this.renderReactElement();
+        if (this.config.preventScroll) {
+            document.body.style.overflow = 'hidden';
+        }
         // Animation
         this.containerControls.start({
             opacity: [0, 1],
@@ -301,15 +346,18 @@ class ModalController {
             opacity: [0, 1],
             transition: { duration: .4 }
         }).then(() => {
-            this.status = 'open';
+            this.status = 'opened';
             return Promise.resolve();
         });
     }
     close() {
-        if (this.status !== 'open') {
+        if (this.status !== 'opened') {
             throw new Error('Modal isn\'t open!');
         }
         this.status = 'closing';
+        if (this.config.preventScroll) {
+            document.body.style.overflow = 'auto';
+        }
         // Animation
         this.containerControls.start({
             opacity: [1, 0],
@@ -320,12 +368,6 @@ class ModalController {
             opacity: [1, 0],
             transition: { duration: .3 },
         }).then(() => Promise.resolve(this.removeNode()));
-    }
-    injectProps(props) {
-        this.content = React__default.cloneElement(this.content, Object.assign({}, props));
-        if (this.status === 'open') {
-            this.renderReactElement();
-        }
     }
     setDisabledBackdrop(value) {
         this.config.disableBackdropClose = value;
@@ -341,31 +383,8 @@ class ModalController {
                 !this.config.disableCloseButton && React__default.createElement(ModalCloseButton, { onClick: () => this.close(), width: "30px", height: "30px", name: "close" }),
                 this.content)));
     }
-    createContainer() {
-        if (this.container || typeof document === 'undefined')
-            return;
-        this.container = document.createElement('aside');
-        this.container.setAttribute('id', this.config.id);
-    }
-    appendNode() {
-        var _a;
-        this.status = 'opening';
-        (_a = document.getElementsByTagName('body')[0]) === null || _a === void 0 ? void 0 : _a.appendChild(this.container);
-        if (this.config.preventScroll) {
-            document.body.style.overflow = 'hidden';
-        }
-    }
-    removeNode() {
-        var _a;
-        ReactDOM.unmountComponentAtNode(this.container);
-        (_a = document.getElementsByTagName('body')[0]) === null || _a === void 0 ? void 0 : _a.removeChild(this.container);
-        if (this.config.preventScroll) {
-            document.body.style.overflow = 'auto';
-        }
-        this.status = 'closed';
-    }
     renderReactElement() {
-        if (this.status === 'opening' || this.status === 'open') {
+        if (this.status === 'opening' || this.status === 'opened') {
             ReactDOM.render(this.createReactElement(), this.container);
         }
         else {
@@ -406,37 +425,32 @@ const ToastElement = styled(framerMotion.motion.div) `
 
 const DEFAULT_CONFIG = {
     id: '__default-pop-up',
-    rootId: 'root',
     color: 'primary',
     timeout: 2000
 };
-class ToastController {
-    constructor(child, options) {
-        this.child = child;
+class ToastController extends AsideController {
+    constructor(content, options) {
+        super(content, options);
         this.animationController = framerMotion.useAnimation();
-        this.container = document.createElement('aside');
-        this.status = 'closed';
         this.clickListener = (event) => {
-            if (!this.container.contains(event.target) || this.container === event.target) {
-                this.hide();
+            var _a;
+            if (!((_a = this.container) === null || _a === void 0 ? void 0 : _a.contains(event.target)) || this.container === event.target) {
+                this.close();
             }
         };
         this.config = Object.assign({}, DEFAULT_CONFIG, options);
-        this.container.setAttribute('id', this.config.id);
         this.hideTimeout = this.animationTimeout = 0;
     }
-    show() {
-        var _a;
+    open() {
         clearTimeout(this.animationTimeout);
         clearTimeout(this.hideTimeout);
-        if (!!!this.child) {
+        if (!!!this.content) {
             return;
         }
-        this.status = 'opening';
-        (_a = document.getElementById(this.config.rootId)) === null || _a === void 0 ? void 0 : _a.appendChild(this.container);
+        this.appendNode();
         ReactDOM.render(this.createReactElement(), this.container);
         setTimeout(() => window.addEventListener('click', this.clickListener));
-        this.hideTimeout = setTimeout(() => this.hide(), this.config.timeout);
+        this.hideTimeout = setTimeout(() => this.close(), this.config.timeout);
         this.animationController.start({
             bottom: [-100, 15],
             opacity: [0, 1],
@@ -446,7 +460,7 @@ class ToastController {
             this.status = 'opened';
         }, 200);
     }
-    hide() {
+    close() {
         if (this.status !== 'opened') {
             return;
         }
@@ -459,20 +473,19 @@ class ToastController {
             transition: { duration: .2, ease: 'backIn' }
         });
         this.animationTimeout = setTimeout(() => {
-            var _a;
-            (_a = document.getElementById(this.config.rootId)) === null || _a === void 0 ? void 0 : _a.removeChild(this.container);
+            this.removeNode();
             this.status = 'closed';
         }, 200);
     }
-    setChild(newChild) {
-        this.child = newChild;
+    setContent(newContent) {
+        this.content = typeof newContent === 'string' ? React__default.createElement("span", null, newContent) : newContent;
     }
     createReactElement() {
-        return (React__default.createElement(ToastElement, { color: this.config.color, animate: this.animationController }, this.child));
+        return (React__default.createElement(ToastElement, { color: this.config.color, animate: this.animationController }, this.content));
     }
 }
-function useToast(child, options) {
-    const [toast] = React.useState(new ToastController(child, options));
+function useToast(content, options) {
+    const [toast] = React.useState(new ToastController(content, options));
     return toast;
 }
 
@@ -534,63 +547,64 @@ const OverflowElement = styled(framerMotion.motion.div) `
 
 const DEFAULT_CONFIG$1 = {
     id: '__default-pop-up',
-    rootId: 'root',
     position: 'bottom'
 };
-class OverflowController {
+class OverflowController extends AsideController {
     constructor(parentRef, content, options) {
+        super(content, options);
         this.parentRef = parentRef;
-        this.content = content;
-        this.animationController = framerMotion.useAnimation();
-        this.container = document.createElement('aside');
         this.clickListener = (event) => {
-            if (!this.container.contains(event.target) || this.container === event.target) {
+            var _a;
+            if (!((_a = this.container) === null || _a === void 0 ? void 0 : _a.contains(event.target)) || this.container === event.target) {
                 this.close();
             }
         };
         this.updateContainerListener = () => this.updateContainer();
         this.config = Object.assign({}, DEFAULT_CONFIG$1, options);
-        this.container.setAttribute('id', this.config.id);
-        this.content = React__default.cloneElement(this.content, { controller: this });
     }
     open() {
-        var _a;
-        (_a = document.getElementById(this.config.rootId)) === null || _a === void 0 ? void 0 : _a.appendChild(this.container);
+        this.appendNode();
         this.updateContainer();
-        ReactDOM.render(this.createReactElement(), this.container);
-        setTimeout(() => {
-            window.addEventListener('click', this.clickListener);
-            window.addEventListener('resize', this.updateContainerListener);
-            window.addEventListener('scroll', this.updateContainerListener);
-        });
-        this.animationController.start({
+        this.addListeners();
+        this.containerControls.start({
             opacity: [0, 1],
             transition: { duration: .2 }
         });
     }
     close() {
-        var _a;
-        window.removeEventListener('click', this.clickListener);
-        window.removeEventListener('resize', this.updateContainerListener);
-        window.removeEventListener('scroll', this.updateContainerListener);
-        (_a = document.getElementById(this.config.rootId)) === null || _a === void 0 ? void 0 : _a.removeChild(this.container);
+        this.removeListeners();
+        this.removeNode();
     }
     setParentRef(parentRef) {
         this.parentRef = parentRef;
     }
+    createReactElement() {
+        return (React__default.createElement(OverflowElement, { className: `__${this.config.position}`, animate: this.containerControls }, this.content));
+    }
     updateContainer() {
         const parentBounding = this.parentRef.current.getBoundingClientRect();
-        this.container.style.position = 'fixed';
-        this.container.style.width = parentBounding.width + 'px';
-        this.container.style.height = parentBounding.height + 'px';
-        this.container.style.left = parentBounding.left + 'px';
-        this.container.style.top = parentBounding.top + 'px';
-        this.container.style.display = 'flex';
-        this.container.style.justifyContent = 'center';
-        this.container.style.alignItems = 'center';
+        if (this.container) {
+            this.container.style.position = 'fixed';
+            this.container.style.width = parentBounding.width + 'px';
+            this.container.style.height = parentBounding.height + 'px';
+            this.container.style.left = parentBounding.left + 'px';
+            this.container.style.top = parentBounding.top + 'px';
+            this.container.style.display = 'flex';
+            this.container.style.justifyContent = 'center';
+            this.container.style.alignItems = 'center';
+        }
     }
-    createReactElement() {
-        return (React__default.createElement(OverflowElement, { className: `__${this.config.position}`, animate: this.animationController }, this.content));
+    addListeners() {
+        setTimeout(() => {
+            window.addEventListener('click', this.clickListener);
+            window.addEventListener('resize', this.updateContainerListener);
+            window.addEventListener('scroll', this.updateContainerListener);
+        });
+    }
+    removeListeners() {
+        window.removeEventListener('click', this.clickListener);
+        window.removeEventListener('resize', this.updateContainerListener);
+        window.removeEventListener('scroll', this.updateContainerListener);
     }
 }
 function useOverflow(parentRef, content, options) {
