@@ -1,57 +1,51 @@
-import React, { ReactElement, useState } from "react";
-import ReactDOM from 'react-dom';
-import { useAnimation } from 'framer-motion';
 import { ToastElement } from './style';
+import { useAnimation } from 'framer-motion';
+import AsideController, { BaseAsideConfig } from "../aside-controller";
+import React, { useState } from "react";
+import ReactDOM from 'react-dom';
 
-type Status = 'opening' | 'opened' | 'closing' | 'closed';
-
-type Config = {
-    id: string;
-    rootId: string;
+type ToastConfig = BaseAsideConfig & {
     color: string;
     timeout: number;
 }
 
-const DEFAULT_CONFIG: Config = {
+const DEFAULT_CONFIG: ToastConfig = {
     id: '__default-pop-up',
-    rootId: 'root',
     color: 'primary',
     timeout: 2000
 };
 
-class ToastController {
+class ToastController extends AsideController {
 
+    protected config: ToastConfig;
     private hideTimeout: number;
     private animationTimeout: number;
     private animationController = useAnimation();
-    private config: Config;
-    private container = document.createElement('aside');
-    private status: Status = 'closed';
 
     private clickListener = (event: MouseEvent): void => {
-        if (!this.container.contains(event.target as HTMLElement) || this.container === event.target) {
-            this.hide();
+        if (!this.container?.contains(event.target as HTMLElement) || this.container === event.target) {
+            this.close();
         }
     };
 
-    constructor(private child?: JSX.Element | string, options?: Partial<Config>) {
+    constructor(content: JSX.Element, options?: Partial<ToastConfig>) {
+        super(content, options);
+        
         this.config = Object.assign({}, DEFAULT_CONFIG, options);
-        this.container.setAttribute('id', this.config.id);
         this.hideTimeout = this.animationTimeout = 0;
     }
 
-    public show(): void {
+    public open(): void {
         clearTimeout(this.animationTimeout);
         clearTimeout(this.hideTimeout);
-        if (!!!this.child) {
+        if (!!!this.content) {
             return;
         }
-        this.status = 'opening';
-        document.getElementById(this.config.rootId)?.appendChild(this.container);
+        this.appendNode();
 
         ReactDOM.render(this.createReactElement(), this.container);
         setTimeout(() => window.addEventListener('click', this.clickListener));
-        this.hideTimeout = setTimeout(() => this.hide(), this.config.timeout);
+        this.hideTimeout = setTimeout(() => this.close(), this.config.timeout);
 
         this.animationController.start({
             bottom: [-100, 15],
@@ -63,7 +57,7 @@ class ToastController {
         }, 200);
     }
 
-    public hide(): void {
+    public close(): void {
         if (this.status !== 'opened') {
             return;
         }
@@ -76,25 +70,25 @@ class ToastController {
             transition: { duration: .2, ease: 'backIn' }
         });
         this.animationTimeout = setTimeout(() => {
-            document.getElementById(this.config.rootId)?.removeChild(this.container);
+            this.removeNode();
             this.status = 'closed';
         }, 200);
     }
 
-    public setChild(newChild: ReactElement | string): void {
-        this.child = newChild;
+    public setContent(newContent: JSX.Element | string): void {
+        this.content = typeof newContent === 'string' ? <span>{newContent}</span> : newContent;
     }
 
-    private createReactElement(): JSX.Element {
+    protected createReactElement(): JSX.Element {
         return (
             <ToastElement color={this.config.color} animate={this.animationController} >
-                {this.child}
+                {this.content}
             </ToastElement>
         );
     }
 }
 
-export default function useToast(child?: JSX.Element | string, options?: Partial<Config>): ToastController {
-    const [toast] = useState(new ToastController(child, options));
+export default function useToast(content: JSX.Element, options?: Partial<ToastConfig>): ToastController {
+    const [toast] = useState(new ToastController(content, options));
     return toast;
 }

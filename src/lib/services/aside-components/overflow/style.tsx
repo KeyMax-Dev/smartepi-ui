@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import { getGlobalTheme } from "../../../assets/themes";
 import { motion } from "framer-motion";
-import { getGlobalTheme } from "../../assets/themes";
+import styled from "styled-components";
 
 export const OverflowElement = styled(motion.div)`
     position: absolute;

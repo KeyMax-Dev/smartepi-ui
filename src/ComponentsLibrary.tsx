@@ -1,11 +1,11 @@
+import { Icon, Button, getGlobalTheme } from './lib';
+import DefaultTheme from './lib/assets/themes/default-theme';
+import Icons from './lib/assets/svgs/icons';
 import React, { useState, ReactText } from 'react';
 import styled from 'styled-components';
-import DefaultTheme from './lib/assets/themes/default-theme';
-import { Icon, Button, getGlobalTheme } from './lib';
-import Icons from './lib/assets/svgs/icons';
-import useModal from './lib/services/modal/index';
-import useToast from './lib/services/toast/index';
-import useOverflow from './lib/services/overflow/index';
+import useModal from './lib/services/aside-components/modal/index';
+import useOverflow from './lib/services/aside-components/overflow/index';
+import useToast from './lib/services/aside-components/toast/index';
 
 interface ComponentExpandableProps {
     children: ReactText | JSX.Element | JSX.Element[];
@@ -66,7 +66,7 @@ export default function ComponentsLibrary(): JSX.Element {
         _setShowComponent({ ...showComponent, ...aux });
     };
     const modal = useModal(<div>Modal Service</div>);
-    const toast = useToast('Toast Service');
+    const toast = useToast(<span>Toast Service</span>);
     const overflowButtonRef = React.createRef<HTMLDivElement>();
     const overflow = useOverflow(overflowButtonRef, <div>Overflow Service</div>);
 
@@ -108,7 +108,7 @@ export default function ComponentsLibrary(): JSX.Element {
             </ComponentExpandable>
             <ComponentExpandable componentName="Services">
                 <Button text="Modal" onClick={() => modal.open()} />
-                <Button text="Toast" onClick={() => toast.show()} />
+                <Button text="Toast" onClick={() => toast.open()} />
                 <div ref={overflowButtonRef}>
                     <Button text="Overflow" onClick={() => overflow.open()} />
                 </div>

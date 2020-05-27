@@ -1,6 +1,6 @@
+import { getGlobalTheme } from "../../../assets/themes";
+import Icon from "../../../components/Icon";
 import styled from "styled-components";
-import Icon from "../../components/Icon";
-import { getGlobalTheme } from "../../assets/themes";
 
 export const ModalBaseElement = styled.div`
     position: fixed;

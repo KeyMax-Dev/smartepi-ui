@@ -16,9 +16,9 @@ import Button from './components/Button';
 import Icon from './components/Icon';
 
 // Services
-import useModal from './services/modal';
-import useToast from './services/toast';
-import useOverflow from './services/overflow';
+import useModal from './services/aside-components/modal';
+import useToast from './services/aside-components/toast';
+import useOverflow from './services/aside-components/overflow';
 
 
 export { 
