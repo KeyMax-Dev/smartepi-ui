@@ -277,10 +277,9 @@ class ModalController {
         this.content = content;
         this.overlayControls = framerMotion.useAnimation();
         this.containerControls = framerMotion.useAnimation();
-        this.container = document.createElement('aside');
+        this.container = null;
         this.status = 'closed';
         this.config = Object.assign({}, DEFAULT_MODAL_CONFIG, options);
-        this.container.setAttribute('id', this.config.id);
         this.injectProps({ controller: this });
     }
     getStatus() {
@@ -290,6 +289,7 @@ class ModalController {
         if (this.status !== 'closed') {
             throw new Error('Modal isn\'t closed!');
         }
+        this.createContainer();
         this.appendNode();
         this.renderReactElement();
         // Animation
@@ -341,6 +341,12 @@ class ModalController {
             React__default.createElement(framerMotion.motion.div, { className: "__container", animate: this.containerControls },
                 !this.config.disableCloseButton && React__default.createElement(ModalCloseButton, { onClick: () => this.close(), width: "30px", height: "30px", name: "close" }),
                 this.content)));
+    }
+    createContainer() {
+        if (this.container || typeof document === 'undefined')
+            return;
+        this.container = document.createElement('aside');
+        this.container.setAttribute('id', this.config.id);
     }
     appendNode() {
         var _a;

@@ -24,6 +24,7 @@ declare class ModalController {
     setDisabledBackdrop(value: boolean): void;
     setDisabledCloseButto(value: boolean): void;
     private createReactElement;
+    private createContainer;
     private appendNode;
     private removeNode;
     private renderReactElement;
