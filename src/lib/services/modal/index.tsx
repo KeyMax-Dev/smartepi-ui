@@ -25,13 +25,12 @@ class ModalController {
 
     private readonly overlayControls = useAnimation();
     private readonly containerControls = useAnimation();
-    private container = document.createElement('aside');
+    private container: HTMLElement | null = null;
     private config: ModalConfig;
     private status: ModalStatus = 'closed';
 
     constructor(private content: JSX.Element, options?: Partial<ModalConfig>) {
         this.config = Object.assign({}, DEFAULT_MODAL_CONFIG, options);
-        this.container.setAttribute('id', this.config.id);
         this.injectProps({ controller: this });
     }
 
@@ -43,6 +42,7 @@ class ModalController {
         if (this.status !== 'closed') {
             throw new Error('Modal isn\'t closed!');
         }
+        this.createContainer();
         this.appendNode();
         this.renderReactElement();
 
@@ -107,9 +107,15 @@ class ModalController {
         );
     }
 
+    private createContainer(): void {
+        if (this.container || typeof document === 'undefined') return;
+        this.container = document.createElement('aside');
+        this.container.setAttribute('id', this.config.id);
+    }
+
     private appendNode(): void {
         this.status = 'opening';
-        document.getElementById(this.config.rootId)?.appendChild(this.container);
+        document.getElementById(this.config.rootId)?.appendChild(this.container as HTMLElement);
 
         if (this.config.preventScroll) {
             document.body.style.overflow = 'hidden';
@@ -117,8 +123,8 @@ class ModalController {
     }
 
     private removeNode(): void {
-        ReactDOM.unmountComponentAtNode(this.container);
-        document.getElementById(this.config.rootId)?.removeChild(this.container);
+        ReactDOM.unmountComponentAtNode(this.container as HTMLElement);
+        document.getElementById(this.config.rootId)?.removeChild(this.container as HTMLElement);
 
         if (this.config.preventScroll) {
             document.body.style.overflow = 'auto';
