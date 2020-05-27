@@ -10,15 +10,13 @@ type ModalConfig = {
     disableBackdropClose: boolean;
     disableCloseButton: boolean;
     preventScroll: boolean;
-    rootId: string;
 }
 
-const DEFAULT_MODAL_CONFIG = {
+const DEFAULT_MODAL_CONFIG: ModalConfig = {
     id: '__default-modal',
     disableBackdropClose: false,
     disableCloseButton: false,
-    preventScroll: true,
-    rootId: 'root'
+    preventScroll: true
 };
 
 class ModalController {
@@ -115,7 +113,7 @@ class ModalController {
 
     private appendNode(): void {
         this.status = 'opening';
-        document.getElementById(this.config.rootId)?.appendChild(this.container as HTMLElement);
+        document.getElementsByTagName('body')[0]?.appendChild(this.container as HTMLElement);
 
         if (this.config.preventScroll) {
             document.body.style.overflow = 'hidden';
@@ -124,7 +122,7 @@ class ModalController {
 
     private removeNode(): void {
         ReactDOM.unmountComponentAtNode(this.container as HTMLElement);
-        document.getElementById(this.config.rootId)?.removeChild(this.container as HTMLElement);
+        document.getElementsByTagName('body')[0]?.removeChild(this.container as HTMLElement);
 
         if (this.config.preventScroll) {
             document.body.style.overflow = 'auto';

@@ -269,8 +269,7 @@ const DEFAULT_MODAL_CONFIG = {
     id: '__default-modal',
     disableBackdropClose: false,
     disableCloseButton: false,
-    preventScroll: true,
-    rootId: 'root'
+    preventScroll: true
 };
 class ModalController {
     constructor(content, options) {
@@ -351,7 +350,7 @@ class ModalController {
     appendNode() {
         var _a;
         this.status = 'opening';
-        (_a = document.getElementById(this.config.rootId)) === null || _a === void 0 ? void 0 : _a.appendChild(this.container);
+        (_a = document.getElementsByTagName('body')[0]) === null || _a === void 0 ? void 0 : _a.appendChild(this.container);
         if (this.config.preventScroll) {
             document.body.style.overflow = 'hidden';
         }
@@ -359,7 +358,7 @@ class ModalController {
     removeNode() {
         var _a;
         ReactDOM.unmountComponentAtNode(this.container);
-        (_a = document.getElementById(this.config.rootId)) === null || _a === void 0 ? void 0 : _a.removeChild(this.container);
+        (_a = document.getElementsByTagName('body')[0]) === null || _a === void 0 ? void 0 : _a.removeChild(this.container);
         if (this.config.preventScroll) {
             document.body.style.overflow = 'auto';
         }

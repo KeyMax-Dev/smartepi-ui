@@ -5,7 +5,6 @@ declare type ModalConfig = {
     disableBackdropClose: boolean;
     disableCloseButton: boolean;
     preventScroll: boolean;
-    rootId: string;
 };
 declare class ModalController {
     private content;
