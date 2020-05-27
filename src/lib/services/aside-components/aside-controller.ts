@@ -20,8 +20,8 @@ export default abstract class AsideController {
     protected readonly containerControls = useAnimation();
 
     protected abstract createReactElement(): JSX.Element;
-    protected abstract open(): void;
-    protected abstract close(): void;
+    protected abstract open(...args: unknown[]): void;
+    protected abstract close(...args: unknown[]): void;
 
     constructor(protected content: JSX.Element, options?: Partial<BaseAsideConfig>) {
         this.config = Object.assign({}, DEFAULT_ASIDE_CONFIG, options);

@@ -67,8 +67,7 @@ export default function ComponentsLibrary(): JSX.Element {
     };
     const modal = useModal(<div>Modal Service</div>);
     const toast = useToast(<span>Toast Service</span>);
-    const overflowButtonRef = React.createRef<HTMLDivElement>();
-    const overflow = useOverflow(overflowButtonRef, <div>Overflow Service</div>);
+    const overflow = useOverflow(<div>Overflow Service</div>);
 
     const ComponentExpandable = (props: ComponentExpandableProps): JSX.Element => {
         return (
@@ -109,9 +108,7 @@ export default function ComponentsLibrary(): JSX.Element {
             <ComponentExpandable componentName="Services">
                 <Button text="Modal" onClick={() => modal.open()} />
                 <Button text="Toast" onClick={() => toast.open()} />
-                <div ref={overflowButtonRef}>
-                    <Button text="Overflow" onClick={() => overflow.open()} />
-                </div>
+                <Button text="Overflow" onClick={(event) => overflow.open(event.target as HTMLElement)} />
             </ComponentExpandable>
         </PageBody>
     );

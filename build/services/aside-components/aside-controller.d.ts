@@ -10,8 +10,8 @@ export default abstract class AsideController {
     protected status: BaseStatus;
     protected readonly containerControls: import("framer-motion").AnimationControls;
     protected abstract createReactElement(): JSX.Element;
-    protected abstract open(): void;
-    protected abstract close(): void;
+    protected abstract open(...args: unknown[]): void;
+    protected abstract close(...args: unknown[]): void;
     constructor(content: JSX.Element, options?: Partial<BaseAsideConfig>);
     getStatus(): BaseStatus;
     injectProps(props: {

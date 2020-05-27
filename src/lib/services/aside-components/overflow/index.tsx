@@ -1,6 +1,6 @@
 import { OverflowElement } from './style';
 import AsideController, { BaseAsideConfig } from '../aside-controller';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 
 type Position = 'top' | 'bottom' | 'left' | 'right';
@@ -17,6 +17,7 @@ const DEFAULT_CONFIG: OverflowConfig = {
 class OverflowController extends AsideController {
 
     protected config: OverflowConfig;
+    private parent: HTMLElement | null = null;
 
     private clickListener = (event: MouseEvent): void => {
         if (!this.container?.contains(event.target as HTMLElement) || this.container === event.target) {
@@ -27,7 +28,6 @@ class OverflowController extends AsideController {
     private updateContainerListener = (): void => this.updateContainer();
 
     constructor(
-        private parentRef: React.RefObject<HTMLElement>,
         content: JSX.Element,
         options?: Partial<OverflowConfig>
     ) {
@@ -35,9 +35,17 @@ class OverflowController extends AsideController {
         this.config = Object.assign({}, DEFAULT_CONFIG, options);
     }
 
-    public open(): void {
+    public setParent(newParent: HTMLElement): void {
+        this.parent = newParent;
+    }
+
+    public getParent(): HTMLElement | null {
+        return this.parent;
+    }
+
+    public open(parent?: HTMLElement): void {
         this.appendNode();
-        this.updateContainer();
+        this.updateContainer(parent);
         this.addListeners();
 
         this.containerControls.start({
@@ -51,10 +59,6 @@ class OverflowController extends AsideController {
         this.removeNode();
     }
 
-    public setParentRef(parentRef: React.RefObject<HTMLElement>): void {
-        this.parentRef = parentRef;
-    }
-
     protected createReactElement(): JSX.Element {
         return (
             <OverflowElement className={`__${this.config.position}`} animate={this.containerControls}>
@@ -63,10 +67,12 @@ class OverflowController extends AsideController {
         );
     }
 
-    private updateContainer(): void {
-        const parentBounding = (this.parentRef.current as HTMLElement).getBoundingClientRect();
-        if (this.container) {
+    private updateContainer(parent?: HTMLElement): void {
+        if (parent) this.setParent(parent);
+        if (!!!this.parent) throw new Error('No parent provided');
 
+        const parentBounding = this.parent.getBoundingClientRect();
+        if (this.container) {
             this.container.style.position = 'fixed';
             this.container.style.width = parentBounding.width + 'px';
             this.container.style.height = parentBounding.height + 'px';
@@ -93,10 +99,7 @@ class OverflowController extends AsideController {
     }
 }
 
-export default function useOverflow(parentRef: React.RefObject<HTMLElement>, content: JSX.Element, options?: Partial<OverflowConfig>): OverflowController {
-    const [controller] = useState(new OverflowController(parentRef, content, options));
-    useEffect(() => {
-        controller.setParentRef(parentRef);
-    });
-    return controller;
+export default function useOverflow(content: JSX.Element, options?: Partial<OverflowConfig>): OverflowController {
+    const [overflow] = useState(new OverflowController(content, options));
+    return overflow;
 }

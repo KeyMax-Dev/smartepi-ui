@@ -550,9 +550,9 @@ const DEFAULT_CONFIG$1 = {
     position: 'bottom'
 };
 class OverflowController extends AsideController {
-    constructor(parentRef, content, options) {
+    constructor(content, options) {
         super(content, options);
-        this.parentRef = parentRef;
+        this.parent = null;
         this.clickListener = (event) => {
             var _a;
             if (!((_a = this.container) === null || _a === void 0 ? void 0 : _a.contains(event.target)) || this.container === event.target) {
@@ -562,9 +562,15 @@ class OverflowController extends AsideController {
         this.updateContainerListener = () => this.updateContainer();
         this.config = Object.assign({}, DEFAULT_CONFIG$1, options);
     }
-    open() {
+    setParent(newParent) {
+        this.parent = newParent;
+    }
+    getParent() {
+        return this.parent;
+    }
+    open(parent) {
         this.appendNode();
-        this.updateContainer();
+        this.updateContainer(parent);
         this.addListeners();
         this.containerControls.start({
             opacity: [0, 1],
@@ -575,14 +581,15 @@ class OverflowController extends AsideController {
         this.removeListeners();
         this.removeNode();
     }
-    setParentRef(parentRef) {
-        this.parentRef = parentRef;
-    }
     createReactElement() {
         return (React__default.createElement(OverflowElement, { className: `__${this.config.position}`, animate: this.containerControls }, this.content));
     }
-    updateContainer() {
-        const parentBounding = this.parentRef.current.getBoundingClientRect();
+    updateContainer(parent) {
+        if (parent)
+            this.setParent(parent);
+        if (!!!this.parent)
+            throw new Error('No parent provided');
+        const parentBounding = this.parent.getBoundingClientRect();
         if (this.container) {
             this.container.style.position = 'fixed';
             this.container.style.width = parentBounding.width + 'px';
@@ -607,12 +614,9 @@ class OverflowController extends AsideController {
         window.removeEventListener('scroll', this.updateContainerListener);
     }
 }
-function useOverflow(parentRef, content, options) {
-    const [controller] = React.useState(new OverflowController(parentRef, content, options));
-    React.useEffect(() => {
-        controller.setParentRef(parentRef);
-    });
-    return controller;
+function useOverflow(content, options) {
+    const [overflow] = React.useState(new OverflowController(content, options));
+    return overflow;
 }
 
 const IconButton = styled(framerMotion.motion.button) `
