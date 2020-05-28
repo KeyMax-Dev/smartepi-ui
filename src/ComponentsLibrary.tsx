@@ -1,4 +1,4 @@
-import { Icon, Button, getGlobalTheme } from './lib';
+import { Icon, Button, getGlobalTheme, ImageAvatar } from './lib';
 import DefaultTheme from './lib/assets/themes/default-theme';
 import Icons from './lib/assets/svgs/icons';
 import React, { useState, ReactText } from 'react';
@@ -113,6 +113,12 @@ export default function ComponentsLibrary(): JSX.Element {
                 <Button text="Modal" onClick={() => modal.open()} />
                 <Button text="Toast" onClick={() => toast.open()} />
                 <Button text="Overflow" onClick={(event) => overflow.open(event.target as HTMLElement)} />
+            </ComponentExpandable>
+            <ComponentExpandable componentName="Image">
+                <ImageAvatar />
+                <ImageAvatar src="https://scontent-gru2-2.cdninstagram.com/v/t51.2885-19/s150x150/91163646_644726092755428_8399382294829203456_n.jpg?_nc_ht=scontent-gru2-2.cdninstagram.com&_nc_ohc=v-UM5fHBt7cAX_24GWk&oh=220aed5de09e8c111dc2e47cd4ad07fe&oe=5EFB8806" />
+                <ImageAvatar size="100px" src="https://scontent-gru2-2.cdninstagram.com/v/t51.2885-19/s150x150/91163646_644726092755428_8399382294829203456_n.jpg?_nc_ht=scontent-gru2-2.cdninstagram.com&_nc_ohc=v-UM5fHBt7cAX_24GWk&oh=220aed5de09e8c111dc2e47cd4ad07fe&oe=5EFB8806" />
+                <ImageAvatar size="200px" src="https://scontent-gru2-2.cdninstagram.com/v/t51.2885-19/s150x150/91163646_644726092755428_8399382294829203456_n.jpg?_nc_ht=scontent-gru2-2.cdninstagram.com&_nc_ohc=v-UM5fHBt7cAX_24GWk&oh=220aed5de09e8c111dc2e47cd4ad07fe&oe=5EFB8806" />
             </ComponentExpandable>
         </PageBody>
     );
