@@ -56,13 +56,21 @@ export default abstract class AsideController {
     protected appendNode(): void {
         this.status = 'opening';
         this.createContainer();
-        this.renderReactElement();
-        document.getElementsByTagName('body')[0]?.appendChild(this.container as HTMLElement);
+        try {
+            this.renderReactElement();
+            document.getElementsByTagName('body')[0]?.appendChild(this.container as HTMLElement);
+        } catch (e) {
+            console.warn(`${this.config.id} append failed`, e);
+        }
     }
 
     protected removeNode(): void {
-        ReactDOM.unmountComponentAtNode(this.container as HTMLElement);
-        document.getElementsByTagName('body')[0]?.removeChild(this.container as HTMLElement);
+        try {
+            ReactDOM.unmountComponentAtNode(this.container as HTMLElement);
+            document.getElementsByTagName('body')[0]?.removeChild(this.container as HTMLElement);
+        } catch (e) {
+            console.warn(`${this.config.id} remove failed`, e);
+        }
         this.status = 'closed';
     }
 }

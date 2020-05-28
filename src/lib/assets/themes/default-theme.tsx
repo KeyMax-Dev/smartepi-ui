@@ -7,6 +7,7 @@ const DefaultTheme: Theme = {
         danger: {principal: '#D40000', contrast: '#FFFFFF'},
         success: {principal: '#00D415', contrast: '#FFFFFF'}
     },
+    defaultIconSize: '40px',
     transitions: {
         avarage: '0.3s ease-in-out',
         fast: '0.1s ease-in-out',

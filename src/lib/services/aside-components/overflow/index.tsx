@@ -26,6 +26,10 @@ class OverflowController extends AsideController {
     };
 
     private updateContainerListener = (): void => this.updateContainer();
+    private hoverLeaveListener = (): void => {
+        this.close();
+        this.container?.removeEventListener('mouseleave', this.hoverLeaveListener);
+    }
 
     constructor(
         content: JSX.Element,
@@ -43,7 +47,7 @@ class OverflowController extends AsideController {
         return this.parent;
     }
 
-    public open(parent?: HTMLElement): void {
+    public open(parent?: HTMLElement, isHover?: boolean): void {
         this.appendNode();
         this.updateContainer(parent);
         this.addListeners();
@@ -52,11 +56,16 @@ class OverflowController extends AsideController {
             opacity: [0, 1],
             transition: { duration: .2 }
         });
+
+        if (isHover) this.container?.addEventListener('mouseleave', this.hoverLeaveListener);
     }
 
     public close(): void {
         this.removeListeners();
-        this.removeNode();
+        this.containerControls.start({
+            opacity: [1, 0],
+            transition: { duration: .2 }
+        }).then(() => this.removeNode());
     }
 
     protected createReactElement(): JSX.Element {

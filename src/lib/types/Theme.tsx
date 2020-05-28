@@ -28,6 +28,7 @@ type Theme = {
     boxShadow: BoxShadow;
     font: {[key: string]: HeadingFont};
     transitions: Transitions;
+    defaultIconSize: string;
 }
 
 export default Theme;

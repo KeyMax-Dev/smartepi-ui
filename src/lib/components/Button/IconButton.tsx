@@ -7,27 +7,37 @@ import { getGlobalTheme } from '../..';
 const IconButton = styled(motion.button) <ButtonProps>`
     all: unset;
     background: transparent;
+    padding: 5px;
     min-height: 40px;
     min-width: 40px;
+    border-radius: ${() => getGlobalTheme().borderRadius};
     margin: 3px;
-    filter: drop-shadow(${() => getGlobalTheme().boxShadow.normal});
     transition: all ${() => getGlobalTheme().transitions.fast};
     cursor: pointer;
 
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     position: relative;
 
     &:active {
-        filter: drop-shadow(${() => getGlobalTheme().boxShadow.active});
         transform: scale(0.96);
     }
 
     span {
-        max-width: 300px;
-        flex: 1;
+        max-width: 80px;
         text-align: center;
+        color: ${(props): string => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
+        font-size: calc(${() => getGlobalTheme().font.h2.fontSize} / 2);
+        font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .__icon {
+        flex: 1;
+        margin: 5px;
     }
 `;
 

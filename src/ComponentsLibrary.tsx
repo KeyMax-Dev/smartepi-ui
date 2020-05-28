@@ -38,6 +38,7 @@ const ComponentExpandableContainer = styled.div`
 const ComponentsContainer = styled.div`
     display: flex;
     justify-content: center;
+    align-items: center;
     padding: 15px;
     margin: 5px;
     border: 1px solid #00000010;
@@ -93,7 +94,7 @@ export default function ComponentsLibrary(): JSX.Element {
             <ComponentExpandable componentName="Icons">
                 {Object.keys(Icons).map(icon => (
                     <div key={icon} className="__icon-container">
-                        <Icon name={icon} width="40px" height="40px" />
+                        <Icon name={icon} />
                         <span>{icon}</span>
                     </div>
                 ))}
@@ -101,9 +102,12 @@ export default function ComponentsLibrary(): JSX.Element {
             <ComponentExpandable componentName="Buttons">
                 <Button styleType="solid" text="Solid" />
                 <Button styleType="solid" text="Solid with Icon" icon="account" />
+                <Button styleType="solid" text="Solid with Icon with iconSize" icon="account" iconSize="80px" />
                 <Button styleType="outline" text="Outline with Icon" icon="account" />
                 <Button styleType="outline" text="outline" />
-                <Button styleType="icon" icon="cog" />
+                <Button styleType="icon" icon="cog" onMouseEnter={(event) => overflow.open(event.target as HTMLElement, true)} />
+                <Button styleType="icon" icon="cog" text="Configurations" />
+                <Button styleType="icon" icon="cog" text="Configurations With iconSize" iconSize="20px" />
             </ComponentExpandable>
             <ComponentExpandable componentName="Services">
                 <Button text="Modal" onClick={() => modal.open()} />

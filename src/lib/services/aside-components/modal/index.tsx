@@ -2,7 +2,6 @@ import { ModalBaseElement, ModalCloseButton } from './style';
 import { motion, useAnimation } from 'framer-motion';
 import AsideController, { BaseAsideConfig } from '../aside-controller';
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 
 type ModalStatus = 'opening' | 'open' | 'closing' | 'closed';
 
@@ -31,9 +30,7 @@ class ModalController extends AsideController {
     }
 
     public open(): Promise<void> {
-        if (this.status !== 'closed') {
-            throw new Error('Modal isn\'t closed!');
-        }
+        if (this.status !== 'closed') return Promise.resolve();
         this.appendNode();
 
         if (this.config.preventScroll) {
@@ -56,9 +53,7 @@ class ModalController extends AsideController {
     }
 
     public close(): Promise<void> {
-        if (this.status !== 'opened') {
-            throw new Error('Modal isn\'t open!');
-        }
+        if (this.status !== 'opened') return Promise.resolve();
         this.status = 'closing';
 
         if (this.config.preventScroll) {
@@ -96,14 +91,6 @@ class ModalController extends AsideController {
                 </motion.div>
             </ModalBaseElement>
         );
-    }
-
-    protected renderReactElement(): void {
-        if (this.status === 'opening' || this.status === 'opened') {
-            ReactDOM.render(this.createReactElement(), this.container);
-        } else {
-            throw new Error('Bad time react element render.');
-        }
     }
 }
 
