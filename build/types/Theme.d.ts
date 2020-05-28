@@ -28,5 +28,6 @@ declare type Theme = {
         [key: string]: HeadingFont;
     };
     transitions: Transitions;
+    defaultIconSize: string;
 };
 export default Theme;

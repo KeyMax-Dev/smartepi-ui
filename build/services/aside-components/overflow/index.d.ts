@@ -9,10 +9,11 @@ declare class OverflowController extends AsideController {
     private parent;
     private clickListener;
     private updateContainerListener;
+    private hoverLeaveListener;
     constructor(content: JSX.Element, options?: Partial<OverflowConfig>);
     setParent(newParent: HTMLElement): void;
     getParent(): HTMLElement | null;
-    open(parent?: HTMLElement): void;
+    open(parent?: HTMLElement, isHover?: boolean): void;
     close(): void;
     protected createReactElement(): JSX.Element;
     private updateContainer;

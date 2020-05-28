@@ -45,6 +45,7 @@ const DefaultTheme = {
         danger: { principal: '#D40000', contrast: '#FFFFFF' },
         success: { principal: '#00D415', contrast: '#FFFFFF' }
     },
+    defaultIconSize: '40px',
     transitions: {
         avarage: '0.3s ease-in-out',
         fast: '0.1s ease-in-out',
@@ -192,8 +193,8 @@ const Spinners = {
 };
 
 const IconElement = styled.div `
-    width: ${(props) => props.width ? props.width : '100%'};
-    height: ${(props) => props.height ? props.height : '100%'};
+    width: ${(props) => props.width ? props.width : getGlobalTheme().defaultIconSize};
+    height: ${(props) => props.height ? props.height : getGlobalTheme().defaultIconSize};
 
     display: flex;
     justify-content: center;
@@ -205,7 +206,7 @@ const IconElement = styled.div `
     }
 
     path {
-        fill: ${(props) => props.color ? DefaultTheme.colors[props.color][props.invert ? 'contrast' : 'principal'] : DefaultTheme.colors['primary'][props.invert ? 'contrast' : 'principal']};
+        fill: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
     }
 `;
 
@@ -304,13 +305,23 @@ class AsideController {
         var _a;
         this.status = 'opening';
         this.createContainer();
-        this.renderReactElement();
-        (_a = document.getElementsByTagName('body')[0]) === null || _a === void 0 ? void 0 : _a.appendChild(this.container);
+        try {
+            this.renderReactElement();
+            (_a = document.getElementsByTagName('body')[0]) === null || _a === void 0 ? void 0 : _a.appendChild(this.container);
+        }
+        catch (e) {
+            console.warn(`${this.config.id} append failed`, e);
+        }
     }
     removeNode() {
         var _a;
-        ReactDOM.unmountComponentAtNode(this.container);
-        (_a = document.getElementsByTagName('body')[0]) === null || _a === void 0 ? void 0 : _a.removeChild(this.container);
+        try {
+            ReactDOM.unmountComponentAtNode(this.container);
+            (_a = document.getElementsByTagName('body')[0]) === null || _a === void 0 ? void 0 : _a.removeChild(this.container);
+        }
+        catch (e) {
+            console.warn(`${this.config.id} remove failed`, e);
+        }
         this.status = 'closed';
     }
 }
@@ -329,9 +340,8 @@ class ModalController extends AsideController {
         this.injectProps({ controller: this });
     }
     open() {
-        if (this.status !== 'closed') {
-            throw new Error('Modal isn\'t closed!');
-        }
+        if (this.status !== 'closed')
+            return Promise.resolve();
         this.appendNode();
         if (this.config.preventScroll) {
             document.body.style.overflow = 'hidden';
@@ -351,9 +361,8 @@ class ModalController extends AsideController {
         });
     }
     close() {
-        if (this.status !== 'opened') {
-            throw new Error('Modal isn\'t open!');
-        }
+        if (this.status !== 'opened')
+            return Promise.resolve();
         this.status = 'closing';
         if (this.config.preventScroll) {
             document.body.style.overflow = 'auto';
@@ -382,14 +391,6 @@ class ModalController extends AsideController {
             React__default.createElement(framerMotion.motion.div, { className: "__container", animate: this.containerControls },
                 !this.config.disableCloseButton && React__default.createElement(ModalCloseButton, { onClick: () => this.close(), width: "30px", height: "30px", name: "close" }),
                 this.content)));
-    }
-    renderReactElement() {
-        if (this.status === 'opening' || this.status === 'opened') {
-            ReactDOM.render(this.createReactElement(), this.container);
-        }
-        else {
-            throw new Error('Bad time react element render.');
-        }
     }
 }
 function useModal(content, options) {
@@ -560,6 +561,11 @@ class OverflowController extends AsideController {
             }
         };
         this.updateContainerListener = () => this.updateContainer();
+        this.hoverLeaveListener = () => {
+            var _a;
+            this.close();
+            (_a = this.container) === null || _a === void 0 ? void 0 : _a.removeEventListener('mouseleave', this.hoverLeaveListener);
+        };
         this.config = Object.assign({}, DEFAULT_CONFIG$1, options);
     }
     setParent(newParent) {
@@ -568,7 +574,8 @@ class OverflowController extends AsideController {
     getParent() {
         return this.parent;
     }
-    open(parent) {
+    open(parent, isHover) {
+        var _a;
         this.appendNode();
         this.updateContainer(parent);
         this.addListeners();
@@ -576,10 +583,15 @@ class OverflowController extends AsideController {
             opacity: [0, 1],
             transition: { duration: .2 }
         });
+        if (isHover)
+            (_a = this.container) === null || _a === void 0 ? void 0 : _a.addEventListener('mouseleave', this.hoverLeaveListener);
     }
     close() {
         this.removeListeners();
-        this.removeNode();
+        this.containerControls.start({
+            opacity: [1, 0],
+            transition: { duration: .2 }
+        }).then(() => this.removeNode());
     }
     createReactElement() {
         return (React__default.createElement(OverflowElement, { className: `__${this.config.position}`, animate: this.containerControls }, this.content));
@@ -622,27 +634,37 @@ function useOverflow(content, options) {
 const IconButton = styled(framerMotion.motion.button) `
     all: unset;
     background: transparent;
+    padding: 5px;
     min-height: 40px;
     min-width: 40px;
+    border-radius: ${() => getGlobalTheme().borderRadius};
     margin: 3px;
-    filter: drop-shadow(${() => getGlobalTheme().boxShadow.normal});
     transition: all ${() => getGlobalTheme().transitions.fast};
     cursor: pointer;
 
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     position: relative;
 
     &:active {
-        filter: drop-shadow(${() => getGlobalTheme().boxShadow.active});
         transform: scale(0.96);
     }
 
     span {
-        max-width: 300px;
-        flex: 1;
+        max-width: 80px;
         text-align: center;
+        color: ${(props) => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
+        font-size: calc(${() => getGlobalTheme().font.h2.fontSize} / 2);
+        font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .__icon {
+        flex: 1;
+        margin: 5px;
     }
 `;
 
@@ -706,15 +728,19 @@ const SolidButton = styled(framerMotion.motion.button) `
 function Button(props) {
     switch (props.styleType) {
         case 'icon':
-            return (React__default.createElement(IconButton, Object.assign({}, props), props.icon && React__default.createElement(Icon, { name: props.icon, color: props.color, invert: false, height: "40px", width: "40px" })));
+            if (!!!props.icon)
+                throw new Error('Square button icon not provided');
+            return (React__default.createElement(IconButton, Object.assign({}, props),
+                React__default.createElement(Icon, { name: props.icon, color: props.color, invert: false, height: props.iconSize, width: props.iconSize, className: "__icon" }),
+                props.text && React__default.createElement("span", null, props.text)));
         case 'outline':
             return (React__default.createElement(OutlineButton, Object.assign({}, props),
-                props.icon && React__default.createElement(Icon, { name: props.icon, color: props.color, invert: false, height: "40px", width: "40px", style: { marginRight: '15px' } }),
+                props.icon && React__default.createElement(Icon, { name: props.icon, color: props.color, invert: false, height: props.iconSize, width: props.iconSize, style: { marginRight: '15px' } }),
                 props.text && React__default.createElement("span", null, props.text)));
         case 'solid':
         default:
             return (React__default.createElement(SolidButton, Object.assign({}, props),
-                props.icon && React__default.createElement(Icon, { name: props.icon, color: props.color, invert: true, height: "40px", width: "40px", style: { marginRight: '15px' } }),
+                props.icon && React__default.createElement(Icon, { name: props.icon, color: props.color, invert: true, height: props.iconSize, width: props.iconSize, style: { marginRight: '15px' } }),
                 props.text && React__default.createElement("span", null, props.text)));
     }
 }

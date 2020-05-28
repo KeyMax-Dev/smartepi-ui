@@ -14,7 +14,6 @@ declare class ModalController extends AsideController {
     setDisabledBackdrop(value: boolean): void;
     setDisabledCloseButto(value: boolean): void;
     protected createReactElement(): JSX.Element;
-    protected renderReactElement(): void;
 }
 export default function useModal(content: JSX.Element, options?: Partial<ModalConfig>): ModalController;
 export {};
