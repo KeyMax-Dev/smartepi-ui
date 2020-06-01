@@ -5,6 +5,7 @@ import { getGlobalTheme } from '../../assets/themes';
 export const IconElement = styled.div<IconProps>`
     width: ${(props): string => props.width ? props.width : getGlobalTheme().defaultIconSize};
     height: ${(props): string => props.height ? props.height : getGlobalTheme().defaultIconSize};
+    flex-shrink: 0;
 
     display: flex;
     justify-content: center;

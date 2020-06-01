@@ -1,4 +1,4 @@
-import { Icon, Button, getGlobalTheme, ImageAvatar } from './lib';
+import { Icon, Button, getGlobalTheme, ImageAvatar, Input } from './lib';
 import DefaultTheme from './lib/assets/themes/default-theme';
 import Icons from './lib/assets/svgs/icons';
 import React, { useState, ReactText } from 'react';
@@ -119,6 +119,16 @@ export default function ComponentsLibrary(): JSX.Element {
                 <ImageAvatar src="https://scontent-gru2-2.cdninstagram.com/v/t51.2885-19/s150x150/91163646_644726092755428_8399382294829203456_n.jpg?_nc_ht=scontent-gru2-2.cdninstagram.com&_nc_ohc=v-UM5fHBt7cAX_24GWk&oh=220aed5de09e8c111dc2e47cd4ad07fe&oe=5EFB8806" />
                 <ImageAvatar size="100px" src="https://scontent-gru2-2.cdninstagram.com/v/t51.2885-19/s150x150/91163646_644726092755428_8399382294829203456_n.jpg?_nc_ht=scontent-gru2-2.cdninstagram.com&_nc_ohc=v-UM5fHBt7cAX_24GWk&oh=220aed5de09e8c111dc2e47cd4ad07fe&oe=5EFB8806" />
                 <ImageAvatar size="200px" src="https://scontent-gru2-2.cdninstagram.com/v/t51.2885-19/s150x150/91163646_644726092755428_8399382294829203456_n.jpg?_nc_ht=scontent-gru2-2.cdninstagram.com&_nc_ohc=v-UM5fHBt7cAX_24GWk&oh=220aed5de09e8c111dc2e47cd4ad07fe&oe=5EFB8806" />
+            </ComponentExpandable>
+            <ComponentExpandable componentName="Inputs">
+                <Input />
+                <Input iconRight="account" />
+                <Input enableClear />
+                <Input enableClear iconLeft="account"/>
+                <Input enableClear iconLeft="account" iconRight="account" />
+                <Input containerType="outline" />
+                <Input containerType="outline" enableClear />
+                <Input containerType="outline" enableClear iconRight="account" iconLeft="account"/>
             </ComponentExpandable>
         </PageBody>
     );

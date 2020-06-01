@@ -8,8 +8,6 @@ const IconButton = styled(motion.button) <ButtonProps>`
     all: unset;
     background: transparent;
     padding: 5px;
-    min-height: 40px;
-    min-width: 40px;
     border-radius: ${() => getGlobalTheme().borderRadius};
     margin: 3px;
     transition: all ${() => getGlobalTheme().transitions.fast};

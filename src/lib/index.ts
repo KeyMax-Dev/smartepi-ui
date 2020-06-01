@@ -15,6 +15,7 @@ import Spinners from './assets/svgs/spinners';
 import Button from './components/Button';
 import Icon from './components/Icon';
 import ImageAvatar from './components/ImageAvatar';
+import Input from './components/Input/index';
 
 // Services
 import useModal from './services/aside-components/modal';
@@ -36,7 +37,8 @@ export {
 export {
     Icon,
     Button,
-    ImageAvatar
+    ImageAvatar,
+    Input
 };
 
 export {

@@ -195,6 +195,7 @@ const Spinners = {
 const IconElement = styled.div `
     width: ${(props) => props.width ? props.width : getGlobalTheme().defaultIconSize};
     height: ${(props) => props.height ? props.height : getGlobalTheme().defaultIconSize};
+    flex-shrink: 0;
 
     display: flex;
     justify-content: center;
@@ -231,6 +232,86 @@ const ImageAvatarElement = styled.div `
 
 function ImageAvatar(props) {
     return (React__default.createElement(ImageAvatarElement, Object.assign({}, props)));
+}
+
+const InputContainerElement = styled(framerMotion.motion.div) `
+    min-width: 260px;
+    height: 50px;
+    padding: 5px;
+    margin: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    transition: all ${() => getGlobalTheme().transitions.fast};
+    
+    background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].contrast};
+
+    &&.__input-container-outline {
+        border: 1px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal}32;
+        border-radius: ${() => getGlobalTheme().borderRadius};
+
+            
+        &:focus-within {
+            box-shadow: ${() => getGlobalTheme().boxShadow.active};
+            border: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal};
+        }
+    }
+
+    &&.__input-container-downline {
+        border-bottom: 1px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal}32;
+
+        &:focus-within {
+            border-bottom: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal};
+        }
+    }
+
+    @media screen and (max-width: 600px) {   
+        width: calc(100% - 30px)
+    }
+`;
+const InputElement = styled(framerMotion.motion.input) `
+    color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal};
+    background-color: transparent;
+    flex: 1;
+    flex-shrink: 1;
+    border: none;
+    outline: none;
+    font-size: ${() => getGlobalTheme().font.input.fontSize};
+    font-weight: ${() => getGlobalTheme().font.input.fontWeight};
+    text-align: ${() => getGlobalTheme().font.input.textAlign};
+    font-family: ${() => getGlobalTheme().font.input.fontFamily};
+    margin: 0 10px;
+    
+    &::placeholder {
+        transition: all ${() => getGlobalTheme().transitions.avarage};
+    }
+    &:focus {
+        &::placeholder {
+            color: transparent;
+        }
+    }
+
+    @media screen and (max-width: 600px) {   
+        margin: 0 3px;
+        min-width: 130px;
+    }
+`;
+
+const DEFAULT_TYPE = 'downline';
+function Input(props) {
+    const containerType = props.containerType ? props.containerType : DEFAULT_TYPE;
+    const inputRef = React__default.createRef();
+    const clear = () => {
+        if (inputRef.current) {
+            const element = inputRef.current;
+            element.value = '';
+        }
+    };
+    return (React__default.createElement(InputContainerElement, Object.assign({}, props.containerProps, { color: props.color, className: `__input-container-${containerType}` }),
+        props.iconLeft && React__default.createElement(Icon, { color: props.color, name: props.iconLeft }),
+        React__default.createElement(InputElement, Object.assign({}, props, { ref: inputRef })),
+        props.enableClear && React__default.createElement(Button, { styleType: "icon", icon: "close", onClick: clear, iconSize: "20px", style: { margin: 0, padding: 0 } }),
+        props.iconRight && React__default.createElement(Icon, { color: props.color, name: props.iconRight })));
 }
 
 const ModalBaseElement = styled.div `
@@ -654,8 +735,6 @@ const IconButton = styled(framerMotion.motion.button) `
     all: unset;
     background: transparent;
     padding: 5px;
-    min-height: 40px;
-    min-width: 40px;
     border-radius: ${() => getGlobalTheme().borderRadius};
     margin: 3px;
     transition: all ${() => getGlobalTheme().transitions.fast};
@@ -769,6 +848,7 @@ exports.DefaultTheme = DefaultTheme;
 exports.Icon = Icon;
 exports.Icons = Icons;
 exports.ImageAvatar = ImageAvatar;
+exports.Input = Input;
 exports.Spinners = Spinners;
 exports.getGlobalTheme = getGlobalTheme;
 exports.setGlobalTheme = setGlobalTheme;
