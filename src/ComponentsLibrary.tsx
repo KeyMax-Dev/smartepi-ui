@@ -1,7 +1,6 @@
-import { Icon, Button, getGlobalTheme, ImageAvatar, Input } from './lib';
-import DefaultTheme from './lib/assets/themes/default-theme';
+import { Icon, Button, getGlobalTheme, ImageAvatar, Input, setGlobalTheme, LightTheme, DarkTheme } from './lib';
 import Icons from './lib/assets/svgs/icons';
-import React, { useState, ReactText } from 'react';
+import React, { useState, ReactText, useEffect } from 'react';
 import styled from 'styled-components';
 import useModal from './lib/services/aside-components/modal/index';
 import useOverflow from './lib/services/aside-components/overflow/index';
@@ -17,11 +16,14 @@ const PageBody = styled.div`
     flex-direction: column;
     align-items: center;
     width: 100%;
+    background-color: ${() => getGlobalTheme().colors.primary.contrast};
+    transition: all ${() => getGlobalTheme().transitions.avarage};
 
     h1 {
         text-align: center;
         font-size: ${() => getGlobalTheme().font.h1.fontSize};
         font-weight: ${() => getGlobalTheme().font.h1.fontWeight};
+        color: ${() => getGlobalTheme().colors.primary.principal};
     }
 `;
 
@@ -41,13 +43,13 @@ const ComponentsContainer = styled.div`
     align-items: center;
     padding: 15px;
     margin: 5px;
-    border: 1px solid #00000010;
+    border: 1px solid ${() => getGlobalTheme().colors.primary.principal}32;
     width: 1024px;
     @media screen and (max-width: 1024px) {   
         width: calc(100% - 20px)
     }
     flex-wrap: wrap;
-    border-radius: ${DefaultTheme.borderRadius};
+    border-radius: ${() => getGlobalTheme().borderRadius};
     
     .__icon-container {
         display: flex;
@@ -60,6 +62,12 @@ const ComponentsContainer = styled.div`
 `;
 
 export default function ComponentsLibrary(): JSX.Element {
+
+    const [theme, _setTheme] = useState(LightTheme);
+    const setTheme = (theme) => {
+        setGlobalTheme(theme);
+        _setTheme(theme);
+    };
 
     const [showComponent, _setShowComponent] = useState<{ [componentName: string]: boolean }>({});
     const setShowComponent = (componentName: string) => {
@@ -91,6 +99,7 @@ export default function ComponentsLibrary(): JSX.Element {
     return (
         <PageBody>
             <h1>SmartEPI UI - Components Library</h1>
+            <Button styleType="icon" icon={theme === LightTheme ? 'sun' : 'moon'} onClick={() => theme === LightTheme ? setTheme(DarkTheme) : setTheme(LightTheme)} />
             <ComponentExpandable componentName="Icons">
                 {Object.keys(Icons).map(icon => (
                     <div key={icon} className="__icon-container">
@@ -101,10 +110,14 @@ export default function ComponentsLibrary(): JSX.Element {
             </ComponentExpandable>
             <ComponentExpandable componentName="Buttons">
                 <Button styleType="solid" text="Solid" />
+                <Button styleType="solid" text="Solid Secondary" color="secondary" />
+                <Button styleType="solid" text="Solid Danger" color="danger" />
                 <Button styleType="solid" text="Solid with Icon" icon="account" />
                 <Button styleType="solid" text="Solid with Icon with iconSize" icon="account" iconSize="80px" />
+                <Button styleType="outline" text="Outline" />
+                <Button styleType="outline" text="Outline Secondary" color="secondary" />
+                <Button styleType="outline" text="Outline Danger" color="danger" />
                 <Button styleType="outline" text="Outline with Icon" icon="account" />
-                <Button styleType="outline" text="outline" />
                 <Button styleType="icon" icon="cog" onMouseEnter={(event) => overflow.open(event.target as HTMLElement, true)} />
                 <Button styleType="icon" icon="cog" text="Configurations" />
                 <Button styleType="icon" icon="cog" text="Configurations With iconSize" iconSize="20px" />

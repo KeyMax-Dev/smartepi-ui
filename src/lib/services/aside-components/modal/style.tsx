@@ -19,7 +19,7 @@ export const ModalBaseElement = styled.div`
         height: 100%;
         left: 0px;
         top: 0px;
-        background-color: rgba(0, 0, 0, .3);
+        background-color: ${() => getGlobalTheme().colors.primary.principal}4D;
         opacity: 0;
     }
 
@@ -30,7 +30,7 @@ export const ModalBaseElement = styled.div`
         align-items: center;
         position: relative;
         padding: 30px;
-        background-color: ${() => getGlobalTheme().colors.secondary.principal};
+        background-color: ${() => getGlobalTheme().colors.primary.contrast};
         border-radius: calc(${() => getGlobalTheme().borderRadius} * 2);
         box-shadow: ${() => getGlobalTheme().boxShadow.normal};
         opacity: 0;

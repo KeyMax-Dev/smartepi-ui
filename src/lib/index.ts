@@ -2,7 +2,8 @@ import './index.css';
 
 // Themes
 import { 
-    DefaultTheme,
+    LightTheme,
+    DarkTheme,
     setGlobalTheme,
     getGlobalTheme
 } from './assets/themes';
@@ -23,8 +24,9 @@ import useToast from './services/aside-components/toast';
 import useOverflow from './services/aside-components/overflow';
 
 
-export { 
-    DefaultTheme,
+export {
+    DarkTheme,
+    LightTheme,
     setGlobalTheme,
     getGlobalTheme
 };

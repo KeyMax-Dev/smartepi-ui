@@ -1,9 +1,9 @@
 import Theme from '../../types/Theme';
 
-const DefaultTheme: Theme = {
+const LightTheme: Theme = {
     colors: {
         primary: {principal: '#000000', contrast: '#FFFFFF'},
-        secondary: {principal: '#FFFFFF', contrast: '#000000'},
+        secondary: {principal: '#BB86FC', contrast: '#6200EE'},
         danger: {principal: '#D40000', contrast: '#FFFFFF'},
         success: {principal: '#00D415', contrast: '#FFFFFF'}
     },
@@ -46,4 +46,4 @@ const DefaultTheme: Theme = {
     }
 };
 
-export default DefaultTheme;
+export default LightTheme;
