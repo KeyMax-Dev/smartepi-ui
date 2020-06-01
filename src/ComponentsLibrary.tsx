@@ -82,10 +82,10 @@ export default function ComponentsLibrary(): JSX.Element {
         return (
             <ComponentExpandableContainer>
                 {showComponent[props.componentName] &&
-                    <Button styleType="outline" onClick={() => setShowComponent(props.componentName)} text={`Hide ${props.componentName}`} />
+                    <Button buttonType="outline" onClick={() => setShowComponent(props.componentName)} text={`Hide ${props.componentName}`} />
                 }
                 {!showComponent[props.componentName] &&
-                    <Button styleType="solid" onClick={() => setShowComponent(props.componentName)} text={`Show ${props.componentName}`} />
+                    <Button buttonType="solid" onClick={() => setShowComponent(props.componentName)} text={`Show ${props.componentName}`} />
                 }
                 {showComponent[props.componentName] &&
                     <ComponentsContainer>
@@ -99,7 +99,7 @@ export default function ComponentsLibrary(): JSX.Element {
     return (
         <PageBody>
             <h1>SmartEPI UI - Components Library</h1>
-            <Button styleType="icon" icon={theme === LightTheme ? 'sun' : 'moon'} onClick={() => theme === LightTheme ? setTheme(DarkTheme) : setTheme(LightTheme)} />
+            <Button buttonType="icon" icon={theme === LightTheme ? 'sun' : 'moon'} onClick={() => theme === LightTheme ? setTheme(DarkTheme) : setTheme(LightTheme)} />
             <ComponentExpandable componentName="Icons">
                 {Object.keys(Icons).map(icon => (
                     <div key={icon} className="__icon-container">
@@ -109,18 +109,18 @@ export default function ComponentsLibrary(): JSX.Element {
                 ))}
             </ComponentExpandable>
             <ComponentExpandable componentName="Buttons">
-                <Button styleType="solid" text="Solid" />
-                <Button styleType="solid" text="Solid Secondary" color="secondary" />
-                <Button styleType="solid" text="Solid Danger" color="danger" />
-                <Button styleType="solid" text="Solid with Icon" icon="account" />
-                <Button styleType="solid" text="Solid with Icon with iconSize" icon="account" iconSize="80px" />
-                <Button styleType="outline" text="Outline" />
-                <Button styleType="outline" text="Outline Secondary" color="secondary" />
-                <Button styleType="outline" text="Outline Danger" color="danger" />
-                <Button styleType="outline" text="Outline with Icon" icon="account" />
-                <Button styleType="icon" icon="cog" onMouseEnter={(event) => overflow.open(event.target as HTMLElement, true)} />
-                <Button styleType="icon" icon="cog" text="Configurations" />
-                <Button styleType="icon" icon="cog" text="Configurations With iconSize" iconSize="20px" />
+                <Button buttonType="solid" text="Solid" />
+                <Button buttonType="solid" text="Solid Secondary" color="secondary" />
+                <Button buttonType="solid" text="Solid Danger" color="danger" />
+                <Button buttonType="solid" text="Solid with Icon" icon="account" />
+                <Button buttonType="solid" text="Solid with Icon with iconSize" icon="account" iconSize="80px" />
+                <Button buttonType="outline" text="Outline" />
+                <Button buttonType="outline" text="Outline Secondary" color="secondary" />
+                <Button buttonType="outline" text="Outline Danger" color="danger" />
+                <Button buttonType="outline" text="Outline with Icon" icon="account" />
+                <Button buttonType="icon" icon="cog" onMouseEnter={(event) => overflow.open(event.target as HTMLElement, true)} />
+                <Button buttonType="icon" icon="cog" text="Configurations" />
+                <Button buttonType="icon" icon="cog" text="Configurations With iconSize" iconSize="20px" />
             </ComponentExpandable>
             <ComponentExpandable componentName="Services">
                 <Button text="Modal" onClick={() => modal.open()} />

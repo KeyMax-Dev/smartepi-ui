@@ -1,9 +1,8 @@
 import { HTMLMotionProps } from 'framer-motion';
 import Icon from '../Icon';
 import IconButton from './IconButton';
-import OutlineButton from './OutlineButton';
 import React from 'react';
-import SolidButton from './SolidButton';
+import BaseButton from './BaseButton';
 
 type ButtonTypes = 'solid' | 'outline' | 'icon' | 'square';
 
@@ -11,12 +10,15 @@ export interface ButtonProps extends HTMLMotionProps<'button'> {
     color?: string;
     icon?: string;
     iconSize?: string;
-    styleType?: ButtonTypes;
+    buttonType?: ButtonTypes;
     text?: string;
 }
 
 export default function Button(props: ButtonProps): JSX.Element {
-    switch (props.styleType) {
+
+    const buttonType: ButtonTypes = props.buttonType ? props.buttonType : 'solid';
+
+    switch (buttonType) {
         case 'icon':
             if (!!!props.icon) throw new Error('Square button icon not provided');
             return (
@@ -26,19 +28,13 @@ export default function Button(props: ButtonProps): JSX.Element {
                 </IconButton>
             );
         case 'outline':
-            return (
-                <OutlineButton {...props}>
-                    {props.icon && <Icon name={props.icon} color={props.color} invert={false} height={props.iconSize} width={props.iconSize} style={{ marginRight: '15px' }} />}
-                    {props.text && <span>{props.text}</span>}
-                </OutlineButton>
-            );
         case 'solid':
         default:
             return (
-                <SolidButton {...props}>
-                    {props.icon && <Icon name={props.icon} color={props.color} invert={true} height={props.iconSize} width={props.iconSize} style={{ marginRight: '15px' }} />}
+                <BaseButton {...props} className={`__button-${buttonType}`}>
+                    {props.icon && <Icon name={props.icon} color={props.color} invert={buttonType === 'solid'} height={props.iconSize} width={props.iconSize} style={{ marginRight: '15px' }} />}
                     {props.text && <span>{props.text}</span>}
-                </SolidButton>
+                </BaseButton>
             );
     }
 }

@@ -38,10 +38,10 @@ function styleInject(css, ref) {
 var css_248z = "@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_300.ttf\") format(\"truetype\");\r\n  font-weight: 300;\r\n  font-style: normal;\r\n}\r\n\r\n@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_400.ttf\") format(\"truetype\");\r\n  font-weight: 400;\r\n  font-style: normal;\r\n}\r\n\r\n@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_500.ttf\") format(\"truetype\");\r\n  font-weight: 500;\r\n  font-style: normal;\r\n}\r\n\r\n@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_700.ttf\") format(\"truetype\");\r\n  font-weight: 700;\r\n  font-style: normal;\r\n}\r\n\r\n* {\r\n  box-sizing: border-box;\r\n}\r\n\r\nbody {\r\n  margin: 0;\r\n  font-family:  'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto';\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  background-color: #fff;\r\n}\r\n\r\n*::-webkit-scrollbar {\r\n  width: 6px;\r\n  height: 6px;\r\n}\r\n\r\n*::-webkit-scrollbar-track {\r\n  background-color: transparent;\r\n}\r\n\r\n*::-webkit-scrollbar-thumb {\r\n  background-color: #00000033;\r\n}\r\n\r\ncode {\r\n  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;\r\n}\r\n\r\na {\r\n  text-decoration: none;\r\n}";
 styleInject(css_248z);
 
-const DefaultTheme = {
+const LightTheme = {
     colors: {
         primary: { principal: '#000000', contrast: '#FFFFFF' },
-        secondary: { principal: '#FFFFFF', contrast: '#000000' },
+        secondary: { principal: '#BB86FC', contrast: '#6200EE' },
         danger: { principal: '#D40000', contrast: '#FFFFFF' },
         success: { principal: '#00D415', contrast: '#FFFFFF' }
     },
@@ -84,9 +84,59 @@ const DefaultTheme = {
     }
 };
 
-let GlobalTheme = DefaultTheme;
+const DarkTheme = {
+    colors: {
+        primary: { principal: '#424242', contrast: '#121212' },
+        secondary: { principal: '#6200EE', contrast: '#BB86FC' },
+        danger: { principal: '#D40000', contrast: '#FFFFFF' },
+        success: { principal: '#00D415', contrast: '#FFFFFF' }
+    },
+    defaultIconSize: '40px',
+    transitions: {
+        avarage: '0.3s ease-in-out',
+        fast: '0.1s ease-in-out',
+        slow: '0.7s ease-in-out'
+    },
+    borderRadius: '10px',
+    boxShadow: {
+        active: '0 1px 5px rgba(0,0,0,0.3)',
+        normal: '0 2px 10px rgba(0,0,0,0.3)'
+    },
+    font: {
+        h1: {
+            fontSize: '2rem',
+            fontWeight: 400,
+            lineHeight: '1.8rem',
+            textAlign: 'center'
+        },
+        h2: {
+            fontSize: '1.5rem',
+            fontWeight: 300,
+            lineHeight: '1.8rem',
+            textAlign: 'center'
+        },
+        input: {
+            fontSize: '1.2rem',
+            fontWeight: 300,
+            textAlign: 'left',
+            fontFamily: `-apple-system, BlinkMacSystemFont, 'Quicksand', 'Segoe UI', 'Roboto'`
+        },
+        p1: {
+            fontSize: '1.2rem',
+            fontWeight: 300,
+            lineHeight: '1.2rem',
+            textAlign: 'left'
+        }
+    }
+};
+
+let GlobalTheme = LightTheme;
 const setGlobalTheme = (theme) => {
     GlobalTheme = theme;
+    if (document) {
+        document.getElementsByTagName('body')[0].style.backgroundColor = GlobalTheme.colors.primary.contrast;
+        document.getElementsByTagName('body')[0].style.color = GlobalTheme.colors.primary.principal;
+    }
 };
 const getGlobalTheme = () => {
     return GlobalTheme;
@@ -138,8 +188,12 @@ const MapMarkerSVG = React__default.createElement("svg", { xmlns: "http://www.w3
     React__default.createElement("path", { d: "M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" }));
 const MinusSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M19,13H5V11H19V13Z" }));
+const MoonSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
+    React__default.createElement("path", { d: "M17.75,4.09L15.22,6.03L16.13,9.09L13.5,7.28L10.87,9.09L11.78,6.03L9.25,4.09L12.44,4L13.5,1L14.56,4L17.75,4.09M21.25,11L19.61,12.25L20.2,14.23L18.5,13.06L16.8,14.23L17.39,12.25L15.75,11L17.81,10.95L18.5,9L19.19,10.95L21.25,11M18.97,15.95C19.8,15.87 20.69,17.05 20.16,17.8C19.84,18.25 19.5,18.67 19.08,19.07C15.17,23 8.84,23 4.94,19.07C1.03,15.17 1.03,8.83 4.94,4.93C5.34,4.53 5.76,4.17 6.21,3.85C6.96,3.32 8.14,4.21 8.06,5.04C7.79,7.9 8.75,10.87 10.95,13.06C13.14,15.26 16.1,16.22 18.97,15.95M17.33,17.97C14.5,17.81 11.7,16.64 9.53,14.5C7.36,12.31 6.2,9.5 6.04,6.68C3.23,9.82 3.34,14.64 6.35,17.66C9.37,20.67 14.19,20.78 17.33,17.97Z" }));
 const PlusSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" }));
+const SunSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
+    React__default.createElement("path", { d: "M3.55,18.54L4.96,19.95L6.76,18.16L5.34,16.74M11,22.45C11.32,22.45 13,22.45 13,22.45V19.5H11M12,5.5A6,6 0 0,0 6,11.5A6,6 0 0,0 12,17.5A6,6 0 0,0 18,11.5C18,8.18 15.31,5.5 12,5.5M20,12.5H23V10.5H20M17.24,18.16L19.04,19.95L20.45,18.54L18.66,16.74M20.45,4.46L19.04,3.05L17.24,4.84L18.66,6.26M13,0.55H11V3.5H13M4,10.5H1V12.5H4M6.76,4.84L4.96,3.05L3.55,4.46L5.34,6.26L6.76,4.84Z" }));
 const TrashSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" }));
 const WarehouseSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
@@ -169,8 +223,10 @@ const Icons = {
     list: ListSVG,
     magnify: MagnifySVG,
     mapMarker: MapMarkerSVG,
+    moon: MoonSVG,
     minus: MinusSVG,
     plus: PlusSVG,
+    sun: SunSVG,
     trash: TrashSVG,
     warehouse: WarehouseSVG,
     worker: WorkerSVG
@@ -244,9 +300,9 @@ const InputContainerElement = styled(framerMotion.motion.div) `
     align-items: stretch;
     transition: all ${() => getGlobalTheme().transitions.fast};
     
-    background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].contrast};
-
+    
     &&.__input-container-outline {
+        background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].contrast};
         border: 1px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal}32;
         border-radius: ${() => getGlobalTheme().borderRadius};
 
@@ -258,6 +314,7 @@ const InputContainerElement = styled(framerMotion.motion.div) `
     }
 
     &&.__input-container-downline {
+        background-color: transparent;
         border-bottom: 1px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal}32;
 
         &:focus-within {
@@ -300,7 +357,7 @@ const InputElement = styled(framerMotion.motion.input) `
 const DEFAULT_TYPE = 'downline';
 function Input(props) {
     const containerType = props.containerType ? props.containerType : DEFAULT_TYPE;
-    const inputRef = React__default.createRef();
+    const inputRef = React.useRef();
     const clear = () => {
         if (inputRef.current) {
             const element = inputRef.current;
@@ -310,7 +367,7 @@ function Input(props) {
     return (React__default.createElement(InputContainerElement, Object.assign({}, props.containerProps, { color: props.color, className: `__input-container-${containerType}` }),
         props.iconLeft && React__default.createElement(Icon, { color: props.color, name: props.iconLeft }),
         React__default.createElement(InputElement, Object.assign({}, props, { ref: inputRef })),
-        props.enableClear && React__default.createElement(Button, { styleType: "icon", icon: "close", onClick: clear, iconSize: "20px", style: { margin: 0, padding: 0 } }),
+        props.enableClear && React__default.createElement(Button, { buttonType: "icon", icon: "close", onClick: clear, iconSize: "20px", style: { margin: 0, padding: 0 } }),
         props.iconRight && React__default.createElement(Icon, { color: props.color, name: props.iconRight })));
 }
 
@@ -331,7 +388,7 @@ const ModalBaseElement = styled.div `
         height: 100%;
         left: 0px;
         top: 0px;
-        background-color: rgba(0, 0, 0, .3);
+        background-color: ${() => getGlobalTheme().colors.primary.principal}4D;
         opacity: 0;
     }
 
@@ -342,7 +399,7 @@ const ModalBaseElement = styled.div `
         align-items: center;
         position: relative;
         padding: 30px;
-        background-color: ${() => getGlobalTheme().colors.secondary.principal};
+        background-color: ${() => getGlobalTheme().colors.primary.contrast};
         border-radius: calc(${() => getGlobalTheme().borderRadius} * 2);
         box-shadow: ${() => getGlobalTheme().boxShadow.normal};
         opacity: 0;
@@ -734,6 +791,8 @@ function useOverflow(content, options) {
 const IconButton = styled(framerMotion.motion.button) `
     all: unset;
     background: transparent;
+    color: ${(props) => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
+    -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
     padding: 5px;
     border-radius: ${() => getGlobalTheme().borderRadius};
     margin: 3px;
@@ -753,7 +812,6 @@ const IconButton = styled(framerMotion.motion.button) `
     span {
         max-width: 80px;
         text-align: center;
-        color: ${(props) => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
         font-size: calc(${() => getGlobalTheme().font.h2.fontSize} / 2);
         font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
         text-overflow: ellipsis;
@@ -766,11 +824,8 @@ const IconButton = styled(framerMotion.motion.button) `
     }
 `;
 
-const OutlineButton = styled(framerMotion.motion.button) `
+const BaseButton = styled(framerMotion.motion.button) `
     all: unset;
-    background: transparent;
-    color: ${(props) => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
-    border: 1px solid ${(props) => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
     padding: 10px 25px;
     min-height: 38px;
     border-radius: ${() => getGlobalTheme().borderRadius};
@@ -783,48 +838,47 @@ const OutlineButton = styled(framerMotion.motion.button) `
     justify-content: center;
     position: relative;
 
-    &:active {
-        background: ${(props) => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal}20;
+
+    &&.__button-outline {    
+        background: transparent;
+        color: ${(props) => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
+        -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
+        border: 1px solid ${(props) => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
+
+        &:active {
+            background: ${(props) => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal}20;
+        }
+
+        span {
+            max-width: 300px;
+            flex: 1;
+            text-align: center;
+        }
     }
 
-    span {
-        max-width: 300px;
-        flex: 1;
-        text-align: center;
-    }
-`;
+    &&.__button-solid {
+        background: ${(props) => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
+        -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color].contrast : getGlobalTheme().colors['primary'].contrast};
+        border: 1px solid transparent;
+        box-shadow: ${() => getGlobalTheme().boxShadow.normal};
 
-const SolidButton = styled(framerMotion.motion.button) `
-    all: unset;
-    background: ${(props) => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
-    padding: 10px 25px;
-    min-height: 40px;
-    border-radius: ${() => getGlobalTheme().borderRadius};
-    box-shadow: ${() => getGlobalTheme().boxShadow.normal};
-    margin: 3px;
-    transition: all ${() => getGlobalTheme().transitions.fast};
-    cursor: pointer;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-
-    &:active {
-        box-shadow: ${() => getGlobalTheme().boxShadow.active};
-        transform: scale(0.96);
-    }
-
-    span {
-        max-width: 300px;
-        flex: 1;
-        text-align: center;
-        color: ${(props) => props.color ? getGlobalTheme().colors[props.color].contrast : getGlobalTheme().colors['primary'].contrast};
+        &:active {
+            box-shadow: ${() => getGlobalTheme().boxShadow.active};
+            transform: scale(0.96);
+        }
+    
+        span {
+            max-width: 300px;
+            flex: 1;
+            text-align: center;
+            color: ${(props) => props.color ? getGlobalTheme().colors[props.color].contrast : getGlobalTheme().colors['primary'].contrast};
+        }
     }
 `;
 
 function Button(props) {
-    switch (props.styleType) {
+    const buttonType = props.buttonType ? props.buttonType : 'solid';
+    switch (buttonType) {
         case 'icon':
             if (!!!props.icon)
                 throw new Error('Square button icon not provided');
@@ -832,23 +886,21 @@ function Button(props) {
                 React__default.createElement(Icon, { name: props.icon, color: props.color, invert: false, height: props.iconSize, width: props.iconSize, className: "__icon" }),
                 props.text && React__default.createElement("span", null, props.text)));
         case 'outline':
-            return (React__default.createElement(OutlineButton, Object.assign({}, props),
-                props.icon && React__default.createElement(Icon, { name: props.icon, color: props.color, invert: false, height: props.iconSize, width: props.iconSize, style: { marginRight: '15px' } }),
-                props.text && React__default.createElement("span", null, props.text)));
         case 'solid':
         default:
-            return (React__default.createElement(SolidButton, Object.assign({}, props),
-                props.icon && React__default.createElement(Icon, { name: props.icon, color: props.color, invert: true, height: props.iconSize, width: props.iconSize, style: { marginRight: '15px' } }),
+            return (React__default.createElement(BaseButton, Object.assign({}, props, { className: `__button-${buttonType}` }),
+                props.icon && React__default.createElement(Icon, { name: props.icon, color: props.color, invert: buttonType === 'solid', height: props.iconSize, width: props.iconSize, style: { marginRight: '15px' } }),
                 props.text && React__default.createElement("span", null, props.text)));
     }
 }
 
 exports.Button = Button;
-exports.DefaultTheme = DefaultTheme;
+exports.DarkTheme = DarkTheme;
 exports.Icon = Icon;
 exports.Icons = Icons;
 exports.ImageAvatar = ImageAvatar;
 exports.Input = Input;
+exports.LightTheme = LightTheme;
 exports.Spinners = Spinners;
 exports.getGlobalTheme = getGlobalTheme;
 exports.setGlobalTheme = setGlobalTheme;

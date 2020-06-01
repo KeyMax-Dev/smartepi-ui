@@ -19,7 +19,7 @@ export interface InputProps extends HTMLMotionProps<'input'> {
 export default function Input(props: InputProps): JSX.Element {
 
     const containerType: ContainerType = props.containerType ? props.containerType : DEFAULT_TYPE;
-    const inputRef = React.createRef<HTMLInputElement>();
+    const inputRef = useRef<HTMLInputElement>();
 
     const clear = () => {
         if (inputRef.current) {
@@ -31,8 +31,8 @@ export default function Input(props: InputProps): JSX.Element {
     return (
         <InputContainerElement {...props.containerProps} color={props.color} className={`__input-container-${containerType}`}>
             {props.iconLeft && <Icon color={props.color} name={props.iconLeft} />}
-            <InputElement {...props} ref={inputRef} />
-            {props.enableClear && <Button styleType="icon" icon="close" onClick={clear} iconSize="20px" style={{ margin: 0, padding: 0 }} />}
+            <InputElement {...props} ref={inputRef as React.MutableRefObject<HTMLInputElement>} />
+            {props.enableClear && <Button buttonType="icon" icon="close" onClick={clear} iconSize="20px" style={{ margin: 0, padding: 0 }} />}
             {props.iconRight && <Icon color={props.color} name={props.iconRight} />}
         </InputContainerElement>
     );

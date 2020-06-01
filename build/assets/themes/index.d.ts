@@ -1,6 +1,7 @@
 import Theme from './../../types/Theme';
-import DefaultTheme from './default-theme';
+import LightTheme from './light-theme';
+import DarkTheme from './dark-theme';
 declare const setGlobalTheme: (theme: Theme) => void;
 declare const getGlobalTheme: () => Theme;
-export { DefaultTheme };
+export { LightTheme, DarkTheme };
 export { setGlobalTheme, getGlobalTheme };

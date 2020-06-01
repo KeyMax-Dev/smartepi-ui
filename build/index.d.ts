@@ -1,5 +1,5 @@
 import './index.css';
-import { DefaultTheme, setGlobalTheme, getGlobalTheme } from './assets/themes';
+import { LightTheme, DarkTheme, setGlobalTheme, getGlobalTheme } from './assets/themes';
 import Icons from './assets/svgs/icons';
 import Spinners from './assets/svgs/spinners';
 import Button from './components/Button';
@@ -9,7 +9,7 @@ import Input from './components/Input/index';
 import useModal from './services/aside-components/modal';
 import useToast from './services/aside-components/toast';
 import useOverflow from './services/aside-components/overflow';
-export { DefaultTheme, setGlobalTheme, getGlobalTheme };
+export { DarkTheme, LightTheme, setGlobalTheme, getGlobalTheme };
 export { Icons, Spinners };
 export { Icon, Button, ImageAvatar, Input };
 export { useModal, useOverflow, useToast };

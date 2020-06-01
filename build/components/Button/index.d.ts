@@ -5,7 +5,7 @@ export interface ButtonProps extends HTMLMotionProps<'button'> {
     color?: string;
     icon?: string;
     iconSize?: string;
-    styleType?: ButtonTypes;
+    buttonType?: ButtonTypes;
     text?: string;
 }
 export default function Button(props: ButtonProps): JSX.Element;
