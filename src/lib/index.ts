@@ -16,7 +16,8 @@ import Spinners from './assets/svgs/spinners';
 import Button from './components/Button';
 import Icon from './components/Icon';
 import ImageAvatar from './components/ImageAvatar';
-import Input from './components/Input/index';
+import Input from './components/Input';
+import Checkbox from './components/Checkbox';
 
 // Services
 import useModal from './services/aside-components/modal';
@@ -40,7 +41,8 @@ export {
     Icon,
     Button,
     ImageAvatar,
-    Input
+    Input,
+    Checkbox
 };
 
 export {

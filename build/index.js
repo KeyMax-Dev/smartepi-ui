@@ -248,7 +248,7 @@ const Spinners = {
     circles: CirclesSVG
 };
 
-const IconElement = styled.div `
+const IconElement = styled(framerMotion.motion.div) `
     width: ${(props) => props.width ? props.width : getGlobalTheme().defaultIconSize};
     height: ${(props) => props.height ? props.height : getGlobalTheme().defaultIconSize};
     flex-shrink: 0;
@@ -369,6 +369,70 @@ function Input(props) {
         React__default.createElement(InputElement, Object.assign({}, props, { ref: inputRef })),
         props.enableClear && React__default.createElement(Button, { buttonType: "icon", icon: "close", onClick: clear, iconSize: "20px", style: { margin: 0, padding: 0 } }),
         props.iconRight && React__default.createElement(Icon, { color: props.color, name: props.iconRight })));
+}
+
+const CheckboxElement = styled(framerMotion.motion.div) `
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transition: all ${() => getGlobalTheme().transitions.avarage};
+    border: 2px solid transparent;
+    margin: 3px;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &&.__checkbox-true {
+        border-color: transparent;
+        background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal};
+
+        &:hover {
+            background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal}B3;
+        }
+    }
+
+    &&.__checkbox-false {
+        border-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal}32;
+
+        &:hover {
+            background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal}32;
+        }
+    }
+
+    label {
+        margin: 3px;
+        color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal};
+    }
+`;
+
+const FadeOut = {
+    opacity: [1, 0],
+    scale: [1, 0.5],
+    transition: { duration: .3, ease: 'backIn' }
+};
+const FadeIn = {
+    opacity: [0, 1],
+    scale: [0.5, 1],
+    transition: { duration: .3, ease: 'backOut' }
+};
+
+function Checkbox(props) {
+    const size = props.size ? props.size : getGlobalTheme().defaultIconSize;
+    const [value, setValue] = React.useState(!!props.value);
+    const animationController = framerMotion.useAnimation();
+    const iconName = props.iconName ? props.iconName : 'check';
+    const toggle = () => {
+        animationController.stop();
+        setValue(!value);
+        if (props.onToggle) {
+            props.onToggle(!value);
+        }
+        animationController.start(value ? FadeOut : FadeIn);
+    };
+    return (React__default.createElement(CheckboxElement, { className: `__checkbox-${value}`, style: { width: size, height: size }, onClick: toggle, color: props.color },
+        React__default.createElement(Icon, { initial: { opacity: value ? 1 : 0 }, name: iconName, invert: value, width: `calc(${size} - 30%)`, height: `calc(${size} - 30%)`, color: props.color, animate: animationController })));
 }
 
 const ModalBaseElement = styled.div `
@@ -895,6 +959,7 @@ function Button(props) {
 }
 
 exports.Button = Button;
+exports.Checkbox = Checkbox;
 exports.DarkTheme = DarkTheme;
 exports.Icon = Icon;
 exports.Icons = Icons;

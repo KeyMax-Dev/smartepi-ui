@@ -1,4 +1,4 @@
-import { Icon, Button, getGlobalTheme, ImageAvatar, Input, setGlobalTheme, LightTheme, DarkTheme } from './lib';
+import { Icon, Button, getGlobalTheme, ImageAvatar, Input, setGlobalTheme, LightTheme, DarkTheme, Checkbox } from './lib';
 import Icons from './lib/assets/svgs/icons';
 import React, { useState, ReactText, useEffect } from 'react';
 import styled from 'styled-components';
@@ -142,6 +142,13 @@ export default function ComponentsLibrary(): JSX.Element {
                 <Input containerType="outline" />
                 <Input containerType="outline" enableClear />
                 <Input containerType="outline" enableClear iconRight="account" iconLeft="account"/>
+            </ComponentExpandable>
+            <ComponentExpandable componentName="Checkboxes">
+                <Checkbox onToggle={(value) => console.log(value)} value={true} size="20px" />
+                <Checkbox onToggle={(value) => console.log(value)} />
+                <Checkbox onToggle={(value) => console.log(value)} size="60px" color="success" />
+                <Checkbox onToggle={(value) => console.log(value)} value={true} size="80px" />
+                <Checkbox onToggle={(value) => console.log(value)} value={true} size="80px" iconName="close" color="danger"/>
             </ComponentExpandable>
         </PageBody>
     );

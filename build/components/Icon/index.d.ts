@@ -1,5 +1,6 @@
-import React from 'react';
-export interface IconProps extends React.HTMLAttributes<HTMLDivElement> {
+/// <reference types="react" />
+import { HTMLMotionProps } from 'framer-motion';
+export interface IconProps extends HTMLMotionProps<'div'> {
     name: string;
     color?: string;
     invert?: boolean;

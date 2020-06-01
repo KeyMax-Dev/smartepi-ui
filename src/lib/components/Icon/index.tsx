@@ -1,8 +1,9 @@
 import React from 'react';
 import { IconElement } from './style';
 import Icons from './../../assets/svgs/icons';
+import { HTMLMotionProps } from 'framer-motion';
 
-export interface IconProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface IconProps extends HTMLMotionProps<'div'> {
     name: string;
     color?: string;
     invert?: boolean;
