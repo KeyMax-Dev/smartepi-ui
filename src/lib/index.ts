@@ -18,6 +18,8 @@ import Icon from './components/Icon';
 import ImageAvatar from './components/ImageAvatar';
 import Input from './components/Input';
 import Checkbox from './components/Checkbox';
+import CardBase from './components/CardBase';
+import Badge from './components/Badge';
 
 // Services
 import useModal from './services/aside-components/modal';
@@ -42,7 +44,9 @@ export {
     Button,
     ImageAvatar,
     Input,
-    Checkbox
+    Checkbox,
+    CardBase,
+    Badge
 };
 
 export {

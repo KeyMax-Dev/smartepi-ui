@@ -435,6 +435,119 @@ function Checkbox(props) {
         React__default.createElement(Icon, { initial: { opacity: value ? 1 : 0 }, name: iconName, invert: value, width: `calc(${size} - 30%)`, height: `calc(${size} - 30%)`, color: props.color, animate: animationController })));
 }
 
+const CardBaseElement = styled(framerMotion.motion.div) `
+    min-width: ${(props) => props.width};
+    width: ${(props) => props.width};
+    max-width: calc(100% - 30px);
+    min-height: ${(props) => props.height};
+    /* height: ${(props) => props.height}; */
+    background-color: ${(props) => getGlobalTheme().colors[props.color].principal};
+    border-radius: calc(${() => getGlobalTheme().borderRadius} * 2);
+    margin: 10px;
+    padding: 15px;
+    box-shadow: ${() => getGlobalTheme().boxShadow.normal};
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+
+    cursor: pointer;
+    transition: all ${() => getGlobalTheme().transitions.fast};
+    &:active {
+        transform: scale(0.99);
+        box-shadow: ${() => getGlobalTheme().boxShadow.active};
+    }
+
+
+    .__title {
+        margin: 5px 0;
+        text-align: ${() => getGlobalTheme().font.h2.textAlign};
+        font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
+        font-size: ${() => getGlobalTheme().font.h2.fontSize};
+        line-height: ${() => getGlobalTheme().font.h2.lineHeight};
+        color: ${(props) => getGlobalTheme().colors[props.color].contrast};
+
+        max-width: calc(100% - 30px);
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+    }
+
+    .__description {
+        text-align: ${() => getGlobalTheme().font.p1.textAlign};
+        font-weight: ${() => getGlobalTheme().font.p1.fontWeight};
+        font-size: ${() => getGlobalTheme().font.p1.fontSize};
+        line-height: ${() => getGlobalTheme().font.p1.lineHeight};
+        color: ${(props) => getGlobalTheme().colors[props.color].contrast};
+
+        max-width: calc(100% - 30px);
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+    }
+
+    .__grid-horizontal {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+        width: 100%;
+    }
+
+    .__grid-vertical {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+    }
+
+    footer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        position: absolute;
+        bottom: -10px;
+    }
+`;
+
+function CardBase(props) {
+    const width = props.width ? props.width : 'unset';
+    const height = props.height ? props.height : 'unset';
+    const color = props.color ? props.color : 'primary';
+    return (React__default.createElement(CardBaseElement, Object.assign({}, props, { width, height, color })));
+}
+
+const BadgeElement = styled(framerMotion.motion.div) `
+    padding: 2px;
+    border-radius: calc(${() => getGlobalTheme().borderRadius} * 2);
+    background-color: ${(props) => getGlobalTheme().colors[props.color].principal};
+    color: ${(props) => getGlobalTheme().colors[props.color].contrast};
+    margin: 0 15px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .__text {
+        flex: 1;
+        margin: 0 5px;
+        text-transform: uppercase;
+    }
+`;
+
+function Badge(props) {
+    const color = props.color ? props.color : 'primary';
+    return (React__default.createElement(BadgeElement, Object.assign({}, props, { color: color }),
+        props.icon && React__default.createElement(Icon, { name: props.icon, invert: true, width: "15pt", height: "unset", color: color }),
+        props.text && React__default.createElement("span", { className: "__text" }, props.text)));
+}
+
 const ModalBaseElement = styled.div `
     position: fixed;
     width: 100%;
@@ -958,7 +1071,9 @@ function Button(props) {
     }
 }
 
+exports.Badge = Badge;
 exports.Button = Button;
+exports.CardBase = CardBase;
 exports.Checkbox = Checkbox;
 exports.DarkTheme = DarkTheme;
 exports.Icon = Icon;
