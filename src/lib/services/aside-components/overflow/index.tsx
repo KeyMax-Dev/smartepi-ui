@@ -1,6 +1,6 @@
-import { OverflowElement } from './style';
+import { OverflowElement, OverflowElementArrow } from './style';
 import AsideController, { BaseAsideConfig } from '../aside-controller';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 
 type Position = 'top' | 'bottom' | 'left' | 'right';
@@ -14,10 +14,14 @@ const DEFAULT_CONFIG: OverflowConfig = {
     position: 'bottom'
 };
 
+const MARGIN = 10;
+
 class OverflowController extends AsideController {
 
     protected config: OverflowConfig;
     private parent: HTMLElement | null = null;
+    private contentRef = useRef<HTMLDivElement>();
+    private contentArrowRef = useRef<HTMLDivElement>();
 
     private clickListener = (event: MouseEvent): void => {
         if (!this.container?.contains(event.target as HTMLElement) || this.container === event.target) {
@@ -48,10 +52,12 @@ class OverflowController extends AsideController {
     }
 
     public open(parent?: HTMLElement, isHover?: boolean): void {
+        if (this.status === 'opened') return;
         this.appendNode();
         this.updateContainer(parent);
         this.addListeners();
 
+        this.containerControls.stop();
         this.containerControls.start({
             opacity: [0, 1],
             transition: { duration: .2 }
@@ -70,8 +76,9 @@ class OverflowController extends AsideController {
 
     protected createReactElement(): JSX.Element {
         return (
-            <OverflowElement className={`__${this.config.position}`} animate={this.containerControls}>
+            <OverflowElement ref={this.contentRef as React.MutableRefObject<HTMLDivElement>} className={`__${this.config.position}`} animate={this.containerControls}>
                 {this.content}
+                <OverflowElementArrow ref={this.contentArrowRef as React.MutableRefObject<HTMLDivElement>} className={`__${this.config.position}`} />
             </OverflowElement>
         );
     }
@@ -91,9 +98,36 @@ class OverflowController extends AsideController {
             this.container.style.justifyContent = 'center';
             this.container.style.alignItems = 'center';
         }
+        if (this.contentRef.current && this.contentArrowRef.current) {
+            const contentBounding = (this.contentRef.current as HTMLDivElement).getBoundingClientRect();
+
+            if (contentBounding.width > window.innerWidth) this.contentRef.current.style.width = (window.innerWidth - MARGIN * 2) + 'px';
+
+            if (contentBounding.left < 0) {
+                const offsetLeft = -parentBounding.left + MARGIN;
+                this.contentRef.current.style.left = offsetLeft + 'px';
+                this.contentArrowRef.current.style.left = (-offsetLeft + parentBounding.width / 2 + this.contentArrowRef.current.offsetWidth / 2 - MARGIN) + 'px';
+            } else if (contentBounding.right > window.innerWidth) {
+                const offsetRight = -window.innerWidth + parentBounding.right;
+                this.contentRef.current.style.right = (offsetRight + MARGIN) + 'px';
+                this.contentArrowRef.current.style.left = (this.contentRef.current.offsetWidth + offsetRight - MARGIN / 4) + 'px';
+            }
+
+            if (contentBounding.top < 0) {
+                this.config.position = 'bottom';
+                this.contentRef.current.classList.replace('__top', '__bottom');
+                this.contentArrowRef.current.classList.replace('__top', '__bottom');
+            }
+            if (contentBounding.bottom > window.innerHeight) {
+                this.config.position = 'top';
+                this.contentRef.current.classList.replace('__bottom', '__top');
+                this.contentArrowRef.current.classList.replace('__bottom', '__top');
+            } 
+        }
     }
 
     private addListeners(): void {
+        this.removeListeners();
         setTimeout(() => {
             window.addEventListener('click', this.clickListener);
             window.addEventListener('resize', this.updateContainerListener);

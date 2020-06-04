@@ -7,6 +7,8 @@ declare type OverflowConfig = BaseAsideConfig & {
 declare class OverflowController extends AsideController {
     protected config: OverflowConfig;
     private parent;
+    private contentRef;
+    private contentArrowRef;
     private clickListener;
     private updateContainerListener;
     private hoverLeaveListener;

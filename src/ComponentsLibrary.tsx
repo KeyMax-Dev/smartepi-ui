@@ -1,6 +1,6 @@
 import { Icon, Button, getGlobalTheme, ImageAvatar, Input, setGlobalTheme, LightTheme, DarkTheme, Checkbox, CardBase, Badge, Datepicker } from './lib';
 import Icons from './lib/assets/svgs/icons';
-import React, { useState, ReactText, useEffect } from 'react';
+import React, { useState, ReactText } from 'react';
 import styled from 'styled-components';
 import useModal from './lib/services/aside-components/modal/index';
 import useOverflow from './lib/services/aside-components/overflow/index';
@@ -77,7 +77,7 @@ export default function ComponentsLibrary(): JSX.Element {
     const modal = useModal(<div>Modal Service</div>);
     const toast = useToast(<span>Toast Service</span>);
     const overflow = useOverflow(<div>Overflow Service</div>);
-    const datepickerOverflow = useOverflow(<Datepicker onDaySelected={(day) => console.log('Day Selected', day.toLocaleDateString())} initial={new Date()} />, { position: 'top' });
+    const datepickerOverflow = useOverflow(<Datepicker onDaySelected={(day) => console.log('Day Selected', day.toLocaleDateString())} initial={new Date()} />);
     const datepickerModal = useModal(<Datepicker width="600px" height="600px" onDaySelected={(day) => datepickerModal.close()} />);
 
     const ComponentExpandable = (props: ComponentExpandableProps): JSX.Element => {
@@ -139,6 +139,7 @@ export default function ComponentsLibrary(): JSX.Element {
                 <Input />
                 <Input iconRight="account" />
                 <Input enableClear />
+                <Input enableDatepicker />
                 <Input enableClear iconLeft="account" />
                 <Input enableClear iconLeft="account" iconRight="account" />
                 <Input containerType="outline" />

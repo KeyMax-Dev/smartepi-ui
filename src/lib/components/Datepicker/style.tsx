@@ -9,7 +9,9 @@ export interface DatepickerElementProps {
 
 export const DatepickerElement = styled.div<DatepickerElementProps>`
     width: ${(props) => props.width};
+    max-width: 100%;
     height: ${(props) => props.height};
+    max-height: 100%;
     display: flex;
     flex-direction: column;
 
@@ -54,6 +56,7 @@ export const DatepickerElement = styled.div<DatepickerElementProps>`
         &:hover {
             background-color: ${() => getGlobalTheme().colors.primary.principal}32;
             color: ${() => getGlobalTheme().colors.primary.contrast};
+            -webkit-text-fill-color: ${() => getGlobalTheme().colors.primary.contrast};
         }
     }
 
@@ -64,10 +67,12 @@ export const DatepickerElement = styled.div<DatepickerElementProps>`
     .__datepicker-list-item-unavaliable {
         cursor: not-allowed;
         color: ${() => getGlobalTheme().colors.danger.principal};
+        -webkit-text-fill-color: ${() => getGlobalTheme().colors.danger.principal};
 
         &:hover {
             background-color: transparent;
             color: ${() => getGlobalTheme().colors.danger.principal};
+            -webkit-text-fill-color: ${() => getGlobalTheme().colors.danger.principal};
         }
     }
 
@@ -96,6 +101,8 @@ export const DatepickerElement = styled.div<DatepickerElementProps>`
         min-height: 30px;
         padding: 2% 0;
         align-items: stretch;
+        color: ${() => getGlobalTheme().colors.primary.principal};
+        -webkit-text-fill-color: ${() => getGlobalTheme().colors.primary.principal};
 
         li {
             all: unset;
@@ -110,10 +117,12 @@ export const DatepickerElement = styled.div<DatepickerElementProps>`
     .__datepicker-list-item-selected {
         background-color: ${() => getGlobalTheme().colors.secondary.principal};
         color: ${() => getGlobalTheme().colors.secondary.contrast};
+        -webkit-text-fill-color: ${() => getGlobalTheme().colors.secondary.contrast};
 
         &:hover {
             background-color: ${() => getGlobalTheme().colors.secondary.principal}32;
             color: ${() => getGlobalTheme().colors.secondary.contrast};
+            -webkit-text-fill-color: ${() => getGlobalTheme().colors.secondary.contrast};
         }
         
         &::after  {

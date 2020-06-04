@@ -367,10 +367,17 @@ function Input(props) {
             element.value = '';
         }
     };
+    const onDatepickerSelect = (date) => {
+        const element = inputRef.current;
+        element.value = date.toLocaleDateString();
+        datepicker.close();
+    };
+    const datepicker = useOverflow(React__default.createElement(Datepicker, { onDaySelected: onDatepickerSelect }));
     return (React__default.createElement(InputContainerElement, Object.assign({}, props.containerProps, { color: props.color, className: `__input-container-${containerType}` }),
         props.iconLeft && React__default.createElement(Icon, { color: props.color, name: props.iconLeft }),
         React__default.createElement(InputElement, Object.assign({}, props, { ref: inputRef })),
         props.enableClear && React__default.createElement(Button, { buttonType: "icon", icon: "close", onClick: clear, iconSize: "20px", style: { margin: 0, padding: 0 } }),
+        props.enableDatepicker && React__default.createElement(Button, { buttonType: "icon", icon: "calendar", onClick: (event) => datepicker.open(event.target), iconSize: "20px", style: { margin: 0, padding: 0 } }),
         props.iconRight && React__default.createElement(Icon, { color: props.color, name: props.iconRight })));
 }
 
@@ -553,7 +560,9 @@ function Badge(props) {
 
 const DatepickerElement = styled.div `
     width: ${(props) => props.width};
+    max-width: 100%;
     height: ${(props) => props.height};
+    max-height: 100%;
     display: flex;
     flex-direction: column;
 
@@ -598,6 +607,7 @@ const DatepickerElement = styled.div `
         &:hover {
             background-color: ${() => getGlobalTheme().colors.primary.principal}32;
             color: ${() => getGlobalTheme().colors.primary.contrast};
+            -webkit-text-fill-color: ${() => getGlobalTheme().colors.primary.contrast};
         }
     }
 
@@ -608,10 +618,12 @@ const DatepickerElement = styled.div `
     .__datepicker-list-item-unavaliable {
         cursor: not-allowed;
         color: ${() => getGlobalTheme().colors.danger.principal};
+        -webkit-text-fill-color: ${() => getGlobalTheme().colors.danger.principal};
 
         &:hover {
             background-color: transparent;
             color: ${() => getGlobalTheme().colors.danger.principal};
+            -webkit-text-fill-color: ${() => getGlobalTheme().colors.danger.principal};
         }
     }
 
@@ -640,6 +652,8 @@ const DatepickerElement = styled.div `
         min-height: 30px;
         padding: 2% 0;
         align-items: stretch;
+        color: ${() => getGlobalTheme().colors.primary.principal};
+        -webkit-text-fill-color: ${() => getGlobalTheme().colors.primary.principal};
 
         li {
             all: unset;
@@ -654,10 +668,12 @@ const DatepickerElement = styled.div `
     .__datepicker-list-item-selected {
         background-color: ${() => getGlobalTheme().colors.secondary.principal};
         color: ${() => getGlobalTheme().colors.secondary.contrast};
+        -webkit-text-fill-color: ${() => getGlobalTheme().colors.secondary.contrast};
 
         &:hover {
             background-color: ${() => getGlobalTheme().colors.secondary.principal}32;
             color: ${() => getGlobalTheme().colors.secondary.contrast};
+            -webkit-text-fill-color: ${() => getGlobalTheme().colors.secondary.contrast};
         }
         
         &::after  {
@@ -1141,47 +1157,49 @@ const OverflowElement = styled(framerMotion.motion.div) `
     box-shadow: ${() => getGlobalTheme().boxShadow.normal};
     background-color: ${() => getGlobalTheme().colors.primary.contrast};
     padding: 5px;
-    
-    &::after {
-        content: ' ';
-        position: absolute;
-        border: 5px solid transparent;
-    }
 
     &.__bottom {
         top: 100%;
-        &::after {
-            left: calc(50% - 5px);
-            top: -10px;
-            border-bottom-color: ${() => getGlobalTheme().colors.primary.contrast};
-        }
     }
 
     &.__top {
         bottom: 100%;
-        &::after {
-            left: calc(50% - 5px);
-            bottom: -10px;
-            border-top-color: ${() => getGlobalTheme().colors.primary.contrast};
-        }
     }
 
     &.__right {
         left: 100%;
-        &::after {
-            top: calc(50% - 5px);
-            left: -10px;
-            border-right-color: ${() => getGlobalTheme().colors.primary.contrast};
-        }
     }
 
     &.__left {
         right: 100%;
-        &::after {
-            top: calc(50% - 5px);
-            right: -10px;
-            border-left-color: ${() => getGlobalTheme().colors.primary.contrast};
-        }
+    }
+`;
+const OverflowElementArrow = styled.div `
+    position: absolute;
+    border: 5px solid transparent;
+
+    &.__bottom {
+        left: calc(50% - 5px);
+        top: -10px;
+        border-bottom-color: ${() => getGlobalTheme().colors.primary.contrast};
+    }
+
+    &.__top {
+        left: calc(50% - 5px);
+        bottom: -10px;
+        border-top-color: ${() => getGlobalTheme().colors.primary.contrast};
+    }
+
+    &.__right {
+        top: calc(50% - 5px);
+        left: -10px;
+        border-right-color: ${() => getGlobalTheme().colors.primary.contrast};
+    }
+
+    &.__left {
+        top: calc(50% - 5px);
+        right: -10px;
+        border-left-color: ${() => getGlobalTheme().colors.primary.contrast};
     }
 `;
 
@@ -1189,10 +1207,13 @@ const DEFAULT_CONFIG$1 = {
     id: '__default-pop-up',
     position: 'bottom'
 };
+const MARGIN = 10;
 class OverflowController extends AsideController {
     constructor(content, options) {
         super(content, options);
         this.parent = null;
+        this.contentRef = React.useRef();
+        this.contentArrowRef = React.useRef();
         this.clickListener = (event) => {
             var _a;
             if (!((_a = this.container) === null || _a === void 0 ? void 0 : _a.contains(event.target)) || this.container === event.target) {
@@ -1215,9 +1236,12 @@ class OverflowController extends AsideController {
     }
     open(parent, isHover) {
         var _a;
+        if (this.status === 'opened')
+            return;
         this.appendNode();
         this.updateContainer(parent);
         this.addListeners();
+        this.containerControls.stop();
         this.containerControls.start({
             opacity: [0, 1],
             transition: { duration: .2 }
@@ -1233,7 +1257,9 @@ class OverflowController extends AsideController {
         }).then(() => this.removeNode());
     }
     createReactElement() {
-        return (React__default.createElement(OverflowElement, { className: `__${this.config.position}`, animate: this.containerControls }, this.content));
+        return (React__default.createElement(OverflowElement, { ref: this.contentRef, className: `__${this.config.position}`, animate: this.containerControls },
+            this.content,
+            React__default.createElement(OverflowElementArrow, { ref: this.contentArrowRef, className: `__${this.config.position}` })));
     }
     updateContainer(parent) {
         if (parent)
@@ -1251,8 +1277,34 @@ class OverflowController extends AsideController {
             this.container.style.justifyContent = 'center';
             this.container.style.alignItems = 'center';
         }
+        if (this.contentRef.current && this.contentArrowRef.current) {
+            const contentBounding = this.contentRef.current.getBoundingClientRect();
+            if (contentBounding.width > window.innerWidth)
+                this.contentRef.current.style.width = (window.innerWidth - MARGIN * 2) + 'px';
+            if (contentBounding.left < 0) {
+                const offsetLeft = -parentBounding.left + MARGIN;
+                this.contentRef.current.style.left = offsetLeft + 'px';
+                this.contentArrowRef.current.style.left = (-offsetLeft + parentBounding.width / 2 + this.contentArrowRef.current.offsetWidth / 2 - MARGIN) + 'px';
+            }
+            else if (contentBounding.right > window.innerWidth) {
+                const offsetRight = -window.innerWidth + parentBounding.right;
+                this.contentRef.current.style.right = (offsetRight + MARGIN) + 'px';
+                this.contentArrowRef.current.style.left = (this.contentRef.current.offsetWidth + offsetRight - MARGIN / 4) + 'px';
+            }
+            if (contentBounding.top < 0) {
+                this.config.position = 'bottom';
+                this.contentRef.current.classList.replace('__top', '__bottom');
+                this.contentArrowRef.current.classList.replace('__top', '__bottom');
+            }
+            if (contentBounding.bottom > window.innerHeight) {
+                this.config.position = 'top';
+                this.contentRef.current.classList.replace('__bottom', '__top');
+                this.contentArrowRef.current.classList.replace('__bottom', '__top');
+            }
+        }
     }
     addListeners() {
+        this.removeListeners();
         setTimeout(() => {
             window.addEventListener('click', this.clickListener);
             window.addEventListener('resize', this.updateContainerListener);
