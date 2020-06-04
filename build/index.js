@@ -146,6 +146,8 @@ const AccountSVG = React__default.createElement("svg", { xmlns: "http://www.w3.o
     React__default.createElement("path", { d: "M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" }));
 const AccountCogSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M10 4A4 4 0 0 0 6 8A4 4 0 0 0 10 12A4 4 0 0 0 14 8A4 4 0 0 0 10 4M17 12C16.87 12 16.76 12.09 16.74 12.21L16.55 13.53C16.25 13.66 15.96 13.82 15.7 14L14.46 13.5C14.35 13.5 14.22 13.5 14.15 13.63L13.15 15.36C13.09 15.47 13.11 15.6 13.21 15.68L14.27 16.5C14.25 16.67 14.24 16.83 14.24 17C14.24 17.17 14.25 17.33 14.27 17.5L13.21 18.32C13.12 18.4 13.09 18.53 13.15 18.64L14.15 20.37C14.21 20.5 14.34 20.5 14.46 20.5L15.7 20C15.96 20.18 16.24 20.35 16.55 20.47L16.74 21.79C16.76 21.91 16.86 22 17 22H19C19.11 22 19.22 21.91 19.24 21.79L19.43 20.47C19.73 20.34 20 20.18 20.27 20L21.5 20.5C21.63 20.5 21.76 20.5 21.83 20.37L22.83 18.64C22.89 18.53 22.86 18.4 22.77 18.32L21.7 17.5C21.72 17.33 21.74 17.17 21.74 17C21.74 16.83 21.73 16.67 21.7 16.5L22.76 15.68C22.85 15.6 22.88 15.47 22.82 15.36L21.82 13.63C21.76 13.5 21.63 13.5 21.5 13.5L20.27 14C20 13.82 19.73 13.65 19.42 13.53L19.23 12.21C19.22 12.09 19.11 12 19 12H17M10 14C5.58 14 2 15.79 2 18V20H11.68A7 7 0 0 1 11 17A7 7 0 0 1 11.64 14.09C11.11 14.03 10.56 14 10 14M18 15.5C18.83 15.5 19.5 16.17 19.5 17C19.5 17.83 18.83 18.5 18 18.5C17.16 18.5 16.5 17.83 16.5 17C16.5 16.17 17.17 15.5 18 15.5Z" }));
+const CalendarSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
+    React__default.createElement("path", { d: "M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z" }));
 const CheckSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" }));
 const ChevronDownSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
@@ -203,6 +205,7 @@ const WorkerSVG = React__default.createElement("svg", { xmlns: "http://www.w3.or
 const Icons = {
     account: AccountSVG,
     accountCog: AccountCogSVG,
+    calendar: CalendarSVG,
     check: CheckSVG,
     chevronDown: ChevronDownSVG,
     chevronLeft: ChevronLeftSVG,
@@ -546,6 +549,308 @@ function Badge(props) {
     return (React__default.createElement(BadgeElement, Object.assign({}, props, { color: color }),
         props.icon && React__default.createElement(Icon, { name: props.icon, invert: true, width: "15pt", height: "unset", color: color }),
         props.text && React__default.createElement("span", { className: "__text" }, props.text)));
+}
+
+const DatepickerElement = styled.div `
+    width: ${(props) => props.width};
+    height: ${(props) => props.height};
+    display: flex;
+    flex-direction: column;
+
+    .__datepicker-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        span {
+            flex: 1;
+            text-align: center;
+        }
+    }
+
+    .__datepicker-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .__datepicker-indicator {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        font-weight: bold;
+        user-select: none;
+    }
+
+        
+    .__datepicker-list-item-container {
+        all: unset;
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        user-select: none;
+        position: relative;
+        transition: all ${() => getGlobalTheme().transitions.fast};
+
+        &:hover {
+            background-color: ${() => getGlobalTheme().colors.primary.principal}32;
+            color: ${() => getGlobalTheme().colors.primary.contrast};
+        }
+    }
+
+    .__datepicker-list-item-outday {
+        opacity: 0.3;
+    }
+
+    .__datepicker-list-item-unavaliable {
+        cursor: not-allowed;
+        color: ${() => getGlobalTheme().colors.danger.principal};
+
+        &:hover {
+            background-color: transparent;
+            color: ${() => getGlobalTheme().colors.danger.principal};
+        }
+    }
+
+    .__datepicker-list-item-today::after {
+        content: " ";
+        width: 100%;
+        height: 100%;
+        background-color: ${() => getGlobalTheme().colors.primary.principal}32;
+        position: absolute;
+        border: 3px solid ${() => getGlobalTheme().colors.primary.principal}32;
+        border-radius: 5px;
+        top: -3px;
+        left: -3px;
+    }
+
+    .__datepicker-week-container {
+        all: unset;
+        flex: 1;
+        display: flex;
+        align-items: stretch;
+    }
+
+    .__datepicker-week-title {
+        all: unset;
+        display: flex;
+        min-height: 30px;
+        padding: 2% 0;
+        align-items: stretch;
+
+        li {
+            all: unset;
+            flex: 1;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    .__datepicker-list-item-selected {
+        background-color: ${() => getGlobalTheme().colors.secondary.principal};
+        color: ${() => getGlobalTheme().colors.secondary.contrast};
+
+        &:hover {
+            background-color: ${() => getGlobalTheme().colors.secondary.principal}32;
+            color: ${() => getGlobalTheme().colors.secondary.contrast};
+        }
+        
+        &::after  {
+            content: " ";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 3px solid ${() => getGlobalTheme().colors.secondary.principal};
+            border-radius: 5px;
+            top: -3px;
+            left: -3px;
+        }
+    }
+`;
+
+const MONTH_NAMES = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outuburo", "Novembro", "Dezembro"];
+const WEEKDAY_NAMES = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+const DAY_TIME = 86400000;
+const DEFAULT_WIDTH = '300px';
+const DEFAULT_HEIGHT = '300px';
+function generateMonthDays(date = new Date()) {
+    const monthDays = [];
+    const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    let day = new Date(firstDay.getFullYear(), firstDay.getMonth(), 1 - firstDay.getDay());
+    for (let weekcount = 0; weekcount < 6; weekcount++) {
+        monthDays[weekcount] = [];
+        for (let weekday = 0; weekday < 7; weekday++) {
+            monthDays[weekcount][weekday] = new Date(day);
+            day = new Date(day.setDate(day.getDate() + 1));
+        }
+    }
+    return monthDays;
+}
+function Datepicker(props) {
+    const [body, setBody] = React.useState();
+    const [currentMonth, setCurrentMonth] = React.useState(new Date().getMonth());
+    const [currentYear, setCurrentYear] = React.useState(new Date().getFullYear());
+    const [currentIndicator, setCurrentIndicator] = React.useState('month');
+    const [indicatorText, setIndicatorText] = React.useState();
+    const [selectedDate, setSelectedDate] = React.useState(props.initial);
+    const changeIndicator = (d) => {
+        switch (currentIndicator) {
+            case 'year':
+                setCurrentYear(currentYear + d);
+                break;
+            case 'month':
+                setCurrentMonth(currentMonth + d);
+                break;
+            case 'decade':
+                setCurrentYear(currentYear + d * 10);
+                break;
+        }
+    };
+    const DayElement = ({ day }) => {
+        let className = '__datepicker-list-item-container';
+        let disableClick = false;
+        if (Date.now() - day.getTime() >= 0 && Date.now() - day.getTime() <= DAY_TIME) {
+            className += ' __datepicker-list-item-today'; // Today class
+        }
+        if (selectedDate && day.toDateString() === selectedDate.toDateString()) {
+            className += ' __datepicker-list-item-selected'; // Selected days class
+        }
+        if (day.getMonth() !== currentMonth) {
+            className += ' __datepicker-list-item-outday'; // Out month days class
+        }
+        if (Date.now() - DAY_TIME - day.getTime() > 0) {
+            className += ' __datepicker-list-item-unavaliable'; // Unavaliable or past days class
+            disableClick = true;
+        }
+        const selectDay = (event) => {
+            event.stopPropagation();
+            setSelectedDate(day);
+            if (day.getMonth() !== currentMonth)
+                setCurrentMonth(day.getMonth());
+            if (props.onDaySelected)
+                props.onDaySelected(day);
+        };
+        return React__default.createElement("li", { onClick: disableClick ? undefined : selectDay, className: className }, day.getDate());
+    };
+    const WeekElement = ({ week }) => {
+        return React__default.createElement("ul", { className: "__datepicker-week-container" }, week.map((day, index) => React__default.createElement(DayElement, { key: index, day: day })));
+    };
+    const MonthElement = ({ date = new Date(currentYear) }) => {
+        let className = '__datepicker-list-item-container';
+        let disableClick = false;
+        if (new Date().getMonth() === date.getMonth() && new Date().getFullYear() === date.getFullYear()) {
+            className += ' __datepicker-list-item-today';
+        }
+        if (new Date().getFullYear() > date.getFullYear() || (new Date().getMonth() > date.getMonth() && new Date().getFullYear() === date.getFullYear())) {
+            className += ' __datepicker-list-item-unavaliable';
+            disableClick = true;
+        }
+        else {
+            if (selectedDate && date.getFullYear() === selectedDate.getFullYear() && date.getMonth() === selectedDate.getMonth()) {
+                className += ' __datepicker-list-item-selected';
+            }
+        }
+        const selectMonth = (event) => {
+            event.stopPropagation();
+            setCurrentIndicator('month');
+            setCurrentMonth(date.getMonth());
+        };
+        return React__default.createElement("li", { onClick: disableClick ? undefined : selectMonth, className: className }, MONTH_NAMES[date.getMonth()]);
+    };
+    const YearElement = ({ fullYear }) => {
+        let className = '__datepicker-list-item-container';
+        let disableClick = false;
+        if (new Date().getFullYear() === fullYear) {
+            className += ' __datepicker-list-item-today';
+        }
+        if (new Date().getFullYear() > fullYear) {
+            className += ' __datepicker-list-item-unavaliable';
+            disableClick = true;
+        }
+        else {
+            if (selectedDate && fullYear === selectedDate.getFullYear()) {
+                className += ' datepicker-list-item-selected'; // Selected days class
+            }
+        }
+        const selectYear = (event) => {
+            event.stopPropagation();
+            setCurrentIndicator('year');
+            setCurrentYear(fullYear);
+        };
+        return React__default.createElement("li", { onClick: disableClick ? undefined : selectYear, className: className }, fullYear);
+    };
+    const fillMonth = (date = new Date(currentYear, currentMonth)) => {
+        setCurrentYear(date.getFullYear());
+        setCurrentMonth(date.getMonth());
+        setIndicatorText(MONTH_NAMES[date.getMonth()] + ' ' + date.getFullYear());
+        setCurrentIndicator('month');
+        const monthDays = generateMonthDays(date);
+        return monthDays.map((week, index) => React__default.createElement(WeekElement, { key: index, week: week }));
+    };
+    const fillYear = (fullYear = currentYear) => {
+        setCurrentIndicator('year');
+        setCurrentYear(fullYear);
+        const list = [];
+        for (let i = 0; i < 4; i++) {
+            const aux = [];
+            for (let j = 0; j < 3; j++) {
+                const index = i * 3 + j;
+                aux.push(React__default.createElement(MonthElement, { date: new Date(fullYear, index), key: index }));
+            }
+            list.push(React__default.createElement("ul", { className: "__datepicker-week-container", key: i }, aux));
+        }
+        setIndicatorText(fullYear.toString());
+        return list;
+    };
+    const fillDecade = (from = currentYear) => {
+        setCurrentIndicator('decade');
+        from = Math.floor(from / 10) * 10;
+        setCurrentYear(from);
+        const list = [];
+        for (let i = 0; i < 5; i++) {
+            const aux = [];
+            for (let j = 0; j < 2; j++) {
+                const fullYear = from + i * 2 + j;
+                aux.push(React__default.createElement(YearElement, { fullYear: fullYear, key: fullYear }));
+            }
+            list.push(React__default.createElement("ul", { className: "__datepicker-week-container", key: i }, aux));
+        }
+        setIndicatorText(`${from} - ${from + 9}`);
+        return list;
+    };
+    const nextIndicator = () => {
+        switch (currentIndicator) {
+            case 'month':
+                return setCurrentIndicator('year');
+            case 'year':
+                return setCurrentIndicator('decade');
+            case 'decade':
+                return;
+        }
+    };
+    React.useEffect(() => {
+        switch (currentIndicator) {
+            case 'month':
+                return setBody(fillMonth());
+            case 'year':
+                return setBody(fillYear());
+            case 'decade':
+                return setBody(fillDecade());
+        }
+    }, [currentIndicator, currentYear, currentMonth, selectedDate]);
+    return (React__default.createElement(DatepickerElement, { width: props.width ? props.width : DEFAULT_WIDTH, height: props.height ? props.height : DEFAULT_HEIGHT },
+        React__default.createElement("div", { className: "__datepicker-header" },
+            React__default.createElement(Button, { buttonType: "icon", icon: "chevronLeft", onClick: () => changeIndicator(-1) }),
+            React__default.createElement("span", { className: "__datepicker-idicator", onClick: nextIndicator }, indicatorText),
+            React__default.createElement(Button, { buttonType: "icon", icon: "chevronRight", onClick: () => changeIndicator(1) })),
+        currentIndicator === 'month' &&
+            React__default.createElement("ul", { className: "__datepicker-week-title" }, WEEKDAY_NAMES.map((weekdayName) => React__default.createElement("li", { key: weekdayName }, weekdayName))),
+        React__default.createElement("div", { className: "__datepicker-body" }, body)));
 }
 
 const ModalBaseElement = styled.div `
@@ -1076,6 +1381,7 @@ exports.Button = Button;
 exports.CardBase = CardBase;
 exports.Checkbox = Checkbox;
 exports.DarkTheme = DarkTheme;
+exports.Datepicker = Datepicker;
 exports.Icon = Icon;
 exports.Icons = Icons;
 exports.ImageAvatar = ImageAvatar;

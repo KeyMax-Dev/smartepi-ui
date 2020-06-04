@@ -1,4 +1,4 @@
-import { Icon, Button, getGlobalTheme, ImageAvatar, Input, setGlobalTheme, LightTheme, DarkTheme, Checkbox, CardBase, Badge } from './lib';
+import { Icon, Button, getGlobalTheme, ImageAvatar, Input, setGlobalTheme, LightTheme, DarkTheme, Checkbox, CardBase, Badge, Datepicker } from './lib';
 import Icons from './lib/assets/svgs/icons';
 import React, { useState, ReactText, useEffect } from 'react';
 import styled from 'styled-components';
@@ -77,6 +77,8 @@ export default function ComponentsLibrary(): JSX.Element {
     const modal = useModal(<div>Modal Service</div>);
     const toast = useToast(<span>Toast Service</span>);
     const overflow = useOverflow(<div>Overflow Service</div>);
+    const datepickerOverflow = useOverflow(<Datepicker onDaySelected={(day) => console.log('Day Selected', day.toLocaleDateString())} initial={new Date()} />, { position: 'top' });
+    const datepickerModal = useModal(<Datepicker width="600px" height="600px" onDaySelected={(day) => datepickerModal.close()} />);
 
     const ComponentExpandable = (props: ComponentExpandableProps): JSX.Element => {
         return (
@@ -153,7 +155,7 @@ export default function ComponentsLibrary(): JSX.Element {
             <ComponentExpandable componentName="Cards">
                 <CardBase width="300px" height="unset">
                     <h1 className="__title">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum, voluptatem.</h1>
-                    <Icon name="cog" invert/>
+                    <Icon name="cog" invert />
                 </CardBase>
                 <CardBase width="300px" height="unset">
                     <h1 className="__title">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum, voluptatem.</h1>
@@ -164,18 +166,22 @@ export default function ComponentsLibrary(): JSX.Element {
                 </CardBase>
                 <CardBase width="500px" height="unset" color="success">
                     <h1 className="__title">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum, voluptatem.</h1>
-                    <Icon name="cog" color="success" invert/>
+                    <Icon name="cog" color="success" invert />
                     <footer>
-                        <Badge icon="cog" text="texto no badge" color="danger"/>
+                        <Badge icon="cog" text="texto no badge" color="danger" />
                     </footer>
                 </CardBase>
                 <CardBase width="300px" height="200px">
-                    <ImageAvatar src="https://www.superepi.com.br/fotos/extragrande/1232fe1/abafador-de-ruido-ark-plus-kalipso-17db-ca-37918.jpg" size="100px" style={{margin: 15}}/>
-                    <h1 className="__title" style={{WebkitLineClamp: 2}}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum, voluptatem.</h1>
+                    <ImageAvatar src="https://www.superepi.com.br/fotos/extragrande/1232fe1/abafador-de-ruido-ark-plus-kalipso-17db-ca-37918.jpg" size="100px" style={{ margin: 15 }} />
+                    <h1 className="__title" style={{ WebkitLineClamp: 2 }}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum, voluptatem.</h1>
                     <footer>
-                        <Badge color="success" text={10}/>
+                        <Badge color="success" text={10} />
                     </footer>
                 </CardBase>
+            </ComponentExpandable>
+            <ComponentExpandable componentName="Datepicker">
+                <Button buttonType="icon" icon="calendar" text="Overflow" onClick={(event) => datepickerOverflow.open(event.target as HTMLElement)} />
+                <Button buttonType="icon" icon="calendar" text="Modal" onClick={() => datepickerModal.open()} />
             </ComponentExpandable>
         </PageBody>
     );

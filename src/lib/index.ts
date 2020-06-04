@@ -20,6 +20,7 @@ import Input from './components/Input';
 import Checkbox from './components/Checkbox';
 import CardBase from './components/CardBase';
 import Badge from './components/Badge';
+import Datepicker from './components/Datepicker';
 
 // Services
 import useModal from './services/aside-components/modal';
@@ -46,7 +47,8 @@ export {
     Input,
     Checkbox,
     CardBase,
-    Badge
+    Badge,
+    Datepicker
 };
 
 export {
