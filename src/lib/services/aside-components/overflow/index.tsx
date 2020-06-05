@@ -3,7 +3,7 @@ import AsideController, { BaseAsideConfig } from '../aside-controller';
 import React, { useState, useRef } from 'react';
 
 
-type Position = 'top' | 'bottom' | 'left' | 'right';
+type Position = 'top' | 'bottom';
 
 type OverflowConfig = BaseAsideConfig & {
     position: Position;
@@ -67,11 +67,13 @@ class OverflowController extends AsideController {
     }
 
     public close(): void {
+        const duration = 0.2;
         this.removeListeners();
         this.containerControls.start({
             opacity: [1, 0],
-            transition: { duration: .2 }
-        }).then(() => this.removeNode());
+            transition: { duration }
+        });
+        setTimeout(() => this.removeNode(), duration * 1000);
     }
 
     protected createReactElement(): JSX.Element {
@@ -101,8 +103,6 @@ class OverflowController extends AsideController {
         if (this.contentRef.current && this.contentArrowRef.current) {
             const contentBounding = (this.contentRef.current as HTMLDivElement).getBoundingClientRect();
 
-            if (contentBounding.width > window.innerWidth) this.contentRef.current.style.width = (window.innerWidth - MARGIN * 2) + 'px';
-
             if (contentBounding.left < 0) {
                 const offsetLeft = -parentBounding.left + MARGIN;
                 this.contentRef.current.style.left = offsetLeft + 'px';
@@ -110,15 +110,15 @@ class OverflowController extends AsideController {
             } else if (contentBounding.right > window.innerWidth) {
                 const offsetRight = -window.innerWidth + parentBounding.right;
                 this.contentRef.current.style.right = (offsetRight + MARGIN) + 'px';
-                this.contentArrowRef.current.style.left = (this.contentRef.current.offsetWidth + offsetRight - MARGIN / 4) + 'px';
+                this.contentArrowRef.current.style.left = (this.contentRef.current.offsetWidth + offsetRight - MARGIN) + 'px';
             }
 
-            if (contentBounding.top < 0) {
+            const minContentOut = contentBounding.height * 0.1;
+            if (contentBounding.top < -minContentOut) {
                 this.config.position = 'bottom';
                 this.contentRef.current.classList.replace('__top', '__bottom');
                 this.contentArrowRef.current.classList.replace('__top', '__bottom');
-            }
-            if (contentBounding.bottom > window.innerHeight) {
+            } else if (contentBounding.bottom > window.innerHeight + minContentOut) {
                 this.config.position = 'top';
                 this.contentRef.current.classList.replace('__bottom', '__top');
                 this.contentArrowRef.current.classList.replace('__bottom', '__top');

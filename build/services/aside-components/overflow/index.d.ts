@@ -1,6 +1,6 @@
 /// <reference types="react" />
 import AsideController, { BaseAsideConfig } from '../aside-controller';
-declare type Position = 'top' | 'bottom' | 'left' | 'right';
+declare type Position = 'top' | 'bottom';
 declare type OverflowConfig = BaseAsideConfig & {
     position: Position;
 };

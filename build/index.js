@@ -377,7 +377,7 @@ function Input(props) {
         props.iconLeft && React__default.createElement(Icon, { color: props.color, name: props.iconLeft }),
         React__default.createElement(InputElement, Object.assign({}, props, { ref: inputRef })),
         props.enableClear && React__default.createElement(Button, { buttonType: "icon", icon: "close", onClick: clear, iconSize: "20px", style: { margin: 0, padding: 0 } }),
-        props.enableDatepicker && React__default.createElement(Button, { buttonType: "icon", icon: "calendar", onClick: (event) => datepicker.open(event.target), iconSize: "20px", style: { margin: 0, padding: 0 } }),
+        props.enableDatepicker && React__default.createElement(Button, { buttonType: "icon", icon: "calendar", onClick: (event) => datepicker.open(event.currentTarget), iconSize: "20px", style: { margin: 0, padding: 0 } }),
         props.iconRight && React__default.createElement(Icon, { color: props.color, name: props.iconRight })));
 }
 
@@ -1152,6 +1152,8 @@ const OverflowElement = styled(framerMotion.motion.div) `
     justify-content: center;
     align-items: center;
     opacity: 0;
+    max-width: calc(100vw - 20px);
+    max-height: calc(100vh - 20px);
 
     border-radius: ${() => getGlobalTheme().borderRadius};
     box-shadow: ${() => getGlobalTheme().boxShadow.normal};
@@ -1164,14 +1166,6 @@ const OverflowElement = styled(framerMotion.motion.div) `
 
     &.__top {
         bottom: 100%;
-    }
-
-    &.__right {
-        left: 100%;
-    }
-
-    &.__left {
-        right: 100%;
     }
 `;
 const OverflowElementArrow = styled.div `
@@ -1188,18 +1182,6 @@ const OverflowElementArrow = styled.div `
         left: calc(50% - 5px);
         bottom: -10px;
         border-top-color: ${() => getGlobalTheme().colors.primary.contrast};
-    }
-
-    &.__right {
-        top: calc(50% - 5px);
-        left: -10px;
-        border-right-color: ${() => getGlobalTheme().colors.primary.contrast};
-    }
-
-    &.__left {
-        top: calc(50% - 5px);
-        right: -10px;
-        border-left-color: ${() => getGlobalTheme().colors.primary.contrast};
     }
 `;
 
@@ -1250,11 +1232,13 @@ class OverflowController extends AsideController {
             (_a = this.container) === null || _a === void 0 ? void 0 : _a.addEventListener('mouseleave', this.hoverLeaveListener);
     }
     close() {
+        const duration = 0.2;
         this.removeListeners();
         this.containerControls.start({
             opacity: [1, 0],
-            transition: { duration: .2 }
-        }).then(() => this.removeNode());
+            transition: { duration }
+        });
+        setTimeout(() => this.removeNode(), duration * 1000);
     }
     createReactElement() {
         return (React__default.createElement(OverflowElement, { ref: this.contentRef, className: `__${this.config.position}`, animate: this.containerControls },
@@ -1279,8 +1263,6 @@ class OverflowController extends AsideController {
         }
         if (this.contentRef.current && this.contentArrowRef.current) {
             const contentBounding = this.contentRef.current.getBoundingClientRect();
-            if (contentBounding.width > window.innerWidth)
-                this.contentRef.current.style.width = (window.innerWidth - MARGIN * 2) + 'px';
             if (contentBounding.left < 0) {
                 const offsetLeft = -parentBounding.left + MARGIN;
                 this.contentRef.current.style.left = offsetLeft + 'px';
@@ -1289,14 +1271,15 @@ class OverflowController extends AsideController {
             else if (contentBounding.right > window.innerWidth) {
                 const offsetRight = -window.innerWidth + parentBounding.right;
                 this.contentRef.current.style.right = (offsetRight + MARGIN) + 'px';
-                this.contentArrowRef.current.style.left = (this.contentRef.current.offsetWidth + offsetRight - MARGIN / 4) + 'px';
+                this.contentArrowRef.current.style.left = (this.contentRef.current.offsetWidth + offsetRight - MARGIN) + 'px';
             }
-            if (contentBounding.top < 0) {
+            const minContentOut = contentBounding.height * 0.1;
+            if (contentBounding.top < -minContentOut) {
                 this.config.position = 'bottom';
                 this.contentRef.current.classList.replace('__top', '__bottom');
                 this.contentArrowRef.current.classList.replace('__top', '__bottom');
             }
-            if (contentBounding.bottom > window.innerHeight) {
+            else if (contentBounding.bottom > window.innerHeight + minContentOut) {
                 this.config.position = 'top';
                 this.contentRef.current.classList.replace('__bottom', '__top');
                 this.contentArrowRef.current.classList.replace('__bottom', '__top');

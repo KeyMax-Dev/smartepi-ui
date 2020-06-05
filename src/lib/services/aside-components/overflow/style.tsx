@@ -9,6 +9,8 @@ export const OverflowElement = styled(motion.div)`
     justify-content: center;
     align-items: center;
     opacity: 0;
+    max-width: calc(100vw - 20px);
+    max-height: calc(100vh - 20px);
 
     border-radius: ${() => getGlobalTheme().borderRadius};
     box-shadow: ${() => getGlobalTheme().boxShadow.normal};
@@ -21,14 +23,6 @@ export const OverflowElement = styled(motion.div)`
 
     &.__top {
         bottom: 100%;
-    }
-
-    &.__right {
-        left: 100%;
-    }
-
-    &.__left {
-        right: 100%;
     }
 `;
 
@@ -46,17 +40,5 @@ export const OverflowElementArrow = styled.div`
         left: calc(50% - 5px);
         bottom: -10px;
         border-top-color: ${() => getGlobalTheme().colors.primary.contrast};
-    }
-
-    &.__right {
-        top: calc(50% - 5px);
-        left: -10px;
-        border-right-color: ${() => getGlobalTheme().colors.primary.contrast};
-    }
-
-    &.__left {
-        top: calc(50% - 5px);
-        right: -10px;
-        border-left-color: ${() => getGlobalTheme().colors.primary.contrast};
     }
 `;

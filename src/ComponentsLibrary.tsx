@@ -181,7 +181,7 @@ export default function ComponentsLibrary(): JSX.Element {
                 </CardBase>
             </ComponentExpandable>
             <ComponentExpandable componentName="Datepicker">
-                <Button buttonType="icon" icon="calendar" text="Overflow" onClick={(event) => datepickerOverflow.open(event.target as HTMLElement)} />
+                <Button buttonType="icon" icon="calendar" text="Overflow" onClick={(event) => datepickerOverflow.open(event.currentTarget as HTMLElement)} />
                 <Button buttonType="icon" icon="calendar" text="Modal" onClick={() => datepickerModal.open()} />
             </ComponentExpandable>
         </PageBody>

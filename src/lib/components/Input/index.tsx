@@ -42,7 +42,7 @@ export default function Input(props: InputProps): JSX.Element {
             {props.iconLeft && <Icon color={props.color} name={props.iconLeft} />}
             <InputElement {...props} ref={inputRef as React.MutableRefObject<HTMLInputElement>} />
             {props.enableClear && <Button buttonType="icon" icon="close" onClick={clear} iconSize="20px" style={{ margin: 0, padding: 0 }} />}
-            {props.enableDatepicker && <Button buttonType="icon" icon="calendar" onClick={(event) => datepicker.open(event.target as HTMLElement)} iconSize="20px" style={{ margin: 0, padding: 0 }} />}
+            {props.enableDatepicker && <Button buttonType="icon" icon="calendar" onClick={(event) => datepicker.open(event.currentTarget as HTMLElement)} iconSize="20px" style={{ margin: 0, padding: 0 }} />}
             {props.iconRight && <Icon color={props.color} name={props.iconRight} />}
         </InputContainerElement>
     );
