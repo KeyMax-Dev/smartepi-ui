@@ -48,11 +48,12 @@ class ModalController extends AsideController {
             transition: { duration: .4 }
         }).then(() => {
             this.status = 'opened';
+            if(this.onopen) this.onopen();
             return Promise.resolve();
         });
     }
 
-    public close(): Promise<void> {
+    public close(reason?: unknown): Promise<void> {
         if (this.status !== 'opened') return Promise.resolve();
         this.status = 'closing';
 
@@ -69,7 +70,11 @@ class ModalController extends AsideController {
         return this.overlayControls.start({
             opacity: [1, 0],
             transition: { duration: .3 },
-        }).then(() => Promise.resolve(this.removeNode()));
+        }).then(() => {
+            this.status = 'closed';
+            if(this.onclose) this.onclose(reason);
+            return Promise.resolve(this.removeNode());
+        });
     }
 
     public setDisabledBackdrop(value: boolean): void {
@@ -84,9 +89,9 @@ class ModalController extends AsideController {
     protected createReactElement(): JSX.Element {
         return (
             <ModalBaseElement>
-                <motion.div className="__overlay" onClick={(): Promise<void> | undefined => (this.config.disableBackdropClose ? undefined : this.close())} animate={this.overlayControls} />
+                <motion.div className="__overlay" onClick={(): Promise<void> | undefined => (this.config.disableBackdropClose ? undefined : this.close('backdrop'))} animate={this.overlayControls} />
                 <motion.div className="__container" animate={this.containerControls}>
-                    {!this.config.disableCloseButton && <ModalCloseButton onClick={(): Promise<void> => this.close()} width="30px" height="30px" name="close" />}
+                    {!this.config.disableCloseButton && <ModalCloseButton onClick={(): Promise<void> => this.close('closeButton')} width="30px" height="30px" name="close" />}
                     {this.content}
                 </motion.div>
             </ModalBaseElement>

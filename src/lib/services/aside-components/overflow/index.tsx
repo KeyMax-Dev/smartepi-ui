@@ -25,13 +25,13 @@ class OverflowController extends AsideController {
 
     private clickListener = (event: MouseEvent): void => {
         if (!this.container?.contains(event.target as HTMLElement) || this.container === event.target) {
-            this.close();
+            this.close('clickOutside');
         }
     };
 
     private updateContainerListener = (): void => this.updateContainer();
     private hoverLeaveListener = (): void => {
-        this.close();
+        this.close('mouseLeave');
         this.container?.removeEventListener('mouseleave', this.hoverLeaveListener);
     }
 
@@ -57,23 +57,32 @@ class OverflowController extends AsideController {
         this.updateContainer(parent);
         this.addListeners();
 
+        this.status = 'opening';
         this.containerControls.stop();
         this.containerControls.start({
             opacity: [0, 1],
             transition: { duration: .2 }
+        }).then(() => {
+            this.status = 'opened';
+            if (this.onopen) this.onopen();
         });
 
         if (isHover) this.container?.addEventListener('mouseleave', this.hoverLeaveListener);
     }
 
-    public close(): void {
+    public close(reason?: unknown): void {
         const duration = 0.2;
         this.removeListeners();
+        this.status = 'closing';
         this.containerControls.start({
             opacity: [1, 0],
             transition: { duration }
         });
-        setTimeout(() => this.removeNode(), duration * 1000);
+        setTimeout(() => {
+            this.status = 'closed';
+            if (this.onclose) this.onclose(reason);
+            this.removeNode();
+        }, duration * 1000);
     }
 
     protected createReactElement(): JSX.Element {

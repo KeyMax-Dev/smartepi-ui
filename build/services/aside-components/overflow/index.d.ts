@@ -16,7 +16,7 @@ declare class OverflowController extends AsideController {
     setParent(newParent: HTMLElement): void;
     getParent(): HTMLElement | null;
     open(parent?: HTMLElement, isHover?: boolean): void;
-    close(): void;
+    close(reason?: unknown): void;
     protected createReactElement(): JSX.Element;
     private updateContainer;
     private addListeners;

@@ -24,7 +24,7 @@ class ToastController extends AsideController {
 
     private clickListener = (event: MouseEvent): void => {
         if (!this.container?.contains(event.target as HTMLElement) || this.container === event.target) {
-            this.close();
+            this.close('outsideClick');
         }
     };
 
@@ -45,8 +45,9 @@ class ToastController extends AsideController {
 
         ReactDOM.render(this.createReactElement(), this.container);
         setTimeout(() => window.addEventListener('click', this.clickListener));
-        this.hideTimeout = setTimeout(() => this.close(), this.config.timeout);
+        this.hideTimeout = setTimeout(() => this.close('timeout'), this.config.timeout);
 
+        this.status = 'opening';
         this.animationController.start({
             bottom: [-100, 15],
             opacity: [0, 1],
@@ -54,10 +55,11 @@ class ToastController extends AsideController {
         });
         this.animationTimeout = setTimeout(() => {
             this.status = 'opened';
+            if (this.onopen) this.onopen();
         }, 200);
     }
 
-    public close(): void {
+    public close(reason?: unknown): void {
         if (this.status !== 'opened') {
             return;
         }
@@ -72,6 +74,7 @@ class ToastController extends AsideController {
         this.animationTimeout = setTimeout(() => {
             this.removeNode();
             this.status = 'closed';
+            if (this.onclose) this.onclose(reason);
         }, 200);
     }
 

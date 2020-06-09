@@ -979,6 +979,12 @@ class AsideController {
         }
         this.status = 'closed';
     }
+    onOpen(func) {
+        this.onopen = func;
+    }
+    onClose(func) {
+        this.onclose = func;
+    }
 }
 
 const DEFAULT_MODAL_CONFIG = {
@@ -1012,10 +1018,12 @@ class ModalController extends AsideController {
             transition: { duration: .4 }
         }).then(() => {
             this.status = 'opened';
+            if (this.onopen)
+                this.onopen();
             return Promise.resolve();
         });
     }
-    close() {
+    close(reason) {
         if (this.status !== 'opened')
             return Promise.resolve();
         this.status = 'closing';
@@ -1031,7 +1039,12 @@ class ModalController extends AsideController {
         return this.overlayControls.start({
             opacity: [1, 0],
             transition: { duration: .3 },
-        }).then(() => Promise.resolve(this.removeNode()));
+        }).then(() => {
+            this.status = 'closed';
+            if (this.onclose)
+                this.onclose(reason);
+            return Promise.resolve(this.removeNode());
+        });
     }
     setDisabledBackdrop(value) {
         this.config.disableBackdropClose = value;
@@ -1042,9 +1055,9 @@ class ModalController extends AsideController {
     }
     createReactElement() {
         return (React__default.createElement(ModalBaseElement, null,
-            React__default.createElement(framerMotion.motion.div, { className: "__overlay", onClick: () => (this.config.disableBackdropClose ? undefined : this.close()), animate: this.overlayControls }),
+            React__default.createElement(framerMotion.motion.div, { className: "__overlay", onClick: () => (this.config.disableBackdropClose ? undefined : this.close('backdrop')), animate: this.overlayControls }),
             React__default.createElement(framerMotion.motion.div, { className: "__container", animate: this.containerControls },
-                !this.config.disableCloseButton && React__default.createElement(ModalCloseButton, { onClick: () => this.close(), width: "30px", height: "30px", name: "close" }),
+                !this.config.disableCloseButton && React__default.createElement(ModalCloseButton, { onClick: () => this.close('closeButton'), width: "30px", height: "30px", name: "close" }),
                 this.content)));
     }
 }
@@ -1091,7 +1104,7 @@ class ToastController extends AsideController {
         this.clickListener = (event) => {
             var _a;
             if (!((_a = this.container) === null || _a === void 0 ? void 0 : _a.contains(event.target)) || this.container === event.target) {
-                this.close();
+                this.close('outsideClick');
             }
         };
         this.config = Object.assign({}, DEFAULT_CONFIG, options);
@@ -1106,7 +1119,8 @@ class ToastController extends AsideController {
         this.appendNode();
         ReactDOM.render(this.createReactElement(), this.container);
         setTimeout(() => window.addEventListener('click', this.clickListener));
-        this.hideTimeout = setTimeout(() => this.close(), this.config.timeout);
+        this.hideTimeout = setTimeout(() => this.close('timeout'), this.config.timeout);
+        this.status = 'opening';
         this.animationController.start({
             bottom: [-100, 15],
             opacity: [0, 1],
@@ -1114,9 +1128,11 @@ class ToastController extends AsideController {
         });
         this.animationTimeout = setTimeout(() => {
             this.status = 'opened';
+            if (this.onopen)
+                this.onopen();
         }, 200);
     }
-    close() {
+    close(reason) {
         if (this.status !== 'opened') {
             return;
         }
@@ -1131,6 +1147,8 @@ class ToastController extends AsideController {
         this.animationTimeout = setTimeout(() => {
             this.removeNode();
             this.status = 'closed';
+            if (this.onclose)
+                this.onclose(reason);
         }, 200);
     }
     setContent(newContent) {
@@ -1199,13 +1217,13 @@ class OverflowController extends AsideController {
         this.clickListener = (event) => {
             var _a;
             if (!((_a = this.container) === null || _a === void 0 ? void 0 : _a.contains(event.target)) || this.container === event.target) {
-                this.close();
+                this.close('clickOutside');
             }
         };
         this.updateContainerListener = () => this.updateContainer();
         this.hoverLeaveListener = () => {
             var _a;
-            this.close();
+            this.close('mouseLeave');
             (_a = this.container) === null || _a === void 0 ? void 0 : _a.removeEventListener('mouseleave', this.hoverLeaveListener);
         };
         this.config = Object.assign({}, DEFAULT_CONFIG$1, options);
@@ -1223,22 +1241,33 @@ class OverflowController extends AsideController {
         this.appendNode();
         this.updateContainer(parent);
         this.addListeners();
+        this.status = 'opening';
         this.containerControls.stop();
         this.containerControls.start({
             opacity: [0, 1],
             transition: { duration: .2 }
+        }).then(() => {
+            this.status = 'opened';
+            if (this.onopen)
+                this.onopen();
         });
         if (isHover)
             (_a = this.container) === null || _a === void 0 ? void 0 : _a.addEventListener('mouseleave', this.hoverLeaveListener);
     }
-    close() {
+    close(reason) {
         const duration = 0.2;
         this.removeListeners();
+        this.status = 'closing';
         this.containerControls.start({
             opacity: [1, 0],
             transition: { duration }
         });
-        setTimeout(() => this.removeNode(), duration * 1000);
+        setTimeout(() => {
+            this.status = 'closed';
+            if (this.onclose)
+                this.onclose(reason);
+            this.removeNode();
+        }, duration * 1000);
     }
     createReactElement() {
         return (React__default.createElement(OverflowElement, { ref: this.contentRef, className: `__${this.config.position}`, animate: this.containerControls },

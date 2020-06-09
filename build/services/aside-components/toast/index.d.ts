@@ -12,7 +12,7 @@ declare class ToastController extends AsideController {
     private clickListener;
     constructor(content: JSX.Element, options?: Partial<ToastConfig>);
     open(): void;
-    close(): void;
+    close(reason?: unknown): void;
     setContent(newContent: JSX.Element | string): void;
     protected createReactElement(): JSX.Element;
 }

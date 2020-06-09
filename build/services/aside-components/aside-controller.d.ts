@@ -9,6 +9,8 @@ export default abstract class AsideController {
     protected container: HTMLElement | null;
     protected status: BaseStatus;
     protected readonly containerControls: import("framer-motion").AnimationControls;
+    protected onopen: (() => void) | undefined;
+    protected onclose: ((reason: unknown) => void) | undefined;
     protected abstract createReactElement(): JSX.Element;
     protected abstract open(...args: unknown[]): void;
     protected abstract close(...args: unknown[]): void;
@@ -21,5 +23,7 @@ export default abstract class AsideController {
     protected renderReactElement(): void;
     protected appendNode(): void;
     protected removeNode(): void;
+    onOpen(func: () => void): void;
+    onClose(func: (reason: unknown) => void): void;
 }
 export {};

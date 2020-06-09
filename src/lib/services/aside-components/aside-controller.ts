@@ -18,6 +18,8 @@ export default abstract class AsideController {
     protected container: HTMLElement | null = null;
     protected status: BaseStatus = 'closed';
     protected readonly containerControls = useAnimation();
+    protected onopen: (() => void) | undefined;
+    protected onclose: ((reason: unknown) => void) | undefined;
 
     protected abstract createReactElement(): JSX.Element;
     protected abstract open(...args: unknown[]): void;
@@ -72,5 +74,13 @@ export default abstract class AsideController {
             console.warn(`${this.config.id} remove failed`, e);
         }
         this.status = 'closed';
+    }
+
+    public onOpen(func: () => void): void {
+        this.onopen = func;
+    }
+
+    public onClose(func: (reason: unknown) => void): void {
+        this.onclose = func;
     }
 }

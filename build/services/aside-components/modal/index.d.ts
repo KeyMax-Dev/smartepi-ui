@@ -10,7 +10,7 @@ declare class ModalController extends AsideController {
     private readonly overlayControls;
     constructor(content: JSX.Element, options?: Partial<ModalConfig>);
     open(): Promise<void>;
-    close(): Promise<void>;
+    close(reason?: unknown): Promise<void>;
     setDisabledBackdrop(value: boolean): void;
     setDisabledCloseButto(value: boolean): void;
     protected createReactElement(): JSX.Element;

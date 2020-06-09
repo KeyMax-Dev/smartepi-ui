@@ -74,9 +74,17 @@ export default function ComponentsLibrary(): JSX.Element {
         const aux = { [componentName]: !!!showComponent[componentName] };
         _setShowComponent({ ...showComponent, ...aux });
     };
+
     const modal = useModal(<div>Modal Service</div>);
+    modal.onOpen(() => console.log('on open event!'));
+    modal.onClose((reason) => console.log('on close event!', reason));
     const toast = useToast(<span>Toast Service</span>);
+    toast.onOpen(() => console.log('on open event'));
+    toast.onClose((reason) => console.log('on close event!', reason));
     const overflow = useOverflow(<div>Overflow Service</div>);
+    overflow.onOpen(() => console.log('on open event'));
+    overflow.onClose((reason) => console.log('on close event!', reason));
+
     const datepickerOverflow = useOverflow(<Datepicker onDaySelected={(day) => console.log('Day Selected', day.toLocaleDateString())} initial={new Date()} />);
     const datepickerModal = useModal(<Datepicker width="600px" height="600px" onDaySelected={(day) => datepickerModal.close()} />);
 
@@ -120,14 +128,14 @@ export default function ComponentsLibrary(): JSX.Element {
                 <Button buttonType="outline" text="Outline Secondary" color="secondary" />
                 <Button buttonType="outline" text="Outline Danger" color="danger" />
                 <Button buttonType="outline" text="Outline with Icon" icon="account" />
-                <Button buttonType="icon" icon="cog" onMouseEnter={(event) => overflow.open(event.target as HTMLElement, true)} />
+                <Button buttonType="icon" icon="cog" onMouseEnter={(event) => overflow.open(event.currentTarget as HTMLElement, true)} />
                 <Button buttonType="icon" icon="cog" text="Configurations" />
                 <Button buttonType="icon" icon="cog" text="Configurations With iconSize" iconSize="20px" />
             </ComponentExpandable>
             <ComponentExpandable componentName="Services">
                 <Button text="Modal" onClick={() => modal.open()} />
                 <Button text="Toast" onClick={() => toast.open()} />
-                <Button text="Overflow" onClick={(event) => overflow.open(event.target as HTMLElement)} />
+                <Button text="Overflow" onClick={(event) => overflow.open(event.currentTarget as HTMLElement)} />
             </ComponentExpandable>
             <ComponentExpandable componentName="Image">
                 <ImageAvatar />
