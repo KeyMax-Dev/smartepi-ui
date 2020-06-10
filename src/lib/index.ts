@@ -8,9 +8,10 @@ import {
     getGlobalTheme
 } from './assets/themes';
 
-// SVGs
+// Assets
 import Icons from './assets/svgs/icons';
 import Spinners from './assets/svgs/spinners';
+import Animations from './assets/animations';
 
 // Components
 import Button from './components/Button';
@@ -36,6 +37,7 @@ export {
 };
 
 export {
+    Animations,
     Icons,
     Spinners
 };

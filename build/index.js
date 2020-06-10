@@ -251,6 +251,62 @@ const Spinners = {
     circles: CirclesSVG
 };
 
+const HeaderIn = {
+    translateY: ['-100%', '0%'],
+    transition: {
+        delay: 0.1,
+        duration: 0.2,
+        ease: 'easeOut'
+    }
+};
+const HeaderOut = {
+    translateY: ['0%', '-100%'],
+    transition: {
+        duration: 0.2,
+        ease: 'easeIn'
+    }
+};
+const HeaderInitial = {
+    translateY: '-100%'
+};
+const FadeOut = {
+    opacity: [1, 0],
+    scale: [1, 0.5],
+    transition: { duration: .3, ease: 'backIn' }
+};
+const FadeIn = {
+    opacity: [0, 1],
+    scale: [0.5, 1],
+    transition: { duration: .3, ease: 'backOut' }
+};
+const FadeInitial = {
+    opacity: 0
+};
+const ListItemInitial = { opacity: 0 };
+const ListItemIn = (index = 0) => ({ opacity: 1, transition: { delay: index * .05, duration: 0.2, ease: 'easeOut' } });
+const FingerprintShadowTry = {
+    opacity: [0, .6, 0],
+    translateY: [0, 10, 0],
+    rotate: [(Math.random() * 50 - 25), (Math.random() * 50 - 25)],
+    transition: { duration: .7, ease: 'easeInOut' }
+};
+const FingerprintBaseTry = {
+    scale: [1, .9, 1],
+    transition: { duration: .7, ease: 'backInOut' }
+};
+const Animations = {
+    HeaderIn,
+    HeaderOut,
+    HeaderInitial,
+    FadeOut,
+    FadeIn,
+    FadeInitial,
+    ListItemInitial,
+    ListItemIn,
+    FingerprintShadowTry,
+    FingerprintBaseTry
+};
+
 const IconElement = styled(framerMotion.motion.div) `
     width: ${(props) => props.width ? props.width : getGlobalTheme().defaultIconSize};
     height: ${(props) => props.height ? props.height : getGlobalTheme().defaultIconSize};
@@ -417,17 +473,6 @@ const CheckboxElement = styled(framerMotion.motion.div) `
     }
 `;
 
-const FadeOut = {
-    opacity: [1, 0],
-    scale: [1, 0.5],
-    transition: { duration: .3, ease: 'backIn' }
-};
-const FadeIn = {
-    opacity: [0, 1],
-    scale: [0.5, 1],
-    transition: { duration: .3, ease: 'backOut' }
-};
-
 function Checkbox(props) {
     const size = props.size ? props.size : getGlobalTheme().defaultIconSize;
     const [value, setValue] = React.useState(!!props.value);
@@ -439,7 +484,7 @@ function Checkbox(props) {
         if (props.onToggle) {
             props.onToggle(!value);
         }
-        animationController.start(value ? FadeOut : FadeIn);
+        animationController.start(value ? Animations.FadeOut : Animations.FadeIn);
     };
     return (React__default.createElement(CheckboxElement, { className: `__checkbox-${value}`, style: { width: size, height: size }, onClick: toggle, color: props.color },
         React__default.createElement(Icon, { initial: { opacity: value ? 1 : 0 }, name: iconName, invert: value, width: `calc(${size} - 30%)`, height: `calc(${size} - 30%)`, color: props.color, animate: animationController })));
@@ -1440,6 +1485,7 @@ function Button(props) {
     }
 }
 
+exports.Animations = Animations;
 exports.Badge = Badge;
 exports.Button = Button;
 exports.CardBase = CardBase;

@@ -3,7 +3,7 @@ import { HTMLMotionProps, useAnimation } from "framer-motion";
 import CheckboxElement from "./style";
 import { Icon } from '../..';
 import { getGlobalTheme } from '../../assets/themes';
-import { FadeOut, FadeIn } from '../../assets/animations';
+import Animations from '../../assets/animations';
 
 export interface CheckboxProps extends HTMLMotionProps<'div'> {
     iconName?: string;
@@ -26,7 +26,7 @@ export default function Checkbox(props: CheckboxProps) {
         if (props.onToggle) {
             props.onToggle(!value);
         }
-        animationController.start(value ? FadeOut : FadeIn);
+        animationController.start(value ? Animations.FadeOut : Animations.FadeIn);
     };
 
     return (
