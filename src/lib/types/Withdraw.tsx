@@ -1,4 +1,4 @@
-export enum WithdrawOutStatus {
+enum WithdrawOutStatus {
     Pending,
     NotSeen,
     Seen,

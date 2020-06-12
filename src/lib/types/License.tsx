@@ -1,4 +1,4 @@
-export enum LicenseStatus {
+enum LicenseStatus {
     ACTIVE = 1,
     INACTIVE = 2,
     CANCELED = 3

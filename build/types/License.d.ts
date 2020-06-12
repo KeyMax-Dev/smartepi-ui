@@ -1,4 +1,4 @@
-export declare enum LicenseStatus {
+declare enum LicenseStatus {
     ACTIVE = 1,
     INACTIVE = 2,
     CANCELED = 3

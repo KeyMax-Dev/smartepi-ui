@@ -1,4 +1,4 @@
-export enum UserPermission {
+enum UserPermission {
     WITHDRAW = 1,
     SUPPLY = 2,
     APPROVE = 3,

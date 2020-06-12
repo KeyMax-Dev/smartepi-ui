@@ -142,6 +142,62 @@ const getGlobalTheme = () => {
     return GlobalTheme;
 };
 
+const HeaderIn = {
+    translateY: ['-100%', '0%'],
+    transition: {
+        delay: 0.1,
+        duration: 0.2,
+        ease: 'easeOut'
+    }
+};
+const HeaderOut = {
+    translateY: ['0%', '-100%'],
+    transition: {
+        duration: 0.2,
+        ease: 'easeIn'
+    }
+};
+const HeaderInitial = {
+    translateY: '-100%'
+};
+const FadeOut = {
+    opacity: [1, 0],
+    scale: [1, 0.5],
+    transition: { duration: .3, ease: 'backIn' }
+};
+const FadeIn = {
+    opacity: [0, 1],
+    scale: [0.5, 1],
+    transition: { duration: .3, ease: 'backOut' }
+};
+const FadeInitial = {
+    opacity: 0
+};
+const ListItemInitial = { opacity: 0 };
+const ListItemIn = (index = 0) => ({ opacity: 1, transition: { delay: index * .05, duration: 0.2, ease: 'easeOut' } });
+const FingerprintShadowTry = {
+    opacity: [0, .6, 0],
+    translateY: [0, 10, 0],
+    rotate: [(Math.random() * 50 - 25), (Math.random() * 50 - 25)],
+    transition: { duration: .7, ease: 'easeInOut' }
+};
+const FingerprintBaseTry = {
+    scale: [1, .9, 1],
+    transition: { duration: .7, ease: 'backInOut' }
+};
+const Animations = {
+    HeaderIn,
+    HeaderOut,
+    HeaderInitial,
+    FadeOut,
+    FadeIn,
+    FadeInitial,
+    ListItemInitial,
+    ListItemIn,
+    FingerprintShadowTry,
+    FingerprintBaseTry
+};
+
 const AccountSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" }));
 const AccountCogSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
@@ -251,61 +307,23 @@ const Spinners = {
     circles: CirclesSVG
 };
 
-const HeaderIn = {
-    translateY: ['-100%', '0%'],
-    transition: {
-        delay: 0.1,
-        duration: 0.2,
-        ease: 'easeOut'
+const BadgeElement = styled(framerMotion.motion.div) `
+    padding: 2px;
+    border-radius: calc(${() => getGlobalTheme().borderRadius} * 2);
+    background-color: ${(props) => getGlobalTheme().colors[props.color].principal};
+    color: ${(props) => getGlobalTheme().colors[props.color].contrast};
+    margin: 0 15px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .__text {
+        flex: 1;
+        margin: 0 5px;
+        text-transform: uppercase;
     }
-};
-const HeaderOut = {
-    translateY: ['0%', '-100%'],
-    transition: {
-        duration: 0.2,
-        ease: 'easeIn'
-    }
-};
-const HeaderInitial = {
-    translateY: '-100%'
-};
-const FadeOut = {
-    opacity: [1, 0],
-    scale: [1, 0.5],
-    transition: { duration: .3, ease: 'backIn' }
-};
-const FadeIn = {
-    opacity: [0, 1],
-    scale: [0.5, 1],
-    transition: { duration: .3, ease: 'backOut' }
-};
-const FadeInitial = {
-    opacity: 0
-};
-const ListItemInitial = { opacity: 0 };
-const ListItemIn = (index = 0) => ({ opacity: 1, transition: { delay: index * .05, duration: 0.2, ease: 'easeOut' } });
-const FingerprintShadowTry = {
-    opacity: [0, .6, 0],
-    translateY: [0, 10, 0],
-    rotate: [(Math.random() * 50 - 25), (Math.random() * 50 - 25)],
-    transition: { duration: .7, ease: 'easeInOut' }
-};
-const FingerprintBaseTry = {
-    scale: [1, .9, 1],
-    transition: { duration: .7, ease: 'backInOut' }
-};
-const Animations = {
-    HeaderIn,
-    HeaderOut,
-    HeaderInitial,
-    FadeOut,
-    FadeIn,
-    FadeInitial,
-    ListItemInitial,
-    ListItemIn,
-    FingerprintShadowTry,
-    FingerprintBaseTry
-};
+`;
 
 const IconElement = styled(framerMotion.motion.div) `
     width: ${(props) => props.width ? props.width : getGlobalTheme().defaultIconSize};
@@ -330,164 +348,11 @@ function Icon(props) {
     return (React__default.createElement(IconElement, Object.assign({}, props), Icons[props.name]));
 }
 
-const img = "data:image/jpeg;base64,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";
-
-const ImageAvatarElement = styled.div `
-    width: ${(props) => props.size ? props.size : getGlobalTheme().defaultIconSize};
-    height: ${(props) => props.size ? props.size : getGlobalTheme().defaultIconSize};
-    min-width: ${(props) => props.size ? props.size : getGlobalTheme().defaultIconSize};
-    min-height: ${(props) => props.size ? props.size : getGlobalTheme().defaultIconSize};
-    border-radius: 50%;
-    background-image: url(${(props) => props.src ? props.src : img});
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    margin: 3px;
-`;
-
-function ImageAvatar(props) {
-    return (React__default.createElement(ImageAvatarElement, Object.assign({}, props)));
-}
-
-const InputContainerElement = styled(framerMotion.motion.div) `
-    min-width: 260px;
-    height: 50px;
-    padding: 5px;
-    margin: 3px;
-    display: flex;
-    justify-content: center;
-    align-items: stretch;
-    transition: all ${() => getGlobalTheme().transitions.fast};
-    
-    
-    &&.__input-container-outline {
-        background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].contrast};
-        border: 1px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal}32;
-        border-radius: ${() => getGlobalTheme().borderRadius};
-
-            
-        &:focus-within {
-            box-shadow: ${() => getGlobalTheme().boxShadow.active};
-            border: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal};
-        }
-    }
-
-    &&.__input-container-downline {
-        background-color: transparent;
-        border-bottom: 1px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal}32;
-
-        &:focus-within {
-            border-bottom: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal};
-        }
-    }
-
-    @media screen and (max-width: 600px) {   
-        width: calc(100% - 30px)
-    }
-`;
-const InputElement = styled(framerMotion.motion.input) `
-    color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal};
-    background-color: transparent;
-    flex: 1;
-    flex-shrink: 1;
-    border: none;
-    outline: none;
-    font-size: ${() => getGlobalTheme().font.input.fontSize};
-    font-weight: ${() => getGlobalTheme().font.input.fontWeight};
-    text-align: ${() => getGlobalTheme().font.input.textAlign};
-    font-family: ${() => getGlobalTheme().font.input.fontFamily};
-    margin: 0 10px;
-    
-    &::placeholder {
-        transition: all ${() => getGlobalTheme().transitions.avarage};
-    }
-    &:focus {
-        &::placeholder {
-            color: transparent;
-        }
-    }
-
-    @media screen and (max-width: 600px) {   
-        margin: 0 3px;
-        min-width: 130px;
-    }
-`;
-
-const DEFAULT_TYPE = 'downline';
-function Input(props) {
-    const containerType = props.containerType ? props.containerType : DEFAULT_TYPE;
-    const inputRef = React.useRef();
-    const clear = () => {
-        if (inputRef.current) {
-            const element = inputRef.current;
-            element.value = '';
-        }
-    };
-    const onDatepickerSelect = (date) => {
-        const element = inputRef.current;
-        element.value = date.toLocaleDateString();
-        datepicker.close();
-    };
-    const datepicker = useOverflow(React__default.createElement(Datepicker, { onDaySelected: onDatepickerSelect }));
-    return (React__default.createElement(InputContainerElement, Object.assign({}, props.containerProps, { color: props.color, className: `__input-container-${containerType}` }),
-        props.iconLeft && React__default.createElement(Icon, { color: props.color, name: props.iconLeft }),
-        React__default.createElement(InputElement, Object.assign({}, props, { ref: inputRef })),
-        props.enableClear && React__default.createElement(Button, { buttonType: "icon", icon: "close", onClick: clear, iconSize: "20px", style: { margin: 0, padding: 0 } }),
-        props.enableDatepicker && React__default.createElement(Button, { buttonType: "icon", icon: "calendar", onClick: (event) => datepicker.open(event.currentTarget), iconSize: "20px", style: { margin: 0, padding: 0 } }),
-        props.iconRight && React__default.createElement(Icon, { color: props.color, name: props.iconRight })));
-}
-
-const CheckboxElement = styled(framerMotion.motion.div) `
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    transition: all ${() => getGlobalTheme().transitions.avarage};
-    border: 2px solid transparent;
-    margin: 3px;
-
-    &:hover {
-        cursor: pointer;
-    }
-
-    &&.__checkbox-true {
-        border-color: transparent;
-        background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal};
-
-        &:hover {
-            background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal}B3;
-        }
-    }
-
-    &&.__checkbox-false {
-        border-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal}32;
-
-        &:hover {
-            background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal}32;
-        }
-    }
-
-    label {
-        margin: 3px;
-        color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal};
-    }
-`;
-
-function Checkbox(props) {
-    const size = props.size ? props.size : getGlobalTheme().defaultIconSize;
-    const [value, setValue] = React.useState(!!props.value);
-    const animationController = framerMotion.useAnimation();
-    const iconName = props.iconName ? props.iconName : 'check';
-    const toggle = () => {
-        animationController.stop();
-        setValue(!value);
-        if (props.onToggle) {
-            props.onToggle(!value);
-        }
-        animationController.start(value ? Animations.FadeOut : Animations.FadeIn);
-    };
-    return (React__default.createElement(CheckboxElement, { className: `__checkbox-${value}`, style: { width: size, height: size }, onClick: toggle, color: props.color },
-        React__default.createElement(Icon, { initial: { opacity: value ? 1 : 0 }, name: iconName, invert: value, width: `calc(${size} - 30%)`, height: `calc(${size} - 30%)`, color: props.color, animate: animationController })));
+function Badge(props) {
+    const color = props.color ? props.color : 'primary';
+    return (React__default.createElement(BadgeElement, Object.assign({}, props, { color: color }),
+        props.icon && React__default.createElement(Icon, { name: props.icon, invert: true, width: "15pt", height: "unset", color: color }),
+        props.text && React__default.createElement("span", { className: "__text" }, props.text)));
 }
 
 const CardBaseElement = styled(framerMotion.motion.div) `
@@ -578,29 +443,57 @@ function CardBase(props) {
     return (React__default.createElement(CardBaseElement, Object.assign({}, props, { width, height, color })));
 }
 
-const BadgeElement = styled(framerMotion.motion.div) `
-    padding: 2px;
-    border-radius: calc(${() => getGlobalTheme().borderRadius} * 2);
-    background-color: ${(props) => getGlobalTheme().colors[props.color].principal};
-    color: ${(props) => getGlobalTheme().colors[props.color].contrast};
-    margin: 0 15px;
-
+const CheckboxElement = styled(framerMotion.motion.div) `
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 50%;
+    transition: all ${() => getGlobalTheme().transitions.avarage};
+    border: 2px solid transparent;
+    margin: 3px;
 
-    .__text {
-        flex: 1;
-        margin: 0 5px;
-        text-transform: uppercase;
+    &:hover {
+        cursor: pointer;
+    }
+
+    &&.__checkbox-true {
+        border-color: transparent;
+        background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal};
+
+        &:hover {
+            background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal}B3;
+        }
+    }
+
+    &&.__checkbox-false {
+        border-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal}32;
+
+        &:hover {
+            background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal}32;
+        }
+    }
+
+    label {
+        margin: 3px;
+        color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal};
     }
 `;
 
-function Badge(props) {
-    const color = props.color ? props.color : 'primary';
-    return (React__default.createElement(BadgeElement, Object.assign({}, props, { color: color }),
-        props.icon && React__default.createElement(Icon, { name: props.icon, invert: true, width: "15pt", height: "unset", color: color }),
-        props.text && React__default.createElement("span", { className: "__text" }, props.text)));
+function Checkbox(props) {
+    const size = props.size ? props.size : getGlobalTheme().defaultIconSize;
+    const [value, setValue] = React.useState(!!props.value);
+    const animationController = framerMotion.useAnimation();
+    const iconName = props.iconName ? props.iconName : 'check';
+    const toggle = () => {
+        animationController.stop();
+        setValue(!value);
+        if (props.onToggle) {
+            props.onToggle(!value);
+        }
+        animationController.start(value ? Animations.FadeOut : Animations.FadeIn);
+    };
+    return (React__default.createElement(CheckboxElement, { className: `__checkbox-${value}`, style: { width: size, height: size }, onClick: toggle, color: props.color },
+        React__default.createElement(Icon, { initial: { opacity: value ? 1 : 0 }, name: iconName, invert: value, width: `calc(${size} - 30%)`, height: `calc(${size} - 30%)`, color: props.color, animate: animationController })));
 }
 
 const DatepickerElement = styled.div `
@@ -914,57 +807,112 @@ function Datepicker(props) {
         React__default.createElement("div", { className: "__datepicker-body" }, body)));
 }
 
-const ModalBaseElement = styled.div `
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    left: 0px;
-    top: 0px;
+const img = "data:image/jpeg;base64,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";
+
+const ImageAvatarElement = styled.div `
+    width: ${(props) => props.size ? props.size : getGlobalTheme().defaultIconSize};
+    height: ${(props) => props.size ? props.size : getGlobalTheme().defaultIconSize};
+    min-width: ${(props) => props.size ? props.size : getGlobalTheme().defaultIconSize};
+    min-height: ${(props) => props.size ? props.size : getGlobalTheme().defaultIconSize};
+    border-radius: 50%;
+    background-image: url(${(props) => props.src ? props.src : img});
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 3px;
+`;
+
+function ImageAvatar(props) {
+    return (React__default.createElement(ImageAvatarElement, Object.assign({}, props)));
+}
+
+const InputContainerElement = styled(framerMotion.motion.div) `
+    min-width: 260px;
+    height: 50px;
+    padding: 5px;
+    margin: 3px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    z-index: 99;
+    align-items: stretch;
+    transition: all ${() => getGlobalTheme().transitions.fast};
+    
+    
+    &&.__input-container-outline {
+        background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].contrast};
+        border: 1px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal}32;
+        border-radius: ${() => getGlobalTheme().borderRadius};
 
-    .__overlay {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        left: 0px;
-        top: 0px;
-        background-color: ${() => getGlobalTheme().colors.primary.principal}4D;
-        opacity: 0;
+            
+        &:focus-within {
+            box-shadow: ${() => getGlobalTheme().boxShadow.active};
+            border: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal};
+        }
     }
 
-    .__container {
-        position: absolute;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        padding: 30px;
-        background-color: ${() => getGlobalTheme().colors.primary.contrast};
-        border-radius: calc(${() => getGlobalTheme().borderRadius} * 2);
-        box-shadow: ${() => getGlobalTheme().boxShadow.normal};
-        opacity: 0;
-        max-width: calc(100% - 30px);
-        max-height: calc(100% - 30px);
+    &&.__input-container-downline {
+        background-color: transparent;
+        border-bottom: 1px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal}32;
 
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        &:focus-within {
+            border-bottom: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal};
+        }
+    }
+
+    @media screen and (max-width: 600px) {   
+        width: calc(100% - 30px)
     }
 `;
-const ModalCloseButton = styled(Icon) `
-    position: absolute;
-    right: 5px;
-    top: 5px;
+const InputElement = styled(framerMotion.motion.input) `
+    color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal};
+    background-color: transparent;
+    flex: 1;
+    flex-shrink: 1;
+    border: none;
+    outline: none;
+    font-size: ${() => getGlobalTheme().font.input.fontSize};
+    font-weight: ${() => getGlobalTheme().font.input.fontWeight};
+    text-align: ${() => getGlobalTheme().font.input.textAlign};
+    font-family: ${() => getGlobalTheme().font.input.fontFamily};
+    margin: 0 10px;
+    
+    &::placeholder {
+        transition: all ${() => getGlobalTheme().transitions.avarage};
+    }
+    &:focus {
+        &::placeholder {
+            color: transparent;
+        }
+    }
 
-    cursor: pointer;
-    transition: ${() => getGlobalTheme().transitions.fast};
-    &:active {
-        transform: scale(0.90);
+    @media screen and (max-width: 600px) {   
+        margin: 0 3px;
+        min-width: 130px;
     }
 `;
+
+const DEFAULT_TYPE = 'downline';
+function Input(props) {
+    const containerType = props.containerType ? props.containerType : DEFAULT_TYPE;
+    const inputRef = React.useRef();
+    const clear = () => {
+        if (inputRef.current) {
+            const element = inputRef.current;
+            element.value = '';
+        }
+    };
+    const onDatepickerSelect = (date) => {
+        const element = inputRef.current;
+        element.value = date.toLocaleDateString();
+        datepicker.close();
+    };
+    const datepicker = useOverflow(React__default.createElement(Datepicker, { onDaySelected: onDatepickerSelect }));
+    return (React__default.createElement(InputContainerElement, Object.assign({}, props.containerProps, { color: props.color, className: `__input-container-${containerType}` }),
+        props.iconLeft && React__default.createElement(Icon, { color: props.color, name: props.iconLeft }),
+        React__default.createElement(InputElement, Object.assign({}, props, { ref: inputRef })),
+        props.enableClear && React__default.createElement(Button, { buttonType: "icon", icon: "close", onClick: clear, iconSize: "20px", style: { margin: 0, padding: 0 } }),
+        props.enableDatepicker && React__default.createElement(Button, { buttonType: "icon", icon: "calendar", onClick: (event) => datepicker.open(event.currentTarget), iconSize: "20px", style: { margin: 0, padding: 0 } }),
+        props.iconRight && React__default.createElement(Icon, { color: props.color, name: props.iconRight })));
+}
 
 const DEFAULT_ASIDE_CONFIG = {
     id: '__default-aside-id'
@@ -1031,6 +979,58 @@ class AsideController {
         this.onclose = func;
     }
 }
+
+const ModalBaseElement = styled.div `
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99;
+
+    .__overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0px;
+        top: 0px;
+        background-color: ${() => getGlobalTheme().colors.primary.principal}4D;
+        opacity: 0;
+    }
+
+    .__container {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        padding: 30px;
+        background-color: ${() => getGlobalTheme().colors.primary.contrast};
+        border-radius: calc(${() => getGlobalTheme().borderRadius} * 2);
+        box-shadow: ${() => getGlobalTheme().boxShadow.normal};
+        opacity: 0;
+        max-width: calc(100% - 30px);
+        max-height: calc(100% - 30px);
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+`;
+const ModalCloseButton = styled(Icon) `
+    position: absolute;
+    right: 5px;
+    top: 5px;
+
+    cursor: pointer;
+    transition: ${() => getGlobalTheme().transitions.fast};
+    &:active {
+        transform: scale(0.90);
+    }
+`;
 
 const DEFAULT_MODAL_CONFIG = {
     id: '__default-modal',
@@ -1486,6 +1486,7 @@ function Button(props) {
 }
 
 exports.Animations = Animations;
+exports.AsideController = AsideController;
 exports.Badge = Badge;
 exports.Button = Button;
 exports.CardBase = CardBase;

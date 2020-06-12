@@ -1,4 +1,4 @@
-export declare enum WithdrawOutStatus {
+declare enum WithdrawOutStatus {
     Pending = 0,
     NotSeen = 1,
     Seen = 2,
