@@ -1479,7 +1479,7 @@ function Button(props) {
         case 'outline':
         case 'solid':
         default:
-            return (React__default.createElement(BaseButton, Object.assign({}, props, { className: `__button-${buttonType}` }),
+            return (React__default.createElement(BaseButton, Object.assign({}, props, { className: `__button-${buttonType} ${props.className}` }),
                 props.icon && React__default.createElement(Icon, { name: props.icon, color: props.color, invert: buttonType === 'solid', height: props.iconSize, width: props.iconSize, style: { marginRight: '15px' } }),
                 props.text && React__default.createElement("span", null, props.text)));
     }

@@ -31,7 +31,7 @@ export default function Button(props: ButtonProps): JSX.Element {
         case 'solid':
         default:
             return (
-                <BaseButton {...props} className={`__button-${buttonType}`}>
+                <BaseButton {...props} className={`__button-${buttonType} ${props.className}`}>
                     {props.icon && <Icon name={props.icon} color={props.color} invert={buttonType === 'solid'} height={props.iconSize} width={props.iconSize} style={{ marginRight: '15px' }} />}
                     {props.text && <span>{props.text}</span>}
                 </BaseButton>
