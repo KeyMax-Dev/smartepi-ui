@@ -11,7 +11,8 @@ type OverflowConfig = BaseAsideConfig & {
 
 const DEFAULT_CONFIG: OverflowConfig = {
     id: '__default-pop-up',
-    position: 'bottom'
+    position: 'bottom',
+    rootElement: 'body'
 };
 
 const MARGIN = 10;
@@ -53,7 +54,7 @@ class OverflowController extends AsideController {
 
     public open(parent?: HTMLElement, isHover?: boolean): void {
         if (this.status === 'opened') return;
-        this.appendNode();
+        if (!this.appendNode()) return;
         this.updateContainer(parent);
         this.addListeners();
 

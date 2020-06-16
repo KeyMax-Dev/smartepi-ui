@@ -12,7 +12,8 @@ type ToastConfig = BaseAsideConfig & {
 const DEFAULT_CONFIG: ToastConfig = {
     id: '__default-pop-up',
     color: 'primary',
-    timeout: 2000
+    timeout: 2000,
+    rootElement: 'body'
 };
 
 class ToastController extends AsideController {
@@ -41,7 +42,7 @@ class ToastController extends AsideController {
         if (!!!this.content) {
             return;
         }
-        this.appendNode();
+        if (!this.appendNode()) return;
 
         ReactDOM.render(this.createReactElement(), this.container);
         setTimeout(() => window.addEventListener('click', this.clickListener));

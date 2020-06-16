@@ -915,7 +915,8 @@ function Input(props) {
 }
 
 const DEFAULT_ASIDE_CONFIG = {
-    id: '__default-aside-id'
+    id: '__default-aside-id',
+    rootElement: 'body'
 };
 class AsideController {
     constructor(content, options) {
@@ -950,27 +951,62 @@ class AsideController {
         }
     }
     appendNode() {
-        var _a;
         this.status = 'opening';
         this.createContainer();
         try {
             this.renderReactElement();
-            (_a = document.getElementsByTagName('body')[0]) === null || _a === void 0 ? void 0 : _a.appendChild(this.container);
+            let elementReference;
+            if (this.config.rootElement.startsWith('#')) {
+                elementReference = document.getElementById(this.config.rootElement.replace('#', ''));
+            }
+            else if (this.config.rootElement.startsWith('.')) {
+                elementReference = document.getElementsByClassName(this.config.rootElement.replace('.', ''))[0];
+            }
+            else {
+                elementReference = document.getElementsByTagName(this.config.rootElement)[0];
+            }
+            if (elementReference) {
+                elementReference.appendChild(this.container);
+                return true;
+            }
+            else {
+                throw 'Element reference not found';
+            }
         }
         catch (e) {
-            console.warn(`${this.config.id} append failed`, e);
+            console.error(`${this.config.id} append failed:`, e);
+            console.error(`${this.config.id} configurations:`, this.config);
+            this.status = 'closed';
+            return false;
         }
     }
     removeNode() {
-        var _a;
         try {
             ReactDOM.unmountComponentAtNode(this.container);
-            (_a = document.getElementsByTagName('body')[0]) === null || _a === void 0 ? void 0 : _a.removeChild(this.container);
+            let elementReference;
+            if (this.config.rootElement.startsWith('#')) {
+                elementReference = document.getElementById(this.config.rootElement.replace('#', ''));
+            }
+            else if (this.config.rootElement.startsWith('.')) {
+                elementReference = document.getElementsByClassName(this.config.rootElement.replace('.', ''))[0];
+            }
+            else {
+                elementReference = document.getElementsByTagName(this.config.rootElement)[0];
+            }
+            if (elementReference) {
+                elementReference.removeChild(this.container);
+                this.status = 'closed';
+                return true;
+            }
+            else {
+                throw 'Element reference not found';
+            }
         }
         catch (e) {
-            console.warn(`${this.config.id} remove failed`, e);
+            console.error(`${this.config.id} remove failed`, e);
+            console.error(`${this.config.id} configurations:`, this.config);
+            return false;
         }
-        this.status = 'closed';
     }
     onOpen(func) {
         this.onopen = func;
@@ -1036,7 +1072,8 @@ const DEFAULT_MODAL_CONFIG = {
     id: '__default-modal',
     disableBackdropClose: false,
     disableCloseButton: false,
-    preventScroll: true
+    preventScroll: true,
+    rootElement: 'body'
 };
 class ModalController extends AsideController {
     constructor(content, options) {
@@ -1048,7 +1085,8 @@ class ModalController extends AsideController {
     open() {
         if (this.status !== 'closed')
             return Promise.resolve();
-        this.appendNode();
+        if (!this.appendNode())
+            return Promise.reject('append failed');
         if (this.config.preventScroll) {
             document.body.style.overflow = 'hidden';
         }
@@ -1088,7 +1126,10 @@ class ModalController extends AsideController {
             this.status = 'closed';
             if (this.onclose)
                 this.onclose(reason);
-            return Promise.resolve(this.removeNode());
+            if (this.removeNode())
+                return Promise.resolve();
+            else
+                return Promise.reject();
         });
     }
     setDisabledBackdrop(value) {
@@ -1140,7 +1181,8 @@ const ToastElement = styled(framerMotion.motion.div) `
 const DEFAULT_CONFIG = {
     id: '__default-pop-up',
     color: 'primary',
-    timeout: 2000
+    timeout: 2000,
+    rootElement: 'body'
 };
 class ToastController extends AsideController {
     constructor(content, options) {
@@ -1161,7 +1203,8 @@ class ToastController extends AsideController {
         if (!!!this.content) {
             return;
         }
-        this.appendNode();
+        if (!this.appendNode())
+            return;
         ReactDOM.render(this.createReactElement(), this.container);
         setTimeout(() => window.addEventListener('click', this.clickListener));
         this.hideTimeout = setTimeout(() => this.close('timeout'), this.config.timeout);
@@ -1250,7 +1293,8 @@ const OverflowElementArrow = styled.div `
 
 const DEFAULT_CONFIG$1 = {
     id: '__default-pop-up',
-    position: 'bottom'
+    position: 'bottom',
+    rootElement: 'body'
 };
 const MARGIN = 10;
 class OverflowController extends AsideController {
@@ -1283,7 +1327,8 @@ class OverflowController extends AsideController {
         var _a;
         if (this.status === 'opened')
             return;
-        this.appendNode();
+        if (!this.appendNode())
+            return;
         this.updateContainer(parent);
         this.addListeners();
         this.status = 'opening';

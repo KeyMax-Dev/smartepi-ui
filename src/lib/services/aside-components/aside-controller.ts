@@ -6,10 +6,12 @@ type BaseStatus = 'opening' | 'opened' | 'closing' | 'closed';
 
 export type BaseAsideConfig = {
     id: string;
+    rootElement: string;
 }
 
 const DEFAULT_ASIDE_CONFIG: BaseAsideConfig = {
-    id: '__default-aside-id'
+    id: '__default-aside-id',
+    rootElement: 'body'
 };
 
 export default abstract class AsideController {
@@ -55,25 +57,60 @@ export default abstract class AsideController {
         }
     }
 
-    protected appendNode(): void {
+    protected appendNode(): boolean {
         this.status = 'opening';
         this.createContainer();
         try {
             this.renderReactElement();
-            document.getElementsByTagName('body')[0]?.appendChild(this.container as HTMLElement);
+
+            let elementReference: Element | null;
+            if (this.config.rootElement.startsWith('#')) {
+                elementReference = document.getElementById(this.config.rootElement.replace('#', ''));
+            } else if (this.config.rootElement.startsWith('.')) {
+                elementReference = document.getElementsByClassName(this.config.rootElement.replace('.', ''))[0];
+            } else {
+                elementReference = document.getElementsByTagName(this.config.rootElement)[0];
+            }
+
+            if (elementReference) {
+                elementReference.appendChild(this.container as HTMLElement);
+                return true;
+            } else {
+                throw 'Element reference not found';
+            }
         } catch (e) {
-            console.warn(`${this.config.id} append failed`, e);
+            console.error(`${this.config.id} append failed:`, e);
+            console.error(`${this.config.id} configurations:`, this.config);
+            this.status = 'closed';
+            return false;
         }
     }
 
-    protected removeNode(): void {
+    protected removeNode(): boolean {
         try {
             ReactDOM.unmountComponentAtNode(this.container as HTMLElement);
-            document.getElementsByTagName('body')[0]?.removeChild(this.container as HTMLElement);
+
+            let elementReference: Element | null;
+            if (this.config.rootElement.startsWith('#')) {
+                elementReference = document.getElementById(this.config.rootElement.replace('#', ''));
+            } else if (this.config.rootElement.startsWith('.')) {
+                elementReference = document.getElementsByClassName(this.config.rootElement.replace('.', ''))[0];
+            } else {
+                elementReference = document.getElementsByTagName(this.config.rootElement)[0];
+            }
+
+            if (elementReference) {
+                elementReference.removeChild(this.container as HTMLElement);
+                this.status = 'closed';
+                return true;
+            } else {
+                throw 'Element reference not found';
+            }
         } catch (e) {
-            console.warn(`${this.config.id} remove failed`, e);
+            console.error(`${this.config.id} remove failed`, e);
+            console.error(`${this.config.id} configurations:`, this.config);
+            return false;
         }
-        this.status = 'closed';
     }
 
     public onOpen(func: () => void): void {

@@ -2,6 +2,7 @@
 declare type BaseStatus = 'opening' | 'opened' | 'closing' | 'closed';
 export declare type BaseAsideConfig = {
     id: string;
+    rootElement: string;
 };
 export default abstract class AsideController {
     protected content: JSX.Element;
@@ -21,8 +22,8 @@ export default abstract class AsideController {
     }): void;
     protected createContainer(): void;
     protected renderReactElement(): void;
-    protected appendNode(): void;
-    protected removeNode(): void;
+    protected appendNode(): boolean;
+    protected removeNode(): boolean;
     onOpen(func: () => void): void;
     onClose(func: (reason: unknown) => void): void;
 }

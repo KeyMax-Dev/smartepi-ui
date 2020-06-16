@@ -15,7 +15,8 @@ const DEFAULT_MODAL_CONFIG: ModalConfig = {
     id: '__default-modal',
     disableBackdropClose: false,
     disableCloseButton: false,
-    preventScroll: true
+    preventScroll: true,
+    rootElement: 'body'
 };
 
 class ModalController extends AsideController {
@@ -31,7 +32,7 @@ class ModalController extends AsideController {
 
     public open(): Promise<void> {
         if (this.status !== 'closed') return Promise.resolve();
-        this.appendNode();
+        if (!this.appendNode()) return Promise.reject('append failed');
 
         if (this.config.preventScroll) {
             document.body.style.overflow = 'hidden';
@@ -73,7 +74,10 @@ class ModalController extends AsideController {
         }).then(() => {
             this.status = 'closed';
             if(this.onclose) this.onclose(reason);
-            return Promise.resolve(this.removeNode());
+            if (this.removeNode())
+                return Promise.resolve();
+            else
+                return Promise.reject();
         });
     }
 
