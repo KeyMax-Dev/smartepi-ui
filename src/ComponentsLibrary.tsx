@@ -120,17 +120,20 @@ export default function ComponentsLibrary(): JSX.Element {
             </ComponentExpandable>
             <ComponentExpandable componentName="Buttons">
                 <Button buttonType="solid" text="Solid" />
+                <Button buttonType="solid" text="Solid Invert" invert />
                 <Button buttonType="solid" text="Solid Secondary" color="secondary" />
                 <Button buttonType="solid" text="Solid Danger" color="danger" />
                 <Button buttonType="solid" text="Solid with Icon" icon="account" />
                 <Button buttonType="solid" text="Solid with Icon with iconSize" icon="account" iconSize="80px" />
                 <Button buttonType="outline" text="Outline" />
+                <Button buttonType="outline" text="Outline Invert" invert />
                 <Button buttonType="outline" text="Outline Secondary" color="secondary" />
                 <Button buttonType="outline" text="Outline Danger" color="danger" />
                 <Button buttonType="outline" text="Outline with Icon" icon="account" />
                 <Button buttonType="icon" icon="cog" onMouseEnter={(event) => overflow.open(event.currentTarget as HTMLElement, true)} />
                 <Button buttonType="icon" icon="cog" text="Configurations" />
                 <Button buttonType="icon" icon="cog" text="Configurations With iconSize" iconSize="20px" />
+                <Button buttonType="icon" icon="cog" text="Configurations Invert" invert/>
             </ComponentExpandable>
             <ComponentExpandable componentName="Services">
                 <Button text="Modal" onClick={() => modal.open()} />

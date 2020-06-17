@@ -7,8 +7,8 @@ import { getGlobalTheme } from '../..';
 const IconButton = styled(motion.button) <ButtonProps>`
     all: unset;
     background: transparent;
-    color: ${(props): string => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
-    -webkit-text-fill-color: ${(props): string => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
+    color: ${(props): string => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
+    -webkit-text-fill-color: ${(props): string => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
     padding: 5px;
     border-radius: ${() => getGlobalTheme().borderRadius};
     margin: 3px;

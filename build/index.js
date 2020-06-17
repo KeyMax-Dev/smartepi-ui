@@ -374,11 +374,6 @@ const CardBaseElement = styled(framerMotion.motion.div) `
 
     cursor: pointer;
     transition: all ${() => getGlobalTheme().transitions.fast};
-    &:active {
-        transform: scale(0.99);
-        box-shadow: ${() => getGlobalTheme().boxShadow.active};
-    }
-
 
     .__title {
         margin: 5px 0;
@@ -1427,8 +1422,8 @@ function useOverflow(content, options) {
 const IconButton = styled(framerMotion.motion.button) `
     all: unset;
     background: transparent;
-    color: ${(props) => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
-    -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
+    color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
+    -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
     padding: 5px;
     border-radius: ${() => getGlobalTheme().borderRadius};
     margin: 3px;
@@ -1477,12 +1472,12 @@ const BaseButton = styled(framerMotion.motion.button) `
 
     &&.__button-outline {    
         background: transparent;
-        color: ${(props) => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
-        -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
-        border: 1px solid ${(props) => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
+        color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
+        -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
+        border: 1px solid ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
 
         &:active {
-            background: ${(props) => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal}20;
+            background: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']}20;
         }
 
         span {
@@ -1493,8 +1488,8 @@ const BaseButton = styled(framerMotion.motion.button) `
     }
 
     &&.__button-solid {
-        background: ${(props) => props.color ? getGlobalTheme().colors[props.color].principal : getGlobalTheme().colors['primary'].principal};
-        -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color].contrast : getGlobalTheme().colors['primary'].contrast};
+        background: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
+        -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'principal' : 'contrast'] : getGlobalTheme().colors['primary'][props.invert ? 'principal' : 'contrast']};
         border: 1px solid transparent;
         box-shadow: ${() => getGlobalTheme().boxShadow.normal};
 
@@ -1519,13 +1514,13 @@ function Button(props) {
             if (!!!props.icon)
                 throw new Error('Square button icon not provided');
             return (React__default.createElement(IconButton, Object.assign({}, props),
-                React__default.createElement(Icon, { name: props.icon, color: props.color, invert: false, height: props.iconSize, width: props.iconSize, className: "__icon" }),
+                React__default.createElement(Icon, { name: props.icon, color: props.color, invert: props.invert, height: props.iconSize, width: props.iconSize, className: "__icon" }),
                 props.text && React__default.createElement("span", null, props.text)));
         case 'outline':
         case 'solid':
         default:
             return (React__default.createElement(BaseButton, Object.assign({}, props, { className: `__button-${buttonType} ${props.className}` }),
-                props.icon && React__default.createElement(Icon, { name: props.icon, color: props.color, invert: buttonType === 'solid', height: props.iconSize, width: props.iconSize, style: { marginRight: '15px' } }),
+                props.icon && React__default.createElement(Icon, { name: props.icon, color: props.color, invert: (buttonType === 'solid' || props.invert), height: props.iconSize, width: props.iconSize, style: { marginRight: '15px' } }),
                 props.text && React__default.createElement("span", null, props.text)));
     }
 }

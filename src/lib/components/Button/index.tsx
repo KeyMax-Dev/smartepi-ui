@@ -7,10 +7,11 @@ import BaseButton from './BaseButton';
 type ButtonTypes = 'solid' | 'outline' | 'icon' | 'square';
 
 export interface ButtonProps extends HTMLMotionProps<'button'> {
+    buttonType?: ButtonTypes;
     color?: string;
     icon?: string;
     iconSize?: string;
-    buttonType?: ButtonTypes;
+    invert?: boolean;
     text?: string;
 }
 
@@ -23,7 +24,7 @@ export default function Button(props: ButtonProps): JSX.Element {
             if (!!!props.icon) throw new Error('Square button icon not provided');
             return (
                 <IconButton {...props}>
-                    <Icon name={props.icon} color={props.color} invert={false} height={props.iconSize} width={props.iconSize} className="__icon" />
+                    <Icon name={props.icon} color={props.color} invert={props.invert} height={props.iconSize} width={props.iconSize} className="__icon" />
                     {props.text && <span>{props.text}</span>}
                 </IconButton>
             );
@@ -32,7 +33,7 @@ export default function Button(props: ButtonProps): JSX.Element {
         default:
             return (
                 <BaseButton {...props} className={`__button-${buttonType} ${props.className}`}>
-                    {props.icon && <Icon name={props.icon} color={props.color} invert={buttonType === 'solid'} height={props.iconSize} width={props.iconSize} style={{ marginRight: '15px' }} />}
+                    {props.icon && <Icon name={props.icon} color={props.color} invert={(buttonType === 'solid' || props.invert)} height={props.iconSize} width={props.iconSize} style={{ marginRight: '15px' }} />}
                     {props.text && <span>{props.text}</span>}
                 </BaseButton>
             );

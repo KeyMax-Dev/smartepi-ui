@@ -28,11 +28,6 @@ export const CardBaseElement = styled(motion.div)<CardBaseElementProps>`
 
     cursor: pointer;
     transition: all ${() => getGlobalTheme().transitions.fast};
-    &:active {
-        transform: scale(0.99);
-        box-shadow: ${() => getGlobalTheme().boxShadow.active};
-    }
-
 
     .__title {
         margin: 5px 0;
