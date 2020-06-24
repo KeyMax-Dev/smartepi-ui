@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import React from 'react';
 import { HTMLMotionProps } from 'framer-motion';
 declare type ContainerType = 'outline' | 'downline';
 export interface InputProps extends HTMLMotionProps<'input'> {
@@ -9,6 +9,7 @@ export interface InputProps extends HTMLMotionProps<'input'> {
     iconLeft?: string;
     iconRight?: string;
     containerType?: ContainerType;
+    getRef?: (input: React.MutableRefObject<HTMLInputElement> | undefined) => void;
 }
 export default function Input(props: InputProps): JSX.Element;
 export {};

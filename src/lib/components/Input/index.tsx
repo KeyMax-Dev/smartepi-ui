@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Icon from '../Icon';
 import { HTMLMotionProps } from 'framer-motion';
 import { InputElement, InputContainerElement } from './style';
@@ -16,13 +16,14 @@ export interface InputProps extends HTMLMotionProps<'input'> {
     iconLeft?: string;
     iconRight?: string;
     containerType?: ContainerType;
+    getRef?: (input: React.MutableRefObject<HTMLInputElement> | undefined) => void;
 }
 
 export default function Input(props: InputProps): JSX.Element {
 
     const containerType: ContainerType = props.containerType ? props.containerType : DEFAULT_TYPE;
     const inputRef = useRef<HTMLInputElement>();
-    
+
     const clear = () => {
         if (inputRef.current) {
             const element = inputRef.current as HTMLInputElement;
@@ -36,6 +37,10 @@ export default function Input(props: InputProps): JSX.Element {
         datepicker.close();
     };
     const datepicker = useOverflow(<Datepicker onDaySelected={onDatepickerSelect} />);
+
+    useEffect(() => {
+        if (props.getRef) props.getRef(inputRef as React.MutableRefObject<HTMLInputElement>);
+    }, []);
 
     return (
         <InputContainerElement {...props.containerProps} color={props.color} className={`__input-container-${containerType}`}>
