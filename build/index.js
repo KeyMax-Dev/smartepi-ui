@@ -922,6 +922,10 @@ function Input(props) {
         datepicker.close();
     };
     const datepicker = useOverflow(React__default.createElement(Datepicker, { onDaySelected: onDatepickerSelect }));
+    React.useEffect(() => {
+        if (props.getRef)
+            props.getRef(inputRef);
+    }, []);
     return (React__default.createElement(InputContainerElement, Object.assign({}, props.containerProps, { color: props.color, className: `__input-container-${containerType}` }),
         props.iconLeft && React__default.createElement(Icon, { color: props.color, name: props.iconLeft }),
         React__default.createElement(InputElement, Object.assign({}, props, { ref: inputRef })),
