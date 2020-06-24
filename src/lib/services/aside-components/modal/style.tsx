@@ -29,9 +29,9 @@ export const ModalBaseElement = styled.div`
         justify-content: center;
         align-items: center;
         position: relative;
-        padding: 30px;
+        padding: ${() => getGlobalTheme().borderRadius};
         background-color: ${() => getGlobalTheme().colors.primary.contrast};
-        border-radius: calc(${() => getGlobalTheme().borderRadius} * 2);
+        border-radius: ${() => getGlobalTheme().borderRadius};
         box-shadow: ${() => getGlobalTheme().boxShadow.normal};
         opacity: 0;
         max-width: calc(100% - 30px);
@@ -45,8 +45,8 @@ export const ModalBaseElement = styled.div`
 
 export const ModalCloseButton = styled(Icon)`
     position: absolute;
-    right: 5px;
-    top: 5px;
+    right: calc(${() => getGlobalTheme().borderRadius} / 3);
+    top: calc(${() => getGlobalTheme().borderRadius} / 3);
 
     cursor: pointer;
     transition: ${() => getGlobalTheme().transitions.fast};
