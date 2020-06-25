@@ -502,17 +502,22 @@ function Checkbox(props) {
     const size = props.size ? props.size : getGlobalTheme().defaultIconSize;
     const [value, setValue] = React.useState(!!props.value);
     const animationController = framerMotion.useAnimation();
-    const iconName = props.iconName ? props.iconName : 'check';
+    const iconName = props.icon ? props.icon : 'check';
     const toggle = () => {
-        animationController.stop();
         setValue(!value);
-        if (props.onToggle) {
-            props.onToggle(!value);
-        }
-        animationController.start(value ? Animations.FadeOut : Animations.FadeIn);
     };
+    React.useEffect(() => {
+        setValue(!!props.value);
+    }, [props.value]);
+    React.useEffect(() => {
+        animationController.start(value ? Animations.FadeIn : Animations.FadeOut);
+        if (props.onToggle) {
+            props.onToggle(value);
+        }
+        return () => animationController.stop();
+    }, [value]);
     return (React__default.createElement(CheckboxElement, { className: `__checkbox-${value}`, style: { width: size, height: size }, onClick: toggle, color: props.color },
-        React__default.createElement(Icon, { initial: { opacity: value ? 1 : 0 }, name: iconName, invert: value, width: `calc(${size} - 30%)`, height: `calc(${size} - 30%)`, color: props.color, animate: animationController })));
+        React__default.createElement(Icon, { initial: { opacity: value ? 0 : 1 }, name: iconName, invert: value, width: `calc(${size} - 30%)`, height: `calc(${size} - 30%)`, color: props.color, animate: animationController })));
 }
 
 const DatepickerElement = styled.div `
@@ -993,7 +998,7 @@ class AsideController {
                 return true;
             }
             else {
-                throw 'Element reference not found';
+                throw new Error('Element reference not found');
             }
         }
         catch (e) {
@@ -1022,7 +1027,7 @@ class AsideController {
                 return true;
             }
             else {
-                throw 'Element reference not found';
+                throw new Error('Element reference not found');
             }
         }
         catch (e) {

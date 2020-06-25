@@ -1,7 +1,7 @@
 /// <reference types="react" />
 import { HTMLMotionProps } from "framer-motion";
 export interface CheckboxProps extends HTMLMotionProps<'div'> {
-    iconName?: string;
+    icon?: string;
     color?: string;
     size?: string;
     onToggle?: (value: boolean) => void;

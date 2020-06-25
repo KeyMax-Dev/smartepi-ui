@@ -76,7 +76,7 @@ export default abstract class AsideController {
                 elementReference.appendChild(this.container as HTMLElement);
                 return true;
             } else {
-                throw 'Element reference not found';
+                throw new Error('Element reference not found');
             }
         } catch (e) {
             console.error(`${this.config.id} append failed:`, e);
@@ -104,7 +104,7 @@ export default abstract class AsideController {
                 this.status = 'closed';
                 return true;
             } else {
-                throw 'Element reference not found';
+                throw new Error('Element reference not found');
             }
         } catch (e) {
             console.error(`${this.config.id} remove failed`, e);

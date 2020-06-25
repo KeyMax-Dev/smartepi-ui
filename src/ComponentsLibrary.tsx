@@ -1,6 +1,6 @@
 import { Icon, Button, getGlobalTheme, ImageAvatar, Input, setGlobalTheme, LightTheme, DarkTheme, Checkbox, CardBase, Badge, Datepicker } from './lib';
 import Icons from './lib/assets/svgs/icons';
-import React, { useState, ReactText } from 'react';
+import React, { useState, ReactText, useEffect } from 'react';
 import styled from 'styled-components';
 import useModal from './lib/services/aside-components/modal/index';
 import useOverflow from './lib/services/aside-components/overflow/index';
@@ -133,7 +133,7 @@ export default function ComponentsLibrary(): JSX.Element {
                 <Button buttonType="icon" icon="cog" onMouseEnter={(event) => overflow.open(event.currentTarget as HTMLElement, true)} />
                 <Button buttonType="icon" icon="cog" text="Configurations" />
                 <Button buttonType="icon" icon="cog" text="Configurations With iconSize" iconSize="20px" />
-                <Button buttonType="icon" icon="cog" text="Configurations Invert" invert/>
+                <Button buttonType="icon" icon="cog" text="Configurations Invert" invert />
             </ComponentExpandable>
             <ComponentExpandable componentName="Services">
                 <Button text="Modal" onClick={() => modal.open()} />
@@ -159,10 +159,10 @@ export default function ComponentsLibrary(): JSX.Element {
             </ComponentExpandable>
             <ComponentExpandable componentName="Checkboxes">
                 <Checkbox onToggle={(value) => console.log(value)} value={true} size="20px" />
-                <Checkbox onToggle={(value) => console.log(value)} />
-                <Checkbox onToggle={(value) => console.log(value)} size="60px" color="success" />
+                <Checkbox onToggle={(value) => console.log(value)} value={false} icon="close" />
+                <Checkbox onToggle={(value) => console.log(value)} value={true} size="60px" color="success" />
                 <Checkbox onToggle={(value) => console.log(value)} value={true} size="80px" />
-                <Checkbox onToggle={(value) => console.log(value)} value={true} size="80px" iconName="close" color="danger" />
+                <Checkbox onToggle={(value) => console.log(value)} value={true} size="80px" icon="close" color="danger" />
             </ComponentExpandable>
             <ComponentExpandable componentName="Cards">
                 <CardBase width="300px" height="unset">

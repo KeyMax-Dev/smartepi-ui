@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { getGlobalTheme } from "../../assets/themes";
-import { CheckboxProps } from './index';
 
 const CheckboxElement = styled(motion.div)`
     display: flex;
