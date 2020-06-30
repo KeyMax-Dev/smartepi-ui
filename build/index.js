@@ -35,7 +35,7 @@ function styleInject(css, ref) {
   }
 }
 
-var css_248z = "@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_300.ttf\") format(\"truetype\");\r\n  font-weight: 300;\r\n  font-style: normal;\r\n}\r\n\r\n@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_400.ttf\") format(\"truetype\");\r\n  font-weight: 400;\r\n  font-style: normal;\r\n}\r\n\r\n@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_500.ttf\") format(\"truetype\");\r\n  font-weight: 500;\r\n  font-style: normal;\r\n}\r\n\r\n@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_700.ttf\") format(\"truetype\");\r\n  font-weight: 700;\r\n  font-style: normal;\r\n}\r\n\r\n* {\r\n  box-sizing: border-box;\r\n}\r\n\r\nbody {\r\n  margin: 0;\r\n  font-family:  'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto';\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  background-color: #fff;\r\n}\r\n\r\n*::-webkit-scrollbar {\r\n  width: 6px;\r\n  height: 6px;\r\n}\r\n\r\n*::-webkit-scrollbar-track {\r\n  background-color: transparent;\r\n}\r\n\r\n*::-webkit-scrollbar-thumb {\r\n  background-color: #00000033;\r\n}\r\n\r\ncode {\r\n  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;\r\n}\r\n\r\na {\r\n  text-decoration: none;\r\n}";
+var css_248z = "@font-face {\n  font-family: \"Quicksand\";\n  src: url(\"assets/extra-files/fonts/Quicksand_300.ttf\") format(\"truetype\");\n  font-weight: 300;\n  font-style: normal;\n}\n\n@font-face {\n  font-family: \"Quicksand\";\n  src: url(\"assets/extra-files/fonts/Quicksand_400.ttf\") format(\"truetype\");\n  font-weight: 400;\n  font-style: normal;\n}\n\n@font-face {\n  font-family: \"Quicksand\";\n  src: url(\"assets/extra-files/fonts/Quicksand_500.ttf\") format(\"truetype\");\n  font-weight: 500;\n  font-style: normal;\n}\n\n@font-face {\n  font-family: \"Quicksand\";\n  src: url(\"assets/extra-files/fonts/Quicksand_700.ttf\") format(\"truetype\");\n  font-weight: 700;\n  font-style: normal;\n}\n\n* {\n  box-sizing: border-box;\n}\n\nbody {\n  margin: 0;\n  font-family:  'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto';\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  background-color: #fff;\n}\n\n*::-webkit-scrollbar {\n  width: 6px;\n  height: 6px;\n}\n\n*::-webkit-scrollbar-track {\n  background-color: transparent;\n}\n\n*::-webkit-scrollbar-thumb {\n  background-color: #00000033;\n}\n\ncode {\n  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;\n}\n\na {\n  text-decoration: none;\n}";
 styleInject(css_248z);
 
 const LightTheme = {
@@ -232,6 +232,8 @@ const CogSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2
     React__default.createElement("path", { d: "M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" }));
 const DownloadSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" }));
+const DotsVerticalSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
+    React__default.createElement("path", { d: "M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z" }));
 const ExitSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M13.34,8.17C12.41,8.17 11.65,7.4 11.65,6.47A1.69,1.69 0 0,1 13.34,4.78C14.28,4.78 15.04,5.54 15.04,6.47C15.04,7.4 14.28,8.17 13.34,8.17M10.3,19.93L4.37,18.75L4.71,17.05L8.86,17.9L10.21,11.04L8.69,11.64V14.5H7V10.54L11.4,8.67L12.07,8.59C12.67,8.59 13.17,8.93 13.5,9.44L14.36,10.79C15.04,12 16.39,12.82 18,12.82V14.5C16.14,14.5 14.44,13.67 13.34,12.4L12.84,14.94L14.61,16.63V23H12.92V17.9L11.14,16.21L10.3,19.93M21,23H19V3H6V16.11L4,15.69V1H21V23M6,23H4V19.78L6,20.2V23Z" }));
 const FileDownloadSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
@@ -240,6 +242,8 @@ const FileSearchSVG = React__default.createElement("svg", { xmlns: "http://www.w
     React__default.createElement("path", { d: "M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H13C12.59,21.75 12.2,21.44 11.86,21.1C9.22,18.67 9.05,14.56 11.5,11.92C13.69,9.5 17.33,9.13 20,11V8L14,2M13,9V3.5L18.5,9H13M20.31,18.9C21.64,16.79 21,14 18.91,12.68C16.8,11.35 14,12 12.69,14.08C11.35,16.19 12,18.97 14.09,20.3C15.55,21.23 17.41,21.23 18.88,20.32L22,23.39L23.39,22L20.31,18.9M16.5,19A2.5,2.5 0 0,1 14,16.5A2.5,2.5 0 0,1 16.5,14A2.5,2.5 0 0,1 19,16.5A2.5,2.5 0 0,1 16.5,19Z" }));
 const FingerprintSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M17.81,4.47C17.73,4.47 17.65,4.45 17.58,4.41C15.66,3.42 14,3 12,3C10.03,3 8.15,3.47 6.44,4.41C6.2,4.54 5.9,4.45 5.76,4.21C5.63,3.97 5.72,3.66 5.96,3.53C7.82,2.5 9.86,2 12,2C14.14,2 16,2.47 18.04,3.5C18.29,3.65 18.38,3.95 18.25,4.19C18.16,4.37 18,4.47 17.81,4.47M3.5,9.72C3.4,9.72 3.3,9.69 3.21,9.63C3,9.47 2.93,9.16 3.09,8.93C4.08,7.53 5.34,6.43 6.84,5.66C10,4.04 14,4.03 17.15,5.65C18.65,6.42 19.91,7.5 20.9,8.9C21.06,9.12 21,9.44 20.78,9.6C20.55,9.76 20.24,9.71 20.08,9.5C19.18,8.22 18.04,7.23 16.69,6.54C13.82,5.07 10.15,5.07 7.29,6.55C5.93,7.25 4.79,8.25 3.89,9.5C3.81,9.65 3.66,9.72 3.5,9.72M9.75,21.79C9.62,21.79 9.5,21.74 9.4,21.64C8.53,20.77 8.06,20.21 7.39,19C6.7,17.77 6.34,16.27 6.34,14.66C6.34,11.69 8.88,9.27 12,9.27C15.12,9.27 17.66,11.69 17.66,14.66A0.5,0.5 0 0,1 17.16,15.16A0.5,0.5 0 0,1 16.66,14.66C16.66,12.24 14.57,10.27 12,10.27C9.43,10.27 7.34,12.24 7.34,14.66C7.34,16.1 7.66,17.43 8.27,18.5C8.91,19.66 9.35,20.15 10.12,20.93C10.31,21.13 10.31,21.44 10.12,21.64C10,21.74 9.88,21.79 9.75,21.79M16.92,19.94C15.73,19.94 14.68,19.64 13.82,19.05C12.33,18.04 11.44,16.4 11.44,14.66A0.5,0.5 0 0,1 11.94,14.16A0.5,0.5 0 0,1 12.44,14.66C12.44,16.07 13.16,17.4 14.38,18.22C15.09,18.7 15.92,18.93 16.92,18.93C17.16,18.93 17.56,18.9 17.96,18.83C18.23,18.78 18.5,18.96 18.54,19.24C18.59,19.5 18.41,19.77 18.13,19.82C17.56,19.93 17.06,19.94 16.92,19.94M14.91,22C14.87,22 14.82,22 14.78,22C13.19,21.54 12.15,20.95 11.06,19.88C9.66,18.5 8.89,16.64 8.89,14.66C8.89,13.04 10.27,11.72 11.97,11.72C13.67,11.72 15.05,13.04 15.05,14.66C15.05,15.73 16,16.6 17.13,16.6C18.28,16.6 19.21,15.73 19.21,14.66C19.21,10.89 15.96,7.83 11.96,7.83C9.12,7.83 6.5,9.41 5.35,11.86C4.96,12.67 4.76,13.62 4.76,14.66C4.76,15.44 4.83,16.67 5.43,18.27C5.53,18.53 5.4,18.82 5.14,18.91C4.88,19 4.59,18.87 4.5,18.62C4,17.31 3.77,16 3.77,14.66C3.77,13.46 4,12.37 4.45,11.42C5.78,8.63 8.73,6.82 11.96,6.82C16.5,6.82 20.21,10.33 20.21,14.65C20.21,16.27 18.83,17.59 17.13,17.59C15.43,17.59 14.05,16.27 14.05,14.65C14.05,13.58 13.12,12.71 11.97,12.71C10.82,12.71 9.89,13.58 9.89,14.65C9.89,16.36 10.55,17.96 11.76,19.16C12.71,20.1 13.62,20.62 15.03,21C15.3,21.08 15.45,21.36 15.38,21.62C15.33,21.85 15.12,22 14.91,22Z" }));
+const hammerWrenchSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
+    React__default.createElement("path", { d: "M13.78 15.3L19.78 21.3L21.89 19.14L15.89 13.14L13.78 15.3M17.5 10.1C17.11 10.1 16.69 10.05 16.36 9.91L4.97 21.25L2.86 19.14L10.27 11.74L8.5 9.96L7.78 10.66L6.33 9.25V12.11L5.63 12.81L2.11 9.25L2.81 8.55H5.62L4.22 7.14L7.78 3.58C8.95 2.41 10.83 2.41 12 3.58L9.89 5.74L11.3 7.14L10.59 7.85L12.38 9.63L14.2 7.75C14.06 7.42 14 7 14 6.63C14 4.66 15.56 3.11 17.5 3.11C18.09 3.11 18.61 3.25 19.08 3.53L16.41 6.2L17.91 7.7L20.58 5.03C20.86 5.5 21 6 21 6.63C21 8.55 19.45 10.1 17.5 10.1Z" }));
 const KeySVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M7,14A2,2 0 0,1 5,12A2,2 0 0,1 7,10A2,2 0 0,1 9,12A2,2 0 0,1 7,14M12.65,10C11.83,7.67 9.61,6 7,6A6,6 0 0,0 1,12A6,6 0 0,0 7,18C9.61,18 11.83,16.33 12.65,14H17V18H21V14H23V10H12.65Z" }));
 const KeyChangeSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
@@ -260,20 +264,22 @@ const PackageVariantSVG = React__default.createElement("svg", { xmlns: "http://w
     React__default.createElement("path", { d: "M2,10.96C1.5,10.68 1.35,10.07 1.63,9.59L3.13,7C3.24,6.8 3.41,6.66 3.6,6.58L11.43,2.18C11.59,2.06 11.79,2 12,2C12.21,2 12.41,2.06 12.57,2.18L20.47,6.62C20.66,6.72 20.82,6.88 20.91,7.08L22.36,9.6C22.64,10.08 22.47,10.69 22,10.96L21,11.54V16.5C21,16.88 20.79,17.21 20.47,17.38L12.57,21.82C12.41,21.94 12.21,22 12,22C11.79,22 11.59,21.94 11.43,21.82L3.53,17.38C3.21,17.21 3,16.88 3,16.5V10.96C2.7,11.13 2.32,11.14 2,10.96M12,4.15V4.15L12,10.85V10.85L17.96,7.5L12,4.15M5,15.91L11,19.29V12.58L5,9.21V15.91M19,15.91V12.69L14,15.59C13.67,15.77 13.3,15.76 13,15.6V19.29L19,15.91M13.85,13.36L20.13,9.73L19.55,8.72L13.27,12.35L13.85,13.36Z" }));
 const PlusSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" }));
-const VideoSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
-    React__default.createElement("path", { d: "M17,10.5V7A1,1 0 0,0 16,6H4A1,1 0 0,0 3,7V17A1,1 0 0,0 4,18H16A1,1 0 0,0 17,17V13.5L21,17.5V6.5L17,10.5Z" }));
 const SelectGroupSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M5 3A2 2 0 0 0 3 5H5M7 3V5H9V3M11 3V5H13V3M15 3V5H17V3M19 3V5H21A2 2 0 0 0 19 3M3 7V9H5V7M7 7V11H11V7M13 7V11H17V7M19 7V9H21V7M3 11V13H5V11M19 11V13H21V11M7 13V17H11V13M13 13V17H17V13M3 15V17H5V15M19 15V17H21V15M3 19A2 2 0 0 0 5 21V19M7 19V21H9V19M11 19V21H13V19M15 19V21H17V19M19 19V21A2 2 0 0 0 21 19Z" }));
 const SelectionSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M11.2 4C9.94 4.12 8.72 4.53 7.64 5.2L6.64 3.47C7.95 2.64 9.45 2.13 11 2M17.53 6.25C16.62 5.39 15.53 4.73 14.34 4.33L15 2.39C16.5 2.84 17.89 3.66 19 4.78M5.34 7.41C4.64 8.44 4.19 9.6 4 10.83L2 10.55C2.2 9 2.79 7.5 3.7 6.23M22 12V12.66L20 12.5V12C20 10.92 19.81 9.86 19.39 8.86L21.22 8.06C21.75 9.31 22 10.65 22 12M6 17.3L4.5 18.61C3.47 17.43 2.72 16.04 2.3 14.53L4.17 14C4.53 15.22 5.16 16.35 6 17.3M12.14 22H12C10.5 22 9 21.68 7.64 21.07L8.53 19.24C9.62 19.75 10.8 20 12 20H12.19M17 21H15V15H21V17H18.42L21.14 19.76L19.73 21.17L17 18.5" }));
 const SunSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M3.55,18.54L4.96,19.95L6.76,18.16L5.34,16.74M11,22.45C11.32,22.45 13,22.45 13,22.45V19.5H11M12,5.5A6,6 0 0,0 6,11.5A6,6 0 0,0 12,17.5A6,6 0 0,0 18,11.5C18,8.18 15.31,5.5 12,5.5M20,12.5H23V10.5H20M17.24,18.16L19.04,19.95L20.45,18.54L18.66,16.74M20.45,4.46L19.04,3.05L17.24,4.84L18.66,6.26M13,0.55H11V3.5H13M4,10.5H1V12.5H4M6.76,4.84L4.96,3.05L3.55,4.46L5.34,6.26L6.76,4.84Z" }));
+const RefreshSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
+    React__default.createElement("path", { d: "M17.65,6.35C16.2,4.9 14.21,4 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20C15.73,20 18.84,17.45 19.73,14H17.65C16.83,16.33 14.61,18 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6C13.66,6 15.14,6.69 16.22,7.78L13,11H20V4L17.65,6.35Z" }));
 const TrashSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" }));
 const WarehouseSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M6 19H8V21H6V19M12 3L2 8V21H4V13H20V21H22V8L12 3M8 11H4V9H8V11M14 11H10V9H14V11M20 11H16V9H20V11M6 15H8V17H6V15M10 15H12V17H10V15M10 19H12V21H10V19M14 19H16V21H14V19Z" }));
 const WorkerSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M12,15C7.58,15 4,16.79 4,19V21H20V19C20,16.79 16.42,15 12,15M8,9A4,4 0 0,0 12,13A4,4 0 0,0 16,9M11.5,2C11.2,2 11,2.21 11,2.5V5.5H10V3C10,3 7.75,3.86 7.75,6.75C7.75,6.75 7,6.89 7,8H17C16.95,6.89 16.25,6.75 16.25,6.75C16.25,3.86 14,3 14,3V5.5H13V2.5C13,2.21 12.81,2 12.5,2H11.5Z" }));
+const VideoSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
+    React__default.createElement("path", { d: "M17,10.5V7A1,1 0 0,0 16,6H4A1,1 0 0,0 3,7V17A1,1 0 0,0 4,18H16A1,1 0 0,0 17,17V13.5L21,17.5V6.5L17,10.5Z" }));
 const Icons = {
     account: AccountSVG,
     accountCog: AccountCogSVG,
@@ -292,10 +298,12 @@ const Icons = {
     cloudSync: CloudSyncSVG,
     cog: CogSVG,
     download: DownloadSVG,
+    dotsVertical: DotsVerticalSVG,
     exit: ExitSVG,
     fileDownload: FileDownloadSVG,
     fileSearch: FileSearchSVG,
     fingerprint: FingerprintSVG,
+    hammerWrench: hammerWrenchSVG,
     key: KeySVG,
     keyChange: KeyChangeSVG,
     license: LicenseSVG,
@@ -306,13 +314,14 @@ const Icons = {
     minus: MinusSVG,
     plus: PlusSVG,
     packageVariant: PackageVariantSVG,
-    video: VideoSVG,
     selectGroup: SelectGroupSVG,
     selection: SelectionSVG,
     sun: SunSVG,
+    refresh: RefreshSVG,
     trash: TrashSVG,
     warehouse: WarehouseSVG,
-    worker: WorkerSVG
+    worker: WorkerSVG,
+    video: VideoSVG
 };
 
 const CirclesSVG = (props) => React__default.createElement("svg", Object.assign({ width: "45", height: "45", viewBox: "0 0 45 45", xmlns: "http://www.w3.org/2000/svg", stroke: "#000" }, props),
@@ -377,6 +386,112 @@ function Badge(props) {
     return (React__default.createElement(BadgeElement, Object.assign({}, props, { color: color }),
         props.icon && React__default.createElement(Icon, { name: props.icon, invert: true, width: "15pt", height: "unset", color: color }),
         props.text && React__default.createElement("span", { className: "__text" }, props.text)));
+}
+
+const IconButton = styled(framerMotion.motion.button) `
+    all: unset;
+    background: transparent;
+    color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
+    -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
+    padding: 5px;
+    border-radius: ${() => getGlobalTheme().borderRadius};
+    margin: 3px;
+    transition: all ${() => getGlobalTheme().transitions.fast};
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    &:active {
+        transform: scale(0.96);
+    }
+
+    span {
+        max-width: 80px;
+        text-align: center;
+        font-size: calc(${() => getGlobalTheme().font.h2.fontSize} / 2);
+        font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .__icon {
+        flex: 1;
+        margin: 5px;
+    }
+`;
+
+const BaseButton = styled(framerMotion.motion.button) `
+    all: unset;
+    padding: 10px 25px;
+    min-height: 38px;
+    border-radius: ${() => getGlobalTheme().borderRadius};
+    margin: 3px;
+    transition: all ${() => getGlobalTheme().transitions.fast};
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+
+    &&.__button-outline {    
+        background: transparent;
+        color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
+        -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
+        border: 1px solid ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
+
+        &:active {
+            background: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']}20;
+        }
+
+        span {
+            max-width: 300px;
+            flex: 1;
+            text-align: center;
+        }
+    }
+
+    &&.__button-solid {
+        background: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
+        -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'principal' : 'contrast'] : getGlobalTheme().colors['primary'][props.invert ? 'principal' : 'contrast']};
+        border: 1px solid transparent;
+        box-shadow: ${() => getGlobalTheme().boxShadow.normal};
+
+        &:active {
+            box-shadow: ${() => getGlobalTheme().boxShadow.active};
+            transform: scale(0.96);
+        }
+    
+        span {
+            max-width: 300px;
+            flex: 1;
+            text-align: center;
+            color: ${(props) => props.color ? getGlobalTheme().colors[props.color].contrast : getGlobalTheme().colors['primary'].contrast};
+        }
+    }
+`;
+
+function Button(props) {
+    const buttonType = props.buttonType ? props.buttonType : 'solid';
+    switch (buttonType) {
+        case 'icon':
+            if (!!!props.icon)
+                throw new Error('Square button icon not provided');
+            return (React__default.createElement(IconButton, Object.assign({}, props),
+                React__default.createElement(Icon, { name: props.icon, color: props.color, invert: props.invert, height: props.iconSize, width: props.iconSize, className: "__icon" }),
+                props.text && React__default.createElement("span", null, props.text)));
+        case 'outline':
+        case 'solid':
+        default:
+            return (React__default.createElement(BaseButton, Object.assign({}, props, { className: `__button-${buttonType} ${props.className}` }),
+                props.icon && React__default.createElement(Icon, { name: props.icon, color: props.color, invert: (buttonType === 'solid' || props.invert), height: props.iconSize, width: props.iconSize, style: { marginRight: '15px' } }),
+                props.text && React__default.createElement("span", null, props.text)));
+    }
 }
 
 const CardBaseElement = styled(framerMotion.motion.div) `
@@ -1450,112 +1565,6 @@ class OverflowController extends AsideController {
 function useOverflow(content, options) {
     const [overflow] = React.useState(new OverflowController(content, options));
     return overflow;
-}
-
-const IconButton = styled(framerMotion.motion.button) `
-    all: unset;
-    background: transparent;
-    color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
-    -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
-    padding: 5px;
-    border-radius: ${() => getGlobalTheme().borderRadius};
-    margin: 3px;
-    transition: all ${() => getGlobalTheme().transitions.fast};
-    cursor: pointer;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-
-    &:active {
-        transform: scale(0.96);
-    }
-
-    span {
-        max-width: 80px;
-        text-align: center;
-        font-size: calc(${() => getGlobalTheme().font.h2.fontSize} / 2);
-        font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
-        text-overflow: ellipsis;
-        overflow: hidden;
-    }
-
-    .__icon {
-        flex: 1;
-        margin: 5px;
-    }
-`;
-
-const BaseButton = styled(framerMotion.motion.button) `
-    all: unset;
-    padding: 10px 25px;
-    min-height: 38px;
-    border-radius: ${() => getGlobalTheme().borderRadius};
-    margin: 3px;
-    transition: all ${() => getGlobalTheme().transitions.fast};
-    cursor: pointer;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-
-
-    &&.__button-outline {    
-        background: transparent;
-        color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
-        -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
-        border: 1px solid ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
-
-        &:active {
-            background: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']}20;
-        }
-
-        span {
-            max-width: 300px;
-            flex: 1;
-            text-align: center;
-        }
-    }
-
-    &&.__button-solid {
-        background: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
-        -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'principal' : 'contrast'] : getGlobalTheme().colors['primary'][props.invert ? 'principal' : 'contrast']};
-        border: 1px solid transparent;
-        box-shadow: ${() => getGlobalTheme().boxShadow.normal};
-
-        &:active {
-            box-shadow: ${() => getGlobalTheme().boxShadow.active};
-            transform: scale(0.96);
-        }
-    
-        span {
-            max-width: 300px;
-            flex: 1;
-            text-align: center;
-            color: ${(props) => props.color ? getGlobalTheme().colors[props.color].contrast : getGlobalTheme().colors['primary'].contrast};
-        }
-    }
-`;
-
-function Button(props) {
-    const buttonType = props.buttonType ? props.buttonType : 'solid';
-    switch (buttonType) {
-        case 'icon':
-            if (!!!props.icon)
-                throw new Error('Square button icon not provided');
-            return (React__default.createElement(IconButton, Object.assign({}, props),
-                React__default.createElement(Icon, { name: props.icon, color: props.color, invert: props.invert, height: props.iconSize, width: props.iconSize, className: "__icon" }),
-                props.text && React__default.createElement("span", null, props.text)));
-        case 'outline':
-        case 'solid':
-        default:
-            return (React__default.createElement(BaseButton, Object.assign({}, props, { className: `__button-${buttonType} ${props.className}` }),
-                props.icon && React__default.createElement(Icon, { name: props.icon, color: props.color, invert: (buttonType === 'solid' || props.invert), height: props.iconSize, width: props.iconSize, style: { marginRight: '15px' } }),
-                props.text && React__default.createElement("span", null, props.text)));
-    }
 }
 
 exports.Animations = Animations;
