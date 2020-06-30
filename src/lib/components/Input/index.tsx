@@ -44,7 +44,7 @@ export default function Input(props: InputProps): JSX.Element {
     }, []);
 
     return (
-        <InputContainerElement {...props.containerProps} invert={props.invert} color={props.color} className={`__input-container-${containerType}`}>
+        <InputContainerElement {...props.containerProps} invert={props.invert} color={props.color} className={`__input-container-${containerType} ${props.containerProps?.className}`}>
             {props.iconLeft && <Icon color={props.color} name={props.iconLeft} invert={props.invert}/>}
             <InputElement {...props} ref={inputRef as React.MutableRefObject<HTMLInputElement>} />
             {props.enableClear && <Button buttonType="icon" icon="close" onClick={clear} iconSize="20px" style={{ margin: 0, padding: 0 }} />}
