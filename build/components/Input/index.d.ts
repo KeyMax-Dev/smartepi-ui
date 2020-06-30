@@ -4,12 +4,13 @@ declare type ContainerType = 'outline' | 'downline';
 export interface InputProps extends HTMLMotionProps<'input'> {
     color?: string;
     containerProps?: HTMLMotionProps<'div'>;
+    containerType?: ContainerType;
     enableClear?: boolean;
     enableDatepicker?: boolean;
+    getRef?: (input: React.MutableRefObject<HTMLInputElement> | undefined) => void;
     iconLeft?: string;
     iconRight?: string;
-    containerType?: ContainerType;
-    getRef?: (input: React.MutableRefObject<HTMLInputElement> | undefined) => void;
+    invert?: boolean;
 }
 export default function Input(props: InputProps): JSX.Element;
 export {};
