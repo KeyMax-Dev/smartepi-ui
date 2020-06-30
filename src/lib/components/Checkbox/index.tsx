@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { HTMLMotionProps, useAnimation } from "framer-motion";
 import CheckboxElement from "./style";
 import { Icon } from '../..';
@@ -38,7 +38,7 @@ export default function Checkbox(props: CheckboxProps) {
 
     return (
         <CheckboxElement className={`__checkbox-${value}`} style={{ width: size, height: size }} onClick={toggle} color={props.color}>
-            <Icon initial={{ opacity: value ? 0 : 1 }} name={iconName} invert={value} width={`calc(${size} - 30%)`} height={`calc(${size} - 30%)`} color={props.color} animate={animationController} />
+            <Icon initial={{ opacity: 0 }} name={iconName} invert={value} width={`calc(${size} - 30%)`} height={`calc(${size} - 30%)`} color={props.color} animate={animationController} />
         </CheckboxElement>
     );
 }

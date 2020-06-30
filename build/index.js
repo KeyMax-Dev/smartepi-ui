@@ -517,7 +517,7 @@ function Checkbox(props) {
         return () => animationController.stop();
     }, [value]);
     return (React__default.createElement(CheckboxElement, { className: `__checkbox-${value}`, style: { width: size, height: size }, onClick: toggle, color: props.color },
-        React__default.createElement(Icon, { initial: { opacity: value ? 0 : 1 }, name: iconName, invert: value, width: `calc(${size} - 30%)`, height: `calc(${size} - 30%)`, color: props.color, animate: animationController })));
+        React__default.createElement(Icon, { initial: { opacity: 0 }, name: iconName, invert: value, width: `calc(${size} - 30%)`, height: `calc(${size} - 30%)`, color: props.color, animate: animationController })));
 }
 
 const DatepickerElement = styled.div `
@@ -862,23 +862,23 @@ const InputContainerElement = styled(framerMotion.motion.div) `
     
     
     &&.__input-container-outline {
-        background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].contrast};
-        border: 1px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal}32;
+        background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'principal' : 'contrast']};
+        border: 1px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}32;
         border-radius: ${() => getGlobalTheme().borderRadius};
 
             
         &:focus-within {
             box-shadow: ${() => getGlobalTheme().boxShadow.active};
-            border: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal};
+            border: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
         }
     }
 
     &&.__input-container-downline {
         background-color: transparent;
-        border-bottom: 1px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal}32;
+        border-bottom: 1px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}32;
 
         &:focus-within {
-            border-bottom: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal};
+            border-bottom: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
         }
     }
 
@@ -887,7 +887,7 @@ const InputContainerElement = styled(framerMotion.motion.div) `
     }
 `;
 const InputElement = styled(framerMotion.motion.input) `
-    color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal};
+    color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
     background-color: transparent;
     flex: 1;
     flex-shrink: 1;
@@ -934,12 +934,12 @@ function Input(props) {
         if (props.getRef)
             props.getRef(inputRef);
     }, []);
-    return (React__default.createElement(InputContainerElement, Object.assign({}, props.containerProps, { color: props.color, className: `__input-container-${containerType}` }),
-        props.iconLeft && React__default.createElement(Icon, { color: props.color, name: props.iconLeft }),
+    return (React__default.createElement(InputContainerElement, Object.assign({}, props.containerProps, { invert: props.invert, color: props.color, className: `__input-container-${containerType}` }),
+        props.iconLeft && React__default.createElement(Icon, { color: props.color, name: props.iconLeft, invert: props.invert }),
         React__default.createElement(InputElement, Object.assign({}, props, { ref: inputRef })),
         props.enableClear && React__default.createElement(Button, { buttonType: "icon", icon: "close", onClick: clear, iconSize: "20px", style: { margin: 0, padding: 0 } }),
-        props.enableDatepicker && React__default.createElement(Button, { buttonType: "icon", icon: "calendar", onClick: (event) => datepicker.open(event.currentTarget), iconSize: "20px", style: { margin: 0, padding: 0 } }),
-        props.iconRight && React__default.createElement(Icon, { color: props.color, name: props.iconRight })));
+        props.enableDatepicker && React__default.createElement(Button, { buttonType: "icon", icon: "calendar", onClick: (event) => datepicker.open(event.currentTarget), iconSize: "20px", style: { margin: 0, padding: 0 }, invert: props.invert }),
+        props.iconRight && React__default.createElement(Icon, { color: props.color, name: props.iconRight, invert: props.invert })));
 }
 
 const DEFAULT_ASIDE_CONFIG = {

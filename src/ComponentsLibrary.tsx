@@ -148,12 +148,13 @@ export default function ComponentsLibrary(): JSX.Element {
             </ComponentExpandable>
             <ComponentExpandable componentName="Inputs">
                 <Input />
+                <Input invert />
                 <Input iconRight="account" />
                 <Input enableClear />
                 <Input enableDatepicker />
                 <Input enableClear iconLeft="account" />
                 <Input enableClear iconLeft="account" iconRight="account" />
-                <Input containerType="outline" />
+                <Input containerType="outline" invert />
                 <Input containerType="outline" enableClear />
                 <Input containerType="outline" enableClear iconRight="account" iconLeft="account" />
             </ComponentExpandable>
