@@ -22,6 +22,8 @@ import Datepicker from './components/Datepicker';
 import Icon from './components/Icon';
 import ImageAvatar from './components/ImageAvatar';
 import Input from './components/Input';
+import Tab from './components/TabsLayout/tab';
+import TabsLayout from './components/TabsLayout/';
 
 // Services
 import AsideController from './services/aside-components/aside-controller';
@@ -58,14 +60,16 @@ export {
 };
 
 export {
-    Icon,
+    Badge,
     Button,
+    CardBase,
+    Checkbox,
+    Datepicker,
+    Icon,
     ImageAvatar,
     Input,
-    Checkbox,
-    CardBase,
-    Badge,
-    Datepicker
+    Tab,
+    TabsLayout
 };
 
 export {

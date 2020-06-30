@@ -35,7 +35,7 @@ function styleInject(css, ref) {
   }
 }
 
-var css_248z = "@font-face {\n  font-family: \"Quicksand\";\n  src: url(\"assets/extra-files/fonts/Quicksand_300.ttf\") format(\"truetype\");\n  font-weight: 300;\n  font-style: normal;\n}\n\n@font-face {\n  font-family: \"Quicksand\";\n  src: url(\"assets/extra-files/fonts/Quicksand_400.ttf\") format(\"truetype\");\n  font-weight: 400;\n  font-style: normal;\n}\n\n@font-face {\n  font-family: \"Quicksand\";\n  src: url(\"assets/extra-files/fonts/Quicksand_500.ttf\") format(\"truetype\");\n  font-weight: 500;\n  font-style: normal;\n}\n\n@font-face {\n  font-family: \"Quicksand\";\n  src: url(\"assets/extra-files/fonts/Quicksand_700.ttf\") format(\"truetype\");\n  font-weight: 700;\n  font-style: normal;\n}\n\n* {\n  box-sizing: border-box;\n}\n\nbody {\n  margin: 0;\n  font-family:  'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto';\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  background-color: #fff;\n}\n\n*::-webkit-scrollbar {\n  width: 6px;\n  height: 6px;\n}\n\n*::-webkit-scrollbar-track {\n  background-color: transparent;\n}\n\n*::-webkit-scrollbar-thumb {\n  background-color: #00000033;\n}\n\ncode {\n  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;\n}\n\na {\n  text-decoration: none;\n}";
+var css_248z = "@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_300.ttf\") format(\"truetype\");\r\n  font-weight: 300;\r\n  font-style: normal;\r\n}\r\n\r\n@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_400.ttf\") format(\"truetype\");\r\n  font-weight: 400;\r\n  font-style: normal;\r\n}\r\n\r\n@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_500.ttf\") format(\"truetype\");\r\n  font-weight: 500;\r\n  font-style: normal;\r\n}\r\n\r\n@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_700.ttf\") format(\"truetype\");\r\n  font-weight: 700;\r\n  font-style: normal;\r\n}\r\n\r\n* {\r\n  box-sizing: border-box;\r\n}\r\n\r\nbody {\r\n  margin: 0;\r\n  font-family:  'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto';\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  background-color: #fff;\r\n}\r\n\r\n*::-webkit-scrollbar {\r\n  width: 6px;\r\n  height: 6px;\r\n}\r\n\r\n*::-webkit-scrollbar-track {\r\n  background-color: transparent;\r\n}\r\n\r\n*::-webkit-scrollbar-thumb {\r\n  background-color: #00000033;\r\n}\r\n\r\ncode {\r\n  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;\r\n}\r\n\r\na {\r\n  text-decoration: none;\r\n}";
 styleInject(css_248z);
 
 const LightTheme = {
@@ -404,112 +404,6 @@ function Badge(props) {
     return (React__default.createElement(BadgeElement, Object.assign({}, props, { color: color }),
         props.icon && React__default.createElement(Icon, { name: props.icon, invert: true, width: "15pt", height: "unset", color: color }),
         props.text && React__default.createElement("span", { className: "__text" }, props.text)));
-}
-
-const IconButton = styled(framerMotion.motion.button) `
-    all: unset;
-    background: transparent;
-    color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
-    -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
-    padding: 5px;
-    border-radius: ${() => getGlobalTheme().borderRadius};
-    margin: 3px;
-    transition: all ${() => getGlobalTheme().transitions.fast};
-    cursor: pointer;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-
-    &:active {
-        transform: scale(0.96);
-    }
-
-    span {
-        max-width: 80px;
-        text-align: center;
-        font-size: calc(${() => getGlobalTheme().font.h2.fontSize} / 2);
-        font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
-        text-overflow: ellipsis;
-        overflow: hidden;
-    }
-
-    .__icon {
-        flex: 1;
-        margin: 5px;
-    }
-`;
-
-const BaseButton = styled(framerMotion.motion.button) `
-    all: unset;
-    padding: 10px 25px;
-    min-height: 38px;
-    border-radius: ${() => getGlobalTheme().borderRadius};
-    margin: 3px;
-    transition: all ${() => getGlobalTheme().transitions.fast};
-    cursor: pointer;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-
-
-    &&.__button-outline {    
-        background: transparent;
-        color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
-        -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
-        border: 1px solid ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
-
-        &:active {
-            background: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']}20;
-        }
-
-        span {
-            max-width: 300px;
-            flex: 1;
-            text-align: center;
-        }
-    }
-
-    &&.__button-solid {
-        background: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
-        -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'principal' : 'contrast'] : getGlobalTheme().colors['primary'][props.invert ? 'principal' : 'contrast']};
-        border: 1px solid transparent;
-        box-shadow: ${() => getGlobalTheme().boxShadow.normal};
-
-        &:active {
-            box-shadow: ${() => getGlobalTheme().boxShadow.active};
-            transform: scale(0.96);
-        }
-    
-        span {
-            max-width: 300px;
-            flex: 1;
-            text-align: center;
-            color: ${(props) => props.color ? getGlobalTheme().colors[props.color].contrast : getGlobalTheme().colors['primary'].contrast};
-        }
-    }
-`;
-
-function Button(props) {
-    const buttonType = props.buttonType ? props.buttonType : 'solid';
-    switch (buttonType) {
-        case 'icon':
-            if (!!!props.icon)
-                throw new Error('Square button icon not provided');
-            return (React__default.createElement(IconButton, Object.assign({}, props),
-                React__default.createElement(Icon, { name: props.icon, color: props.color, invert: props.invert, height: props.iconSize, width: props.iconSize, className: "__icon" }),
-                props.text && React__default.createElement("span", null, props.text)));
-        case 'outline':
-        case 'solid':
-        default:
-            return (React__default.createElement(BaseButton, Object.assign({}, props, { className: `__button-${buttonType} ${props.className}` }),
-                props.icon && React__default.createElement(Icon, { name: props.icon, color: props.color, invert: (buttonType === 'solid' || props.invert), height: props.iconSize, width: props.iconSize, style: { marginRight: '15px' } }),
-                props.text && React__default.createElement("span", null, props.text)));
-    }
 }
 
 const CardBaseElement = styled(framerMotion.motion.div) `
@@ -1061,6 +955,7 @@ function Input(props) {
     const onDatepickerSelect = (date) => {
         const element = inputRef.current;
         element.value = date.toLocaleDateString();
+        // eslint-disable-next-line
         datepicker.close();
     };
     const datepicker = useOverflow(React__default.createElement(Datepicker, { onDaySelected: onDatepickerSelect }));
@@ -1074,6 +969,91 @@ function Input(props) {
         props.enableClear && React__default.createElement(Button, { buttonType: "icon", icon: "close", onClick: clear, iconSize: "20px", style: { margin: 0, padding: 0 } }),
         props.enableDatepicker && React__default.createElement(Button, { buttonType: "icon", icon: "calendar", onClick: (event) => datepicker.open(event.currentTarget), iconSize: "20px", style: { margin: 0, padding: 0 }, invert: props.invert }),
         props.iconRight && React__default.createElement(Icon, { color: props.color, name: props.iconRight, invert: props.invert })));
+}
+
+const TabsLayoutElement = styled(framerMotion.motion.section) `
+    position: relative;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    .tabs-header {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+        width: 100%;
+        min-height: 50px;
+        background-color: ${() => getGlobalTheme().colors.primary.principal};
+        box-shadow: ${() => getGlobalTheme().boxShadow.normal};
+        color: ${() => getGlobalTheme().colors.primary.contrast}33;
+        .tab {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 100%;
+            cursor: pointer;
+            border-bottom: 5px solid ${() => getGlobalTheme().colors.primary.contrast}33;
+            text-transform: uppercase;
+            overflow: hidden;
+        }
+        .tab-selector {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 5px;
+            background-color: ${() => getGlobalTheme().colors.primary.contrast};
+            z-index: 3;
+        }
+        .tab-selected {
+            color: ${() => getGlobalTheme().colors.primary.contrast};
+        }
+    }
+    .tab-body {
+        width: 100%;
+        flex: 1;
+    }
+`;
+const TabElement = styled(framerMotion.motion.div) `
+
+`;
+
+function Tab(props) {
+    return (React__default.createElement(TabElement, { className: "tab-body-container" }, props.children));
+}
+
+function TabsLayout({ index, children, onTabChange }) {
+    const [tabIndex, setTabIndex] = React.useState(index || 0);
+    const selectorController = framerMotion.useAnimation();
+    const bodyController = framerMotion.useAnimation();
+    const childrenLenght = Array.isArray(children) ? children.length : 1;
+    React.useEffect(() => {
+        selectorController.start({
+            left: `calc(${100 * tabIndex / childrenLenght}%)`,
+            transition: { duration: 0.2, ease: 'easeIn' }
+        });
+        bodyController.start({
+            opacity: [0, 1],
+            transition: { duration: 0.2, ease: 'easeIn' }
+        });
+        if (onTabChange)
+            onTabChange(tabIndex);
+    }, [tabIndex]);
+    React.useEffect(() => {
+        if (index) {
+            setTabIndex(index);
+        }
+    }, [index]);
+    const renderTab = (element, index) => {
+        return React__default.createElement("div", { key: index, className: `tab ${tabIndex === index ? 'tab-selected' : ''}`, onClick: () => setTabIndex(index) }, element.props.title);
+    };
+    return (React__default.createElement(TabsLayoutElement, { className: "tabs-layout" },
+        React__default.createElement(framerMotion.motion.header, { className: "tabs-header" },
+            Array.isArray(children) ? children.map(renderTab) : renderTab(children, 0),
+            React__default.createElement(framerMotion.motion.div, { className: "tab-selector", style: { width: `calc(100% / ${childrenLenght})` }, animate: selectorController })),
+        React__default.createElement(framerMotion.motion.div, { className: "tab-body", animate: bodyController, initial: { opacity: 0 } }, Array.isArray(children) ? children[tabIndex] : children)));
 }
 
 const DEFAULT_ASIDE_CONFIG = {
@@ -1586,6 +1566,112 @@ function useOverflow(content, options) {
     return overflow;
 }
 
+const IconButton = styled(framerMotion.motion.button) `
+    all: unset;
+    background: transparent;
+    color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
+    -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
+    padding: 5px;
+    border-radius: ${() => getGlobalTheme().borderRadius};
+    margin: 3px;
+    transition: all ${() => getGlobalTheme().transitions.fast};
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    &:active {
+        transform: scale(0.96);
+    }
+
+    span {
+        max-width: 80px;
+        text-align: center;
+        font-size: calc(${() => getGlobalTheme().font.h2.fontSize} / 2);
+        font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .__icon {
+        flex: 1;
+        margin: 5px;
+    }
+`;
+
+const BaseButton = styled(framerMotion.motion.button) `
+    all: unset;
+    padding: 10px 25px;
+    min-height: 38px;
+    border-radius: ${() => getGlobalTheme().borderRadius};
+    margin: 3px;
+    transition: all ${() => getGlobalTheme().transitions.fast};
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+
+    &&.__button-outline {    
+        background: transparent;
+        color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
+        -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
+        border: 1px solid ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
+
+        &:active {
+            background: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']}20;
+        }
+
+        span {
+            max-width: 300px;
+            flex: 1;
+            text-align: center;
+        }
+    }
+
+    &&.__button-solid {
+        background: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
+        -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'principal' : 'contrast'] : getGlobalTheme().colors['primary'][props.invert ? 'principal' : 'contrast']};
+        border: 1px solid transparent;
+        box-shadow: ${() => getGlobalTheme().boxShadow.normal};
+
+        &:active {
+            box-shadow: ${() => getGlobalTheme().boxShadow.active};
+            transform: scale(0.96);
+        }
+    
+        span {
+            max-width: 300px;
+            flex: 1;
+            text-align: center;
+            color: ${(props) => props.color ? getGlobalTheme().colors[props.color].contrast : getGlobalTheme().colors['primary'].contrast};
+        }
+    }
+`;
+
+function Button(props) {
+    const buttonType = props.buttonType ? props.buttonType : 'solid';
+    switch (buttonType) {
+        case 'icon':
+            if (!!!props.icon)
+                throw new Error('Square button icon not provided');
+            return (React__default.createElement(IconButton, Object.assign({}, props),
+                React__default.createElement(Icon, { name: props.icon, color: props.color, invert: props.invert, height: props.iconSize, width: props.iconSize, className: "__icon" }),
+                props.text && React__default.createElement("span", null, props.text)));
+        case 'outline':
+        case 'solid':
+        default:
+            return (React__default.createElement(BaseButton, Object.assign({}, props, { className: `__button-${buttonType} ${props.className}` }),
+                props.icon && React__default.createElement(Icon, { name: props.icon, color: props.color, invert: (buttonType === 'solid' || props.invert), height: props.iconSize, width: props.iconSize, style: { marginRight: '15px' } }),
+                props.text && React__default.createElement("span", null, props.text)));
+    }
+}
+
 exports.Animations = Animations;
 exports.AsideController = AsideController;
 exports.Badge = Badge;
@@ -1600,6 +1686,8 @@ exports.ImageAvatar = ImageAvatar;
 exports.Input = Input;
 exports.LightTheme = LightTheme;
 exports.Spinners = Spinners;
+exports.Tab = Tab;
+exports.TabsLayout = TabsLayout;
 exports.getGlobalTheme = getGlobalTheme;
 exports.setGlobalTheme = setGlobalTheme;
 exports.useModal = useModal;

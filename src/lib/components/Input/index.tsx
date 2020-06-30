@@ -35,6 +35,7 @@ export default function Input(props: InputProps): JSX.Element {
     const onDatepickerSelect = (date: Date) => {
         const element = inputRef.current as HTMLInputElement;
         element.value = date.toLocaleDateString();
+        // eslint-disable-next-line
         datepicker.close();
     };
     const datepicker = useOverflow(<Datepicker onDaySelected={onDatepickerSelect} />);

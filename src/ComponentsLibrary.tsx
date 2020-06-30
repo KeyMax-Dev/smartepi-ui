@@ -1,6 +1,6 @@
-import { Icon, Button, getGlobalTheme, ImageAvatar, Input, setGlobalTheme, LightTheme, DarkTheme, Checkbox, CardBase, Badge, Datepicker } from './lib';
+import { Icon, Button, getGlobalTheme, ImageAvatar, Input, setGlobalTheme, LightTheme, DarkTheme, Checkbox, CardBase, Badge, Datepicker, TabsLayout, Tab } from './lib';
 import Icons from './lib/assets/svgs/icons';
-import React, { useState, ReactText, useEffect } from 'react';
+import React, { useState, ReactText } from 'react';
 import styled from 'styled-components';
 import useModal from './lib/services/aside-components/modal/index';
 import useOverflow from './lib/services/aside-components/overflow/index';
@@ -195,6 +195,19 @@ export default function ComponentsLibrary(): JSX.Element {
             <ComponentExpandable componentName="Datepicker">
                 <Button buttonType="icon" icon="calendar" text="Overflow" onClick={(event) => datepickerOverflow.open(event.currentTarget as HTMLElement)} />
                 <Button buttonType="icon" icon="calendar" text="Modal" onClick={() => datepickerModal.open()} />
+            </ComponentExpandable>
+            <ComponentExpandable componentName="Tabs Layout">
+                <TabsLayout index={2} onTabChange={(index) => console.log('tab change', index)}>
+                    <Tab title="Tab com um nome bem grande">
+                        tab1 body
+                    </Tab>
+                    <Tab title="tab2">
+                        tab2 body
+                    </Tab>
+                    <Tab title="tab3">
+                        tab3 body
+                    </Tab>
+                </TabsLayout>
             </ComponentExpandable>
         </PageBody>
     );
