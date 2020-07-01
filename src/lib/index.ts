@@ -23,9 +23,14 @@ import Icon from './components/Icon';
 import ImageAvatar from './components/ImageAvatar';
 import Input from './components/Input';
 import Tab from './components/Tabs/tab';
-import Table from './components/Table';
-import TableColumn from './components/Table';
 import Tabs from './components/Tabs';
+// Table
+import Table, { 
+    TableRowProps, 
+    TableRowEvents,
+    TableRowEventHandler
+} from './components/Table';
+import TableColumn from './components/Table/table-column';
 
 // Services
 import AsideController from './services/aside-components/aside-controller';
@@ -47,7 +52,6 @@ import User from './types/User';
 import UserProfile from './types/UserProfile';
 import Warehouse from './types/Warehouse';
 import Withdraw from './types/Withdraw';
-import { TableRowProps, TableRowEvents } from './components/Table';
 
 export {
     DarkTheme,
@@ -72,9 +76,17 @@ export {
     ImageAvatar,
     Input,
     Tab,
+    Tabs
+};
+
+export {    
     Table,
     TableColumn,
-    Tabs
+};
+export type {
+    TableRowEventHandler,
+    TableRowEvents,
+    TableRowProps
 };
 
 export {
@@ -93,8 +105,6 @@ export type {
     ProductSize,
     Rule,
     Sector,
-    TableRowEvents,
-    TableRowProps,
     Theme,
     User,
     UserProfile,

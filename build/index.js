@@ -1024,6 +1024,39 @@ function Tab(props) {
     return (React__default.createElement(TabElement, { className: "tab-body-container" }, props.children));
 }
 
+function Tabs({ index, children, onTabChange }) {
+    const [tabIndex, setTabIndex] = React.useState(index || 0);
+    const selectorController = framerMotion.useAnimation();
+    const bodyController = framerMotion.useAnimation();
+    const childrenLenght = Array.isArray(children) ? children.length : 1;
+    React.useEffect(() => {
+        selectorController.start({
+            left: `calc(${100 * tabIndex / childrenLenght}%)`,
+            transition: { duration: 0.2, ease: 'easeIn' }
+        });
+        // TODO: Define tab body animation
+        // bodyController.start({
+        //     opacity: [0, 1],
+        //     transition: { duration: 0.2, ease: 'easeIn' }
+        // });
+        if (onTabChange)
+            onTabChange(tabIndex);
+    }, [tabIndex]);
+    React.useEffect(() => {
+        if (index) {
+            setTabIndex(index);
+        }
+    }, [index]);
+    const renderTab = (element, index) => {
+        return React__default.createElement("div", { key: index, className: `tab ${tabIndex === index ? 'tab-selected' : ''}`, onClick: () => setTabIndex(index) }, element.props.title);
+    };
+    return (React__default.createElement(TabsLayoutElement, { className: "tabs-layout" },
+        React__default.createElement(framerMotion.motion.header, { className: "tabs-header" },
+            Array.isArray(children) ? children.map(renderTab) : renderTab(children, 0),
+            React__default.createElement(framerMotion.motion.div, { className: "tab-selector", style: { width: `calc(100% / ${childrenLenght})` }, animate: selectorController })),
+        React__default.createElement(framerMotion.motion.div, { className: "tab-body", animate: bodyController }, Array.isArray(children) ? children[tabIndex] : children)));
+}
+
 const TableElement = styled.table `
     width: 100%;
     flex: 1;
@@ -1090,37 +1123,8 @@ function Table(props) {
         React__default.createElement(TableBodyElement, null, props.table.map(renderLine))));
 }
 
-function Tabs({ index, children, onTabChange }) {
-    const [tabIndex, setTabIndex] = React.useState(index || 0);
-    const selectorController = framerMotion.useAnimation();
-    const bodyController = framerMotion.useAnimation();
-    const childrenLenght = Array.isArray(children) ? children.length : 1;
-    React.useEffect(() => {
-        selectorController.start({
-            left: `calc(${100 * tabIndex / childrenLenght}%)`,
-            transition: { duration: 0.2, ease: 'easeIn' }
-        });
-        // TODO: Define tab body animation
-        // bodyController.start({
-        //     opacity: [0, 1],
-        //     transition: { duration: 0.2, ease: 'easeIn' }
-        // });
-        if (onTabChange)
-            onTabChange(tabIndex);
-    }, [tabIndex]);
-    React.useEffect(() => {
-        if (index) {
-            setTabIndex(index);
-        }
-    }, [index]);
-    const renderTab = (element, index) => {
-        return React__default.createElement("div", { key: index, className: `tab ${tabIndex === index ? 'tab-selected' : ''}`, onClick: () => setTabIndex(index) }, element.props.title);
-    };
-    return (React__default.createElement(TabsLayoutElement, { className: "tabs-layout" },
-        React__default.createElement(framerMotion.motion.header, { className: "tabs-header" },
-            Array.isArray(children) ? children.map(renderTab) : renderTab(children, 0),
-            React__default.createElement(framerMotion.motion.div, { className: "tab-selector", style: { width: `calc(100% / ${childrenLenght})` }, animate: selectorController })),
-        React__default.createElement(framerMotion.motion.div, { className: "tab-body", animate: bodyController }, Array.isArray(children) ? children[tabIndex] : children)));
+function TableColumn(props) {
+    return (React__default.createElement(TableColumnElement, Object.assign({}, props), props.children));
 }
 
 const DEFAULT_ASIDE_CONFIG = {
@@ -1755,7 +1759,7 @@ exports.LightTheme = LightTheme;
 exports.Spinners = Spinners;
 exports.Tab = Tab;
 exports.Table = Table;
-exports.TableColumn = Table;
+exports.TableColumn = TableColumn;
 exports.Tabs = Tabs;
 exports.getGlobalTheme = getGlobalTheme;
 exports.setGlobalTheme = setGlobalTheme;

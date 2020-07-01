@@ -7,8 +7,8 @@ type TableColumnReactElement = React.ReactElement<TableColumnProps, typeof Table
 type TableChildren =  TableColumnReactElement | false | undefined;
 type DOMEvents = Exclude<keyof React.DOMAttributes<HTMLTableRowElement>, 'children' | 'dangerouslySetInnerHTML'>;
 type TableRowEvent = React.SyntheticEvent;
-type TableRowEventHandler = (event: TableRowEvent, tableItem: TableItem) => void;
 
+export type TableRowEventHandler = (event: TableRowEvent, tableItem: TableItem) => void;
 export type TableRowProps = Omit<React.ComponentProps<'tr'>, DOMEvents>;
 export type TableRowEvents = Partial<{ [K in DOMEvents]: TableRowEventHandler }>;
 
