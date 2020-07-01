@@ -3,15 +3,13 @@ import { useAnimation, motion } from 'framer-motion';
 import React, { useState, useEffect, ReactElement } from 'react';
 import Tab, { TabProps } from './tab';
 
-type asd = React.ReactElement<TabProps, typeof Tab>;
-
 interface TabsHeaderProps {
     index?: number;
-    children: asd | asd[];
+    children: React.ReactElement<TabProps, typeof Tab> | React.ReactElement<TabProps, typeof Tab>[];
     onTabChange?: (index: number) => void;
 }
 
-export default function TabsLayout({ index, children, onTabChange }: TabsHeaderProps): JSX.Element {
+export default function Tabs({ index, children, onTabChange }: TabsHeaderProps): JSX.Element {
 
     const [tabIndex, setTabIndex] = useState(index || 0);
     const selectorController = useAnimation();
@@ -24,10 +22,11 @@ export default function TabsLayout({ index, children, onTabChange }: TabsHeaderP
             transition: { duration: 0.2, ease: 'easeIn' }
         });
 
-        bodyController.start({
-            opacity: [0, 1],
-            transition: { duration: 0.2, ease: 'easeIn' }
-        });
+        // TODO: Define tab body animation
+        // bodyController.start({
+        //     opacity: [0, 1],
+        //     transition: { duration: 0.2, ease: 'easeIn' }
+        // });
 
         if (onTabChange) onTabChange(tabIndex);
     }, [tabIndex]);
@@ -48,7 +47,7 @@ export default function TabsLayout({ index, children, onTabChange }: TabsHeaderP
                 {Array.isArray(children) ? children.map(renderTab) : renderTab(children, 0)}
                 <motion.div className="tab-selector" style={{ width: `calc(100% / ${childrenLenght})` }} animate={selectorController} />
             </motion.header>
-            <motion.div className="tab-body" animate={bodyController} initial={{opacity: 0}}>
+            <motion.div className="tab-body" animate={bodyController} >
                 {Array.isArray(children) ? children[tabIndex] : children}
             </motion.div>
         </TabsLayoutElement>

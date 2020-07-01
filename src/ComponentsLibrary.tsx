@@ -1,10 +1,11 @@
-import { Icon, Button, getGlobalTheme, ImageAvatar, Input, setGlobalTheme, LightTheme, DarkTheme, Checkbox, CardBase, Badge, Datepicker, TabsLayout, Tab } from './lib';
+import { Icon, Button, getGlobalTheme, ImageAvatar, Input, setGlobalTheme, LightTheme, DarkTheme, Checkbox, CardBase, Badge, Datepicker, Tabs, Tab, Table } from './lib';
 import Icons from './lib/assets/svgs/icons';
 import React, { useState, ReactText } from 'react';
 import styled from 'styled-components';
 import useModal from './lib/services/aside-components/modal/index';
 import useOverflow from './lib/services/aside-components/overflow/index';
 import useToast from './lib/services/aside-components/toast/index';
+import TableColumn from './lib/components/Table/table-column';
 
 interface ComponentExpandableProps {
     children: ReactText | JSX.Element | JSX.Element[];
@@ -60,6 +61,12 @@ const ComponentsContainer = styled.div`
         font-size: 10px;
     }
 `;
+
+const TableData = [
+    { id: 0, data: { value1: 'data1', value2: 'data2' } },
+    { id: 2, data: { value1: 'data3', value2: 'data4' } },
+    { id: 3, data: { value1: 'data5', value2: 'data6' } },
+];
 
 export default function ComponentsLibrary(): JSX.Element {
 
@@ -196,8 +203,8 @@ export default function ComponentsLibrary(): JSX.Element {
                 <Button buttonType="icon" icon="calendar" text="Overflow" onClick={(event) => datepickerOverflow.open(event.currentTarget as HTMLElement)} />
                 <Button buttonType="icon" icon="calendar" text="Modal" onClick={() => datepickerModal.open()} />
             </ComponentExpandable>
-            <ComponentExpandable componentName="Tabs Layout">
-                <TabsLayout index={2} onTabChange={(index) => console.log('tab change', index)}>
+            <ComponentExpandable componentName="Tabs">
+                <Tabs index={2} onTabChange={(index) => console.log('tab change', index)}>
                     <Tab title="Tab com um nome bem grande">
                         tab1 body
                     </Tab>
@@ -207,7 +214,22 @@ export default function ComponentsLibrary(): JSX.Element {
                     <Tab title="tab3">
                         tab3 body
                     </Tab>
-                </TabsLayout>
+                </Tabs>
+            </ComponentExpandable>
+            <ComponentExpandable componentName="Table">
+                <Table table={TableData}>
+                    <TableColumn name="ID" key="id" width="100px">
+                        {(item) => <div>{item.id}</div>}
+                    </TableColumn>
+                    <TableColumn name="Data" key="data" flex={1}>
+                        {(item) =>
+                            <div style={{width: '100%', display: 'flex', justifyContent: 'space-around'}}>
+                                <span><b>Value1:</b> {item.data.value1}</span>
+                                <span><b>Value2:</b> {item.data.value2}</span>
+                            </div>
+                        }
+                    </TableColumn>
+                </Table>
             </ComponentExpandable>
         </PageBody>
     );

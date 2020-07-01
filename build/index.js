@@ -1024,7 +1024,73 @@ function Tab(props) {
     return (React__default.createElement(TabElement, { className: "tab-body-container" }, props.children));
 }
 
-function TabsLayout({ index, children, onTabChange }) {
+const TableElement = styled.table `
+    width: 100%;
+    flex: 1;
+    border-spacing: 0;
+    overflow-x: scroll;
+    tr {
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+        text-align: center;
+        width: 100%;
+        max-width: 1024px;
+    }
+`;
+const TableHeaderElement = styled.thead `
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: ${() => getGlobalTheme().colors.primary.principal};
+    box-shadow: ${() => getGlobalTheme().boxShadow.normal};
+    th {
+        color: ${() => getGlobalTheme().colors.primary.contrast};
+        font-size: ${() => getGlobalTheme().font.h2.fontSize};
+        font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
+        text-align: center;
+        padding: 10px;
+    }
+`;
+const TableBodyElement = styled.tbody `
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    tr {        
+        border-bottom: 1px solid ${() => getGlobalTheme().colors.primary.principal}32;
+    }
+`;
+const TableColumnElement = styled.td `
+    flex: ${(props) => props.flex || 'initial'};
+    min-width: ${(props) => props.width || 'initial'};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+    transition: all ${() => getGlobalTheme().transitions.avarage};
+    &:hover {
+        background-color: ${() => getGlobalTheme().colors.primary.principal}08;
+    }
+`;
+
+function Table(props) {
+    const children = props.children.filter((ele) => typeof ele === 'object');
+    const rowProps = props.rowProps || {};
+    const rowEvents = props.rowEvents || {};
+    const renderLine = (element, index) => {
+        const events = {};
+        Object.entries(rowEvents).forEach(([key, event]) => events[key] = (nativeEvent) => event ? event(nativeEvent, element) : undefined);
+        return React__default.createElement("tr", Object.assign({ key: index }, rowProps, events), children.map((column) => React__default.cloneElement(column, column.props, column.props.children(element, index))));
+    };
+    return (React__default.createElement(TableElement, null,
+        React__default.createElement(TableHeaderElement, null,
+            React__default.createElement("tr", null, children.map((child) => React__default.createElement("th", Object.assign({ key: child.props.name, style: { flex: child.props.flex } }, child.props), child.props.name)))),
+        React__default.createElement(TableBodyElement, null, props.table.map(renderLine))));
+}
+
+function Tabs({ index, children, onTabChange }) {
     const [tabIndex, setTabIndex] = React.useState(index || 0);
     const selectorController = framerMotion.useAnimation();
     const bodyController = framerMotion.useAnimation();
@@ -1034,10 +1100,11 @@ function TabsLayout({ index, children, onTabChange }) {
             left: `calc(${100 * tabIndex / childrenLenght}%)`,
             transition: { duration: 0.2, ease: 'easeIn' }
         });
-        bodyController.start({
-            opacity: [0, 1],
-            transition: { duration: 0.2, ease: 'easeIn' }
-        });
+        // TODO: Define tab body animation
+        // bodyController.start({
+        //     opacity: [0, 1],
+        //     transition: { duration: 0.2, ease: 'easeIn' }
+        // });
         if (onTabChange)
             onTabChange(tabIndex);
     }, [tabIndex]);
@@ -1053,7 +1120,7 @@ function TabsLayout({ index, children, onTabChange }) {
         React__default.createElement(framerMotion.motion.header, { className: "tabs-header" },
             Array.isArray(children) ? children.map(renderTab) : renderTab(children, 0),
             React__default.createElement(framerMotion.motion.div, { className: "tab-selector", style: { width: `calc(100% / ${childrenLenght})` }, animate: selectorController })),
-        React__default.createElement(framerMotion.motion.div, { className: "tab-body", animate: bodyController, initial: { opacity: 0 } }, Array.isArray(children) ? children[tabIndex] : children)));
+        React__default.createElement(framerMotion.motion.div, { className: "tab-body", animate: bodyController }, Array.isArray(children) ? children[tabIndex] : children)));
 }
 
 const DEFAULT_ASIDE_CONFIG = {
@@ -1687,7 +1754,9 @@ exports.Input = Input;
 exports.LightTheme = LightTheme;
 exports.Spinners = Spinners;
 exports.Tab = Tab;
-exports.TabsLayout = TabsLayout;
+exports.Table = Table;
+exports.TableColumn = Table;
+exports.Tabs = Tabs;
 exports.getGlobalTheme = getGlobalTheme;
 exports.setGlobalTheme = setGlobalTheme;
 exports.useModal = useModal;
