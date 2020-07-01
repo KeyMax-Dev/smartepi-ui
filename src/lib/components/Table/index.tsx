@@ -39,7 +39,7 @@ export default function Table(props: TableProps): JSX.Element {
         <TableElement>
             <TableHeaderElement>
                 <tr>
-                    {children.map((child: TableColumnReactElement) => <th key={child.props.name} style={{ flex: child.props.flex }} {...child.props}>{child.props.name}</th>)}
+                    {children.map((child: TableColumnReactElement) => <th key={child.props.name} style={{ flex: child.props.flex, minWidth: child.props.width, maxWidth: child.props.width }} {...child.props}>{child.props.name}</th>)}
                 </tr>
             </TableHeaderElement>
             <TableBodyElement>

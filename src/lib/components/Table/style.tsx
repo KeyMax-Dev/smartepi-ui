@@ -46,6 +46,7 @@ export const TableBodyElement = styled.tbody`
 export const TableColumnElement = styled.td<TableColumnProps>`
     flex: ${(props) => props.flex || 'initial'};
     min-width: ${(props) => props.width || 'initial'};
+    max-width: ${(props) => props.width || 'initial'};
     display: flex;
     justify-content: center;
     align-items: center;

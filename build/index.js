@@ -1097,6 +1097,7 @@ const TableBodyElement = styled.tbody `
 const TableColumnElement = styled.td `
     flex: ${(props) => props.flex || 'initial'};
     min-width: ${(props) => props.width || 'initial'};
+    max-width: ${(props) => props.width || 'initial'};
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1119,7 +1120,7 @@ function Table(props) {
     };
     return (React__default.createElement(TableElement, null,
         React__default.createElement(TableHeaderElement, null,
-            React__default.createElement("tr", null, children.map((child) => React__default.createElement("th", Object.assign({ key: child.props.name, style: { flex: child.props.flex } }, child.props), child.props.name)))),
+            React__default.createElement("tr", null, children.map((child) => React__default.createElement("th", Object.assign({ key: child.props.name, style: { flex: child.props.flex, minWidth: child.props.width, maxWidth: child.props.width } }, child.props), child.props.name)))),
         React__default.createElement(TableBodyElement, null, props.table.map(renderLine))));
 }
 
