@@ -48,7 +48,7 @@ export default function Tabs({ index, children, onTabChange }: TabsHeaderProps):
                 {Array.isArray(children) ? children.map(renderTab) : renderTab(children, 0)}
                 <motion.div className="tab-selector" style={{ width: `calc(100% / ${childrenLenght})` }} animate={selectorController} />
             </motion.header>
-            <motion.div className="tab-body" animate={bodyController} >
+            <motion.div className="tab-body-container" animate={bodyController} >
                 <ScrollableContainer flexDirection="column">
                     {Array.isArray(children) ? children[tabIndex] : children}
                 </ScrollableContainer>

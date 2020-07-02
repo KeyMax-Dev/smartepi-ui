@@ -44,7 +44,7 @@ export const TabsLayoutElement = styled(motion.section)`
             color: ${() => getGlobalTheme().colors.primary.contrast};
         }
     }
-    .tab-body {
+    .tab-body-container {
         flex: 1 1 100%;
         width: 100%;
         justify-self: stretch;

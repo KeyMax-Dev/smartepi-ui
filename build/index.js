@@ -1013,7 +1013,7 @@ const TabsLayoutElement = styled(framerMotion.motion.section) `
             color: ${() => getGlobalTheme().colors.primary.contrast};
         }
     }
-    .tab-body {
+    .tab-body-container {
         flex: 1 1 100%;
         width: 100%;
         justify-self: stretch;
@@ -1029,7 +1029,7 @@ const TabElement = styled(framerMotion.motion.div) `
 `;
 
 function Tab(props) {
-    return (React__default.createElement(TabElement, { className: "tab-body-container" }, props.children));
+    return (React__default.createElement(TabElement, Object.assign({}, props, { className: `tab-body ${props.className}` }), props.children));
 }
 
 const ScrollableContainer = styled(framerMotion.motion.div) `
@@ -1076,7 +1076,7 @@ function Tabs({ index, children, onTabChange }) {
         React__default.createElement(framerMotion.motion.header, { className: "tabs-header" },
             Array.isArray(children) ? children.map(renderTab) : renderTab(children, 0),
             React__default.createElement(framerMotion.motion.div, { className: "tab-selector", style: { width: `calc(100% / ${childrenLenght})` }, animate: selectorController })),
-        React__default.createElement(framerMotion.motion.div, { className: "tab-body", animate: bodyController },
+        React__default.createElement(framerMotion.motion.div, { className: "tab-body-container", animate: bodyController },
             React__default.createElement(ScrollableContainer, { flexDirection: "column" }, Array.isArray(children) ? children[tabIndex] : children))));
 }
 
