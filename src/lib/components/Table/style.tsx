@@ -4,10 +4,15 @@ import { getGlobalTheme } from "../../assets/themes";
 
 
 export const TableElement = styled.table`
+    flex: 1 1 100%;
     width: 100%;
-    flex: 1;
+    min-height: 100%;
+    justify-self: stretch;
+    align-self: stretch;
+    
     border-spacing: 0;
-    overflow-x: scroll;
+    display: flex;
+    flex-direction: column;
     tr {
         display: flex;
         justify-content: center;
@@ -34,10 +39,8 @@ export const TableHeaderElement = styled.thead`
 `;
 
 export const TableBodyElement = styled.tbody`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    flex: 1;
+    position: relative;
     tr {        
         border-bottom: 1px solid ${() => getGlobalTheme().colors.primary.principal}32;
     }

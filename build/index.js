@@ -972,9 +972,12 @@ function Input(props) {
 }
 
 const TabsLayoutElement = styled(framerMotion.motion.section) `
-    position: relative;
+    flex: 1 1 100%;
     width: 100%;
-    flex: 1;
+    min-height: 100%;
+    justify-self: stretch;
+    align-self: stretch;
+    
     display: flex;
     flex-direction: column;
     .tabs-header {
@@ -1014,6 +1017,7 @@ const TabsLayoutElement = styled(framerMotion.motion.section) `
     .tab-body {
         width: 100%;
         flex: 1;
+        position: relative;
     }
 `;
 const TabElement = styled(framerMotion.motion.div) `
@@ -1023,6 +1027,20 @@ const TabElement = styled(framerMotion.motion.div) `
 function Tab(props) {
     return (React__default.createElement(TabElement, { className: "tab-body-container" }, props.children));
 }
+
+const ScrollableContainer = styled(framerMotion.motion.div) `
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: auto;
+
+    display: flex;
+    flex-direction: ${(props) => props.flexDirection};
+    justify-content: flex-start;
+    align-items: center;
+`;
 
 function Tabs({ index, children, onTabChange }) {
     const [tabIndex, setTabIndex] = React.useState(index || 0);
@@ -1054,14 +1072,20 @@ function Tabs({ index, children, onTabChange }) {
         React__default.createElement(framerMotion.motion.header, { className: "tabs-header" },
             Array.isArray(children) ? children.map(renderTab) : renderTab(children, 0),
             React__default.createElement(framerMotion.motion.div, { className: "tab-selector", style: { width: `calc(100% / ${childrenLenght})` }, animate: selectorController })),
-        React__default.createElement(framerMotion.motion.div, { className: "tab-body", animate: bodyController }, Array.isArray(children) ? children[tabIndex] : children)));
+        React__default.createElement(framerMotion.motion.div, { className: "tab-body", animate: bodyController },
+            React__default.createElement(ScrollableContainer, { flexDirection: "column" }, Array.isArray(children) ? children[tabIndex] : children))));
 }
 
 const TableElement = styled.table `
+    flex: 1 1 100%;
     width: 100%;
-    flex: 1;
+    min-height: 100%;
+    justify-self: stretch;
+    align-self: stretch;
+    
     border-spacing: 0;
-    overflow-x: scroll;
+    display: flex;
+    flex-direction: column;
     tr {
         display: flex;
         justify-content: center;
@@ -1086,10 +1110,8 @@ const TableHeaderElement = styled.thead `
     }
 `;
 const TableBodyElement = styled.tbody `
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    flex: 1;
+    position: relative;
     tr {        
         border-bottom: 1px solid ${() => getGlobalTheme().colors.primary.principal}32;
     }
@@ -1121,7 +1143,8 @@ function Table(props) {
     return (React__default.createElement(TableElement, null,
         React__default.createElement(TableHeaderElement, null,
             React__default.createElement("tr", null, children.map((child) => React__default.createElement("th", Object.assign({ key: child.props.name, style: { flex: child.props.flex, minWidth: child.props.width, maxWidth: child.props.width } }, child.props), child.props.name)))),
-        React__default.createElement(TableBodyElement, null, props.table.map(renderLine))));
+        React__default.createElement(TableBodyElement, null,
+            React__default.createElement(ScrollableContainer, { flexDirection: "column" }, props.table.map(renderLine)))));
 }
 
 function TableColumn(props) {

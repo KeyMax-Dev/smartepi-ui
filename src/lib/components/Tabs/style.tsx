@@ -3,9 +3,12 @@ import { motion } from "framer-motion";
 import { getGlobalTheme } from "../../assets/themes";
 
 export const TabsLayoutElement = styled(motion.section)`
-    position: relative;
+    flex: 1 1 100%;
     width: 100%;
-    flex: 1;
+    min-height: 100%;
+    justify-self: stretch;
+    align-self: stretch;
+    
     display: flex;
     flex-direction: column;
     .tabs-header {
@@ -45,6 +48,7 @@ export const TabsLayoutElement = styled(motion.section)`
     .tab-body {
         width: 100%;
         flex: 1;
+        position: relative;
     }
 `;
 

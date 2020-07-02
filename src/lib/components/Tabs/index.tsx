@@ -2,6 +2,7 @@ import { TabsLayoutElement } from './style';
 import { useAnimation, motion } from 'framer-motion';
 import React, { useState, useEffect, ReactElement } from 'react';
 import Tab, { TabProps } from './tab';
+import ScrollableContainer from '../ScrollableContainer';
 
 interface TabsHeaderProps {
     index?: number;
@@ -48,7 +49,9 @@ export default function Tabs({ index, children, onTabChange }: TabsHeaderProps):
                 <motion.div className="tab-selector" style={{ width: `calc(100% / ${childrenLenght})` }} animate={selectorController} />
             </motion.header>
             <motion.div className="tab-body" animate={bodyController} >
-                {Array.isArray(children) ? children[tabIndex] : children}
+                <ScrollableContainer flexDirection="column">
+                    {Array.isArray(children) ? children[tabIndex] : children}
+                </ScrollableContainer>
             </motion.div>
         </TabsLayoutElement>
     );
