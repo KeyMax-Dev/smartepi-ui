@@ -5,7 +5,6 @@ import { getGlobalTheme } from "../../assets/themes";
 export const TabsLayoutElement = styled(motion.section)`
     flex: 1 1 100%;
     width: 100%;
-    min-height: 100%;
     justify-self: stretch;
     align-self: stretch;
     
@@ -46,13 +45,18 @@ export const TabsLayoutElement = styled(motion.section)`
         }
     }
     .tab-body {
+        flex: 1 1 100%;
         width: 100%;
-        flex: 1;
+        justify-self: stretch;
+        align-self: stretch;
         position: relative;
     }
 `;
 
 export const TabElement = styled(motion.div)`
-
+    flex: 1 1 100%;
+    width: 100%;
+    justify-self: stretch;
+    align-self: stretch;
 `;
 

@@ -974,7 +974,6 @@ function Input(props) {
 const TabsLayoutElement = styled(framerMotion.motion.section) `
     flex: 1 1 100%;
     width: 100%;
-    min-height: 100%;
     justify-self: stretch;
     align-self: stretch;
     
@@ -1015,13 +1014,18 @@ const TabsLayoutElement = styled(framerMotion.motion.section) `
         }
     }
     .tab-body {
+        flex: 1 1 100%;
         width: 100%;
-        flex: 1;
+        justify-self: stretch;
+        align-self: stretch;
         position: relative;
     }
 `;
 const TabElement = styled(framerMotion.motion.div) `
-
+    flex: 1 1 100%;
+    width: 100%;
+    justify-self: stretch;
+    align-self: stretch;
 `;
 
 function Tab(props) {
@@ -1079,7 +1083,6 @@ function Tabs({ index, children, onTabChange }) {
 const TableElement = styled.table `
     flex: 1 1 100%;
     width: 100%;
-    min-height: 100%;
     justify-self: stretch;
     align-self: stretch;
     

@@ -6,7 +6,6 @@ import { getGlobalTheme } from "../../assets/themes";
 export const TableElement = styled.table`
     flex: 1 1 100%;
     width: 100%;
-    min-height: 100%;
     justify-self: stretch;
     align-self: stretch;
     
