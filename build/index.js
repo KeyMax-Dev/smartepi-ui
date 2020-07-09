@@ -1147,7 +1147,7 @@ function Table(props) {
     };
     return (React__default.createElement(TableElement, null,
         React__default.createElement(TableHeaderElement, null,
-            React__default.createElement("tr", null, children.map((child) => React__default.createElement("th", Object.assign({ key: child.props.name, style: { flex: child.props.flex, minWidth: child.props.width, maxWidth: child.props.width } }, child.props), child.props.name)))),
+            React__default.createElement("tr", null, children.map((child) => React__default.createElement("th", Object.assign({ key: child.props.name, style: { flex: child.props.flex, minWidth: child.props.minWidth, maxWidth: child.props.maxWidth } }, child.props), child.props.name)))),
         React__default.createElement(TableBodyElement, null,
             React__default.createElement(ScrollableContainer, { flexDirection: "column" }, props.table.map(renderLine)))));
 }
