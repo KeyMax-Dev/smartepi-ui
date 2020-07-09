@@ -1,3 +1,4 @@
+import React from 'react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
@@ -5,6 +6,9 @@ import styled from 'styled-components';
 interface ScrollableContainerProps {
     flexDirection: 'row' | 'row-reverse' | 'column' | 'column-reverse';
 }
+
+// type ThemedScrollableContainer =
+//     <C extends keyof JSX.IntrinsicElements>(c: C) => any;
 
 const ScrollableContainer = styled(motion.div)<ScrollableContainerProps>`
     position: absolute;

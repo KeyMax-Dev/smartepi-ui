@@ -1032,6 +1032,8 @@ function Tab(props) {
     return (React__default.createElement(TabElement, Object.assign({}, props, { className: `tab-body ${props.className}` }), props.children));
 }
 
+// type ThemedScrollableContainer =
+//     <C extends keyof JSX.IntrinsicElements>(c: C) => any;
 const ScrollableContainer = styled(framerMotion.motion.div) `
     position: absolute;
     top: 0;
@@ -1120,9 +1122,9 @@ const TableBodyElement = styled.tbody `
     }
 `;
 const TableColumnElement = styled.td `
-    flex: ${(props) => props.flex || 'initial'};
-    min-width: ${(props) => props.width || 'initial'};
-    max-width: ${(props) => props.width || 'initial'};
+    flex: ${({ flex }) => flex || 'initial'};
+    min-width: ${({ minWidth }) => minWidth || 'initial'};
+    max-width: ${({ maxWidth }) => maxWidth || 'initial'};
     display: flex;
     justify-content: center;
     align-items: center;

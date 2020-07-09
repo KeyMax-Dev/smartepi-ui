@@ -44,7 +44,7 @@ export default function Table(props: TableProps): JSX.Element {
                 </tr>
             </TableHeaderElement>
             <TableBodyElement>
-                <ScrollableContainer flexDirection="column">
+                <ScrollableContainer<'div'> flexDirection="column">
                     {props.table.map(renderLine)}
                 </ScrollableContainer>
             </TableBodyElement>
