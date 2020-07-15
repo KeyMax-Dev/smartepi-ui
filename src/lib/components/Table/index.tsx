@@ -2,6 +2,8 @@ import React, { EventHandler } from 'react';
 import { TableElement, TableBodyElement, TableHeaderElement } from "./style";
 import TableColumn, { TableColumnProps } from './table-column';
 import ScrollableContainer from './../ScrollableContainer/index';
+import { motion } from 'framer-motion';
+import Spinners from '../../assets/svgs/spinners';
 
 type TableItem = { [key: string]: unknown };
 type TableColumnReactElement = React.ReactElement<TableColumnProps, typeof TableColumn>;
@@ -18,6 +20,7 @@ interface TableProps {
     children: TableChildren[];
     rowProps?: TableRowProps;
     rowEvents?: TableRowEvents;
+    loading?: boolean;
 }
 
 export default function Table(props: TableProps): JSX.Element {
@@ -38,16 +41,31 @@ export default function Table(props: TableProps): JSX.Element {
 
     return (
         <TableElement>
-            <TableHeaderElement>
-                <tr>
-                    {children.map((child: TableColumnReactElement) => <th key={child.props.name} style={{ flex: child.props.flex, minWidth: child.props.minWidth, maxWidth: child.props.maxWidth }} {...child.props}>{child.props.name}</th>)}
-                </tr>
-            </TableHeaderElement>
-            <TableBodyElement>
-                <ScrollableContainer<'div'> flexDirection="column">
-                    {props.table.map(renderLine)}
-                </ScrollableContainer>
-            </TableBodyElement>
+            {(props.table.length > 0 && !props.loading) &&
+                <TableHeaderElement>
+                    <tr>
+                        {children.map((child: TableColumnReactElement) => <th key={child.props.name} style={{ flex: child.props.flex, minWidth: child.props.minWidth, maxWidth: child.props.maxWidth }} {...child.props}>{child.props.name}</th>)}
+                    </tr>
+                </TableHeaderElement>
+            }
+            {(props.table.length > 0 && !props.loading) &&
+                <TableBodyElement>
+                    <ScrollableContainer<'div'> flexDirection="column">
+                        {props.table.map(renderLine)}
+                    </ScrollableContainer>
+                </TableBodyElement>
+            }
+            {(props.table.length === 0 && !props.loading) &&
+                <motion.div className="loading-container">
+                    Nenhum dado para ser exibido.
+                </motion.div>
+            }
+            {props.loading &&
+                <motion.div className="loading-container">
+                    <Spinners.circles width="200px" height="200px" />
+                    Carregando dados...
+                </motion.div>
+            }
         </TableElement>
     );
 }

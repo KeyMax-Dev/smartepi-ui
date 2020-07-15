@@ -7,7 +7,7 @@ export const TableElement = styled.table`
     flex: 1 1 100%;
     width: 100%;
     justify-self: stretch;
-    align-self: stretch;
+    align-self: center;
     
     border-spacing: 0;
     display: flex;
@@ -19,6 +19,16 @@ export const TableElement = styled.table`
         text-align: center;
         width: 100%;
         max-width: 1024px;
+    }
+
+    .loading-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100%;
+        flex: 1;
+        text-align: center;
     }
 `;
 

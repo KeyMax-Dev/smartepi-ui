@@ -1086,7 +1086,7 @@ const TableElement = styled.table `
     flex: 1 1 100%;
     width: 100%;
     justify-self: stretch;
-    align-self: stretch;
+    align-self: center;
     
     border-spacing: 0;
     display: flex;
@@ -1098,6 +1098,16 @@ const TableElement = styled.table `
         text-align: center;
         width: 100%;
         max-width: 1024px;
+    }
+
+    .loading-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100%;
+        flex: 1;
+        text-align: center;
     }
 `;
 const TableHeaderElement = styled.thead `
@@ -1146,10 +1156,18 @@ function Table(props) {
         return React__default.createElement("tr", Object.assign({ key: index }, rowProps, events), children.map((column) => React__default.cloneElement(column, column.props, column.props.children(element, index))));
     };
     return (React__default.createElement(TableElement, null,
-        React__default.createElement(TableHeaderElement, null,
-            React__default.createElement("tr", null, children.map((child) => React__default.createElement("th", Object.assign({ key: child.props.name, style: { flex: child.props.flex, minWidth: child.props.minWidth, maxWidth: child.props.maxWidth } }, child.props), child.props.name)))),
-        React__default.createElement(TableBodyElement, null,
-            React__default.createElement(ScrollableContainer, { flexDirection: "column" }, props.table.map(renderLine)))));
+        (props.table.length > 0 && !props.loading) &&
+            React__default.createElement(TableHeaderElement, null,
+                React__default.createElement("tr", null, children.map((child) => React__default.createElement("th", Object.assign({ key: child.props.name, style: { flex: child.props.flex, minWidth: child.props.minWidth, maxWidth: child.props.maxWidth } }, child.props), child.props.name)))),
+        (props.table.length > 0 && !props.loading) &&
+            React__default.createElement(TableBodyElement, null,
+                React__default.createElement(ScrollableContainer, { flexDirection: "column" }, props.table.map(renderLine))),
+        (props.table.length === 0 && !props.loading) &&
+            React__default.createElement(framerMotion.motion.div, { className: "loading-container" }, "Nenhum dado para ser exibido."),
+        props.loading &&
+            React__default.createElement(framerMotion.motion.div, { className: "loading-container" },
+                React__default.createElement(Spinners.circles, { width: "200px", height: "200px" }),
+                "Carregando dados...")));
 }
 
 function TableColumn(props) {

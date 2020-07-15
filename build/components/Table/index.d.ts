@@ -17,6 +17,7 @@ interface TableProps {
     children: TableChildren[];
     rowProps?: TableRowProps;
     rowEvents?: TableRowEvents;
+    loading?: boolean;
 }
 export default function Table(props: TableProps): JSX.Element;
 export {};
