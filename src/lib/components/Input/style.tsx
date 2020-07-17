@@ -4,7 +4,7 @@ import { getGlobalTheme } from "../../assets/themes";
 import { InputProps } from './index';
 
 export const InputContainerElement = styled(motion.div)<InputProps>`
-    min-width: 260px;
+    min-width: 300px;
     height: 50px;
     padding: 5px;
     margin: 3px;
@@ -36,7 +36,8 @@ export const InputContainerElement = styled(motion.div)<InputProps>`
     }
 
     @media screen and (max-width: 600px) {   
-        width: calc(100% - 30px)
+        width: calc(100% - 30px);
+        min-width: 250px;
     }
 `;
 
@@ -55,6 +56,7 @@ export const InputElement = styled(motion.input)<InputProps>`
     
     &::placeholder {
         transition: all ${() => getGlobalTheme().transitions.avarage};
+        color: ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}7A;
     }
     &:focus {
         &::placeholder {

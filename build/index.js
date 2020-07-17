@@ -206,6 +206,8 @@ const AccountPlusSVG = React__default.createElement("svg", { xmlns: "http://www.
     React__default.createElement("path", { d: "M15,14C12.33,14 7,15.33 7,18V20H23V18C23,15.33 17.67,14 15,14M6,10V7H4V10H1V12H4V15H6V12H9V10M15,12A4,4 0 0,0 19,8A4,4 0 0,0 15,4A4,4 0 0,0 11,8A4,4 0 0,0 15,12Z" }));
 const AccountTieSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M12,3A4,4 0 0,1 16,7A4,4 0 0,1 12,11A4,4 0 0,1 8,7A4,4 0 0,1 12,3M16,13.54C16,14.6 15.72,17.07 13.81,19.83L13,15L13.94,13.12C13.32,13.05 12.67,13 12,13C11.33,13 10.68,13.05 10.06,13.12L11,15L10.19,19.83C8.28,17.07 8,14.6 8,13.54C5.61,14.24 4,15.5 4,17V21H10L11.09,21H12.91L14,21H20V17C20,15.5 18.4,14.24 16,13.54Z" }));
+const AlertSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
+    React__default.createElement("path", { d: "M11,15H13V17H11V15M11,7H13V13H11V7M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20Z" }));
 const CalendarSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z" }));
 const CheckSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
@@ -297,6 +299,7 @@ const Icons = {
     accountCog: AccountCogSVG,
     accountPlus: AccountPlusSVG,
     accountTie: AccountTieSVG,
+    alert: AlertSVG,
     calendar: CalendarSVG,
     check: CheckSVG,
     chevronDown: ChevronDownSVG,
@@ -859,7 +862,7 @@ function Datepicker(props) {
 }
 
 const InputContainerElement = styled(framerMotion.motion.div) `
-    min-width: 260px;
+    min-width: 300px;
     height: 50px;
     padding: 5px;
     margin: 3px;
@@ -891,7 +894,8 @@ const InputContainerElement = styled(framerMotion.motion.div) `
     }
 
     @media screen and (max-width: 600px) {   
-        width: calc(100% - 30px)
+        width: calc(100% - 30px);
+        min-width: 250px;
     }
 `;
 const InputElement = styled(framerMotion.motion.input) `
@@ -909,6 +913,7 @@ const InputElement = styled(framerMotion.motion.input) `
     
     &::placeholder {
         transition: all ${() => getGlobalTheme().transitions.avarage};
+        color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}7A;
     }
     &:focus {
         &::placeholder {
@@ -1006,11 +1011,13 @@ const validate = (value, ...validators) => {
 
 function FormField(props) {
     const [color, setColor] = React.useState(props.color);
+    const [iconRight, setIconRight] = React.useState(props.iconRight);
     const [validated, setValidated] = React.useState(false);
     const blurValidationHandler = (event) => {
         const validation = validate(event.target.value, ...props.validators);
         if (validation) {
             setColor('danger');
+            setIconRight('alert');
             setValidated(false);
         }
         props.onValidationChange(validation);
@@ -1020,18 +1027,21 @@ function FormField(props) {
     const changeValidationHandler = (event) => {
         const validation = validate(event.target.value, ...props.validators);
         if (validation) {
-            if (validated)
+            if (validated) {
                 setColor('danger');
+                setIconRight('alert');
+            }
         }
         else {
             setColor(props.color);
+            setIconRight(props.iconRight);
             setValidated(true);
         }
         props.onValidationChange(validation);
         if (props.onChange)
             props.onChange(event);
     };
-    return React__default.createElement(Input, Object.assign({}, props, { color: color, onBlur: blurValidationHandler, onChange: changeValidationHandler }));
+    return React__default.createElement(Input, Object.assign({}, props, { color: color, iconRight: iconRight, onBlur: blurValidationHandler, onChange: changeValidationHandler }));
 }
 
 function useForm(fields) {

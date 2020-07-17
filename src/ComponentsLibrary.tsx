@@ -99,7 +99,7 @@ export default function ComponentsLibrary(): JSX.Element {
 
     const [form, formValidate] = useForm([
         { key: 'name', validators: [new Validators.Required(), new Validators.MinLength(4)] },
-        { key: 'password', validators: [new Validators.Required(), new Validators.MinLength(3), new Validators.MaxLength(6)], inputProps: { type: 'password' } },
+        { key: 'password', validators: [new Validators.Required(), new Validators.MinLength(3), new Validators.MaxLength(6)], inputProps: { type: 'password', placeholder: 'Password', containerType: 'outline' } },
     ]);
 
     const ComponentExpandable = (props: ComponentExpandableProps): JSX.Element => {
@@ -124,7 +124,7 @@ export default function ComponentsLibrary(): JSX.Element {
         <PageBody>
             <h1>SmartEPI UI - Components Library</h1>
             <Button buttonType="icon" icon={theme === LightTheme ? 'sun' : 'moon'} onClick={() => theme === LightTheme ? setTheme(DarkTheme) : setTheme(LightTheme)} />
-
+            {form}
             <ComponentExpandable componentName="Icons">
                 {Object.keys(Icons).map(icon => (
                     <div key={icon} className="__icon-container">
@@ -241,7 +241,7 @@ export default function ComponentsLibrary(): JSX.Element {
             </ComponentExpandable>
 
             <ComponentExpandable componentName="Form">
-                {form}
+                {/* {form} */}
                 <Button text="Validate" onClick={() => console.log(formValidate())} />
             </ComponentExpandable>
         </PageBody>

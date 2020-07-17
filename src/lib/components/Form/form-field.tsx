@@ -12,6 +12,7 @@ export interface FormFieldProps extends InputProps {
 export default function FormField(props: FormFieldProps): JSX.Element {
 
     const [color, setColor] = useState<string | undefined>(props.color);
+    const [iconRight, setIconRight] = useState<string | undefined>(props.iconRight);
     const [validated, setValidated] = useState<boolean>(false);
 
     const blurValidationHandler = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -19,6 +20,7 @@ export default function FormField(props: FormFieldProps): JSX.Element {
 
         if (validation) {
             setColor('danger');
+            setIconRight('alert');
             setValidated(false);
         }
         props.onValidationChange(validation);
@@ -29,9 +31,13 @@ export default function FormField(props: FormFieldProps): JSX.Element {
         const validation = validate(event.target.value, ...props.validators);
 
         if (validation) {
-            if (validated) setColor('danger');
+            if (validated) {
+                setColor('danger');
+                setIconRight('alert');
+            };
         } else {
             setColor(props.color);
+            setIconRight(props.iconRight);
             setValidated(true);
         }
 
@@ -39,5 +45,5 @@ export default function FormField(props: FormFieldProps): JSX.Element {
         if (props.onChange) props.onChange(event);
     };
 
-    return <Input {...props} color={color} onBlur={blurValidationHandler} onChange={changeValidationHandler} />;
+    return <Input {...props} color={color} iconRight={iconRight} onBlur={blurValidationHandler} onChange={changeValidationHandler} />;
 }
