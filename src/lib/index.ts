@@ -19,6 +19,8 @@ import Button from './components/Button';
 import CardBase from './components/CardBase';
 import Checkbox from './components/Checkbox';
 import Datepicker from './components/Datepicker';
+import Form from './components/Form';
+import FormField from './components/Form/form-field';
 import Icon from './components/Icon';
 import ImageAvatar from './components/ImageAvatar';
 import Input from './components/Input';
@@ -37,6 +39,11 @@ import AsideController from './services/aside-components/aside-controller';
 import useModal from './services/aside-components/modal';
 import useToast from './services/aside-components/toast';
 import useOverflow from './services/aside-components/overflow';
+import {
+    validate,
+    Validators,
+    InputValidator
+} from './services/input-validator';
 
 // Types
 import Customer from './types/Customer';
@@ -72,6 +79,8 @@ export {
     CardBase,
     Checkbox,
     Datepicker,
+    Form,
+    FormField,
     Icon,
     ImageAvatar,
     Input,
@@ -93,7 +102,12 @@ export {
     AsideController,
     useModal,
     useOverflow,
-    useToast
+    useToast,
+    validate,
+    Validators
+};
+export type {
+    InputValidator
 };
 
 export type {

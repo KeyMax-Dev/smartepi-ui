@@ -1,4 +1,4 @@
-import { Icon, Button, getGlobalTheme, ImageAvatar, Input, setGlobalTheme, LightTheme, DarkTheme, Checkbox, CardBase, Badge, Datepicker, Tabs, Tab, Table } from './lib';
+import { Icon, Button, getGlobalTheme, ImageAvatar, Input, setGlobalTheme, LightTheme, DarkTheme, Checkbox, CardBase, Badge, Datepicker, Tabs, Tab, Table, Form, FormField } from './lib';
 import Icons from './lib/assets/svgs/icons';
 import React, { useState, ReactText } from 'react';
 import styled from 'styled-components';
@@ -6,6 +6,8 @@ import useModal from './lib/services/aside-components/modal/index';
 import useOverflow from './lib/services/aside-components/overflow/index';
 import useToast from './lib/services/aside-components/toast/index';
 import TableColumn from './lib/components/Table/table-column';
+import Validators from './lib/services/input-validator/default-validators';
+import useForm from './lib/components/Form';
 
 interface ComponentExpandableProps {
     children: ReactText | JSX.Element | JSX.Element[];
@@ -95,6 +97,11 @@ export default function ComponentsLibrary(): JSX.Element {
     const datepickerOverflow = useOverflow(<Datepicker onDaySelected={(day) => console.log('Day Selected', day.toLocaleDateString())} initial={new Date()} />);
     const datepickerModal = useModal(<Datepicker width="600px" height="600px" onDaySelected={(day) => datepickerModal.close()} />);
 
+    const [form, formValidate] = useForm([
+        { key: 'name', validators: [new Validators.Required(), new Validators.MinLength(4)] },
+        { key: 'password', validators: [new Validators.Required(), new Validators.MinLength(3), new Validators.MaxLength(6)], inputProps: { type: 'password' } },
+    ]);
+
     const ComponentExpandable = (props: ComponentExpandableProps): JSX.Element => {
         return (
             <ComponentExpandableContainer>
@@ -117,6 +124,7 @@ export default function ComponentsLibrary(): JSX.Element {
         <PageBody>
             <h1>SmartEPI UI - Components Library</h1>
             <Button buttonType="icon" icon={theme === LightTheme ? 'sun' : 'moon'} onClick={() => theme === LightTheme ? setTheme(DarkTheme) : setTheme(LightTheme)} />
+
             <ComponentExpandable componentName="Icons">
                 {Object.keys(Icons).map(icon => (
                     <div key={icon} className="__icon-container">
@@ -223,13 +231,18 @@ export default function ComponentsLibrary(): JSX.Element {
                     </TableColumn>
                     <TableColumn name="Data" key="data" flex={1}>
                         {(item) =>
-                            <div style={{width: '100%', display: 'flex', justifyContent: 'space-around'}}>
+                            <div style={{ width: '100%', display: 'flex', justifyContent: 'space-around' }}>
                                 <span><b>Value1:</b> {item.data.value1}</span>
                                 <span><b>Value2:</b> {item.data.value2}</span>
                             </div>
                         }
                     </TableColumn>
                 </Table>
+            </ComponentExpandable>
+
+            <ComponentExpandable componentName="Form">
+                {form}
+                <Button text="Validate" onClick={() => console.log(formValidate())} />
             </ComponentExpandable>
         </PageBody>
     );
