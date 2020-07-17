@@ -60,6 +60,10 @@ export const TableBodyElement = styled.tbody`
     bottom: 0;
     min-width: fit-content;
     overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
     tr {        
         border-bottom: 1px solid ${() => getGlobalTheme().colors.primary.principal}32;
     }
