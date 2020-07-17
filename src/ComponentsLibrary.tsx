@@ -124,7 +124,6 @@ export default function ComponentsLibrary(): JSX.Element {
         <PageBody>
             <h1>SmartEPI UI - Components Library</h1>
             <Button buttonType="icon" icon={theme === LightTheme ? 'sun' : 'moon'} onClick={() => theme === LightTheme ? setTheme(DarkTheme) : setTheme(LightTheme)} />
-            {form}
             <ComponentExpandable componentName="Icons">
                 {Object.keys(Icons).map(icon => (
                     <div key={icon} className="__icon-container">
@@ -136,12 +135,17 @@ export default function ComponentsLibrary(): JSX.Element {
             <ComponentExpandable componentName="Buttons">
                 <Button buttonType="solid" text="Solid" />
                 <Button buttonType="solid" text="Solid Invert" invert />
+                <Button buttonType="solid" text="Solid Disabled" disabled />
+                <Button buttonType="solid" text="Solid Disabled Invert" invert disabled />
                 <Button buttonType="solid" text="Solid Secondary" color="secondary" />
                 <Button buttonType="solid" text="Solid Danger" color="danger" />
+                <Button buttonType="solid" text="Solid Danger Disabled" disabled color="danger" />
                 <Button buttonType="solid" text="Solid with Icon" icon="account" />
                 <Button buttonType="solid" text="Solid with Icon with iconSize" icon="account" iconSize="80px" />
                 <Button buttonType="outline" text="Outline" />
+                <Button buttonType="outline" text="Outline Disabled" disabled />
                 <Button buttonType="outline" text="Outline Invert" invert />
+                <Button buttonType="outline" text="Outline Invert Disabled" invert disabled />
                 <Button buttonType="outline" text="Outline Secondary" color="secondary" />
                 <Button buttonType="outline" text="Outline Danger" color="danger" />
                 <Button buttonType="outline" text="Outline with Icon" icon="account" />

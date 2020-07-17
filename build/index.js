@@ -1847,7 +1847,6 @@ const BaseButton = styled(framerMotion.motion.button) `
     justify-content: center;
     position: relative;
 
-
     &&.__button-outline {    
         background: transparent;
         color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
@@ -1856,6 +1855,16 @@ const BaseButton = styled(framerMotion.motion.button) `
 
         &:active {
             background: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']}20;
+        }
+
+        &:disabled {
+            opacity: 0.15;
+            cursor: default;
+
+            &:active {
+                transform: none;
+                background: transparent;
+            }
         }
 
         span {
@@ -1874,6 +1883,16 @@ const BaseButton = styled(framerMotion.motion.button) `
         &:active {
             box-shadow: ${() => getGlobalTheme().boxShadow.active};
             transform: scale(0.96);
+        }
+
+        &:disabled {
+            opacity: 0.3;
+            cursor: default;
+            box-shadow: none;
+            &:active {
+                transform: none;
+                box-shadow: none;
+            }
         }
     
         span {
