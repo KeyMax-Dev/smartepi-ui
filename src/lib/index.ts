@@ -33,17 +33,19 @@ import Table, {
     TableRowEventHandler
 } from './components/Table';
 import TableColumn from './components/Table/table-column';
+// Form
+import useForm from './components/Form';
+import {
+    validate,
+    Validators,
+    InputValidator
+} from './services/input-validator';
 
 // Services
 import AsideController from './services/aside-components/aside-controller';
 import useModal from './services/aside-components/modal';
 import useToast from './services/aside-components/toast';
 import useOverflow from './services/aside-components/overflow';
-import {
-    validate,
-    Validators,
-    InputValidator
-} from './services/input-validator';
 
 // Types
 import Customer from './types/Customer';
@@ -102,7 +104,11 @@ export {
     AsideController,
     useModal,
     useOverflow,
-    useToast,
+    useToast
+};
+
+export {
+    useForm,
     validate,
     Validators
 };

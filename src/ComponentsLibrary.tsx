@@ -1,4 +1,4 @@
-import { Icon, Button, getGlobalTheme, ImageAvatar, Input, setGlobalTheme, LightTheme, DarkTheme, Checkbox, CardBase, Badge, Datepicker, Tabs, Tab, Table, Form, FormField } from './lib';
+import { Icon, Button, getGlobalTheme, ImageAvatar, Input, setGlobalTheme, LightTheme, DarkTheme, Checkbox, CardBase, Badge, Datepicker, Tabs, Tab, Table } from './lib';
 import Icons from './lib/assets/svgs/icons';
 import React, { useState, ReactText } from 'react';
 import styled from 'styled-components';

@@ -1916,6 +1916,7 @@ exports.Tabs = Tabs;
 exports.Validators = Validators;
 exports.getGlobalTheme = getGlobalTheme;
 exports.setGlobalTheme = setGlobalTheme;
+exports.useForm = useForm;
 exports.useModal = useModal;
 exports.useOverflow = useOverflow;
 exports.useToast = useToast;
