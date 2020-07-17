@@ -44,15 +44,13 @@ export default function Table(props: TableProps): JSX.Element {
             {(props.table.length > 0 && !props.loading) &&
                 <TableHeaderElement>
                     <tr>
-                        {children.map((child: TableColumnReactElement) => <th key={child.props.name} style={{ flex: child.props.flex, minWidth: child.props.minWidth, maxWidth: child.props.maxWidth }} {...child.props}>{child.props.name}</th>)}
+                        {children.map((child: TableColumnReactElement) => <th key={child.props.name} style={{ flex: child.props.flex, minWidth: child.props.minwidth, maxWidth: child.props.maxwidth }} {...child.props}>{child.props.name}</th>)}
                     </tr>
                 </TableHeaderElement>
             }
             {(props.table.length > 0 && !props.loading) &&
                 <TableBodyElement>
-                    <ScrollableContainer<'div'> flexDirection="column">
-                        {props.table.map(renderLine)}
-                    </ScrollableContainer>
+                    {props.table.map(renderLine)}
                 </TableBodyElement>
             }
             {(props.table.length === 0 && !props.loading) &&

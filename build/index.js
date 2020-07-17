@@ -1198,12 +1198,15 @@ function Tabs({ index, children, onTabChange }) {
 const TableElement = styled.table `
     flex: 1 1 100%;
     width: 100%;
-    justify-self: stretch;
-    align-self: center;
+    min-height: 100px;
+    justify-self: flex-start;
+    align-self: flex-start;
+    overflow: auto;
     
     border-spacing: 0;
     display: flex;
     flex-direction: column;
+    position: relative;
     tr {
         display: flex;
         justify-content: center;
@@ -1229,30 +1232,37 @@ const TableHeaderElement = styled.thead `
     align-items: center;
     background-color: ${() => getGlobalTheme().colors.primary.principal};
     box-shadow: ${() => getGlobalTheme().boxShadow.normal};
+    min-width: fit-content;
+    height: 50px;
     th {
         color: ${() => getGlobalTheme().colors.primary.contrast};
         font-size: ${() => getGlobalTheme().font.h2.fontSize};
         font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
         text-align: center;
-        padding: 10px;
     }
 `;
 const TableBodyElement = styled.tbody `
     flex: 1;
-    position: relative;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    min-width: fit-content;
+    overflow: auto;
     tr {        
         border-bottom: 1px solid ${() => getGlobalTheme().colors.primary.principal}32;
     }
 `;
 const TableColumnElement = styled.td `
     flex: ${({ flex }) => flex || 'initial'};
-    min-width: ${({ minWidth }) => minWidth || 'initial'};
-    max-width: ${({ maxWidth }) => maxWidth || 'initial'};
+    min-width: ${({ minwidth: minWidth }) => minWidth || 'initial'};
+    max-width: ${({ maxwidth: maxWidth }) => maxWidth || 'initial'};
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 10px;
+    padding: 10px 0;
     transition: all ${() => getGlobalTheme().transitions.avarage};
     &:hover {
         background-color: ${() => getGlobalTheme().colors.primary.principal}08;
@@ -1271,10 +1281,9 @@ function Table(props) {
     return (React__default.createElement(TableElement, null,
         (props.table.length > 0 && !props.loading) &&
             React__default.createElement(TableHeaderElement, null,
-                React__default.createElement("tr", null, children.map((child) => React__default.createElement("th", Object.assign({ key: child.props.name, style: { flex: child.props.flex, minWidth: child.props.minWidth, maxWidth: child.props.maxWidth } }, child.props), child.props.name)))),
+                React__default.createElement("tr", null, children.map((child) => React__default.createElement("th", Object.assign({ key: child.props.name, style: { flex: child.props.flex, minWidth: child.props.minwidth, maxWidth: child.props.maxwidth } }, child.props), child.props.name)))),
         (props.table.length > 0 && !props.loading) &&
-            React__default.createElement(TableBodyElement, null,
-                React__default.createElement(ScrollableContainer, { flexDirection: "column" }, props.table.map(renderLine))),
+            React__default.createElement(TableBodyElement, null, props.table.map(renderLine)),
         (props.table.length === 0 && !props.loading) &&
             React__default.createElement(framerMotion.motion.div, { className: "loading-container" }, "Nenhum dado para ser exibido."),
         props.loading &&
@@ -1284,7 +1293,7 @@ function Table(props) {
 }
 
 function TableColumn(props) {
-    return (React__default.createElement(TableColumnElement, Object.assign({}, props), props.children));
+    return (React__default.createElement(TableColumnElement, Object.assign({}, props)));
 }
 
 const DEFAULT_ASIDE_CONFIG = {
