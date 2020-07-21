@@ -267,7 +267,7 @@ class AsideController {
         return this.status;
     }
     injectProps(props) {
-        this.content = React__default.cloneElement(this.content, Object.assign({}, props));
+        this.content = React__default.cloneElement(this.content, Object.assign(Object.assign({}, this.content.props), props));
         if (this.status === 'opened') {
             this.renderReactElement();
         }

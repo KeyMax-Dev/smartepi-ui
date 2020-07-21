@@ -124,7 +124,6 @@ export default function ComponentsLibrary(): JSX.Element {
         <PageBody>
             <h1>SmartEPI UI - Components Library</h1>
             <Button buttonType="icon" icon={theme === LightTheme ? 'sun' : 'moon'} onClick={() => theme === LightTheme ? setTheme(DarkTheme) : setTheme(LightTheme)} />
-            {form}
             <ComponentExpandable componentName="Icons">
                 {Object.keys(Icons).map(icon => (
                     <div key={icon} className="__icon-container">

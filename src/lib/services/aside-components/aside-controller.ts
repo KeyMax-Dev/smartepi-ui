@@ -37,7 +37,7 @@ export default abstract class AsideController {
     }
 
     public injectProps(props: { [key: string]: unknown }): void {
-        this.content = React.cloneElement(this.content, { ...props });
+        this.content = React.cloneElement(this.content, { ...this.content.props, ...props });
         if (this.status === 'opened') {
             this.renderReactElement();
         }
