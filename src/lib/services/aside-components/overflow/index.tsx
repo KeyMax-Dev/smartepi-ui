@@ -5,7 +5,7 @@ import React, { useState, useRef } from 'react';
 
 type Position = 'top' | 'bottom';
 
-type OverflowConfig = BaseAsideConfig & {
+export type OverflowConfig = BaseAsideConfig & {
     position: Position;
 }
 
@@ -17,7 +17,7 @@ const DEFAULT_CONFIG: OverflowConfig = {
 
 const MARGIN = 10;
 
-class OverflowController extends AsideController {
+export class OverflowController extends AsideController {
 
     protected config: OverflowConfig;
     private parent: HTMLElement | null = null;

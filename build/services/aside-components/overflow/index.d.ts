@@ -1,10 +1,10 @@
 /// <reference types="react" />
 import AsideController, { BaseAsideConfig } from '../aside-controller';
 declare type Position = 'top' | 'bottom';
-declare type OverflowConfig = BaseAsideConfig & {
+export declare type OverflowConfig = BaseAsideConfig & {
     position: Position;
 };
-declare class OverflowController extends AsideController {
+export declare class OverflowController extends AsideController {
     protected config: OverflowConfig;
     private parent;
     private contentRef;

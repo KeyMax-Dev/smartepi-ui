@@ -1,10 +1,10 @@
 /// <reference types="react" />
 import AsideController, { BaseAsideConfig } from "../aside-controller";
-declare type ToastConfig = BaseAsideConfig & {
+export declare type ToastConfig = BaseAsideConfig & {
     color: string;
     timeout: number;
 };
-declare class ToastController extends AsideController {
+export declare class ToastController extends AsideController {
     protected config: ToastConfig;
     private hideTimeout;
     private animationTimeout;
@@ -17,4 +17,3 @@ declare class ToastController extends AsideController {
     protected createReactElement(): JSX.Element;
 }
 export default function useToast(content: JSX.Element, options?: Partial<ToastConfig>): ToastController;
-export {};

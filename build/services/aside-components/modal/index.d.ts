@@ -1,11 +1,11 @@
 /// <reference types="react" />
 import AsideController, { BaseAsideConfig } from '../aside-controller';
-declare type ModalConfig = BaseAsideConfig & {
+export declare type ModalConfig = BaseAsideConfig & {
     disableBackdropClose: boolean;
     disableCloseButton: boolean;
     preventScroll: boolean;
 };
-declare class ModalController extends AsideController {
+export declare class ModalController extends AsideController {
     protected config: ModalConfig;
     private readonly overlayControls;
     constructor(content: JSX.Element, options?: Partial<ModalConfig>);
@@ -16,4 +16,3 @@ declare class ModalController extends AsideController {
     protected createReactElement(): JSX.Element;
 }
 export default function useModal(content: JSX.Element, options?: Partial<ModalConfig>): ModalController;
-export {};

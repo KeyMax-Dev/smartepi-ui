@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 type ModalStatus = 'opening' | 'open' | 'closing' | 'closed';
 
-type ModalConfig = BaseAsideConfig & {
+export type ModalConfig = BaseAsideConfig & {
     disableBackdropClose: boolean;
     disableCloseButton: boolean;
     preventScroll: boolean;
@@ -19,7 +19,7 @@ const DEFAULT_MODAL_CONFIG: ModalConfig = {
     rootElement: 'body'
 };
 
-class ModalController extends AsideController {
+export class ModalController extends AsideController {
 
     protected config: ModalConfig;
     private readonly overlayControls = useAnimation();

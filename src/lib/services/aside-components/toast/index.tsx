@@ -4,7 +4,7 @@ import AsideController, { BaseAsideConfig } from "../aside-controller";
 import React, { useState } from "react";
 import ReactDOM from 'react-dom';
 
-type ToastConfig = BaseAsideConfig & {
+export type ToastConfig = BaseAsideConfig & {
     color: string;
     timeout: number;
 }
@@ -16,7 +16,7 @@ const DEFAULT_CONFIG: ToastConfig = {
     rootElement: 'body'
 };
 
-class ToastController extends AsideController {
+export class ToastController extends AsideController {
 
     protected config: ToastConfig;
     private hideTimeout: number;

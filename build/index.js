@@ -4,9 +4,9 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var React = require('react');
 var React__default = _interopDefault(React);
-var styled = _interopDefault(require('styled-components'));
-var framerMotion = require('framer-motion');
 var ReactDOM = _interopDefault(require('react-dom'));
+var framerMotion = require('framer-motion');
+var styled = _interopDefault(require('styled-components'));
 
 function styleInject(css, ref) {
   if ( ref === void 0 ) ref = {};
@@ -142,6 +142,58 @@ const getGlobalTheme = () => {
     return GlobalTheme;
 };
 
+class Required {
+    constructor() {
+        this.errorName = 'Required';
+    }
+    validate(text) {
+        return text.length > 1;
+    }
+}
+class MinLength {
+    constructor(minLength) {
+        this.minLength = minLength;
+        this.errorName = 'MinLength';
+    }
+    validate(text) {
+        return text.length >= this.minLength;
+    }
+}
+class MaxLength {
+    constructor(maxLenght) {
+        this.maxLenght = maxLenght;
+        this.errorName = 'MaxLength';
+    }
+    validate(text) {
+        return text.length <= this.maxLenght;
+    }
+}
+class Email {
+    constructor() {
+        this.errorName = 'Email';
+        this.emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    }
+    validate(text) {
+        return this.emailRegexp.test(text);
+    }
+}
+const Validators = {
+    Required,
+    MinLength,
+    MaxLength,
+    Email
+};
+
+const validate = (value, ...validators) => {
+    const errors = [];
+    validators.forEach((validator) => {
+        if (!validator.validate(value)) {
+            errors.push(validator.errorName);
+        }
+    });
+    return errors.length > 0 ? errors : false;
+};
+
 const HeaderIn = {
     translateY: ['-100%', '0%'],
     transition: {
@@ -197,6 +249,145 @@ const Animations = {
     FingerprintShadowTry,
     FingerprintBaseTry
 };
+
+const DEFAULT_ASIDE_CONFIG = {
+    id: '__default-aside-id',
+    rootElement: 'body'
+};
+class AsideController {
+    constructor(content, options) {
+        this.content = content;
+        this.container = null;
+        this.status = 'closed';
+        this.containerControls = framerMotion.useAnimation();
+        this.config = Object.assign({}, DEFAULT_ASIDE_CONFIG, options);
+        this.injectProps({ controller: this });
+    }
+    getStatus() {
+        return this.status;
+    }
+    injectProps(props) {
+        this.content = React__default.cloneElement(this.content, Object.assign({}, props));
+        if (this.status === 'opened') {
+            this.renderReactElement();
+        }
+    }
+    createContainer() {
+        if (this.container || typeof document === 'undefined')
+            return;
+        this.container = document.createElement('aside');
+        this.container.setAttribute('id', this.config.id);
+    }
+    renderReactElement() {
+        if (this.status === 'opening' || this.status === 'opened') {
+            ReactDOM.render(this.createReactElement(), this.container);
+        }
+        else {
+            throw new Error('Bad time react element render.');
+        }
+    }
+    appendNode() {
+        this.status = 'opening';
+        this.createContainer();
+        try {
+            this.renderReactElement();
+            let elementReference;
+            if (this.config.rootElement.startsWith('#')) {
+                elementReference = document.getElementById(this.config.rootElement.replace('#', ''));
+            }
+            else if (this.config.rootElement.startsWith('.')) {
+                elementReference = document.getElementsByClassName(this.config.rootElement.replace('.', ''))[0];
+            }
+            else {
+                elementReference = document.getElementsByTagName(this.config.rootElement)[0];
+            }
+            if (elementReference) {
+                elementReference.appendChild(this.container);
+                return true;
+            }
+            else {
+                throw new Error('Element reference not found');
+            }
+        }
+        catch (e) {
+            console.error(`${this.config.id} append failed:`, e);
+            console.error(`${this.config.id} configurations:`, this.config);
+            this.status = 'closed';
+            return false;
+        }
+    }
+    removeNode() {
+        try {
+            ReactDOM.unmountComponentAtNode(this.container);
+            let elementReference;
+            if (this.config.rootElement.startsWith('#')) {
+                elementReference = document.getElementById(this.config.rootElement.replace('#', ''));
+            }
+            else if (this.config.rootElement.startsWith('.')) {
+                elementReference = document.getElementsByClassName(this.config.rootElement.replace('.', ''))[0];
+            }
+            else {
+                elementReference = document.getElementsByTagName(this.config.rootElement)[0];
+            }
+            if (elementReference) {
+                elementReference.removeChild(this.container);
+                this.status = 'closed';
+                return true;
+            }
+            else {
+                throw new Error('Element reference not found');
+            }
+        }
+        catch (e) {
+            console.error(`${this.config.id} remove failed`, e);
+            console.error(`${this.config.id} configurations:`, this.config);
+            return false;
+        }
+    }
+    onOpen(func) {
+        this.onopen = func;
+    }
+    onClose(func) {
+        this.onclose = func;
+    }
+}
+
+const BadgeElement = styled(framerMotion.motion.div) `
+    padding: 2px;
+    border-radius: calc(${() => getGlobalTheme().borderRadius} * 2);
+    background-color: ${(props) => getGlobalTheme().colors[props.color].principal};
+    color: ${(props) => getGlobalTheme().colors[props.color].contrast};
+    margin: 0 15px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .__text {
+        flex: 1;
+        margin: 0 5px;
+        text-transform: uppercase;
+    }
+`;
+
+const IconElement = styled(framerMotion.motion.div) `
+    width: ${(props) => props.width ? props.width : getGlobalTheme().defaultIconSize};
+    height: ${(props) => props.height ? props.height : getGlobalTheme().defaultIconSize};
+    flex-shrink: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    path {
+        fill: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
+    }
+`;
 
 const AccountSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" }));
@@ -344,59 +535,6 @@ const Icons = {
     warehouse: WarehouseSVG,
     worker: WorkerSVG,
 };
-
-const CirclesSVG = (props) => React__default.createElement("svg", Object.assign({ width: "45", height: "45", viewBox: "0 0 45 45", xmlns: "http://www.w3.org/2000/svg", stroke: "#000" }, props),
-    React__default.createElement("g", { fill: "none", fillRule: "evenodd", transform: "translate(1 1)", strokeWidth: "2" },
-        React__default.createElement("circle", { cx: "22", cy: "22", r: "6", strokeOpacity: "0" },
-            React__default.createElement("animate", { attributeName: "r", begin: "1.5s", dur: "3s", values: "6;22", calcMode: "linear", repeatCount: "indefinite" }),
-            React__default.createElement("animate", { attributeName: "stroke-opacity", begin: "1.5s", dur: "3s", values: "1;0", calcMode: "linear", repeatCount: "indefinite" }),
-            React__default.createElement("animate", { attributeName: "stroke-width", begin: "1.5s", dur: "3s", values: "2;0", calcMode: "linear", repeatCount: "indefinite" })),
-        React__default.createElement("circle", { cx: "22", cy: "22", r: "6", strokeOpacity: "0" },
-            React__default.createElement("animate", { attributeName: "r", begin: "3s", dur: "3s", values: "6;22", calcMode: "linear", repeatCount: "indefinite" }),
-            React__default.createElement("animate", { attributeName: "stroke-opacity", begin: "3s", dur: "3s", values: "1;0", calcMode: "linear", repeatCount: "indefinite" }),
-            React__default.createElement("animate", { attributeName: "stroke-width", begin: "3s", dur: "3s", values: "2;0", calcMode: "linear", repeatCount: "indefinite" })),
-        React__default.createElement("circle", { cx: "22", cy: "22", r: "8" },
-            React__default.createElement("animate", { attributeName: "r", begin: "0s", dur: "1.5s", values: "6;1;2;3;4;5;6", calcMode: "linear", repeatCount: "indefinite" }))));
-const Spinners = {
-    circles: CirclesSVG
-};
-
-const BadgeElement = styled(framerMotion.motion.div) `
-    padding: 2px;
-    border-radius: calc(${() => getGlobalTheme().borderRadius} * 2);
-    background-color: ${(props) => getGlobalTheme().colors[props.color].principal};
-    color: ${(props) => getGlobalTheme().colors[props.color].contrast};
-    margin: 0 15px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .__text {
-        flex: 1;
-        margin: 0 5px;
-        text-transform: uppercase;
-    }
-`;
-
-const IconElement = styled(framerMotion.motion.div) `
-    width: ${(props) => props.width ? props.width : getGlobalTheme().defaultIconSize};
-    height: ${(props) => props.height ? props.height : getGlobalTheme().defaultIconSize};
-    flex-shrink: 0;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    svg {
-        width: 100%;
-        height: 100%;
-    }
-
-    path {
-        fill: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
-    }
-`;
 
 function Icon(props) {
     return (React__default.createElement(IconElement, Object.assign({}, props), Icons[props.name]));
@@ -957,58 +1095,6 @@ function Input(props) {
         props.iconRight && React__default.createElement(Icon, { color: props.color, name: props.iconRight, invert: props.invert })));
 }
 
-class Required {
-    constructor() {
-        this.errorName = 'Required';
-    }
-    validate(text) {
-        return text.length > 1;
-    }
-}
-class MinLength {
-    constructor(minLength) {
-        this.minLength = minLength;
-        this.errorName = 'MinLength';
-    }
-    validate(text) {
-        return text.length >= this.minLength;
-    }
-}
-class MaxLength {
-    constructor(maxLenght) {
-        this.maxLenght = maxLenght;
-        this.errorName = 'MaxLength';
-    }
-    validate(text) {
-        return text.length <= this.maxLenght;
-    }
-}
-class Email {
-    constructor() {
-        this.errorName = 'Email';
-        this.emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-    }
-    validate(text) {
-        return this.emailRegexp.test(text);
-    }
-}
-const Validators = {
-    Required,
-    MinLength,
-    MaxLength,
-    Email
-};
-
-const validate = (value, ...validators) => {
-    const errors = [];
-    validators.forEach((validator) => {
-        if (!validator.validate(value)) {
-            errors.push(validator.errorName);
-        }
-    });
-    return errors.length > 0 ? errors : false;
-};
-
 function FormField(props) {
     const [color, setColor] = React.useState(props.color);
     const [iconRight, setIconRight] = React.useState(props.iconRight);
@@ -1100,6 +1186,22 @@ function ImageAvatar(props) {
     return (React__default.createElement(ImageAvatarElement, Object.assign({}, props)));
 }
 
+const CirclesSVG = (props) => React__default.createElement("svg", Object.assign({ width: "45", height: "45", viewBox: "0 0 45 45", xmlns: "http://www.w3.org/2000/svg", stroke: "#000" }, props),
+    React__default.createElement("g", { fill: "none", fillRule: "evenodd", transform: "translate(1 1)", strokeWidth: "2" },
+        React__default.createElement("circle", { cx: "22", cy: "22", r: "6", strokeOpacity: "0" },
+            React__default.createElement("animate", { attributeName: "r", begin: "1.5s", dur: "3s", values: "6;22", calcMode: "linear", repeatCount: "indefinite" }),
+            React__default.createElement("animate", { attributeName: "stroke-opacity", begin: "1.5s", dur: "3s", values: "1;0", calcMode: "linear", repeatCount: "indefinite" }),
+            React__default.createElement("animate", { attributeName: "stroke-width", begin: "1.5s", dur: "3s", values: "2;0", calcMode: "linear", repeatCount: "indefinite" })),
+        React__default.createElement("circle", { cx: "22", cy: "22", r: "6", strokeOpacity: "0" },
+            React__default.createElement("animate", { attributeName: "r", begin: "3s", dur: "3s", values: "6;22", calcMode: "linear", repeatCount: "indefinite" }),
+            React__default.createElement("animate", { attributeName: "stroke-opacity", begin: "3s", dur: "3s", values: "1;0", calcMode: "linear", repeatCount: "indefinite" }),
+            React__default.createElement("animate", { attributeName: "stroke-width", begin: "3s", dur: "3s", values: "2;0", calcMode: "linear", repeatCount: "indefinite" })),
+        React__default.createElement("circle", { cx: "22", cy: "22", r: "8" },
+            React__default.createElement("animate", { attributeName: "r", begin: "0s", dur: "1.5s", values: "6;1;2;3;4;5;6", calcMode: "linear", repeatCount: "indefinite" }))));
+const Spinners = {
+    circles: CirclesSVG
+};
+
 const TabsLayoutElement = styled(framerMotion.motion.section) `
     flex: 1 1 100%;
     width: 100%;
@@ -1159,56 +1261,6 @@ const TabElement = styled(framerMotion.motion.div) `
 
 function Tab(props) {
     return (React__default.createElement(TabElement, Object.assign({}, props, { className: `tab-body ${props.className}` }), props.children));
-}
-
-// type ThemedScrollableContainer =
-//     <C extends keyof JSX.IntrinsicElements>(c: C) => any;
-const ScrollableContainer = styled(framerMotion.motion.div) `
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    overflow: auto;
-
-    display: flex;
-    flex-direction: ${(props) => props.flexDirection};
-    justify-content: flex-start;
-    align-items: center;
-`;
-
-function Tabs({ index, children, onTabChange }) {
-    const [tabIndex, setTabIndex] = React.useState(index || 0);
-    const selectorController = framerMotion.useAnimation();
-    const bodyController = framerMotion.useAnimation();
-    const childrenLenght = Array.isArray(children) ? children.length : 1;
-    React.useEffect(() => {
-        selectorController.start({
-            left: `calc(${100 * tabIndex / childrenLenght}%)`,
-            transition: { duration: 0.2, ease: 'easeIn' }
-        });
-        // TODO: Define tab body animation
-        // bodyController.start({
-        //     opacity: [0, 1],
-        //     transition: { duration: 0.2, ease: 'easeIn' }
-        // });
-        if (onTabChange)
-            onTabChange(tabIndex);
-    }, [tabIndex]);
-    React.useEffect(() => {
-        if (index) {
-            setTabIndex(index);
-        }
-    }, [index]);
-    const renderTab = (element, index) => {
-        return React__default.createElement("div", { key: index, className: `tab ${tabIndex === index ? 'tab-selected' : ''}`, onClick: () => setTabIndex(index) }, element.props.title);
-    };
-    return (React__default.createElement(TabsLayoutElement, { className: "tabs-layout" },
-        React__default.createElement(framerMotion.motion.header, { className: "tabs-header" },
-            Array.isArray(children) ? children.map(renderTab) : renderTab(children, 0),
-            React__default.createElement(framerMotion.motion.div, { className: "tab-selector", style: { width: `calc(100% / ${childrenLenght})` }, animate: selectorController })),
-        React__default.createElement(framerMotion.motion.div, { className: "tab-body-container", animate: bodyController },
-            React__default.createElement(ScrollableContainer, { flexDirection: "column" }, Array.isArray(children) ? children[tabIndex] : children))));
 }
 
 const TableElement = styled.table `
@@ -1316,106 +1368,54 @@ function TableColumn(props) {
     return (React__default.createElement(TableColumnElement, Object.assign({}, props)));
 }
 
-const DEFAULT_ASIDE_CONFIG = {
-    id: '__default-aside-id',
-    rootElement: 'body'
-};
-class AsideController {
-    constructor(content, options) {
-        this.content = content;
-        this.container = null;
-        this.status = 'closed';
-        this.containerControls = framerMotion.useAnimation();
-        this.config = Object.assign({}, DEFAULT_ASIDE_CONFIG, options);
-        this.injectProps({ controller: this });
-    }
-    getStatus() {
-        return this.status;
-    }
-    injectProps(props) {
-        this.content = React__default.cloneElement(this.content, Object.assign({}, props));
-        if (this.status === 'opened') {
-            this.renderReactElement();
+// type ThemedScrollableContainer =
+//     <C extends keyof JSX.IntrinsicElements>(c: C) => any;
+const ScrollableContainer = styled(framerMotion.motion.div) `
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: auto;
+
+    display: flex;
+    flex-direction: ${(props) => props.flexDirection};
+    justify-content: flex-start;
+    align-items: center;
+`;
+
+function Tabs({ index, children, onTabChange }) {
+    const [tabIndex, setTabIndex] = React.useState(index || 0);
+    const selectorController = framerMotion.useAnimation();
+    const bodyController = framerMotion.useAnimation();
+    const childrenLenght = Array.isArray(children) ? children.length : 1;
+    React.useEffect(() => {
+        selectorController.start({
+            left: `calc(${100 * tabIndex / childrenLenght}%)`,
+            transition: { duration: 0.2, ease: 'easeIn' }
+        });
+        // TODO: Define tab body animation
+        // bodyController.start({
+        //     opacity: [0, 1],
+        //     transition: { duration: 0.2, ease: 'easeIn' }
+        // });
+        if (onTabChange)
+            onTabChange(tabIndex);
+    }, [tabIndex]);
+    React.useEffect(() => {
+        if (index) {
+            setTabIndex(index);
         }
-    }
-    createContainer() {
-        if (this.container || typeof document === 'undefined')
-            return;
-        this.container = document.createElement('aside');
-        this.container.setAttribute('id', this.config.id);
-    }
-    renderReactElement() {
-        if (this.status === 'opening' || this.status === 'opened') {
-            ReactDOM.render(this.createReactElement(), this.container);
-        }
-        else {
-            throw new Error('Bad time react element render.');
-        }
-    }
-    appendNode() {
-        this.status = 'opening';
-        this.createContainer();
-        try {
-            this.renderReactElement();
-            let elementReference;
-            if (this.config.rootElement.startsWith('#')) {
-                elementReference = document.getElementById(this.config.rootElement.replace('#', ''));
-            }
-            else if (this.config.rootElement.startsWith('.')) {
-                elementReference = document.getElementsByClassName(this.config.rootElement.replace('.', ''))[0];
-            }
-            else {
-                elementReference = document.getElementsByTagName(this.config.rootElement)[0];
-            }
-            if (elementReference) {
-                elementReference.appendChild(this.container);
-                return true;
-            }
-            else {
-                throw new Error('Element reference not found');
-            }
-        }
-        catch (e) {
-            console.error(`${this.config.id} append failed:`, e);
-            console.error(`${this.config.id} configurations:`, this.config);
-            this.status = 'closed';
-            return false;
-        }
-    }
-    removeNode() {
-        try {
-            ReactDOM.unmountComponentAtNode(this.container);
-            let elementReference;
-            if (this.config.rootElement.startsWith('#')) {
-                elementReference = document.getElementById(this.config.rootElement.replace('#', ''));
-            }
-            else if (this.config.rootElement.startsWith('.')) {
-                elementReference = document.getElementsByClassName(this.config.rootElement.replace('.', ''))[0];
-            }
-            else {
-                elementReference = document.getElementsByTagName(this.config.rootElement)[0];
-            }
-            if (elementReference) {
-                elementReference.removeChild(this.container);
-                this.status = 'closed';
-                return true;
-            }
-            else {
-                throw new Error('Element reference not found');
-            }
-        }
-        catch (e) {
-            console.error(`${this.config.id} remove failed`, e);
-            console.error(`${this.config.id} configurations:`, this.config);
-            return false;
-        }
-    }
-    onOpen(func) {
-        this.onopen = func;
-    }
-    onClose(func) {
-        this.onclose = func;
-    }
+    }, [index]);
+    const renderTab = (element, index) => {
+        return React__default.createElement("div", { key: index, className: `tab ${tabIndex === index ? 'tab-selected' : ''}`, onClick: () => setTabIndex(index) }, element.props.title);
+    };
+    return (React__default.createElement(TabsLayoutElement, { className: "tabs-layout" },
+        React__default.createElement(framerMotion.motion.header, { className: "tabs-header" },
+            Array.isArray(children) ? children.map(renderTab) : renderTab(children, 0),
+            React__default.createElement(framerMotion.motion.div, { className: "tab-selector", style: { width: `calc(100% / ${childrenLenght})` }, animate: selectorController })),
+        React__default.createElement(framerMotion.motion.div, { className: "tab-body-container", animate: bodyController },
+            React__default.createElement(ScrollableContainer, { flexDirection: "column" }, Array.isArray(children) ? children[tabIndex] : children))));
 }
 
 const ModalBaseElement = styled.div `
@@ -1554,105 +1554,6 @@ function useModal(content, options) {
     return modal;
 }
 
-const ToastElement = styled(framerMotion.motion.div) `
-    position: fixed;
-    width: 1024px;
-    left: calc(50% - 512px);
-    padding: 15px;
-    bottom: -100px;
-    z-index: 99;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    background-color: ${(props) => getGlobalTheme().colors[props.color].principal};
-    color: ${(props) => getGlobalTheme().colors[props.color].contrast};
-    font-size: ${() => getGlobalTheme().font.h2.fontSize};
-    font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
-    border-radius: ${() => getGlobalTheme().borderRadius};
-    box-shadow: ${() => getGlobalTheme().boxShadow.normal};
-
-    @media screen and (max-width: 1024px) {
-        width: calc(100% - 30px);
-        left: 15px;
-        font-size: calc(${() => getGlobalTheme().font.h2.fontSize} / 2);
-    }
-`;
-
-const DEFAULT_CONFIG = {
-    id: '__default-pop-up',
-    color: 'primary',
-    timeout: 2000,
-    rootElement: 'body'
-};
-class ToastController extends AsideController {
-    constructor(content, options) {
-        super(content, options);
-        this.animationController = framerMotion.useAnimation();
-        this.clickListener = (event) => {
-            var _a;
-            if (!((_a = this.container) === null || _a === void 0 ? void 0 : _a.contains(event.target)) || this.container === event.target) {
-                this.close('outsideClick');
-            }
-        };
-        this.config = Object.assign({}, DEFAULT_CONFIG, options);
-        this.hideTimeout = this.animationTimeout = 0;
-    }
-    open() {
-        clearTimeout(this.animationTimeout);
-        clearTimeout(this.hideTimeout);
-        if (!!!this.content) {
-            return;
-        }
-        if (!this.appendNode())
-            return;
-        ReactDOM.render(this.createReactElement(), this.container);
-        setTimeout(() => window.addEventListener('click', this.clickListener));
-        this.hideTimeout = setTimeout(() => this.close('timeout'), this.config.timeout);
-        this.status = 'opening';
-        this.animationController.start({
-            bottom: [-100, 15],
-            opacity: [0, 1],
-            transition: { duration: .2, ease: 'backOut' }
-        });
-        this.animationTimeout = setTimeout(() => {
-            this.status = 'opened';
-            if (this.onopen)
-                this.onopen();
-        }, 200);
-    }
-    close(reason) {
-        if (this.status !== 'opened') {
-            return;
-        }
-        this.status = 'closing';
-        clearTimeout(this.hideTimeout);
-        window.removeEventListener('click', this.clickListener);
-        this.animationController.start({
-            bottom: [15, -100],
-            opacity: [1, 0],
-            transition: { duration: .2, ease: 'backIn' }
-        });
-        this.animationTimeout = setTimeout(() => {
-            this.removeNode();
-            this.status = 'closed';
-            if (this.onclose)
-                this.onclose(reason);
-        }, 200);
-    }
-    setContent(newContent) {
-        this.content = typeof newContent === 'string' ? React__default.createElement("span", null, newContent) : newContent;
-    }
-    createReactElement() {
-        return (React__default.createElement(ToastElement, { color: this.config.color, animate: this.animationController }, this.content));
-    }
-}
-function useToast(content, options) {
-    const [toast] = React.useState(new ToastController(content, options));
-    return toast;
-}
-
 const OverflowElement = styled(framerMotion.motion.div) `
     position: absolute;
     display: flex;
@@ -1693,7 +1594,7 @@ const OverflowElementArrow = styled.div `
     }
 `;
 
-const DEFAULT_CONFIG$1 = {
+const DEFAULT_CONFIG = {
     id: '__default-pop-up',
     position: 'bottom',
     rootElement: 'body'
@@ -1717,7 +1618,7 @@ class OverflowController extends AsideController {
             this.close('mouseLeave');
             (_a = this.container) === null || _a === void 0 ? void 0 : _a.removeEventListener('mouseleave', this.hoverLeaveListener);
         };
-        this.config = Object.assign({}, DEFAULT_CONFIG$1, options);
+        this.config = Object.assign({}, DEFAULT_CONFIG, options);
     }
     setParent(newParent) {
         this.parent = newParent;
@@ -1824,6 +1725,105 @@ class OverflowController extends AsideController {
 function useOverflow(content, options) {
     const [overflow] = React.useState(new OverflowController(content, options));
     return overflow;
+}
+
+const ToastElement = styled(framerMotion.motion.div) `
+    position: fixed;
+    width: 1024px;
+    left: calc(50% - 512px);
+    padding: 15px;
+    bottom: -100px;
+    z-index: 99;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: ${(props) => getGlobalTheme().colors[props.color].principal};
+    color: ${(props) => getGlobalTheme().colors[props.color].contrast};
+    font-size: ${() => getGlobalTheme().font.h2.fontSize};
+    font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
+    border-radius: ${() => getGlobalTheme().borderRadius};
+    box-shadow: ${() => getGlobalTheme().boxShadow.normal};
+
+    @media screen and (max-width: 1024px) {
+        width: calc(100% - 30px);
+        left: 15px;
+        font-size: calc(${() => getGlobalTheme().font.h2.fontSize} / 2);
+    }
+`;
+
+const DEFAULT_CONFIG$1 = {
+    id: '__default-pop-up',
+    color: 'primary',
+    timeout: 2000,
+    rootElement: 'body'
+};
+class ToastController extends AsideController {
+    constructor(content, options) {
+        super(content, options);
+        this.animationController = framerMotion.useAnimation();
+        this.clickListener = (event) => {
+            var _a;
+            if (!((_a = this.container) === null || _a === void 0 ? void 0 : _a.contains(event.target)) || this.container === event.target) {
+                this.close('outsideClick');
+            }
+        };
+        this.config = Object.assign({}, DEFAULT_CONFIG$1, options);
+        this.hideTimeout = this.animationTimeout = 0;
+    }
+    open() {
+        clearTimeout(this.animationTimeout);
+        clearTimeout(this.hideTimeout);
+        if (!!!this.content) {
+            return;
+        }
+        if (!this.appendNode())
+            return;
+        ReactDOM.render(this.createReactElement(), this.container);
+        setTimeout(() => window.addEventListener('click', this.clickListener));
+        this.hideTimeout = setTimeout(() => this.close('timeout'), this.config.timeout);
+        this.status = 'opening';
+        this.animationController.start({
+            bottom: [-100, 15],
+            opacity: [0, 1],
+            transition: { duration: .2, ease: 'backOut' }
+        });
+        this.animationTimeout = setTimeout(() => {
+            this.status = 'opened';
+            if (this.onopen)
+                this.onopen();
+        }, 200);
+    }
+    close(reason) {
+        if (this.status !== 'opened') {
+            return;
+        }
+        this.status = 'closing';
+        clearTimeout(this.hideTimeout);
+        window.removeEventListener('click', this.clickListener);
+        this.animationController.start({
+            bottom: [15, -100],
+            opacity: [1, 0],
+            transition: { duration: .2, ease: 'backIn' }
+        });
+        this.animationTimeout = setTimeout(() => {
+            this.removeNode();
+            this.status = 'closed';
+            if (this.onclose)
+                this.onclose(reason);
+        }, 200);
+    }
+    setContent(newContent) {
+        this.content = typeof newContent === 'string' ? React__default.createElement("span", null, newContent) : newContent;
+    }
+    createReactElement() {
+        return (React__default.createElement(ToastElement, { color: this.config.color, animate: this.animationController }, this.content));
+    }
+}
+function useToast(content, options) {
+    const [toast] = React.useState(new ToastController(content, options));
+    return toast;
 }
 
 const IconButton = styled(framerMotion.motion.button) `
@@ -1966,11 +1966,14 @@ exports.Icons = Icons;
 exports.ImageAvatar = ImageAvatar;
 exports.Input = Input;
 exports.LightTheme = LightTheme;
+exports.ModalController = ModalController;
+exports.OverflowController = OverflowController;
 exports.Spinners = Spinners;
 exports.Tab = Tab;
 exports.Table = Table;
 exports.TableColumn = TableColumn;
 exports.Tabs = Tabs;
+exports.ToastController = ToastController;
 exports.Validators = Validators;
 exports.getGlobalTheme = getGlobalTheme;
 exports.setGlobalTheme = setGlobalTheme;
