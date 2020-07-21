@@ -5,5 +5,6 @@ export interface FormFieldProps extends InputProps {
     key: string;
     onValidationChange: (value: false | string[]) => void;
     validators: InputValidator[];
+    validated?: boolean;
 }
 export default function FormField(props: FormFieldProps): JSX.Element;

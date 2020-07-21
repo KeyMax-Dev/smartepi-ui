@@ -4,12 +4,6 @@ import { InputProps } from '../Input';
 import InputValidator from '../../services/input-validator/input-validator';
 import { validate } from './../../services/input-validator/index';
 
-type Form = [
-    JSX.Element | JSX.Element[],
-    () => null | { [key: string]: string },
-    { [key: string]: { value: string; hasError: false | string[] } }
-];
-
 type Field = {
     key: string;
     inputProps?: InputProps;
@@ -18,8 +12,16 @@ type Field = {
 
 type FieldState = {
     value: string;
+    validated?: boolean;
     hasError: false | string[];
 }
+
+type Form = [
+    JSX.Element | JSX.Element[],
+    () => null | { [key: string]: string },
+    () => { [key: string]: string },
+    { [key: string]: FieldState }
+];
 
 export default function useForm(fields: Field[]): Form {
 
@@ -37,7 +39,7 @@ export default function useForm(fields: Field[]): Form {
         setFieldStates({ ...fieldStates, [key]: state });
     };
 
-    const form = fields.map(({ key, inputProps, validators }) =>
+    const formElement = fields.map(({ key, inputProps, validators }) =>
         <FormField
             {...inputProps}
             key={key}
@@ -45,15 +47,27 @@ export default function useForm(fields: Field[]): Form {
             onChange={(event) => valueChangeHandler(key, event.target.value)}
             value={fieldStates[key].value}
             validators={validators}
+            validated={fieldStates[key].validated}
         />
     );
 
-    const formValidate = (): null | { [key: string]: string } => {
+    const getErrors = (): null | { [key: string]: string } => {
+        let newFieldStates = {};
+        let hasError = {};
         for (const key in fieldStates) {
-            if (fieldStates[key].hasError) return null;
+            const state = { ...fieldStates[key], validated: true };
+            newFieldStates = { ...newFieldStates, [key]: state };
+            if (fieldStates[key].hasError) hasError = { ...hasError, [key]: fieldStates[key].hasError };
         }
+
+        setFieldStates(newFieldStates);
+        if (Object.entries(hasError).length > 0) return hasError;
+        else return null;
+    };
+
+    const getValues = () => {
         return Object.entries(fieldStates).reduce((obj, curr) => ({ ...obj, [curr[0]]: curr[1].value }), {});
     };
 
-    return [form, formValidate, fieldStates];
+    return [formElement, getErrors, getValues, fieldStates];
 }

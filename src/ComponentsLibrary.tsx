@@ -97,7 +97,7 @@ export default function ComponentsLibrary(): JSX.Element {
     const datepickerOverflow = useOverflow(<Datepicker onDaySelected={(day) => console.log('Day Selected', day.toLocaleDateString())} initial={new Date()} />);
     const datepickerModal = useModal(<Datepicker width="600px" height="600px" onDaySelected={(day) => datepickerModal.close()} />);
 
-    const [form, formValidate] = useForm([
+    const [form, getErrors, getValues] = useForm([
         { key: 'name', validators: [new Validators.Required(), new Validators.MinLength(4)] },
         { key: 'password', validators: [new Validators.Required(), new Validators.MinLength(3), new Validators.MaxLength(6)], inputProps: { type: 'password', placeholder: 'Password', containerType: 'outline' } },
     ]);
