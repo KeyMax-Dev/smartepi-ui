@@ -98,7 +98,7 @@ export default function ComponentsLibrary(): JSX.Element {
     const datepickerModal = useModal(<Datepicker width="600px" height="600px" onDaySelected={(day) => datepickerModal.close()} />);
 
     const [form, getErrors, getValues] = useForm([
-        { key: 'name', validators: [new Validators.Required(), new Validators.MinLength(4)] },
+        { key: 'name', validators: [new Validators.Required(), new Validators.MinLength(4)], initial: 'valor inicial' },
         { key: 'password', validators: [new Validators.Required(), new Validators.MinLength(3), new Validators.MaxLength(6)], inputProps: { type: 'password', placeholder: 'Password', containerType: 'outline' } },
     ]);
 
@@ -124,6 +124,7 @@ export default function ComponentsLibrary(): JSX.Element {
         <PageBody>
             <h1>SmartEPI UI - Components Library</h1>
             <Button buttonType="icon" icon={theme === LightTheme ? 'sun' : 'moon'} onClick={() => theme === LightTheme ? setTheme(DarkTheme) : setTheme(LightTheme)} />
+            {form}
             <ComponentExpandable componentName="Icons">
                 {Object.keys(Icons).map(icon => (
                     <div key={icon} className="__icon-container">

@@ -5,15 +5,16 @@ import InputValidator from '../../services/input-validator/input-validator';
 import { validate } from './../../services/input-validator/index';
 
 type Field = {
-    key: string;
+    initial?: string;
     inputProps?: InputProps;
+    key: string;
     validators: InputValidator[];
 }
 
 type FieldState = {
-    value: string;
-    validated?: boolean;
     hasError: false | string[];
+    validated?: boolean;
+    value: string;
 }
 
 type Form = [
@@ -26,7 +27,7 @@ type Form = [
 export default function useForm(fields: Field[]): Form {
 
     const [fieldStates, setFieldStates] = useState<{ [key: string]: FieldState }>(
-        fields.reduce((obj, cur) => ({ ...obj, [cur.key]: { value: '', hasError: validate('', ...cur.validators) } }), {})
+        fields.reduce((obj, cur) => ({ ...obj, [cur.key]: { value: cur.initial || '', hasError: validate(cur.initial || '', ...cur.validators) } }), {})
     );
 
     const validationChangeHandler = (key: string, hasError: false | string[]) => {

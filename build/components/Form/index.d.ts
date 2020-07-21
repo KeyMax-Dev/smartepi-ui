@@ -2,14 +2,15 @@
 import { InputProps } from '../Input';
 import InputValidator from '../../services/input-validator/input-validator';
 declare type Field = {
-    key: string;
+    initial?: string;
     inputProps?: InputProps;
+    key: string;
     validators: InputValidator[];
 };
 declare type FieldState = {
-    value: string;
-    validated?: boolean;
     hasError: false | string[];
+    validated?: boolean;
+    value: string;
 };
 declare type Form = [JSX.Element | JSX.Element[], () => null | {
     [key: string]: string;
