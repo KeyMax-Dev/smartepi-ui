@@ -12,11 +12,15 @@ export declare type TableRowProps = Omit<React.ComponentProps<'tr'>, DOMEvents>;
 export declare type TableRowEvents = Partial<{
     [K in DOMEvents]: TableRowEventHandler;
 }>;
+export declare type TableBodyEvents = Partial<{
+    [K in DOMEvents]: React.SyntheticEvent;
+}>;
 interface TableProps {
     table: TableItem[];
     children: TableChildren[];
     rowProps?: TableRowProps;
     rowEvents?: TableRowEvents;
+    onScroll?: (event: React.UIEvent<HTMLTableSectionElement>) => void;
     loading?: boolean;
 }
 export default function Table(props: TableProps): JSX.Element;

@@ -229,7 +229,7 @@ export default function ComponentsLibrary(): JSX.Element {
                 </Tabs>
             </ComponentExpandable>
             <ComponentExpandable componentName="Table">
-                <Table table={TableData}>
+                <Table table={TableData} >
                     <TableColumn name="ID" key="id" minwidth="100px">
                         {(item) => <div>{item.id}</div>}
                     </TableColumn>
@@ -246,7 +246,7 @@ export default function ComponentsLibrary(): JSX.Element {
 
             <ComponentExpandable componentName="Form">
                 {/* {form} */}
-                <Button text="Validate" onClick={() => console.log(formValidate())} />
+                <Button text="Validate" onClick={() => console.log(getErrors())} />
             </ComponentExpandable>
         </PageBody>
     );

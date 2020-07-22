@@ -1355,7 +1355,7 @@ function Table(props) {
             React__default.createElement(TableHeaderElement, null,
                 React__default.createElement("tr", null, children.map((child) => React__default.createElement("th", Object.assign({ key: child.props.name, style: { flex: child.props.flex, minWidth: child.props.minwidth, maxWidth: child.props.maxwidth } }, child.props), child.props.name)))),
         (props.table.length > 0 && !props.loading) &&
-            React__default.createElement(TableBodyElement, null, props.table.map(renderLine)),
+            React__default.createElement(TableBodyElement, { onScroll: props.onScroll }, props.table.map(renderLine)),
         (props.table.length === 0 && !props.loading) &&
             React__default.createElement(framerMotion.motion.div, { className: "loading-container" }, "Nenhum dado para ser exibido."),
         props.loading &&

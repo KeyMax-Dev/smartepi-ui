@@ -1,9 +1,8 @@
-import React, { EventHandler } from 'react';
-import { TableElement, TableBodyElement, TableHeaderElement } from "./style";
-import TableColumn, { TableColumnProps } from './table-column';
-import ScrollableContainer from './../ScrollableContainer/index';
 import { motion } from 'framer-motion';
+import { TableElement, TableBodyElement, TableHeaderElement } from "./style";
+import React, { EventHandler } from 'react';
 import Spinners from '../../assets/svgs/spinners';
+import TableColumn, { TableColumnProps } from './table-column';
 
 type TableItem = { [key: string]: unknown };
 type TableColumnReactElement = React.ReactElement<TableColumnProps, typeof TableColumn>;
@@ -14,12 +13,14 @@ type TableRowEvent = React.SyntheticEvent;
 export type TableRowEventHandler = (event: TableRowEvent, tableItem: any) => void;
 export type TableRowProps = Omit<React.ComponentProps<'tr'>, DOMEvents>;
 export type TableRowEvents = Partial<{ [K in DOMEvents]: TableRowEventHandler }>;
+export type TableBodyEvents = Partial<{ [K in DOMEvents]: React.SyntheticEvent }>;
 
 interface TableProps {
     table: TableItem[];
     children: TableChildren[];
     rowProps?: TableRowProps;
     rowEvents?: TableRowEvents;
+    onScroll?: (event: React.UIEvent<HTMLTableSectionElement>) => void;
     loading?: boolean;
 }
 
@@ -49,7 +50,7 @@ export default function Table(props: TableProps): JSX.Element {
                 </TableHeaderElement>
             }
             {(props.table.length > 0 && !props.loading) &&
-                <TableBodyElement>
+                <TableBodyElement onScroll={props.onScroll}>
                     {props.table.map(renderLine)}
                 </TableBodyElement>
             }
