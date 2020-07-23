@@ -7,7 +7,7 @@ import AsideController from './services/aside-components/aside-controller';
 import Badge from './components/Badge';
 import Button from './components/Button';
 import CardBase from './components/CardBase';
-import Checkbox from './components/Checkbox';
+import Checkbox, { CheckboxToggleEvent } from './components/Checkbox';
 import Datepicker from './components/Datepicker';
 import Form from './components/Form';
 import FormField from './components/Form/form-field';
@@ -61,6 +61,7 @@ export {
 };
 
 export type {
+    CheckboxToggleEvent,
     InputValidator,
     ModalConfig,
     OverflowConfig,

@@ -5,11 +5,15 @@ import { Icon } from '../..';
 import { getGlobalTheme } from '../../assets/themes';
 import Animations from '../../assets/animations';
 
+export type CheckboxToggleEvent = Partial<React.MouseEvent<HTMLDivElement>> & {
+    value: boolean;
+};
+
 export interface CheckboxProps extends HTMLMotionProps<'div'> {
     icon?: string;
     color?: string;
     size?: string;
-    onToggle?: (value: boolean) => void;
+    onToggle?: (event: CheckboxToggleEvent) => void;
     value?: boolean;
 }
 
@@ -17,11 +21,13 @@ export default function Checkbox(props: CheckboxProps) {
 
     const size = props.size ? props.size : getGlobalTheme().defaultIconSize;
     const [value, setValue] = useState<boolean>(!!props.value);
+    const [event, setEvent] = useState<CheckboxToggleEvent>({ value });
     const animationController = useAnimation();
     const iconName = props.icon ? props.icon : 'check';
 
-    const toggle = () => {
+    const toggle = (currentEvent: React.MouseEvent<HTMLDivElement>) => {
         setValue(!value);
+        setEvent({ ...currentEvent, value });
     };
 
     useEffect(() => {
@@ -31,7 +37,8 @@ export default function Checkbox(props: CheckboxProps) {
     useEffect(() => {
         animationController.start(value ? Animations.FadeIn : Animations.FadeOut);
         if (props.onToggle) {
-            props.onToggle(value);
+            props.onToggle(event);
+            setEvent({ value });
         }
         return () => animationController.stop();
     }, [value]);

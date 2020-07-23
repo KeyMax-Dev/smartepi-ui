@@ -6,7 +6,7 @@ import AsideController from './services/aside-components/aside-controller';
 import Badge from './components/Badge';
 import Button from './components/Button';
 import CardBase from './components/CardBase';
-import Checkbox from './components/Checkbox';
+import Checkbox, { CheckboxToggleEvent } from './components/Checkbox';
 import Datepicker from './components/Datepicker';
 import Form from './components/Form';
 import FormField from './components/Form/form-field';
@@ -25,4 +25,4 @@ import useModal, { ModalController, ModalConfig } from './services/aside-compone
 import useOverflow, { OverflowController, OverflowConfig } from './services/aside-components/overflow';
 import useToast, { ToastController, ToastConfig } from './services/aside-components/toast';
 export { Animations, AsideController, Badge, Button, CardBase, Checkbox, DarkTheme, Datepicker, Form, FormField, getGlobalTheme, Icon, Icons, ImageAvatar, Input, LightTheme, ModalController, OverflowController, setGlobalTheme, Spinners, Tab, Table, TableColumn, Tabs, ToastController, useForm, useModal, useOverflow, useToast, validate, Validators };
-export type { InputValidator, ModalConfig, OverflowConfig, TableRowEventHandler, TableRowEvents, TableRowProps, Theme, ToastConfig };
+export type { CheckboxToggleEvent, InputValidator, ModalConfig, OverflowConfig, TableRowEventHandler, TableRowEvents, TableRowProps, Theme, ToastConfig };

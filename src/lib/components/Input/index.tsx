@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Icon from '../Icon';
 import { HTMLMotionProps } from 'framer-motion';
 import { InputElement, InputContainerElement } from './style';
@@ -24,32 +24,48 @@ export default function Input(props: InputProps): JSX.Element {
 
     const containerType: ContainerType = props.containerType ? props.containerType : DEFAULT_TYPE;
     const inputRef = useRef<HTMLInputElement>();
+    const [enableClear, setEnableClear] = useState<boolean>(!!props.value);
 
     const clear = () => {
         if (inputRef.current) {
-            const element = inputRef.current as HTMLInputElement;
-            element.value = '';
+            const input = inputRef.current as HTMLInputElement;
+            const setValue = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+            if (setValue) {
+                setValue.call(input, '');
+                input.dispatchEvent(new Event('input', { bubbles: true }));
+            }
         }
     };
 
     const onDatepickerSelect = (date: Date) => {
-        const element = inputRef.current as HTMLInputElement;
-        element.value = date.toLocaleDateString();
-        // eslint-disable-next-line
-        datepicker.close();
+        if (inputRef.current) {
+            const input = inputRef.current as HTMLInputElement;
+            const setValue = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+            if (setValue) {
+                setValue.call(input, date.toLocaleDateString());
+                input.dispatchEvent(new Event('input', { bubbles: true }));
+                // eslint-disable-next-line
+                datepicker.close();
+            }
+        }
     };
     const datepicker = useOverflow(<Datepicker onDaySelected={onDatepickerSelect} />);
 
+    const changeHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        setEnableClear(!!(event.currentTarget.value && props.enableClear));
+        if (props.onChange) props.onChange(event);
+    };
+
     useEffect(() => {
         if (props.getRef) props.getRef(inputRef as React.MutableRefObject<HTMLInputElement>);
-    }, []);
+    }, [inputRef.current]);
 
     return (
         <InputContainerElement {...props.containerProps} invert={props.invert} color={props.color} className={`__input-container-${containerType} ${props.containerProps?.className}`}>
-            {props.iconLeft && <Icon color={props.color} name={props.iconLeft} invert={props.invert}/>}
-            <InputElement {...props} ref={inputRef as React.MutableRefObject<HTMLInputElement>} />
-            {props.enableClear && <Button buttonType="icon" icon="close" onClick={clear} iconSize="20px" style={{ margin: 0, padding: 0 }} />}
-            {props.enableDatepicker && <Button buttonType="icon" icon="calendar" onClick={(event) => datepicker.open(event.currentTarget as HTMLElement)} iconSize="20px" style={{ margin: 0, padding: 0 }} invert={props.invert} />}
+            {props.iconLeft && <Icon color={props.color} name={props.iconLeft} invert={props.invert} />}
+            <InputElement {...props} ref={inputRef as React.MutableRefObject<HTMLInputElement>} onChange={changeHandler} />
+            {enableClear && <Button buttonType="icon" icon="close" onClick={clear} iconSize="20px" invert={props.invert} style={{ margin: 0, padding: 0 }} />}
+            {props.enableDatepicker && <Button buttonType="icon" icon="calendar" invert={props.invert} onClick={(event) => datepicker.open(event.currentTarget as HTMLElement)} iconSize="20px" style={{ margin: 0, padding: 0 }} />}
             {props.iconRight && <Icon color={props.color} name={props.iconRight} invert={props.invert} />}
         </InputContainerElement>
     );

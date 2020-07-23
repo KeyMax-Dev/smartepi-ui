@@ -669,10 +669,12 @@ const CheckboxElement = styled(framerMotion.motion.div) `
 function Checkbox(props) {
     const size = props.size ? props.size : getGlobalTheme().defaultIconSize;
     const [value, setValue] = React.useState(!!props.value);
+    const [event, setEvent] = React.useState({ value });
     const animationController = framerMotion.useAnimation();
     const iconName = props.icon ? props.icon : 'check';
-    const toggle = () => {
+    const toggle = (currentEvent) => {
         setValue(!value);
+        setEvent(Object.assign(Object.assign({}, currentEvent), { value }));
     };
     React.useEffect(() => {
         setValue(!!props.value);
@@ -680,7 +682,8 @@ function Checkbox(props) {
     React.useEffect(() => {
         animationController.start(value ? Animations.FadeIn : Animations.FadeOut);
         if (props.onToggle) {
-            props.onToggle(value);
+            props.onToggle(event);
+            setEvent({ value });
         }
         return () => animationController.stop();
     }, [value]);
@@ -1070,28 +1073,46 @@ function Input(props) {
     var _a;
     const containerType = props.containerType ? props.containerType : DEFAULT_TYPE;
     const inputRef = React.useRef();
+    const [enableClear, setEnableClear] = React.useState(!!props.value);
     const clear = () => {
+        var _a;
         if (inputRef.current) {
-            const element = inputRef.current;
-            element.value = '';
+            const input = inputRef.current;
+            const setValue = (_a = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')) === null || _a === void 0 ? void 0 : _a.set;
+            if (setValue) {
+                setValue.call(input, '');
+                input.dispatchEvent(new Event('input', { bubbles: true }));
+            }
         }
     };
     const onDatepickerSelect = (date) => {
-        const element = inputRef.current;
-        element.value = date.toLocaleDateString();
-        // eslint-disable-next-line
-        datepicker.close();
+        var _a;
+        if (inputRef.current) {
+            const input = inputRef.current;
+            const setValue = (_a = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')) === null || _a === void 0 ? void 0 : _a.set;
+            if (setValue) {
+                setValue.call(input, date.toLocaleDateString());
+                input.dispatchEvent(new Event('input', { bubbles: true }));
+                // eslint-disable-next-line
+                datepicker.close();
+            }
+        }
     };
     const datepicker = useOverflow(React__default.createElement(Datepicker, { onDaySelected: onDatepickerSelect }));
+    const changeHandler = (event) => {
+        setEnableClear(!!(event.currentTarget.value && props.enableClear));
+        if (props.onChange)
+            props.onChange(event);
+    };
     React.useEffect(() => {
         if (props.getRef)
             props.getRef(inputRef);
-    }, []);
+    }, [inputRef.current]);
     return (React__default.createElement(InputContainerElement, Object.assign({}, props.containerProps, { invert: props.invert, color: props.color, className: `__input-container-${containerType} ${(_a = props.containerProps) === null || _a === void 0 ? void 0 : _a.className}` }),
         props.iconLeft && React__default.createElement(Icon, { color: props.color, name: props.iconLeft, invert: props.invert }),
-        React__default.createElement(InputElement, Object.assign({}, props, { ref: inputRef })),
-        props.enableClear && React__default.createElement(Button, { buttonType: "icon", icon: "close", onClick: clear, iconSize: "20px", style: { margin: 0, padding: 0 } }),
-        props.enableDatepicker && React__default.createElement(Button, { buttonType: "icon", icon: "calendar", onClick: (event) => datepicker.open(event.currentTarget), iconSize: "20px", style: { margin: 0, padding: 0 }, invert: props.invert }),
+        React__default.createElement(InputElement, Object.assign({}, props, { ref: inputRef, onChange: changeHandler })),
+        enableClear && React__default.createElement(Button, { buttonType: "icon", icon: "close", onClick: clear, iconSize: "20px", invert: props.invert, style: { margin: 0, padding: 0 } }),
+        props.enableDatepicker && React__default.createElement(Button, { buttonType: "icon", icon: "calendar", invert: props.invert, onClick: (event) => datepicker.open(event.currentTarget), iconSize: "20px", style: { margin: 0, padding: 0 } }),
         props.iconRight && React__default.createElement(Icon, { color: props.color, name: props.iconRight, invert: props.invert })));
 }
 

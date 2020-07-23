@@ -134,7 +134,7 @@ export default function ComponentsLibrary(): JSX.Element {
             </ComponentExpandable>
             <ComponentExpandable componentName="Buttons">
                 <Button buttonType="solid" text="Solid" />
-                <Button buttonType="solid" text="Solid Invert" invert />
+                <Button buttonType="solid" text="Solid Invert" invert/>
                 <Button buttonType="solid" text="Solid Disabled" disabled />
                 <Button buttonType="solid" text="Solid Disabled Invert" invert disabled />
                 <Button buttonType="solid" text="Solid Secondary" color="secondary" />
@@ -170,19 +170,20 @@ export default function ComponentsLibrary(): JSX.Element {
                 <Input invert />
                 <Input iconRight="account" />
                 <Input enableClear />
+                <Input enableClear invert />
                 <Input enableDatepicker />
                 <Input enableClear iconLeft="account" />
                 <Input enableClear iconLeft="account" iconRight="account" />
                 <Input containerType="outline" invert />
-                <Input containerType="outline" enableClear />
+                <Input invert containerType="outline" enableClear />
                 <Input containerType="outline" enableClear iconRight="account" iconLeft="account" />
             </ComponentExpandable>
             <ComponentExpandable componentName="Checkboxes">
-                <Checkbox onToggle={(value) => console.log(value)} value={true} size="20px" />
-                <Checkbox onToggle={(value) => console.log(value)} value={false} icon="close" />
-                <Checkbox onToggle={(value) => console.log(value)} value={true} size="60px" color="success" />
-                <Checkbox onToggle={(value) => console.log(value)} value={true} size="80px" />
-                <Checkbox onToggle={(value) => console.log(value)} value={true} size="80px" icon="close" color="danger" />
+                <Checkbox onToggle={(event) => console.log(event.value)} value={true} size="20px" />
+                <Checkbox onToggle={(event) => console.log(event.value)} value={false} icon="close" />
+                <Checkbox onToggle={(event) => console.log(event.value)} value={true} size="60px" color="success" />
+                <Checkbox onToggle={(event) => console.log(event.value)} value={true} size="80px" />
+                <Checkbox onToggle={(event) => console.log(event.value)} value={true} size="80px" icon="close" color="danger" />
             </ComponentExpandable>
             <ComponentExpandable componentName="Cards">
                 <CardBase width="300px" height="unset">
