@@ -1099,18 +1099,17 @@ function Input(props) {
         }
     };
     const datepicker = useOverflow(React__default.createElement(Datepicker, { onDaySelected: onDatepickerSelect }));
-    const changeHandler = (event) => {
-        setEnableClear(!!(event.currentTarget.value && props.enableClear));
-        if (props.onChange)
-            props.onChange(event);
-    };
     React.useEffect(() => {
+        var _a;
         if (props.getRef)
             props.getRef(inputRef);
+        const eventHandler = (event) => setEnableClear(event.target.value.length > 0 && !!props.enableClear);
+        (_a = inputRef.current) === null || _a === void 0 ? void 0 : _a.addEventListener('input', eventHandler);
+        return () => { var _a; return (_a = inputRef.current) === null || _a === void 0 ? void 0 : _a.removeEventListener('input', eventHandler); };
     }, [inputRef.current]);
     return (React__default.createElement(InputContainerElement, Object.assign({}, props.containerProps, { invert: props.invert, color: props.color, className: `__input-container-${containerType} ${(_a = props.containerProps) === null || _a === void 0 ? void 0 : _a.className}` }),
         props.iconLeft && React__default.createElement(Icon, { color: props.color, name: props.iconLeft, invert: props.invert }),
-        React__default.createElement(InputElement, Object.assign({}, props, { ref: inputRef, onChange: changeHandler })),
+        React__default.createElement(InputElement, Object.assign({}, props, { ref: inputRef })),
         enableClear && React__default.createElement(Button, { buttonType: "icon", icon: "close", onClick: clear, iconSize: "20px", invert: props.invert, style: { margin: 0, padding: 0 } }),
         props.enableDatepicker && React__default.createElement(Button, { buttonType: "icon", icon: "calendar", invert: props.invert, onClick: (event) => datepicker.open(event.currentTarget), iconSize: "20px", style: { margin: 0, padding: 0 } }),
         props.iconRight && React__default.createElement(Icon, { color: props.color, name: props.iconRight, invert: props.invert })));

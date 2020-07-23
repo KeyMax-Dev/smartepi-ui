@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, ChangeEvent, FocusEvent } from 'react';
 import Icon from '../Icon';
 import { HTMLMotionProps } from 'framer-motion';
 import { InputElement, InputContainerElement } from './style';
@@ -51,19 +51,18 @@ export default function Input(props: InputProps): JSX.Element {
     };
     const datepicker = useOverflow(<Datepicker onDaySelected={onDatepickerSelect} />);
 
-    const changeHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        setEnableClear(!!(event.currentTarget.value && props.enableClear));
-        if (props.onChange) props.onChange(event);
-    };
-
     useEffect(() => {
         if (props.getRef) props.getRef(inputRef as React.MutableRefObject<HTMLInputElement>);
+
+        const eventHandler = (event: any) => setEnableClear(event.target.value.length > 0 && !!props.enableClear);
+        inputRef.current?.addEventListener('input', eventHandler);
+        return () => inputRef.current?.removeEventListener('input', eventHandler);
     }, [inputRef.current]);
 
     return (
         <InputContainerElement {...props.containerProps} invert={props.invert} color={props.color} className={`__input-container-${containerType} ${props.containerProps?.className}`}>
             {props.iconLeft && <Icon color={props.color} name={props.iconLeft} invert={props.invert} />}
-            <InputElement {...props} ref={inputRef as React.MutableRefObject<HTMLInputElement>} onChange={changeHandler} />
+            <InputElement {...props} ref={inputRef as React.MutableRefObject<HTMLInputElement>} />
             {enableClear && <Button buttonType="icon" icon="close" onClick={clear} iconSize="20px" invert={props.invert} style={{ margin: 0, padding: 0 }} />}
             {props.enableDatepicker && <Button buttonType="icon" icon="calendar" invert={props.invert} onClick={(event) => datepicker.open(event.currentTarget as HTMLElement)} iconSize="20px" style={{ margin: 0, padding: 0 }} />}
             {props.iconRight && <Icon color={props.color} name={props.iconRight} invert={props.invert} />}
