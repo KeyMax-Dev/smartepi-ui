@@ -1073,7 +1073,7 @@ function Input(props) {
     var _a;
     const containerType = props.containerType ? props.containerType : DEFAULT_TYPE;
     const inputRef = React.useRef();
-    const [enableClear, setEnableClear] = React.useState(!!props.value);
+    const [enableClear, setEnableClear] = React.useState(!!props.value && !!props.enableClear);
     const clear = () => {
         var _a;
         if (inputRef.current) {
@@ -1119,11 +1119,13 @@ function FormField(props) {
     const [color, setColor] = React.useState(props.color);
     const [iconRight, setIconRight] = React.useState(props.iconRight);
     const [validated, setValidated] = React.useState(props.validated || false);
-    const validateField = (value) => {
+    const validateField = (value, forceErrorState) => {
         const validation = validate(value, ...props.validators);
         if (validation) {
-            setColor('danger');
-            setIconRight('alert');
+            if (validated || forceErrorState) {
+                setColor('danger');
+                setIconRight('alert');
+            }
         }
         else {
             setColor(props.color);
@@ -1135,14 +1137,12 @@ function FormField(props) {
         return validation;
     };
     const blurValidationHandler = (event) => {
-        validateField(event.target.value);
+        validateField(event.target.value, true);
         if (props.onBlur)
             props.onBlur(event);
     };
     const changeValidationHandler = (event) => {
-        if (validated) {
-            validateField(event.target.value);
-        }
+        validateField(event.target.value);
         if (props.onChange)
             props.onChange(event);
     };

@@ -16,12 +16,14 @@ export default function FormField(props: FormFieldProps): JSX.Element {
     const [iconRight, setIconRight] = useState<string | undefined>(props.iconRight);
     const [validated, setValidated] = useState<boolean>(props.validated || false);
 
-    const validateField = (value: InputValueType): false | string[] => {
+    const validateField = (value: InputValueType, forceErrorState?: boolean): false | string[] => {
         const validation = validate(value, ...props.validators);
 
         if (validation) {
-            setColor('danger');
-            setIconRight('alert');
+            if (validated || forceErrorState) {
+                setColor('danger');
+                setIconRight('alert');
+            }
         } else {
             setColor(props.color);
             setIconRight(props.iconRight);
@@ -33,14 +35,12 @@ export default function FormField(props: FormFieldProps): JSX.Element {
     };
 
     const blurValidationHandler = (event: React.FocusEvent<HTMLInputElement>) => {
-        validateField(event.target.value);
+        validateField(event.target.value, true);
         if (props.onBlur) props.onBlur(event);
     };
 
     const changeValidationHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (validated) {
-            validateField(event.target.value);
-        };
+        validateField(event.target.value);
         if (props.onChange) props.onChange(event);
     };
 

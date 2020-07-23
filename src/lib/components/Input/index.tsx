@@ -24,7 +24,7 @@ export default function Input(props: InputProps): JSX.Element {
 
     const containerType: ContainerType = props.containerType ? props.containerType : DEFAULT_TYPE;
     const inputRef = useRef<HTMLInputElement>();
-    const [enableClear, setEnableClear] = useState<boolean>(!!props.value);
+    const [enableClear, setEnableClear] = useState<boolean>(!!props.value && !!props.enableClear);
 
     const clear = () => {
         if (inputRef.current) {
