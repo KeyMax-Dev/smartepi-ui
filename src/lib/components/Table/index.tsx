@@ -49,7 +49,7 @@ const mapChildren = (children: TableChild | TableChild[]): TableColumnReactEleme
     }
 };
 
-export default function Table({data, children, loading, config}: TableProps): JSX.Element {
+export default function Table({ data, children, loading, config }: TableProps): JSX.Element {
 
     const mappedChildren: TableColumnReactElement[] = mapChildren(children);
     const baseConfig = Object.assign({}, DEFAULT_TABLE_CONFIG, config);
@@ -79,17 +79,19 @@ export default function Table({data, children, loading, config}: TableProps): JS
                 </TableBodyElement>
             }
             {(data.length === 0 && !loading) &&
-                <motion.tr className="loading-container">
-                    <td>{baseConfig.emptyMessage}</td>
-                </motion.tr>
+                <motion.tbody className="loading-container">
+                    <tr><td>
+                        {baseConfig.emptyMessage}
+                    </td></tr>
+                </motion.tbody>
             }
             {loading &&
-                <motion.tr className="loading-container">
-                    <td>
+                <motion.tbody className="loading-container">
+                    <tr><td>
                         <Spinners.circles width="200px" height="200px" />
                         {baseConfig.loadingMessage}
-                    </td>
-                </motion.tr>
+                    </td></tr>
+                </motion.tbody>
             }
         </TableElement>
     );

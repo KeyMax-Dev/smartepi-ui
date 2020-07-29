@@ -1406,13 +1406,15 @@ function Table({ data, children, loading, config }) {
         (data.length > 0 && !loading) &&
             React__default.createElement(TableBodyElement, { onScroll: baseConfig.onScroll }, data.map(renderLine)),
         (data.length === 0 && !loading) &&
-            React__default.createElement(framerMotion.motion.tr, { className: "loading-container" },
-                React__default.createElement("td", null, baseConfig.emptyMessage)),
+            React__default.createElement(framerMotion.motion.tbody, { className: "loading-container" },
+                React__default.createElement("tr", null,
+                    React__default.createElement("td", null, baseConfig.emptyMessage))),
         loading &&
-            React__default.createElement(framerMotion.motion.tr, { className: "loading-container" },
-                React__default.createElement("td", null,
-                    React__default.createElement(Spinners.circles, { width: "200px", height: "200px" }),
-                    baseConfig.loadingMessage))));
+            React__default.createElement(framerMotion.motion.tbody, { className: "loading-container" },
+                React__default.createElement("tr", null,
+                    React__default.createElement("td", null,
+                        React__default.createElement(Spinners.circles, { width: "200px", height: "200px" }),
+                        baseConfig.loadingMessage)))));
 }
 
 // type ThemedScrollableContainer =
