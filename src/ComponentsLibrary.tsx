@@ -230,7 +230,7 @@ export default function ComponentsLibrary(): JSX.Element {
                 </Tabs>
             </ComponentExpandable>
             <ComponentExpandable componentName="Table">
-                <Table table={TableData} >
+                <Table data={TableData} >
                     <TableColumn name="ID" key="id" minwidth="100px">
                         {(item) => <div>{item.id}</div>}
                     </TableColumn>

@@ -1312,6 +1312,13 @@ const TableElement = styled.table `
         height: 100%;
         flex: 1;
         text-align: center;
+
+        td {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
     }
 `;
 const TableHeaderElement = styled.thead `
@@ -1361,31 +1368,51 @@ const TableColumnElement = styled.td `
     }
 `;
 
-function Table(props) {
-    const children = props.children.filter((ele) => typeof ele === 'object');
-    const rowProps = props.rowProps || {};
-    const rowEvents = props.rowEvents || {};
-    const renderLine = (element, index) => {
-        const events = {};
-        Object.entries(rowEvents).forEach(([key, event]) => events[key] = (nativeEvent) => event ? event(nativeEvent, element) : undefined);
-        return React__default.createElement("tr", Object.assign({ key: index }, rowProps, events), children.map((column) => React__default.cloneElement(column, column.props, column.props.children(element, index))));
-    };
-    return (React__default.createElement(TableElement, null,
-        (props.table.length > 0 && !props.loading) &&
-            React__default.createElement(TableHeaderElement, null,
-                React__default.createElement("tr", null, children.map((child) => React__default.createElement("th", Object.assign({ key: child.props.name, style: { flex: child.props.flex, minWidth: child.props.minwidth, maxWidth: child.props.maxwidth } }, child.props), child.props.name)))),
-        (props.table.length > 0 && !props.loading) &&
-            React__default.createElement(TableBodyElement, { onScroll: props.onScroll }, props.table.map(renderLine)),
-        (props.table.length === 0 && !props.loading) &&
-            React__default.createElement(framerMotion.motion.div, { className: "loading-container" }, "Nenhum dado para ser exibido."),
-        props.loading &&
-            React__default.createElement(framerMotion.motion.div, { className: "loading-container" },
-                React__default.createElement(Spinners.circles, { width: "200px", height: "200px" }),
-                "Carregando dados...")));
-}
-
 function TableColumn(props) {
     return (React__default.createElement(TableColumnElement, Object.assign({}, props)));
+}
+
+const DEFAULT_TABLE_CONFIG = {
+    rowProps: {},
+    rowEvents: {},
+    loadingMessage: 'Carregando dados...',
+    emptyMessage: 'Nenhum dado para ser exibido.'
+};
+const mapChildren = (children) => {
+    if (Array.isArray(children)) {
+        return children.filter((ele) => ele.type === TableColumn);
+    }
+    else {
+        if (children) {
+            return children.type === TableColumn ? [children] : [];
+        }
+        else {
+            return [];
+        }
+    }
+};
+function Table({ data, children, loading, config }) {
+    const mappedChildren = mapChildren(children);
+    const baseConfig = Object.assign({}, DEFAULT_TABLE_CONFIG, config);
+    const renderLine = (element, index) => {
+        const events = {};
+        Object.entries(baseConfig.rowEvents).forEach(([key, event]) => events[key] = (nativeEvent) => event ? event(nativeEvent, element) : undefined);
+        return React__default.createElement("tr", Object.assign({ key: index }, baseConfig.rowProps, events), mappedChildren.map((column) => React__default.cloneElement(column, column.props, column.props.children(element, index))));
+    };
+    return (React__default.createElement(TableElement, null,
+        (data.length > 0 && !loading) &&
+            React__default.createElement(TableHeaderElement, null,
+                React__default.createElement("tr", null, mappedChildren.map((child) => React__default.createElement("th", Object.assign({ key: child.props.name, style: { flex: child.props.flex, minWidth: child.props.minwidth, maxWidth: child.props.maxwidth } }, child.props), child.props.name)))),
+        (data.length > 0 && !loading) &&
+            React__default.createElement(TableBodyElement, { onScroll: baseConfig.onScroll }, data.map(renderLine)),
+        (data.length === 0 && !loading) &&
+            React__default.createElement(framerMotion.motion.tr, { className: "loading-container" },
+                React__default.createElement("td", null, baseConfig.emptyMessage)),
+        loading &&
+            React__default.createElement(framerMotion.motion.tr, { className: "loading-container" },
+                React__default.createElement("td", null,
+                    React__default.createElement(Spinners.circles, { width: "200px", height: "200px" }),
+                    baseConfig.loadingMessage))));
 }
 
 // type ThemedScrollableContainer =
@@ -1647,40 +1674,44 @@ class OverflowController extends AsideController {
         return this.parent;
     }
     open(parent, isHover) {
-        var _a;
-        if (this.status === 'opened')
-            return;
-        if (!this.appendNode())
-            return;
-        this.updateContainer(parent);
-        this.addListeners();
-        this.status = 'opening';
-        this.containerControls.stop();
-        this.containerControls.start({
-            opacity: [0, 1],
-            transition: { duration: .2 }
-        }).then(() => {
-            this.status = 'opened';
-            if (this.onopen)
-                this.onopen();
+        setTimeout(() => {
+            var _a;
+            if (this.status === 'opened')
+                return;
+            if (!this.appendNode())
+                return;
+            this.updateContainer(parent);
+            this.addListeners();
+            this.status = 'opening';
+            this.containerControls.stop();
+            this.containerControls.start({
+                opacity: [0, 1],
+                transition: { duration: .2 }
+            }).then(() => {
+                this.status = 'opened';
+                if (this.onopen)
+                    this.onopen();
+            });
+            if (isHover)
+                (_a = this.container) === null || _a === void 0 ? void 0 : _a.addEventListener('mouseleave', this.hoverLeaveListener);
         });
-        if (isHover)
-            (_a = this.container) === null || _a === void 0 ? void 0 : _a.addEventListener('mouseleave', this.hoverLeaveListener);
     }
     close(reason) {
-        const duration = 0.2;
-        this.removeListeners();
-        this.status = 'closing';
-        this.containerControls.start({
-            opacity: [1, 0],
-            transition: { duration }
-        });
         setTimeout(() => {
-            this.status = 'closed';
-            if (this.onclose)
-                this.onclose(reason);
-            this.removeNode();
-        }, duration * 1000);
+            const duration = 0.2;
+            this.removeListeners();
+            this.status = 'closing';
+            this.containerControls.start({
+                opacity: [1, 0],
+                transition: { duration }
+            });
+            setTimeout(() => {
+                this.status = 'closed';
+                if (this.onclose)
+                    this.onclose(reason);
+                this.removeNode();
+            }, duration * 1000);
+        });
     }
     createReactElement() {
         return (React__default.createElement(OverflowElement, { ref: this.contentRef, className: `__${this.config.position}`, animate: this.containerControls },

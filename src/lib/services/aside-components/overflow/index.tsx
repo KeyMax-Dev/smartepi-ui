@@ -53,37 +53,41 @@ export class OverflowController extends AsideController {
     }
 
     public open(parent?: HTMLElement, isHover?: boolean): void {
-        if (this.status === 'opened') return;
-        if (!this.appendNode()) return;
-        this.updateContainer(parent);
-        this.addListeners();
-
-        this.status = 'opening';
-        this.containerControls.stop();
-        this.containerControls.start({
-            opacity: [0, 1],
-            transition: { duration: .2 }
-        }).then(() => {
-            this.status = 'opened';
-            if (this.onopen) this.onopen();
+        setTimeout(() => {
+            if (this.status === 'opened') return;
+            if (!this.appendNode()) return;
+            this.updateContainer(parent);
+            this.addListeners();
+    
+            this.status = 'opening';
+            this.containerControls.stop();
+            this.containerControls.start({
+                opacity: [0, 1],
+                transition: { duration: .2 }
+            }).then(() => {
+                this.status = 'opened';
+                if (this.onopen) this.onopen();
+            });
+    
+            if (isHover) this.container?.addEventListener('mouseleave', this.hoverLeaveListener);
         });
-
-        if (isHover) this.container?.addEventListener('mouseleave', this.hoverLeaveListener);
     }
 
     public close(reason?: unknown): void {
-        const duration = 0.2;
-        this.removeListeners();
-        this.status = 'closing';
-        this.containerControls.start({
-            opacity: [1, 0],
-            transition: { duration }
-        });
         setTimeout(() => {
-            this.status = 'closed';
-            if (this.onclose) this.onclose(reason);
-            this.removeNode();
-        }, duration * 1000);
+            const duration = 0.2;
+            this.removeListeners();
+            this.status = 'closing';
+            this.containerControls.start({
+                opacity: [1, 0],
+                transition: { duration }
+            });
+            setTimeout(() => {
+                this.status = 'closed';
+                if (this.onclose) this.onclose(reason);
+                this.removeNode();
+            }, duration * 1000);
+        });
     }
 
     protected createReactElement(): JSX.Element {
