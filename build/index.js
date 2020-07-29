@@ -1380,11 +1380,11 @@ const DEFAULT_TABLE_CONFIG = {
 };
 const mapChildren = (children) => {
     if (Array.isArray(children)) {
-        return children.filter((ele) => ele.type === TableColumn);
+        return children.filter((ele) => typeof ele === 'object' && (ele === null || ele === void 0 ? void 0 : ele.type) === TableColumn);
     }
     else {
-        if (children) {
-            return children.type === TableColumn ? [children] : [];
+        if (typeof children === 'object') {
+            return (children === null || children === void 0 ? void 0 : children.type) === TableColumn ? [children] : [];
         }
         else {
             return [];

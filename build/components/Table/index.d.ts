@@ -4,7 +4,7 @@ declare type TableItem = {
     [key: string]: unknown;
 };
 declare type TableColumnReactElement = React.ReactElement<TableColumnProps, typeof TableColumn>;
-declare type TableChildren = TableColumnReactElement | TableColumnReactElement[] | false | undefined;
+declare type TableChild = TableColumnReactElement | boolean | null | undefined;
 declare type DOMEvents = Exclude<keyof React.DOMAttributes<HTMLTableRowElement>, 'children' | 'dangerouslySetInnerHTML'>;
 declare type TableRowEvent = React.SyntheticEvent;
 export declare type TableRowEventHandler = (event: TableRowEvent, tableItem: any) => void;
@@ -24,7 +24,7 @@ declare type TableConfig = {
 };
 interface TableProps {
     data: TableItem[];
-    children: TableChildren;
+    children: TableChild | TableChild[];
     loading?: boolean;
     config?: Partial<TableConfig>;
 }

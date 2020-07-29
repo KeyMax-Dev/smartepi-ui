@@ -6,7 +6,7 @@ import TableColumn, { TableColumnProps } from './table-column';
 
 type TableItem = { [key: string]: unknown };
 type TableColumnReactElement = React.ReactElement<TableColumnProps, typeof TableColumn>;
-type TableChildren = TableColumnReactElement | TableColumnReactElement[] | false | undefined;
+type TableChild = TableColumnReactElement | boolean | null | undefined;
 type DOMEvents = Exclude<keyof React.DOMAttributes<HTMLTableRowElement>, 'children' | 'dangerouslySetInnerHTML'>;
 type TableRowEvent = React.SyntheticEvent;
 
@@ -32,17 +32,17 @@ const DEFAULT_TABLE_CONFIG: TableConfig = {
 
 interface TableProps {
     data: TableItem[];
-    children: TableChildren;
+    children: TableChild | TableChild[];
     loading?: boolean;
     config?: Partial<TableConfig>;
 }
 
-const mapChildren = (children: TableChildren): TableColumnReactElement[] => {
+const mapChildren = (children: TableChild | TableChild[]): TableColumnReactElement[] => {
     if (Array.isArray(children)) {
-        return children.filter((ele): ele is TableColumnReactElement => ele.type === TableColumn);
+        return children.filter((ele): ele is TableColumnReactElement => typeof ele === 'object' && ele?.type === TableColumn);
     } else {
-        if (children) {
-            return children.type === TableColumn ? [children] : [];
+        if (typeof children === 'object') {
+            return children?.type === TableColumn ? [children] : [];
         } else {
             return [];
         }
