@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { SelectContainerElement, SelectListElement } from './style';
-import { InputElement } from '../Input/style';
-import Icon from '../Icon';
-import Spinners from '../../assets/svgs/spinners';
+import { InputElement } from '../Input/style';import Spinners from '../../assets/svgs/spinners';
 import Button from '../Button';
 import { useAnimation } from 'framer-motion';
 
@@ -12,27 +10,27 @@ interface SelectProps<T> {
     loading?: boolean;
     onSelect?: (event: React.MouseEvent<HTMLDivElement>, item: T) => void;
     onSearch?: (value: string) => void;
-    value?: string;
+    value?: T;
     color?: string;
     invert?: boolean;
+    placeholder?: string;
 }
 
-const SEARCH_LIMIT_TIME = 1000;
+const SEARCH_LIMIT_TIME = 500;
 let SEARCH_TIMER: number;
 
-export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, value, color, invert }: SelectProps<T>): JSX.Element {
+export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, value, color, invert, placeholder }: SelectProps<T>): JSX.Element {
 
-    const [inputValue, setInputValue] = useState<string>('');
-    const [selected, setSelected] = useState<T>();
+    const [inputValue, setInputValue] = useState<string>(value ? `${value[dataKey]}` : '');
+    const [selected, setSelected] = useState<T | undefined>(value);
     const [opened, setOpened] = useState<boolean>(false);
     const [filteredData, setFilteredData] = useState<T[]>(data);
     const buttonAnimationController = useAnimation();
     const containerRef = useRef<any>();
 
-
     useEffect(() => {
         if (value) {
-            setInputValue(value);
+            setInputValue(`${value[dataKey]}`);
         }
     }, [value]);
 
@@ -40,6 +38,7 @@ export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, 
         setSelected(item);
         setInputValue(`${item[dataKey]}`);
         setOpened(false);
+        setFilteredData(data.filter(element => `${element[dataKey]}`.match(`${item[dataKey]}`)));
         if (onSelect) onSelect(event, item);
     };
 
@@ -48,16 +47,14 @@ export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, 
         setInputValue(value);
         setSelected(undefined);
 
-        setFilteredData(data.filter(item => `${item[dataKey]}`.match(value)));
-
         clearTimeout(SEARCH_TIMER);
         SEARCH_TIMER = setTimeout(() => {
+            setFilteredData(data.filter(item => `${item[dataKey]}`.match(value)));
             if (onSearch) onSearch(value);
         }, SEARCH_LIMIT_TIME);
     };
 
-    const focusHandler = (event: React.FocusEvent<HTMLInputElement>) => {
-        console.log('focus', event.currentTarget);
+    const focusHandler = () => {
         setOpened(true);
     };
 
@@ -76,33 +73,33 @@ export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, 
 
     useEffect(() => {
         const closeHandler = (event: MouseEvent) => {
-            if (containerRef.current) {
-                if (containerRef.current.contains(event.target as HTMLElement)) {
-                    console.log('contains');
-                    (containerRef.current.firstChild as HTMLInputElement).focus();
-                } else {
-                    setOpened(false);
-                }
+            if (containerRef.current && !containerRef.current.contains(event.target as HTMLElement)) {
+                setOpened(false);
             }
         };
 
         if (opened) {
-            setFilteredData(data.filter(item => `${item[dataKey]}`.match(inputValue)));
             buttonAnimationController.start({ rotate: 180, transition: { duration: 0.1, ease: 'backInOut' } });
+            setFilteredData(data.filter(item => `${item[dataKey]}`.match(inputValue)));
+
             window.addEventListener('click', closeHandler);
+            return () => window.removeEventListener('click', closeHandler);
         } else {
             buttonAnimationController.start({ rotate: 0, transition: { duration: 0.1, ease: 'backInOut' } });
             if (!selected) {
                 setInputValue('');
             }
         }
-
-        return () => window.removeEventListener('click', closeHandler);
+        
     }, [opened]);
+
+    useEffect(() => {
+        setFilteredData(data.filter(item => `${item[dataKey]}`.match(inputValue)));
+    }, [data]);
 
     return (
         <SelectContainerElement color={color} invert={invert} ref={containerRef}>
-            <InputElement value={inputValue} onChange={inputChangeHandler} onFocus={focusHandler} />
+            <InputElement value={inputValue} onChange={inputChangeHandler} onFocus={focusHandler} placeholder={placeholder} />
             <Button buttonType="icon" icon="chevronDown" iconSize="20px" onClick={togglerHandler} animate={buttonAnimationController} />
             {opened &&
                 <SelectListElement color={color} invert={invert} >

@@ -9,13 +9,13 @@ type DataType = {
 const DATA: DataType[] = [
     { _id: '0', name: 'data0' },
     { _id: '1', name: 'data1' },
-    { _id: '2', name: 'tatiane lindona' },
+    { _id: '2', name: 'data2' },
 ]; 
 
 export default function TestingPage(): JSX.Element {
     return (
         <div>
-            <Select<DataType> dataKey="name" data={DATA} onSearch={(value) => console.log(value)} />
+            <Select<DataType> dataKey="name" data={DATA} onSearch={(value) => console.log(value)} placeholder="placeholder" />
         </div>
     );
 }

@@ -1939,24 +1939,25 @@ const SelectListElement = styled.div `
     }
 `;
 
-const SEARCH_LIMIT_TIME = 1000;
+const SEARCH_LIMIT_TIME = 500;
 let SEARCH_TIMER;
-function Select({ data, dataKey, loading, onSelect, onSearch, value, color, invert }) {
-    const [inputValue, setInputValue] = React.useState('');
-    const [selected, setSelected] = React.useState();
+function Select({ data, dataKey, loading, onSelect, onSearch, value, color, invert, placeholder }) {
+    const [inputValue, setInputValue] = React.useState(value ? `${value[dataKey]}` : '');
+    const [selected, setSelected] = React.useState(value);
     const [opened, setOpened] = React.useState(false);
     const [filteredData, setFilteredData] = React.useState(data);
     const buttonAnimationController = framerMotion.useAnimation();
     const containerRef = React.useRef();
     React.useEffect(() => {
         if (value) {
-            setInputValue(value);
+            setInputValue(`${value[dataKey]}`);
         }
     }, [value]);
     const itemSelectHandler = (event, item) => {
         setSelected(item);
         setInputValue(`${item[dataKey]}`);
         setOpened(false);
+        setFilteredData(data.filter(element => `${element[dataKey]}`.match(`${item[dataKey]}`)));
         if (onSelect)
             onSelect(event, item);
     };
@@ -1964,15 +1965,14 @@ function Select({ data, dataKey, loading, onSelect, onSearch, value, color, inve
         const value = `${event.target.value}`;
         setInputValue(value);
         setSelected(undefined);
-        setFilteredData(data.filter(item => `${item[dataKey]}`.match(value)));
         clearTimeout(SEARCH_TIMER);
         SEARCH_TIMER = setTimeout(() => {
+            setFilteredData(data.filter(item => `${item[dataKey]}`.match(value)));
             if (onSearch)
                 onSearch(value);
         }, SEARCH_LIMIT_TIME);
     };
-    const focusHandler = (event) => {
-        console.log('focus', event.currentTarget);
+    const focusHandler = () => {
         setOpened(true);
     };
     const togglerHandler = () => {
@@ -1983,20 +1983,15 @@ function Select({ data, dataKey, loading, onSelect, onSearch, value, color, inve
     };
     React.useEffect(() => {
         const closeHandler = (event) => {
-            if (containerRef.current) {
-                if (containerRef.current.contains(event.target)) {
-                    console.log('contains');
-                    containerRef.current.firstChild.focus();
-                }
-                else {
-                    setOpened(false);
-                }
+            if (containerRef.current && !containerRef.current.contains(event.target)) {
+                setOpened(false);
             }
         };
         if (opened) {
-            setFilteredData(data.filter(item => `${item[dataKey]}`.match(inputValue)));
             buttonAnimationController.start({ rotate: 180, transition: { duration: 0.1, ease: 'backInOut' } });
+            setFilteredData(data.filter(item => `${item[dataKey]}`.match(inputValue)));
             window.addEventListener('click', closeHandler);
+            return () => window.removeEventListener('click', closeHandler);
         }
         else {
             buttonAnimationController.start({ rotate: 0, transition: { duration: 0.1, ease: 'backInOut' } });
@@ -2004,10 +1999,12 @@ function Select({ data, dataKey, loading, onSelect, onSearch, value, color, inve
                 setInputValue('');
             }
         }
-        return () => window.removeEventListener('click', closeHandler);
     }, [opened]);
+    React.useEffect(() => {
+        setFilteredData(data.filter(item => `${item[dataKey]}`.match(inputValue)));
+    }, [data]);
     return (React__default.createElement(SelectContainerElement, { color: color, invert: invert, ref: containerRef },
-        React__default.createElement(InputElement, { value: inputValue, onChange: inputChangeHandler, onFocus: focusHandler }),
+        React__default.createElement(InputElement, { value: inputValue, onChange: inputChangeHandler, onFocus: focusHandler, placeholder: placeholder }),
         React__default.createElement(Button, { buttonType: "icon", icon: "chevronDown", iconSize: "20px", onClick: togglerHandler, animate: buttonAnimationController }),
         opened &&
             React__default.createElement(SelectListElement, { color: color, invert: invert },
