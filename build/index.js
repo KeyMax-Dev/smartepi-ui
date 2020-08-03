@@ -1879,6 +1879,149 @@ function useToast(content, options) {
     return toast;
 }
 
+const SelectInputElement = styled.input `
+    flex: 1;
+`;
+const SelectContainerElement = styled.div `
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'principal' : 'contrast']};
+    border: 1px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}32;
+    border-radius: ${() => getGlobalTheme().borderRadius};
+
+        
+    &:focus-within {
+        box-shadow: ${() => getGlobalTheme().boxShadow.active};
+        border: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
+    }
+
+    margin: 5px;
+`;
+const SelectListElement = styled.div `
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+
+    top: 40px;
+    left: -2px;
+    right: -2px;
+
+    background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'principal' : 'contrast']};
+    border-bottom: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
+    border-left: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
+    border-right: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
+    border-bottom-left-radius: ${() => getGlobalTheme().borderRadius};
+    border-bottom-right-radius: ${() => getGlobalTheme().borderRadius};
+        box-shadow: ${() => getGlobalTheme().boxShadow.active};
+
+    .select-list-item {
+        width: 100%;
+        padding: 5px 5px 5px 15px;
+        transition: ${() => getGlobalTheme().transitions.fast};
+
+        &:hover {
+            cursor: pointer;
+            background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}12;
+        }
+    }
+
+    .select-list-loading {
+        width: 100%;
+        min-height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+`;
+
+const SEARCH_LIMIT_TIME = 1000;
+let SEARCH_TIMER;
+function Select({ data, dataKey, loading, onSelect, onSearch, value, color, invert }) {
+    const [inputValue, setInputValue] = React.useState('');
+    const [selected, setSelected] = React.useState();
+    const [opened, setOpened] = React.useState(false);
+    const [filteredData, setFilteredData] = React.useState(data);
+    const buttonAnimationController = framerMotion.useAnimation();
+    const containerRef = React.useRef();
+    React.useEffect(() => {
+        if (value) {
+            setInputValue(value);
+        }
+    }, [value]);
+    const itemSelectHandler = (event, item) => {
+        setSelected(item);
+        setInputValue(`${item[dataKey]}`);
+        setOpened(false);
+        if (onSelect)
+            onSelect(event, item);
+    };
+    const inputChangeHandler = (event) => {
+        const value = `${event.target.value}`;
+        setInputValue(value);
+        setSelected(undefined);
+        setFilteredData(data.filter(item => `${item[dataKey]}`.match(value)));
+        clearTimeout(SEARCH_TIMER);
+        SEARCH_TIMER = setTimeout(() => {
+            if (onSearch)
+                onSearch(value);
+        }, SEARCH_LIMIT_TIME);
+    };
+    const focusHandler = (event) => {
+        console.log('focus', event.currentTarget);
+        setOpened(true);
+    };
+    const togglerHandler = () => {
+        setOpened(!opened);
+    };
+    const renderListItem = (item, index) => {
+        return React__default.createElement("div", { key: index, onClick: (event) => itemSelectHandler(event, item), className: "select-list-item" }, `${item[dataKey]}`);
+    };
+    React.useEffect(() => {
+        const closeHandler = (event) => {
+            if (containerRef.current) {
+                if (containerRef.current.contains(event.target)) {
+                    console.log('contains');
+                    containerRef.current.firstChild.focus();
+                }
+                else {
+                    setOpened(false);
+                }
+            }
+        };
+        if (opened) {
+            setFilteredData(data.filter(item => `${item[dataKey]}`.match(inputValue)));
+            buttonAnimationController.start({ rotate: 180, transition: { duration: 0.1, ease: 'backInOut' } });
+            window.addEventListener('click', closeHandler);
+        }
+        else {
+            buttonAnimationController.start({ rotate: 0, transition: { duration: 0.1, ease: 'backInOut' } });
+            if (!selected) {
+                setInputValue('');
+            }
+        }
+        return () => window.removeEventListener('click', closeHandler);
+    }, [opened]);
+    return (React__default.createElement(SelectContainerElement, { color: color, invert: invert, ref: containerRef },
+        React__default.createElement(InputElement, { value: inputValue, onChange: inputChangeHandler, onFocus: focusHandler }),
+        React__default.createElement(Button, { buttonType: "icon", icon: "chevronDown", iconSize: "20px", onClick: togglerHandler, animate: buttonAnimationController }),
+        opened &&
+            React__default.createElement(SelectListElement, { color: color, invert: invert },
+                filteredData.length > 0 &&
+                    filteredData.map(renderListItem),
+                loading &&
+                    React__default.createElement("div", { className: "select-list-loading" },
+                        React__default.createElement(Spinners.circles, { width: "40px", height: "40px" }),
+                        React__default.createElement("span", null, "Carregando mais dados...")),
+                !loading && filteredData.length < 1 &&
+                    React__default.createElement("div", { className: "select-list-loading" },
+                        React__default.createElement("span", null, "Nenhum item encontrado")))));
+}
+
 const IconButton = styled(framerMotion.motion.button) `
     all: unset;
     background: transparent;
@@ -2021,6 +2164,7 @@ exports.Input = Input;
 exports.LightTheme = LightTheme;
 exports.ModalController = ModalController;
 exports.OverflowController = OverflowController;
+exports.Select = Select;
 exports.Spinners = Spinners;
 exports.Tab = Tab;
 exports.Table = Table;

@@ -25,6 +25,7 @@ import useForm from './components/Form';
 import useModal, { ModalController, ModalConfig } from './services/aside-components/modal';
 import useOverflow, { OverflowController, OverflowConfig } from './services/aside-components/overflow';
 import useToast, { ToastController, ToastConfig } from './services/aside-components/toast';
+import Select from './components/Select/index';
 
 export {
     Animations,
@@ -45,6 +46,7 @@ export {
     LightTheme,
     ModalController,
     OverflowController,
+    Select,
     setGlobalTheme,
     Spinners,
     Tab,
