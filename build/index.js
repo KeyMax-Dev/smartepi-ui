@@ -1957,7 +1957,6 @@ function Select({ data, dataKey, loading, onSelect, onSearch, value, color, inve
         setSelected(item);
         setInputValue(`${item[dataKey]}`);
         setOpened(false);
-        setFilteredData(data.filter(element => `${element[dataKey]}`.match(`${item[dataKey]}`)));
         if (onSelect)
             onSelect(event, item);
     };
@@ -1989,7 +1988,8 @@ function Select({ data, dataKey, loading, onSelect, onSearch, value, color, inve
         };
         if (opened) {
             buttonAnimationController.start({ rotate: 180, transition: { duration: 0.1, ease: 'backInOut' } });
-            setFilteredData(data.filter(item => `${item[dataKey]}`.match(inputValue)));
+            if (onSearch)
+                onSearch(inputValue);
             window.addEventListener('click', closeHandler);
             return () => window.removeEventListener('click', closeHandler);
         }
@@ -1997,6 +1997,10 @@ function Select({ data, dataKey, loading, onSelect, onSearch, value, color, inve
             buttonAnimationController.start({ rotate: 0, transition: { duration: 0.1, ease: 'backInOut' } });
             if (!selected) {
                 setInputValue('');
+                setFilteredData(data.filter(item => `${item[dataKey]}`.match('')));
+            }
+            else {
+                setFilteredData(data.filter(item => `${item[dataKey]}`.match(inputValue)));
             }
         }
     }, [opened]);
