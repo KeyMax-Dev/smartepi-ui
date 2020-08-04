@@ -1906,6 +1906,7 @@ const SelectListElement = styled.div `
     justify-content: center;
     align-items: flex-start;
     flex-direction: column;
+    z-index: 2;
 
     top: 40px;
     left: -2px;
@@ -1987,33 +1988,38 @@ function Select({ data, dataKey, loading, onSelect, onSearch, value, color, inve
             }
         };
         if (opened) {
-            buttonAnimationController.start({ rotate: 180, transition: { duration: 0.1, ease: 'backInOut' } });
             if (onSearch)
                 onSearch(inputValue);
+            buttonAnimationController.start({ rotate: 180, transition: { duration: 0.1, ease: 'backInOut' } });
             window.addEventListener('click', closeHandler);
             return () => window.removeEventListener('click', closeHandler);
         }
         else {
-            buttonAnimationController.start({ rotate: 0, transition: { duration: 0.1, ease: 'backInOut' } });
             if (!selected) {
-                setInputValue('');
-                setFilteredData(data.filter(item => `${item[dataKey]}`.match('')));
+                setSelected(value);
+                setInputValue(value ? `${value[dataKey]}` : '');
+                setFilteredData(data.filter(item => `${item[dataKey]}`.match(value ? `${value[dataKey]}` : '')));
             }
             else {
                 setFilteredData(data.filter(item => `${item[dataKey]}`.match(inputValue)));
             }
+            buttonAnimationController.start({ rotate: 0, transition: { duration: 0.1, ease: 'backInOut' } });
         }
     }, [opened]);
     React.useEffect(() => {
         setFilteredData(data.filter(item => `${item[dataKey]}`.match(inputValue)));
     }, [data]);
+    React.useEffect(() => {
+        setSelected(value);
+        setInputValue(value ? `${value[dataKey]}` : '');
+        setFilteredData(data.filter(item => `${item[dataKey]}`.match(value ? `${value[dataKey]}` : '')));
+    }, [value]);
     return (React__default.createElement(SelectContainerElement, { color: color, invert: invert, ref: containerRef },
         React__default.createElement(InputElement, { value: inputValue, onChange: inputChangeHandler, onFocus: focusHandler, placeholder: placeholder }),
         React__default.createElement(Button, { buttonType: "icon", icon: "chevronDown", iconSize: "20px", onClick: togglerHandler, animate: buttonAnimationController }),
         opened &&
             React__default.createElement(SelectListElement, { color: color, invert: invert },
-                filteredData.length > 0 &&
-                    filteredData.map(renderListItem),
+                filteredData.map(renderListItem),
                 loading &&
                     React__default.createElement("div", { className: "select-list-loading" },
                         React__default.createElement(Spinners.circles, { width: "40px", height: "40px" }),

@@ -1,5 +1,5 @@
 import { Select } from './lib';
-import React from 'react';
+import React, { useState } from 'react';
 
 type DataType = {
     _id: string;
@@ -13,8 +13,10 @@ const DATA: DataType[] = [
 ]; 
 
 export default function TestingPage(): JSX.Element {
+    const [selected, setSelected] = useState<DataType>();
     return (
         <div>
+            <Select<DataType> dataKey="name" data={DATA} onSearch={(value) => console.log(value)} placeholder="placeholder" value={selected} onSelect={(event, item) => setSelected(item)} loading={true} />
             <Select<DataType> dataKey="name" data={DATA} onSearch={(value) => console.log(value)} placeholder="placeholder" />
         </div>
     );

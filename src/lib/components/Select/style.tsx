@@ -36,6 +36,7 @@ export const SelectListElement = styled.div<SelectThemeProps>`
     justify-content: center;
     align-items: flex-start;
     flex-direction: column;
+    z-index: 2;
 
     top: 40px;
     left: -2px;

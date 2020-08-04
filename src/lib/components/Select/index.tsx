@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { SelectContainerElement, SelectListElement } from './style';
-import { InputElement } from '../Input/style';import Spinners from '../../assets/svgs/spinners';
+import { InputElement } from '../Input/style'; import Spinners from '../../assets/svgs/spinners';
 import Button from '../Button';
 import { useAnimation } from 'framer-motion';
 
@@ -78,26 +78,33 @@ export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, 
         };
 
         if (opened) {
-            buttonAnimationController.start({ rotate: 180, transition: { duration: 0.1, ease: 'backInOut' } });
             if (onSearch) onSearch(inputValue);
+            buttonAnimationController.start({ rotate: 180, transition: { duration: 0.1, ease: 'backInOut' } });
 
             window.addEventListener('click', closeHandler);
             return () => window.removeEventListener('click', closeHandler);
         } else {
-            buttonAnimationController.start({ rotate: 0, transition: { duration: 0.1, ease: 'backInOut' } });
             if (!selected) {
-                setInputValue('');
-                setFilteredData(data.filter(item => `${item[dataKey]}`.match('')));
+                setSelected(value);
+                setInputValue(value ? `${value[dataKey]}` : '');
+                setFilteredData(data.filter(item => `${item[dataKey]}`.match(value ? `${value[dataKey]}` : '')));
             } else {
                 setFilteredData(data.filter(item => `${item[dataKey]}`.match(inputValue)));
             }
+            buttonAnimationController.start({ rotate: 0, transition: { duration: 0.1, ease: 'backInOut' } });
         }
-        
+
     }, [opened]);
 
     useEffect(() => {
         setFilteredData(data.filter(item => `${item[dataKey]}`.match(inputValue)));
     }, [data]);
+
+    useEffect(() => {
+        setSelected(value);
+        setInputValue(value ? `${value[dataKey]}` : '');
+        setFilteredData(data.filter(item => `${item[dataKey]}`.match(value ? `${value[dataKey]}` : '')));
+    }, [value]);
 
     return (
         <SelectContainerElement color={color} invert={invert} ref={containerRef}>
@@ -105,9 +112,7 @@ export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, 
             <Button buttonType="icon" icon="chevronDown" iconSize="20px" onClick={togglerHandler} animate={buttonAnimationController} />
             {opened &&
                 <SelectListElement color={color} invert={invert} >
-                    {filteredData.length > 0 &&
-                        filteredData.map(renderListItem)
-                    }
+                    {filteredData.map(renderListItem)}
                     {loading &&
                         <div className="select-list-loading">
                             <Spinners.circles width="40px" height="40px" />
