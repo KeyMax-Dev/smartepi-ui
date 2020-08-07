@@ -1006,7 +1006,7 @@ const InputContainerElement = styled(framerMotion.motion.div) `
     min-width: 300px;
     height: 50px;
     padding: 5px;
-    margin: 3px;
+    margin: 5px;
     display: flex;
     justify-content: center;
     align-items: stretch;
@@ -1125,6 +1125,7 @@ function FormField(props) {
             if (validated || forceErrorState) {
                 setColor('danger');
                 setIconRight('alert');
+                setValidated(true);
             }
         }
         else {
@@ -1148,8 +1149,7 @@ function FormField(props) {
     };
     React.useEffect(() => {
         if (props.validated) {
-            validateField(props.value || '');
-            setValidated(props.validated);
+            validateField(props.value || '', props.validated);
         }
     }, [props.validated]);
     return React__default.createElement(Input, Object.assign({}, props, { color: color, iconRight: iconRight, onBlur: blurValidationHandler, onChange: changeValidationHandler }));
@@ -1887,15 +1887,27 @@ const SelectContainerElement = styled.div `
     display: flex;
     justify-content: center;
     align-items: center;
+    width: calc(100% - 10px);
 
-    background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'principal' : 'contrast']};
-    border: 1px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}32;
-    border-radius: ${() => getGlobalTheme().borderRadius};
+    &.select-container-outline {
+        background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'principal' : 'contrast']};
+        border: 1px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}32;
+        border-radius: ${() => getGlobalTheme().borderRadius};
 
-        
-    &:focus-within {
-        box-shadow: ${() => getGlobalTheme().boxShadow.active};
-        border: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
+            
+        &:focus-within {
+            box-shadow: ${() => getGlobalTheme().boxShadow.active};
+            border: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
+        }
+    }
+
+    &.select-container-downline {
+        background-color: transparent;
+        border-bottom: 1px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}32;
+
+        &:focus-within {
+            border-bottom: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
+        }
     }
 
     margin: 5px;
@@ -1903,22 +1915,20 @@ const SelectContainerElement = styled.div `
 const SelectListElement = styled.div `
     position: absolute;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
     z-index: 2;
 
     top: 40px;
-    left: -2px;
-    right: -2px;
-
+    left: 4px;
+    right: 4px;
+    max-height: 23vh;
+    overflow-y: auto;
+    border-bottom-left-radius: calc(${() => getGlobalTheme().borderRadius} * 0.4);
+    border-bottom-right-radius: calc(${() => getGlobalTheme().borderRadius} * 0.4);
+    box-shadow: ${() => getGlobalTheme().boxShadow.active};
     background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'principal' : 'contrast']};
-    border-bottom: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
-    border-left: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
-    border-right: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
-    border-bottom-left-radius: ${() => getGlobalTheme().borderRadius};
-    border-bottom-right-radius: ${() => getGlobalTheme().borderRadius};
-        box-shadow: ${() => getGlobalTheme().boxShadow.active};
 
     .select-list-item {
         width: 100%;
@@ -1937,12 +1947,13 @@ const SelectListElement = styled.div `
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}0A;
     }
 `;
 
 const SEARCH_LIMIT_TIME = 500;
 let SEARCH_TIMER;
-function Select({ data, dataKey, loading, onSelect, onSearch, value, color, invert, placeholder }) {
+function Select({ data, dataKey, loading, onSelect, onSearch, value, color, invert, placeholder, containerType }) {
     const [inputValue, setInputValue] = React.useState(value ? `${value[dataKey]}` : '');
     const [selected, setSelected] = React.useState(value);
     const [opened, setOpened] = React.useState(false);
@@ -2014,11 +2025,11 @@ function Select({ data, dataKey, loading, onSelect, onSearch, value, color, inve
         setInputValue(value ? `${value[dataKey]}` : '');
         setFilteredData(data.filter(item => `${item[dataKey]}`.match(value ? `${value[dataKey]}` : '')));
     }, [value]);
-    return (React__default.createElement(SelectContainerElement, { color: color, invert: invert, ref: containerRef },
+    return (React__default.createElement(SelectContainerElement, { color: color, invert: invert, ref: containerRef, className: `select-container-${containerType ? containerType : 'downline'}` },
         React__default.createElement(InputElement, { value: inputValue, onChange: inputChangeHandler, onFocus: focusHandler, placeholder: placeholder }),
         React__default.createElement(Button, { buttonType: "icon", icon: "chevronDown", iconSize: "20px", onClick: togglerHandler, animate: buttonAnimationController }),
         opened &&
-            React__default.createElement(SelectListElement, { color: color, invert: invert },
+            React__default.createElement(SelectListElement, { color: color, invert: invert, className: `select-list-container` },
                 filteredData.map(renderListItem),
                 loading &&
                     React__default.createElement("div", { className: "select-list-loading" },
@@ -2051,12 +2062,13 @@ const IconButton = styled(framerMotion.motion.button) `
     }
 
     span {
-        max-width: 80px;
+        max-width: 120px;
         text-align: center;
-        font-size: calc(${() => getGlobalTheme().font.h2.fontSize} / 2);
+        font-size: calc(${() => getGlobalTheme().font.h2.fontSize} * 0.45);
         font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
         text-overflow: ellipsis;
         overflow: hidden;
+        text-transform: uppercase;
     }
 
     .__icon {

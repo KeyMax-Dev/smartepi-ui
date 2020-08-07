@@ -16,15 +16,27 @@ export const SelectContainerElement = styled.div<SelectThemeProps>`
     display: flex;
     justify-content: center;
     align-items: center;
+    width: calc(100% - 10px);
 
-    background-color: ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'principal' : 'contrast']};
-    border: 1px solid ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}32;
-    border-radius: ${() => getGlobalTheme().borderRadius};
+    &.select-container-outline {
+        background-color: ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'principal' : 'contrast']};
+        border: 1px solid ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}32;
+        border-radius: ${() => getGlobalTheme().borderRadius};
 
-        
-    &:focus-within {
-        box-shadow: ${() => getGlobalTheme().boxShadow.active};
-        border: 2px solid ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
+            
+        &:focus-within {
+            box-shadow: ${() => getGlobalTheme().boxShadow.active};
+            border: 2px solid ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
+        }
+    }
+
+    &.select-container-downline {
+        background-color: transparent;
+        border-bottom: 1px solid ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}32;
+
+        &:focus-within {
+            border-bottom: 2px solid ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
+        }
     }
 
     margin: 5px;
@@ -33,22 +45,20 @@ export const SelectContainerElement = styled.div<SelectThemeProps>`
 export const SelectListElement = styled.div<SelectThemeProps>`
     position: absolute;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
     z-index: 2;
 
     top: 40px;
-    left: -2px;
-    right: -2px;
-
+    left: 4px;
+    right: 4px;
+    max-height: 23vh;
+    overflow-y: auto;
+    border-bottom-left-radius: calc(${() => getGlobalTheme().borderRadius} * 0.4);
+    border-bottom-right-radius: calc(${() => getGlobalTheme().borderRadius} * 0.4);
+    box-shadow: ${() => getGlobalTheme().boxShadow.active};
     background-color: ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'principal' : 'contrast']};
-    border-bottom: 2px solid ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
-    border-left: 2px solid ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
-    border-right: 2px solid ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
-    border-bottom-left-radius: ${() => getGlobalTheme().borderRadius};
-    border-bottom-right-radius: ${() => getGlobalTheme().borderRadius};
-        box-shadow: ${() => getGlobalTheme().boxShadow.active};
 
     .select-list-item {
         width: 100%;
@@ -67,5 +77,6 @@ export const SelectListElement = styled.div<SelectThemeProps>`
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}0A;
     }
 `;

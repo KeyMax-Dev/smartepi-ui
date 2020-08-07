@@ -26,12 +26,13 @@ const IconButton = styled(motion.button) <ButtonProps>`
     }
 
     span {
-        max-width: 80px;
+        max-width: 120px;
         text-align: center;
-        font-size: calc(${() => getGlobalTheme().font.h2.fontSize} / 2);
+        font-size: calc(${() => getGlobalTheme().font.h2.fontSize} * 0.45);
         font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
         text-overflow: ellipsis;
         overflow: hidden;
+        text-transform: uppercase;
     }
 
     .__icon {

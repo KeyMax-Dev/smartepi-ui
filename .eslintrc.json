@@ -11,9 +11,7 @@
     },
     "rules": {
       "semi": "warn",
-      "camelcase": "off",
-      "@typescript-eslint/explicit-function-return-type": "off",
-      "react-hooks/exhaustive-deps": "off" // Checks effect dependencies
+      "@typescript-eslint/explicit-function-return-type": ["error", { "allowExpressions": true }]
     },
     "settings": {
       "react": {

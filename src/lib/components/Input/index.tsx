@@ -26,7 +26,7 @@ export default function Input(props: InputProps): JSX.Element {
     const inputRef = useRef<HTMLInputElement>();
     const [enableClear, setEnableClear] = useState<boolean>(!!props.value && !!props.enableClear);
 
-    const clear = () => {
+    const clear = (): void => {
         if (inputRef.current) {
             const input = inputRef.current as HTMLInputElement;
             const setValue = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
@@ -37,7 +37,7 @@ export default function Input(props: InputProps): JSX.Element {
         }
     };
 
-    const onDatepickerSelect = (date: Date) => {
+    const onDatepickerSelect = (date: Date): void => {
         if (inputRef.current) {
             const input = inputRef.current as HTMLInputElement;
             const setValue = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
@@ -54,7 +54,7 @@ export default function Input(props: InputProps): JSX.Element {
     useEffect(() => {
         if (props.getRef) props.getRef(inputRef as React.MutableRefObject<HTMLInputElement>);
 
-        const eventHandler = (event: any) => setEnableClear(event.target.value.length > 0 && !!props.enableClear);
+        const eventHandler = (event: any): void => setEnableClear(event.target.value.length > 0 && !!props.enableClear);
         inputRef.current?.addEventListener('input', eventHandler);
         return () => inputRef.current?.removeEventListener('input', eventHandler);
     }, [inputRef.current]);

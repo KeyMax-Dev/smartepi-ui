@@ -4,10 +4,12 @@ import { InputProps } from '../Input';
 import InputValidator from '../../services/input-validator/input-validator';
 import { validate } from './../../services/input-validator/index';
 
-type Field = {
+type FormPrototype = { [key: string]: string };
+
+type Field<T extends FormPrototype> = {
     initial?: string;
     inputProps?: InputProps;
-    key: string;
+    key: keyof T;
     validators: InputValidator[];
 }
 
@@ -17,25 +19,30 @@ type FieldState = {
     value: string;
 }
 
-type Form = [
+type FieldStates<T extends FormPrototype> = { [K in keyof T]: FieldState };
+
+
+type Form<T extends FormPrototype> = [
     JSX.Element | JSX.Element[],
-    () => null | { [key: string]: string },
-    () => { [key: string]: string },
-    { [key: string]: FieldState }
+    () => null | { [K in keyof T]?: string[] },
+    () => T,
+    FieldStates<T>
 ];
 
-export default function useForm(fields: Field[]): Form {
+export default function useForm<T extends FormPrototype>(fields: Field<T>[]): Form<T> {
 
-    const [fieldStates, setFieldStates] = useState<{ [key: string]: FieldState }>(
-        fields.reduce((obj, cur) => ({ ...obj, [cur.key]: { value: cur.initial || '', hasError: validate(cur.initial || '', ...cur.validators) } }), {})
+    const [fieldStates, setFieldStates] = useState<{ [K in keyof T]: FieldState }>(
+        fields.reduce((obj, cur) => ({ ...obj,
+            [cur.key]: { value: cur.initial || '', hasError: validate(cur.initial || '', ...cur.validators) } }),
+            {} as { [K in keyof T]: FieldState })
     );
 
-    const validationChangeHandler = (key: string, hasError: false | string[]) => {
+    const validationChangeHandler = (key: string, hasError: false | string[]): void => {
         const state = { ...fieldStates[key], hasError };
         setFieldStates({ ...fieldStates, [key]: state });
     };
 
-    const valueChangeHandler = (key: string, value: string) => {
+    const valueChangeHandler = (key: string, value: string): void => {
         const state = { ...fieldStates[key], value };
         setFieldStates({ ...fieldStates, [key]: state });
     };
@@ -43,18 +50,18 @@ export default function useForm(fields: Field[]): Form {
     const formElement = fields.map(({ key, inputProps, validators }) =>
         <FormField
             {...inputProps}
-            key={key}
-            onValidationChange={(value) => validationChangeHandler(key, value)}
-            onChange={(event) => valueChangeHandler(key, event.target.value)}
+            key={key as string}
+            onValidationChange={(value) => validationChangeHandler(key as string, value)}
+            onChange={(event) => valueChangeHandler(key as string, event.target.value)}
             value={fieldStates[key].value}
             validators={validators}
             validated={fieldStates[key].validated}
         />
     );
 
-    const getErrors = (): null | { [key: string]: string } => {
-        let newFieldStates = {};
-        let hasError = {};
+    const getErrors = (): null | { [K in keyof T]?: string[] } => {
+        let newFieldStates: FieldStates<T> = {} as FieldStates<T>;
+        let hasError: { [K in keyof T]?: string[] } = {};
         for (const key in fieldStates) {
             const state = { ...fieldStates[key], validated: true };
             newFieldStates = { ...newFieldStates, [key]: state };
@@ -66,8 +73,8 @@ export default function useForm(fields: Field[]): Form {
         else return null;
     };
 
-    const getValues = () => {
-        return Object.entries(fieldStates).reduce((obj, curr) => ({ ...obj, [curr[0]]: curr[1].value }), {});
+    const getValues = (): T => {
+        return Object.entries(fieldStates).reduce((obj, curr) => ({ ...obj, [curr[0]]: curr[1].value }), {} as T);
     };
 
     return [formElement, getErrors, getValues, fieldStates];

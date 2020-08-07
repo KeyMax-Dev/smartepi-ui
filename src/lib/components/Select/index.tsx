@@ -3,6 +3,7 @@ import { SelectContainerElement, SelectListElement } from './style';
 import { InputElement } from '../Input/style'; import Spinners from '../../assets/svgs/spinners';
 import Button from '../Button';
 import { useAnimation } from 'framer-motion';
+import ScrollableContainer from '../ScrollableContainer';
 
 interface SelectProps<T> {
     data: T[];
@@ -14,12 +15,13 @@ interface SelectProps<T> {
     color?: string;
     invert?: boolean;
     placeholder?: string;
+    containerType?: 'outline' | 'downline';
 }
 
 const SEARCH_LIMIT_TIME = 500;
 let SEARCH_TIMER: number;
 
-export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, value, color, invert, placeholder }: SelectProps<T>): JSX.Element {
+export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, value, color, invert, placeholder, containerType }: SelectProps<T>): JSX.Element {
 
     const [inputValue, setInputValue] = useState<string>(value ? `${value[dataKey]}` : '');
     const [selected, setSelected] = useState<T | undefined>(value);
@@ -34,14 +36,14 @@ export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, 
         }
     }, [value]);
 
-    const itemSelectHandler = (event: React.MouseEvent<HTMLDivElement>, item: T) => {
+    const itemSelectHandler = (event: React.MouseEvent<HTMLDivElement>, item: T): void => {
         setSelected(item);
         setInputValue(`${item[dataKey]}`);
         setOpened(false);
         if (onSelect) onSelect(event, item);
     };
 
-    const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const value = `${event.target.value}`;
         setInputValue(value);
         setSelected(undefined);
@@ -53,15 +55,15 @@ export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, 
         }, SEARCH_LIMIT_TIME);
     };
 
-    const focusHandler = () => {
+    const focusHandler = (): void => {
         setOpened(true);
     };
 
-    const togglerHandler = () => {
+    const togglerHandler = (): void => {
         setOpened(!opened);
     };
 
-    const renderListItem = (item: T, index: number) => {
+    const renderListItem = (item: T, index: number): JSX.Element => {
         return <div
             key={index}
             onClick={(event) => itemSelectHandler(event, item)}
@@ -71,7 +73,7 @@ export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, 
     };
 
     useEffect(() => {
-        const closeHandler = (event: MouseEvent) => {
+        const closeHandler = (event: MouseEvent): void => {
             if (containerRef.current && !containerRef.current.contains(event.target as HTMLElement)) {
                 setOpened(false);
             }
@@ -107,11 +109,12 @@ export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, 
     }, [value]);
 
     return (
-        <SelectContainerElement color={color} invert={invert} ref={containerRef}>
+        <SelectContainerElement color={color} invert={invert} ref={containerRef} className={`select-container-${containerType ? containerType : 'downline'}`}>
             <InputElement value={inputValue} onChange={inputChangeHandler} onFocus={focusHandler} placeholder={placeholder} />
             <Button buttonType="icon" icon="chevronDown" iconSize="20px" onClick={togglerHandler} animate={buttonAnimationController} />
             {opened &&
-                <SelectListElement color={color} invert={invert} >
+
+                <SelectListElement color={color} invert={invert} className={`select-list-container`}>
                     {filteredData.map(renderListItem)}
                     {loading &&
                         <div className="select-list-loading">

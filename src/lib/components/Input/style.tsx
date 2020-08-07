@@ -7,7 +7,7 @@ export const InputContainerElement = styled(motion.div)<InputProps>`
     min-width: 300px;
     height: 50px;
     padding: 5px;
-    margin: 3px;
+    margin: 5px;
     display: flex;
     justify-content: center;
     align-items: stretch;
