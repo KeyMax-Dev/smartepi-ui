@@ -26,7 +26,7 @@ const IconButton = styled(motion.button) <ButtonProps>`
     }
 
     span {
-        max-width: 120px;
+        max-width: 80px;
         text-align: center;
         font-size: calc(${() => getGlobalTheme().font.h2.fontSize} * 0.45);
         font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
