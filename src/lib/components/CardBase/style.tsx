@@ -3,19 +3,12 @@ import { CardBaseProps } from ".";
 import { motion } from "framer-motion";
 import { getGlobalTheme } from "../../assets/themes";
 
-export interface CardBaseElementProps {
-    width: string;
-    height: string;
-    color: string;
-}
-
-export const CardBaseElement = styled(motion.div)<CardBaseElementProps>`
-    min-width: ${(props): string => props.width};
-    width: ${(props): string => props.width};
+export const CardBaseElement = styled(motion.div)<CardBaseProps>`
+    min-width: ${({ width }) => width || ''};
+    width: ${({ width }) => width || ''};
     max-width: calc(100% - 30px);
-    min-height: ${(props): string => props.height};
-    /* height: ${(props): string => props.height}; */
-    background-color: ${(props) => getGlobalTheme().colors[props.color].principal};
+    min-height: ${({ height }) => height || ''};
+    background-color: ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
     border-radius: calc(${() => getGlobalTheme().borderRadius} * 2);
     margin: 10px;
     padding: 15px;
@@ -28,14 +21,16 @@ export const CardBaseElement = styled(motion.div)<CardBaseElementProps>`
 
     cursor: pointer;
     transition: all ${() => getGlobalTheme().transitions.fast};
+    
+    color: ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'principal' : 'contrast']};
 
-    .__title {
+    h2 {
         margin: 5px 0;
         text-align: ${() => getGlobalTheme().font.h2.textAlign};
         font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
         font-size: ${() => getGlobalTheme().font.h2.fontSize};
         line-height: ${() => getGlobalTheme().font.h2.lineHeight};
-        color: ${(props) => getGlobalTheme().colors[props.color].contrast};
+        color: ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'principal' : 'contrast']};
 
         max-width: calc(100% - 30px);
         overflow: hidden;
@@ -49,7 +44,6 @@ export const CardBaseElement = styled(motion.div)<CardBaseElementProps>`
         font-weight: ${() => getGlobalTheme().font.p1.fontWeight};
         font-size: ${() => getGlobalTheme().font.p1.fontSize};
         line-height: ${() => getGlobalTheme().font.p1.lineHeight};
-        color: ${(props) => getGlobalTheme().colors[props.color].contrast};
 
         max-width: calc(100% - 30px);
         overflow: hidden;

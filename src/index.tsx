@@ -4,6 +4,6 @@ import ComponentsLibrary from "./ComponentsLibrary";
 import TestingPage from "./TestingPage";
 
 ReactDOM.render(
-  <TestingPage />,
+  <ComponentsLibrary />,
   document.getElementById('root')
 );

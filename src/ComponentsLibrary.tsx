@@ -187,18 +187,18 @@ export default function ComponentsLibrary(): JSX.Element {
             </ComponentExpandable>
             <ComponentExpandable componentName="Cards">
                 <CardBase width="300px" height="unset">
-                    <h1 className="__title">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum, voluptatem.</h1>
+                    <h2>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum, voluptatem.</h2>
                     <Icon name="cog" invert />
                 </CardBase>
                 <CardBase width="300px" height="unset">
-                    <h1 className="__title">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum, voluptatem.</h1>
+                    <h2>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum, voluptatem.</h2>
                     <Icon name="cog" invert />
                     <footer>
                         <Badge icon="cog" />
                     </footer>
                 </CardBase>
                 <CardBase width="500px" height="unset" color="success">
-                    <h1 className="__title">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum, voluptatem.</h1>
+                    <h2>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum, voluptatem.</h2>
                     <Icon name="cog" color="success" invert />
                     <footer>
                         <Badge icon="cog" text="texto no badge" color="danger" />
@@ -206,7 +206,7 @@ export default function ComponentsLibrary(): JSX.Element {
                 </CardBase>
                 <CardBase width="300px" height="200px">
                     <ImageAvatar src="https://www.superepi.com.br/fotos/extragrande/1232fe1/abafador-de-ruido-ark-plus-kalipso-17db-ca-37918.jpg" size="100px" style={{ margin: 15 }} />
-                    <h1 className="__title" style={{ WebkitLineClamp: 2 }}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum, voluptatem.</h1>
+                    <h2 className="__title" style={{ WebkitLineClamp: 2 }}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum, voluptatem.</h2>
                     <footer>
                         <Badge color="success" text={10} />
                     </footer>

@@ -551,12 +551,11 @@ function Badge(props) {
 }
 
 const CardBaseElement = styled(framerMotion.motion.div) `
-    min-width: ${(props) => props.width};
-    width: ${(props) => props.width};
+    min-width: ${({ width }) => width || ''};
+    width: ${({ width }) => width || ''};
     max-width: calc(100% - 30px);
-    min-height: ${(props) => props.height};
-    /* height: ${(props) => props.height}; */
-    background-color: ${(props) => getGlobalTheme().colors[props.color].principal};
+    min-height: ${({ height }) => height || ''};
+    background-color: ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
     border-radius: calc(${() => getGlobalTheme().borderRadius} * 2);
     margin: 10px;
     padding: 15px;
@@ -569,14 +568,16 @@ const CardBaseElement = styled(framerMotion.motion.div) `
 
     cursor: pointer;
     transition: all ${() => getGlobalTheme().transitions.fast};
+    
+    color: ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'principal' : 'contrast']};
 
-    .__title {
+    h2 {
         margin: 5px 0;
         text-align: ${() => getGlobalTheme().font.h2.textAlign};
         font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
         font-size: ${() => getGlobalTheme().font.h2.fontSize};
         line-height: ${() => getGlobalTheme().font.h2.lineHeight};
-        color: ${(props) => getGlobalTheme().colors[props.color].contrast};
+        color: ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'principal' : 'contrast']};
 
         max-width: calc(100% - 30px);
         overflow: hidden;
@@ -590,7 +591,6 @@ const CardBaseElement = styled(framerMotion.motion.div) `
         font-weight: ${() => getGlobalTheme().font.p1.fontWeight};
         font-size: ${() => getGlobalTheme().font.p1.fontSize};
         line-height: ${() => getGlobalTheme().font.p1.lineHeight};
-        color: ${(props) => getGlobalTheme().colors[props.color].contrast};
 
         max-width: calc(100% - 30px);
         overflow: hidden;
@@ -627,10 +627,7 @@ const CardBaseElement = styled(framerMotion.motion.div) `
 `;
 
 function CardBase(props) {
-    const width = props.width ? props.width : 'unset';
-    const height = props.height ? props.height : 'unset';
-    const color = props.color ? props.color : 'primary';
-    return (React__default.createElement(CardBaseElement, Object.assign({}, props, { width, height, color })));
+    return React__default.createElement(CardBaseElement, Object.assign({}, props));
 }
 
 const CheckboxElement = styled(framerMotion.motion.div) `
