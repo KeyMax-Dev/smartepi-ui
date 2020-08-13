@@ -15,6 +15,8 @@ import Icon from './components/Icon';
 import Icons from './assets/svgs/icons';
 import ImageAvatar from './components/ImageAvatar';
 import Input from './components/Input';
+import ScrollableContainer from './components/ScrollableContainer';
+import Select from './components/Select';
 import Spinners from './assets/svgs/spinners';
 import Tab from './components/Tabs/tab';
 import Table, { TableRowProps, TableRowEvents, TableRowEventHandler } from './components/Table';
@@ -25,7 +27,6 @@ import useForm from './components/Form';
 import useModal, { ModalController, ModalConfig } from './services/aside-components/modal';
 import useOverflow, { OverflowController, OverflowConfig } from './services/aside-components/overflow';
 import useToast, { ToastController, ToastConfig } from './services/aside-components/toast';
-import Select from './components/Select/index';
 
 export {
     Animations,
@@ -46,6 +47,7 @@ export {
     LightTheme,
     ModalController,
     OverflowController,
+    ScrollableContainer,
     Select,
     setGlobalTheme,
     Spinners,

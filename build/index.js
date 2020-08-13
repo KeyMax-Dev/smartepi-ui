@@ -1206,6 +1206,94 @@ function ImageAvatar(props) {
     return (React__default.createElement(ImageAvatarElement, Object.assign({}, props)));
 }
 
+// type ThemedScrollableContainer =
+//     <C extends keyof JSX.IntrinsicElements>(c: C) => any;
+const ScrollableContainer = styled(framerMotion.motion.div) `
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: auto;
+
+    display: flex;
+    flex-direction: ${(props) => props.flexDirection};
+    justify-content: flex-start;
+    align-items: center;
+`;
+
+const SelectInputElement = styled.input `
+    flex: 1;
+`;
+const SelectContainerElement = styled.div `
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - 10px);
+
+    &.select-container-outline {
+        background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'principal' : 'contrast']};
+        border: 1px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}32;
+        border-radius: ${() => getGlobalTheme().borderRadius};
+
+            
+        &:focus-within {
+            box-shadow: ${() => getGlobalTheme().boxShadow.active};
+            border: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
+        }
+    }
+
+    &.select-container-downline {
+        background-color: transparent;
+        border-bottom: 1px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}32;
+
+        &:focus-within {
+            border-bottom: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
+        }
+    }
+
+    margin: 5px;
+`;
+const SelectListElement = styled.div `
+    position: absolute;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    z-index: 2;
+
+    top: 40px;
+    left: 4px;
+    right: 4px;
+    max-height: 23vh;
+    overflow-y: auto;
+    border-bottom-left-radius: calc(${() => getGlobalTheme().borderRadius} * 0.4);
+    border-bottom-right-radius: calc(${() => getGlobalTheme().borderRadius} * 0.4);
+    box-shadow: ${() => getGlobalTheme().boxShadow.active};
+    background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'principal' : 'contrast']};
+
+    .select-list-item {
+        width: 100%;
+        padding: 5px 5px 5px 15px;
+        transition: ${() => getGlobalTheme().transitions.fast};
+
+        &:hover {
+            cursor: pointer;
+            background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}12;
+        }
+    }
+
+    .select-list-loading {
+        width: 100%;
+        min-height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}0A;
+    }
+`;
+
 const CirclesSVG = (props) => React__default.createElement("svg", Object.assign({ width: "45", height: "45", viewBox: "0 0 45 45", xmlns: "http://www.w3.org/2000/svg", stroke: "#000" }, props),
     React__default.createElement("g", { fill: "none", fillRule: "evenodd", transform: "translate(1 1)", strokeWidth: "2" },
         React__default.createElement("circle", { cx: "22", cy: "22", r: "6", strokeOpacity: "0" },
@@ -1221,6 +1309,95 @@ const CirclesSVG = (props) => React__default.createElement("svg", Object.assign(
 const Spinners = {
     circles: CirclesSVG
 };
+
+const SEARCH_LIMIT_TIME = 500;
+let SEARCH_TIMER;
+function Select({ data, dataKey, loading, onSelect, onSearch, value, color, invert, placeholder, containerType }) {
+    const [inputValue, setInputValue] = React.useState(value ? `${value[dataKey]}` : '');
+    const [selected, setSelected] = React.useState(value);
+    const [opened, setOpened] = React.useState(false);
+    const [filteredData, setFilteredData] = React.useState(data);
+    const buttonAnimationController = framerMotion.useAnimation();
+    const containerRef = React.useRef();
+    React.useEffect(() => {
+        if (value) {
+            setInputValue(`${value[dataKey]}`);
+        }
+    }, [value]);
+    const itemSelectHandler = (event, item) => {
+        setSelected(item);
+        setInputValue(`${item[dataKey]}`);
+        setOpened(false);
+        if (onSelect)
+            onSelect(event, item);
+    };
+    const inputChangeHandler = (event) => {
+        const value = `${event.target.value}`;
+        setInputValue(value);
+        setSelected(undefined);
+        clearTimeout(SEARCH_TIMER);
+        SEARCH_TIMER = setTimeout(() => {
+            setFilteredData(data.filter(item => `${item[dataKey]}`.match(value)));
+            if (onSearch)
+                onSearch(value);
+        }, SEARCH_LIMIT_TIME);
+    };
+    const focusHandler = () => {
+        setOpened(true);
+    };
+    const togglerHandler = () => {
+        setOpened(!opened);
+    };
+    const renderListItem = (item, index) => {
+        return React__default.createElement("div", { key: index, onClick: (event) => itemSelectHandler(event, item), className: "select-list-item" }, `${item[dataKey]}`);
+    };
+    React.useEffect(() => {
+        const closeHandler = (event) => {
+            if (containerRef.current && !containerRef.current.contains(event.target)) {
+                setOpened(false);
+            }
+        };
+        if (opened) {
+            if (onSearch)
+                onSearch(inputValue);
+            buttonAnimationController.start({ rotate: 180, transition: { duration: 0.1, ease: 'backInOut' } });
+            window.addEventListener('click', closeHandler);
+            return () => window.removeEventListener('click', closeHandler);
+        }
+        else {
+            if (!selected) {
+                setSelected(value);
+                setInputValue(value ? `${value[dataKey]}` : '');
+                setFilteredData(data.filter(item => `${item[dataKey]}`.match(value ? `${value[dataKey]}` : '')));
+            }
+            else {
+                setFilteredData(data.filter(item => `${item[dataKey]}`.match(inputValue)));
+            }
+            buttonAnimationController.start({ rotate: 0, transition: { duration: 0.1, ease: 'backInOut' } });
+        }
+    }, [opened]);
+    React.useEffect(() => {
+        setFilteredData(data.filter(item => `${item[dataKey]}`.match(inputValue)));
+    }, [data]);
+    React.useEffect(() => {
+        setSelected(value);
+        setInputValue(value ? `${value[dataKey]}` : '');
+        setFilteredData(data.filter(item => `${item[dataKey]}`.match(value ? `${value[dataKey]}` : '')));
+    }, [value]);
+    return (React__default.createElement(SelectContainerElement, { color: color, invert: invert, ref: containerRef, className: `select-container-${containerType ? containerType : 'downline'}` },
+        React__default.createElement(InputElement, { value: inputValue, onChange: inputChangeHandler, onFocus: focusHandler, placeholder: placeholder }),
+        React__default.createElement(Button, { buttonType: "icon", icon: "chevronDown", iconSize: "20px", onClick: togglerHandler, animate: buttonAnimationController }),
+        opened &&
+            React__default.createElement(SelectListElement, { color: color, invert: invert, className: `select-list-container` },
+                filteredData.map(renderListItem),
+                loading &&
+                    React__default.createElement("div", { className: "select-list-loading" },
+                        React__default.createElement(Spinners.circles, { width: "40px", height: "40px" }),
+                        React__default.createElement("span", null, "Carregando mais dados...")),
+                !loading && filteredData.length < 1 &&
+                    React__default.createElement("div", { className: "select-list-loading" },
+                        React__default.createElement("span", null, "Nenhum item encontrado")))));
+}
 
 const TabsLayoutElement = styled(framerMotion.motion.section) `
     flex: 1 1 100%;
@@ -1416,22 +1593,6 @@ function Table({ data, children, loading, config }) {
                         React__default.createElement(Spinners.circles, { width: "200px", height: "200px" }),
                         baseConfig.loadingMessage)))));
 }
-
-// type ThemedScrollableContainer =
-//     <C extends keyof JSX.IntrinsicElements>(c: C) => any;
-const ScrollableContainer = styled(framerMotion.motion.div) `
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    overflow: auto;
-
-    display: flex;
-    flex-direction: ${(props) => props.flexDirection};
-    justify-content: flex-start;
-    align-items: center;
-`;
 
 function Tabs({ index, children, onTabChange }) {
     const [tabIndex, setTabIndex] = React.useState(index || 0);
@@ -1879,167 +2040,6 @@ function useToast(content, options) {
     return toast;
 }
 
-const SelectInputElement = styled.input `
-    flex: 1;
-`;
-const SelectContainerElement = styled.div `
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: calc(100% - 10px);
-
-    &.select-container-outline {
-        background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'principal' : 'contrast']};
-        border: 1px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}32;
-        border-radius: ${() => getGlobalTheme().borderRadius};
-
-            
-        &:focus-within {
-            box-shadow: ${() => getGlobalTheme().boxShadow.active};
-            border: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
-        }
-    }
-
-    &.select-container-downline {
-        background-color: transparent;
-        border-bottom: 1px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}32;
-
-        &:focus-within {
-            border-bottom: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
-        }
-    }
-
-    margin: 5px;
-`;
-const SelectListElement = styled.div `
-    position: absolute;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-direction: column;
-    z-index: 2;
-
-    top: 40px;
-    left: 4px;
-    right: 4px;
-    max-height: 23vh;
-    overflow-y: auto;
-    border-bottom-left-radius: calc(${() => getGlobalTheme().borderRadius} * 0.4);
-    border-bottom-right-radius: calc(${() => getGlobalTheme().borderRadius} * 0.4);
-    box-shadow: ${() => getGlobalTheme().boxShadow.active};
-    background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'principal' : 'contrast']};
-
-    .select-list-item {
-        width: 100%;
-        padding: 5px 5px 5px 15px;
-        transition: ${() => getGlobalTheme().transitions.fast};
-
-        &:hover {
-            cursor: pointer;
-            background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}12;
-        }
-    }
-
-    .select-list-loading {
-        width: 100%;
-        min-height: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}0A;
-    }
-`;
-
-const SEARCH_LIMIT_TIME = 500;
-let SEARCH_TIMER;
-function Select({ data, dataKey, loading, onSelect, onSearch, value, color, invert, placeholder, containerType }) {
-    const [inputValue, setInputValue] = React.useState(value ? `${value[dataKey]}` : '');
-    const [selected, setSelected] = React.useState(value);
-    const [opened, setOpened] = React.useState(false);
-    const [filteredData, setFilteredData] = React.useState(data);
-    const buttonAnimationController = framerMotion.useAnimation();
-    const containerRef = React.useRef();
-    React.useEffect(() => {
-        if (value) {
-            setInputValue(`${value[dataKey]}`);
-        }
-    }, [value]);
-    const itemSelectHandler = (event, item) => {
-        setSelected(item);
-        setInputValue(`${item[dataKey]}`);
-        setOpened(false);
-        if (onSelect)
-            onSelect(event, item);
-    };
-    const inputChangeHandler = (event) => {
-        const value = `${event.target.value}`;
-        setInputValue(value);
-        setSelected(undefined);
-        clearTimeout(SEARCH_TIMER);
-        SEARCH_TIMER = setTimeout(() => {
-            setFilteredData(data.filter(item => `${item[dataKey]}`.match(value)));
-            if (onSearch)
-                onSearch(value);
-        }, SEARCH_LIMIT_TIME);
-    };
-    const focusHandler = () => {
-        setOpened(true);
-    };
-    const togglerHandler = () => {
-        setOpened(!opened);
-    };
-    const renderListItem = (item, index) => {
-        return React__default.createElement("div", { key: index, onClick: (event) => itemSelectHandler(event, item), className: "select-list-item" }, `${item[dataKey]}`);
-    };
-    React.useEffect(() => {
-        const closeHandler = (event) => {
-            if (containerRef.current && !containerRef.current.contains(event.target)) {
-                setOpened(false);
-            }
-        };
-        if (opened) {
-            if (onSearch)
-                onSearch(inputValue);
-            buttonAnimationController.start({ rotate: 180, transition: { duration: 0.1, ease: 'backInOut' } });
-            window.addEventListener('click', closeHandler);
-            return () => window.removeEventListener('click', closeHandler);
-        }
-        else {
-            if (!selected) {
-                setSelected(value);
-                setInputValue(value ? `${value[dataKey]}` : '');
-                setFilteredData(data.filter(item => `${item[dataKey]}`.match(value ? `${value[dataKey]}` : '')));
-            }
-            else {
-                setFilteredData(data.filter(item => `${item[dataKey]}`.match(inputValue)));
-            }
-            buttonAnimationController.start({ rotate: 0, transition: { duration: 0.1, ease: 'backInOut' } });
-        }
-    }, [opened]);
-    React.useEffect(() => {
-        setFilteredData(data.filter(item => `${item[dataKey]}`.match(inputValue)));
-    }, [data]);
-    React.useEffect(() => {
-        setSelected(value);
-        setInputValue(value ? `${value[dataKey]}` : '');
-        setFilteredData(data.filter(item => `${item[dataKey]}`.match(value ? `${value[dataKey]}` : '')));
-    }, [value]);
-    return (React__default.createElement(SelectContainerElement, { color: color, invert: invert, ref: containerRef, className: `select-container-${containerType ? containerType : 'downline'}` },
-        React__default.createElement(InputElement, { value: inputValue, onChange: inputChangeHandler, onFocus: focusHandler, placeholder: placeholder }),
-        React__default.createElement(Button, { buttonType: "icon", icon: "chevronDown", iconSize: "20px", onClick: togglerHandler, animate: buttonAnimationController }),
-        opened &&
-            React__default.createElement(SelectListElement, { color: color, invert: invert, className: `select-list-container` },
-                filteredData.map(renderListItem),
-                loading &&
-                    React__default.createElement("div", { className: "select-list-loading" },
-                        React__default.createElement(Spinners.circles, { width: "40px", height: "40px" }),
-                        React__default.createElement("span", null, "Carregando mais dados...")),
-                !loading && filteredData.length < 1 &&
-                    React__default.createElement("div", { className: "select-list-loading" },
-                        React__default.createElement("span", null, "Nenhum item encontrado")))));
-}
-
 const IconButton = styled(framerMotion.motion.button) `
     all: unset;
     background: transparent;
@@ -2183,6 +2183,7 @@ exports.Input = Input;
 exports.LightTheme = LightTheme;
 exports.ModalController = ModalController;
 exports.OverflowController = OverflowController;
+exports.ScrollableContainer = ScrollableContainer;
 exports.Select = Select;
 exports.Spinners = Spinners;
 exports.Tab = Tab;
