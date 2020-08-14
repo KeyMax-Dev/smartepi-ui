@@ -9,7 +9,7 @@ export interface TabProps extends HTMLMotionProps<'div'> {
 
 export default function Tab(props: TabProps): JSX.Element {
     return (
-        <TabElement {...props} className={`tab-body ${props.className}`}>
+        <TabElement {...props} className={`ui-tabs-tab-body ${props.className}`}>
             {props.children}
         </TabElement>
     );

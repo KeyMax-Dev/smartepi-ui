@@ -65,28 +65,28 @@ export default function Table({ data, children, loading, config }: TableProps): 
     };
 
     return (
-        <TableElement>
+        <TableElement className="ui-table">
             {(data.length > 0 && !loading) &&
-                <TableHeaderElement>
+                <TableHeaderElement className="ui-table-header">
                     <tr>
                         {mappedChildren.map((child: TableColumnReactElement) => <th key={child.props.name} style={{ flex: child.props.flex, minWidth: child.props.minwidth, maxWidth: child.props.maxwidth }} {...child.props}>{child.props.name}</th>)}
                     </tr>
                 </TableHeaderElement>
             }
             {(data.length > 0 && !loading) &&
-                <TableBodyElement onScroll={baseConfig.onScroll}>
+                <TableBodyElement onScroll={baseConfig.onScroll} className="ui-table-body">
                     {data.map(renderLine)}
                 </TableBodyElement>
             }
             {(data.length === 0 && !loading) &&
-                <motion.tbody className="loading-container">
+                <motion.tbody className="ui-table-loading-container">
                     <tr><td>
                         {baseConfig.emptyMessage}
                     </td></tr>
                 </motion.tbody>
             }
             {loading &&
-                <motion.tbody className="loading-container">
+                <motion.tbody className="ui-table-loading-container">
                     <tr><td>
                         <Spinners.circles width="200px" height="200px" />
                         {baseConfig.loadingMessage}

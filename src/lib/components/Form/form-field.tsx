@@ -51,5 +51,12 @@ export default function FormField(props: FormFieldProps): JSX.Element {
         }
     }, [props.validated]);
 
-    return <Input {...props} color={color} iconRight={iconRight} onBlur={blurValidationHandler} onChange={changeValidationHandler} />;
+    return <Input
+        {...props}
+        color={color}
+        iconRight={iconRight}
+        onBlur={blurValidationHandler}
+        onChange={changeValidationHandler}
+        className={`ui-form-input ${props.className}`}
+    />;
 }

@@ -18,7 +18,7 @@ export const BadgeElement = styled(motion.div)<BadgeElementProps>`
     justify-content: center;
     align-items: center;
 
-    .__text {
+    .ui-badge-text {
         flex: 1;
         margin: 0 5px;
         text-transform: uppercase;

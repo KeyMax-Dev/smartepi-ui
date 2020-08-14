@@ -1,8 +1,7 @@
 import { HTMLMotionProps } from 'framer-motion';
 import Icon from '../Icon';
-import IconButton from './IconButton';
+import { IconButton, BaseButton } from './style';
 import React from 'react';
-import BaseButton from './BaseButton';
 
 type ButtonTypes = 'solid' | 'outline' | 'icon' | 'square';
 
@@ -24,7 +23,7 @@ export default function Button(props: ButtonProps): JSX.Element {
             if (!!!props.icon) throw new Error('Square button icon not provided');
             return (
                 <IconButton {...props}>
-                    <Icon name={props.icon} color={props.color} invert={props.invert} height={props.iconSize} width={props.iconSize} className="__icon" />
+                    <Icon name={props.icon} color={props.color} invert={props.invert} height={props.iconSize} width={props.iconSize} className="ui-btn-icon" />
                     {props.text && <span>{props.text}</span>}
                 </IconButton>
             );
@@ -32,9 +31,9 @@ export default function Button(props: ButtonProps): JSX.Element {
         case 'solid':
         default:
             return (
-                <BaseButton {...props} className={`__button-${buttonType} ${props.className}`}>
-                    {props.icon && <Icon name={props.icon} color={props.color} invert={(buttonType === 'solid' || props.invert)} height={props.iconSize} width={props.iconSize} style={{ marginRight: '15px' }} />}
-                    {props.text && <span>{props.text}</span>}
+                <BaseButton {...props} className={`ui-btn-${buttonType} ${props.className}`}>
+                    {props.icon && <Icon name={props.icon} color={props.color} invert={(buttonType === 'solid' || props.invert)} height={props.iconSize} width={props.iconSize} className={`ui-btn-${buttonType}-icon`} />}
+                    {props.text && <span className={`ui-btn-${buttonType}-text`}>{props.text}</span>}
                 </BaseButton>
             );
     }

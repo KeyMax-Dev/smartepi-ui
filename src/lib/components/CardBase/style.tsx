@@ -39,7 +39,7 @@ export const CardBaseElement = styled(motion.div)<CardBaseProps>`
         -webkit-box-orient: vertical;
     }
 
-    .__description {
+    .ui-card-description {
         text-align: ${() => getGlobalTheme().font.p1.textAlign};
         font-weight: ${() => getGlobalTheme().font.p1.fontWeight};
         font-size: ${() => getGlobalTheme().font.p1.fontSize};
@@ -50,23 +50,6 @@ export const CardBaseElement = styled(motion.div)<CardBaseProps>`
         display: -webkit-box;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
-    }
-
-    .__grid-horizontal {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        flex: 1;
-        width: 100%;
-    }
-
-    .__grid-vertical {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        flex: 1;
     }
 
     footer {

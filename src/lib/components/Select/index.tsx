@@ -67,7 +67,7 @@ export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, 
         return <div
             key={index}
             onClick={(event) => itemSelectHandler(event, item)}
-            className="select-list-item">
+            className="ui-select-list-item">
             {`${item[dataKey]}`}
         </div>;
     };
@@ -109,21 +109,21 @@ export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, 
     }, [value]);
 
     return (
-        <SelectContainerElement color={color} invert={invert} ref={containerRef} className={`select-container-${containerType ? containerType : 'downline'}`}>
+        <SelectContainerElement color={color} invert={invert} ref={containerRef} className={`ui-select-container-${containerType || 'downline'}`}>
             <InputElement value={inputValue} onChange={inputChangeHandler} onFocus={focusHandler} placeholder={placeholder} />
             <Button buttonType="icon" icon="chevronDown" iconSize="20px" onClick={togglerHandler} animate={buttonAnimationController} />
             {opened &&
 
-                <SelectListElement color={color} invert={invert} className={`select-list-container`}>
+                <SelectListElement color={color} invert={invert} className={`ui-select-list-container`}>
                     {filteredData.map(renderListItem)}
                     {loading &&
-                        <div className="select-list-loading">
+                        <div className="ui-select-list-loading">
                             <Spinners.circles width="40px" height="40px" />
                             <span>Carregando mais dados...</span>
                         </div>
                     }
                     {!loading && filteredData.length < 1 &&
-                        <div className="select-list-loading">
+                        <div className="ui-select-list-loading">
                             <span>Nenhum item encontrado</span>
                         </div>
                     }

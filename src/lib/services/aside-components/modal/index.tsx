@@ -1,5 +1,5 @@
 import { ModalBaseElement, ModalCloseButton } from './style';
-import { motion, useAnimation } from 'framer-motion';
+import { motion, useAnimation, HTMLMotionProps } from 'framer-motion';
 import AsideController, { BaseAsideConfig } from '../aside-controller';
 import React, { useState } from 'react';
 
@@ -9,14 +9,16 @@ export type ModalConfig = BaseAsideConfig & {
     disableBackdropClose: boolean;
     disableCloseButton: boolean;
     preventScroll: boolean;
+    containerProps: Exclude<HTMLMotionProps<'div'>, 'animate'>;
 }
 
 const DEFAULT_MODAL_CONFIG: ModalConfig = {
-    id: '__default-modal',
+    id: 'ui-modal-default',
     disableBackdropClose: false,
     disableCloseButton: false,
     preventScroll: true,
-    rootElement: 'body'
+    rootElement: 'body',
+    containerProps: {}
 };
 
 export class ModalController extends AsideController {
@@ -93,9 +95,9 @@ export class ModalController extends AsideController {
     protected createReactElement(): JSX.Element {
         return (
             <ModalBaseElement>
-                <motion.div className="__overlay" onClick={(): Promise<void> | undefined => (this.config.disableBackdropClose ? undefined : this.close('backdrop'))} animate={this.overlayControls} />
-                <motion.div className="__container" animate={this.containerControls}>
-                    {!this.config.disableCloseButton && <ModalCloseButton onClick={(): Promise<void> => this.close('closeButton')} width="30px" height="30px" name="close" />}
+                <motion.div className="ui-modal-overlay" onClick={(): Promise<void> | undefined => (this.config.disableBackdropClose ? undefined : this.close('backdrop'))} animate={this.overlayControls} />
+                <motion.div className="ui-modal-container" {...this.config.containerProps} animate={this.containerControls}>
+                    {!this.config.disableCloseButton && <ModalCloseButton className="ui-modal-btn-close" onClick={(): Promise<void> => this.close('closeButton')} width="30px" height="30px" name="close" />}
                     {this.content}
                 </motion.div>
             </ModalBaseElement>

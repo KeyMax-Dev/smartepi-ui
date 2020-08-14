@@ -10,7 +10,7 @@ export type ToastConfig = BaseAsideConfig & {
 }
 
 const DEFAULT_CONFIG: ToastConfig = {
-    id: '__default-pop-up',
+    id: 'ui-toast-default',
     color: 'primary',
     timeout: 2000,
     rootElement: 'body'

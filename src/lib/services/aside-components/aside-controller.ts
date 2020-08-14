@@ -10,7 +10,7 @@ export type BaseAsideConfig = {
 }
 
 const DEFAULT_ASIDE_CONFIG: BaseAsideConfig = {
-    id: '__default-aside-id',
+    id: 'ui-default-aside-id',
     rootElement: 'body'
 };
 

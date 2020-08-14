@@ -14,7 +14,7 @@ export const InputContainerElement = styled(motion.div)<InputProps>`
     transition: all ${() => getGlobalTheme().transitions.fast};
     
     
-    &&.__input-container-outline {
+    &&.ui-input-container-outline {
         background-color: ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'principal' : 'contrast']};
         border: 1px solid ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}32;
         border-radius: ${() => getGlobalTheme().borderRadius};
@@ -26,7 +26,7 @@ export const InputContainerElement = styled(motion.div)<InputProps>`
         }
     }
 
-    &&.__input-container-downline {
+    &&.ui-input-container-downline {
         background-color: transparent;
         border-bottom: 1px solid ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}32;
 

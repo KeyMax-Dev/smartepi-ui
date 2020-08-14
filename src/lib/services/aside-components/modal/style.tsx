@@ -13,7 +13,7 @@ export const ModalBaseElement = styled.div`
     align-items: center;
     z-index: 99;
 
-    .__overlay {
+    .ui-modal-overlay {
         position: absolute;
         width: 100%;
         height: 100%;
@@ -23,7 +23,7 @@ export const ModalBaseElement = styled.div`
         opacity: 0;
     }
 
-    .__container {
+    .ui-modal-container {
         position: absolute;
         display: flex;
         justify-content: center;

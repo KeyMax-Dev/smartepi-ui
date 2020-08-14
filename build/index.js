@@ -35,7 +35,7 @@ function styleInject(css, ref) {
   }
 }
 
-var css_248z = "@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_300.ttf\") format(\"truetype\");\r\n  font-weight: 300;\r\n  font-style: normal;\r\n}\r\n\r\n@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_400.ttf\") format(\"truetype\");\r\n  font-weight: 400;\r\n  font-style: normal;\r\n}\r\n\r\n@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_500.ttf\") format(\"truetype\");\r\n  font-weight: 500;\r\n  font-style: normal;\r\n}\r\n\r\n@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_700.ttf\") format(\"truetype\");\r\n  font-weight: 700;\r\n  font-style: normal;\r\n}\r\n\r\n* {\r\n  box-sizing: border-box;\r\n}\r\n\r\nbody {\r\n  margin: 0;\r\n  font-family:  'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto';\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  background-color: #fff;\r\n}\r\n\r\n*::-webkit-scrollbar {\r\n  width: 6px;\r\n  height: 6px;\r\n}\r\n\r\n*::-webkit-scrollbar-track {\r\n  background-color: transparent;\r\n}\r\n\r\n*::-webkit-scrollbar-thumb {\r\n  background-color: #00000033;\r\n}\r\n\r\ncode {\r\n  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;\r\n}\r\n\r\na {\r\n  text-decoration: none;\r\n}";
+var css_248z = "@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_300.ttf\") format(\"truetype\");\r\n  font-weight: 300;\r\n  font-style: normal;\r\n}\r\n\r\n@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_400.ttf\") format(\"truetype\");\r\n  font-weight: 400;\r\n  font-style: normal;\r\n}\r\n\r\n@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_500.ttf\") format(\"truetype\");\r\n  font-weight: 500;\r\n  font-style: normal;\r\n}\r\n\r\n@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_700.ttf\") format(\"truetype\");\r\n  font-weight: 700;\r\n  font-style: normal;\r\n}\r\n\r\n* {\r\n  box-sizing: border-box;\r\n}\r\n\r\nbody {\r\n  margin: 0;\r\n  font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto';\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  background-color: #fff;\r\n}\r\n\r\n*::-webkit-scrollbar {\r\n  width: 6px;\r\n  height: 6px;\r\n}\r\n\r\n*::-webkit-scrollbar-track {\r\n  background-color: transparent;\r\n}\r\n\r\n*::-webkit-scrollbar-thumb {\r\n  background-color: #00000033;\r\n}\r\n\r\ncode {\r\n  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;\r\n}\r\n\r\na {\r\n  text-decoration: none;\r\n}\r\n\r\n.ui-grid-horizontal {\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\r\n  flex: 1;\r\n  width: 100%;\r\n}\r\n\r\n.ui-grid-vertical {\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: center;\r\n  align-items: center;\r\n  flex: 1;\r\n}";
 styleInject(css_248z);
 
 const LightTheme = {
@@ -251,7 +251,7 @@ const Animations = {
 };
 
 const DEFAULT_ASIDE_CONFIG = {
-    id: '__default-aside-id',
+    id: 'ui-default-aside-id',
     rootElement: 'body'
 };
 class AsideController {
@@ -363,7 +363,7 @@ const BadgeElement = styled(framerMotion.motion.div) `
     justify-content: center;
     align-items: center;
 
-    .__text {
+    .ui-badge-text {
         flex: 1;
         margin: 0 5px;
         text-transform: uppercase;
@@ -546,8 +546,8 @@ function Icon(props) {
 function Badge(props) {
     const color = props.color ? props.color : 'primary';
     return (React__default.createElement(BadgeElement, Object.assign({}, props, { color: color }),
-        props.icon && React__default.createElement(Icon, { name: props.icon, invert: true, width: "15pt", height: "unset", color: color }),
-        props.text && React__default.createElement("span", { className: "__text" }, props.text)));
+        props.icon && React__default.createElement(Icon, { className: "ui-badge-icon", name: props.icon, invert: true, width: "15pt", height: "unset", color: color }),
+        props.text && React__default.createElement("span", { className: "ui-badge-text" }, props.text)));
 }
 
 const CardBaseElement = styled(framerMotion.motion.div) `
@@ -586,7 +586,7 @@ const CardBaseElement = styled(framerMotion.motion.div) `
         -webkit-box-orient: vertical;
     }
 
-    .__description {
+    .ui-card-description {
         text-align: ${() => getGlobalTheme().font.p1.textAlign};
         font-weight: ${() => getGlobalTheme().font.p1.fontWeight};
         font-size: ${() => getGlobalTheme().font.p1.fontSize};
@@ -597,23 +597,6 @@ const CardBaseElement = styled(framerMotion.motion.div) `
         display: -webkit-box;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
-    }
-
-    .__grid-horizontal {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        flex: 1;
-        width: 100%;
-    }
-
-    .__grid-vertical {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        flex: 1;
     }
 
     footer {
@@ -643,7 +626,7 @@ const CheckboxElement = styled(framerMotion.motion.div) `
         cursor: pointer;
     }
 
-    &&.__checkbox-true {
+    &&.ui-checkbox-true {
         border-color: transparent;
         background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal};
 
@@ -652,17 +635,12 @@ const CheckboxElement = styled(framerMotion.motion.div) `
         }
     }
 
-    &&.__checkbox-false {
+    &&.ui-checkbox-false {
         border-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal}32;
 
         &:hover {
             background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal}32;
         }
-    }
-
-    label {
-        margin: 3px;
-        color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal};
     }
 `;
 
@@ -687,7 +665,7 @@ function Checkbox(props) {
         }
         return () => animationController.stop();
     }, [value]);
-    return (React__default.createElement(CheckboxElement, { className: `__checkbox-${value}`, style: { width: size, height: size }, onClick: toggle, color: props.color },
+    return (React__default.createElement(CheckboxElement, Object.assign({}, props, { className: `ui-checkbox-${value} ${props.className || ''}`, style: { width: size, height: size }, onClick: toggle, color: props.color }),
         React__default.createElement(Icon, { initial: { opacity: 0 }, name: iconName, invert: value, width: `calc(${size} - 30%)`, height: `calc(${size} - 30%)`, color: props.color, animate: animationController })));
 }
 
@@ -699,7 +677,7 @@ const DatepickerElement = styled.div `
     display: flex;
     flex-direction: column;
 
-    .__datepicker-header {
+    .ui-datepicker-header {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -709,13 +687,13 @@ const DatepickerElement = styled.div `
         }
     }
 
-    .__datepicker-body {
+    .ui-datepicker-body {
         flex: 1;
         display: flex;
         flex-direction: column;
     }
 
-    .__datepicker-indicator {
+    .ui-datepicker-indicator {
         flex: 1;
         display: flex;
         justify-content: center;
@@ -726,7 +704,7 @@ const DatepickerElement = styled.div `
     }
 
         
-    .__datepicker-list-item-container {
+    .ui-datepicker-list-item-container {
         all: unset;
         flex: 1;
         display: flex;
@@ -744,11 +722,11 @@ const DatepickerElement = styled.div `
         }
     }
 
-    .__datepicker-list-item-outday {
+    .ui-datepicker-list-item-outday {
         opacity: 0.3;
     }
 
-    .__datepicker-list-item-unavaliable {
+    .ui-datepicker-list-item-unavaliable {
         cursor: not-allowed;
         color: ${() => getGlobalTheme().colors.danger.principal};
         -webkit-text-fill-color: ${() => getGlobalTheme().colors.danger.principal};
@@ -760,7 +738,7 @@ const DatepickerElement = styled.div `
         }
     }
 
-    .__datepicker-list-item-today::after {
+    .ui-datepicker-list-item-today::after {
         content: " ";
         width: 100%;
         height: 100%;
@@ -772,14 +750,14 @@ const DatepickerElement = styled.div `
         left: -3px;
     }
 
-    .__datepicker-week-container {
+    .ui-datepicker-week-container {
         all: unset;
         flex: 1;
         display: flex;
         align-items: stretch;
     }
 
-    .__datepicker-week-title {
+    .ui-datepicker-week-title {
         all: unset;
         display: flex;
         min-height: 30px;
@@ -798,7 +776,7 @@ const DatepickerElement = styled.div `
         }
     }
 
-    .__datepicker-list-item-selected {
+    .ui-datepicker-list-item-selected {
         background-color: ${() => getGlobalTheme().colors.secondary.principal};
         color: ${() => getGlobalTheme().colors.secondary.contrast};
         -webkit-text-fill-color: ${() => getGlobalTheme().colors.secondary.contrast};
@@ -861,19 +839,19 @@ function Datepicker(props) {
         }
     };
     const DayElement = ({ day }) => {
-        let className = '__datepicker-list-item-container';
+        let className = 'ui-datepicker-list-item-container';
         let disableClick = false;
         if (Date.now() - day.getTime() >= 0 && Date.now() - day.getTime() <= DAY_TIME) {
-            className += ' __datepicker-list-item-today'; // Today class
+            className += ' ui-datepicker-list-item-today'; // Today class
         }
         if (selectedDate && day.toDateString() === selectedDate.toDateString()) {
-            className += ' __datepicker-list-item-selected'; // Selected days class
+            className += ' ui-datepicker-list-item-selected'; // Selected days class
         }
         if (day.getMonth() !== currentMonth) {
-            className += ' __datepicker-list-item-outday'; // Out month days class
+            className += ' ui-datepicker-list-item-outday'; // Out month days class
         }
         if (Date.now() - DAY_TIME - day.getTime() > 0) {
-            className += ' __datepicker-list-item-unavaliable'; // Unavaliable or past days class
+            className += ' ui-datepicker-list-item-unavaliable'; // Unavaliable or past days class
             disableClick = true;
         }
         const selectDay = (event) => {
@@ -887,21 +865,21 @@ function Datepicker(props) {
         return React__default.createElement("li", { onClick: disableClick ? undefined : selectDay, className: className }, day.getDate());
     };
     const WeekElement = ({ week }) => {
-        return React__default.createElement("ul", { className: "__datepicker-week-container" }, week.map((day, index) => React__default.createElement(DayElement, { key: index, day: day })));
+        return React__default.createElement("ul", { className: "ui-datepicker-week-container" }, week.map((day, index) => React__default.createElement(DayElement, { key: index, day: day })));
     };
     const MonthElement = ({ date = new Date(currentYear) }) => {
-        let className = '__datepicker-list-item-container';
+        let className = 'ui-datepicker-list-item-container';
         let disableClick = false;
         if (new Date().getMonth() === date.getMonth() && new Date().getFullYear() === date.getFullYear()) {
-            className += ' __datepicker-list-item-today';
+            className += ' ui-datepicker-list-item-today';
         }
         if (new Date().getFullYear() > date.getFullYear() || (new Date().getMonth() > date.getMonth() && new Date().getFullYear() === date.getFullYear())) {
-            className += ' __datepicker-list-item-unavaliable';
+            className += ' ui-datepicker-list-item-unavaliable';
             disableClick = true;
         }
         else {
             if (selectedDate && date.getFullYear() === selectedDate.getFullYear() && date.getMonth() === selectedDate.getMonth()) {
-                className += ' __datepicker-list-item-selected';
+                className += ' ui-datepicker-list-item-selected';
             }
         }
         const selectMonth = (event) => {
@@ -912,13 +890,13 @@ function Datepicker(props) {
         return React__default.createElement("li", { onClick: disableClick ? undefined : selectMonth, className: className }, MONTH_NAMES[date.getMonth()]);
     };
     const YearElement = ({ fullYear }) => {
-        let className = '__datepicker-list-item-container';
+        let className = 'ui-datepicker-list-item-container';
         let disableClick = false;
         if (new Date().getFullYear() === fullYear) {
-            className += ' __datepicker-list-item-today';
+            className += ' ui-datepicker-list-item-today';
         }
         if (new Date().getFullYear() > fullYear) {
-            className += ' __datepicker-list-item-unavaliable';
+            className += ' ui-datepicker-list-item-unavaliable';
             disableClick = true;
         }
         else {
@@ -951,7 +929,7 @@ function Datepicker(props) {
                 const index = i * 3 + j;
                 aux.push(React__default.createElement(MonthElement, { date: new Date(fullYear, index), key: index }));
             }
-            list.push(React__default.createElement("ul", { className: "__datepicker-week-container", key: i }, aux));
+            list.push(React__default.createElement("ul", { className: "ui-datepicker-week-container", key: i }, aux));
         }
         setIndicatorText(fullYear.toString());
         return list;
@@ -967,7 +945,7 @@ function Datepicker(props) {
                 const fullYear = from + i * 2 + j;
                 aux.push(React__default.createElement(YearElement, { fullYear: fullYear, key: fullYear }));
             }
-            list.push(React__default.createElement("ul", { className: "__datepicker-week-container", key: i }, aux));
+            list.push(React__default.createElement("ul", { className: "ui-datepicker-week-container", key: i }, aux));
         }
         setIndicatorText(`${from} - ${from + 9}`);
         return list;
@@ -993,13 +971,13 @@ function Datepicker(props) {
         }
     }, [currentIndicator, currentYear, currentMonth, selectedDate]);
     return (React__default.createElement(DatepickerElement, { width: props.width ? props.width : DEFAULT_WIDTH, height: props.height ? props.height : DEFAULT_HEIGHT },
-        React__default.createElement("div", { className: "__datepicker-header" },
+        React__default.createElement("div", { className: "ui-datepicker-header" },
             React__default.createElement(Button, { buttonType: "icon", icon: "chevronLeft", onClick: () => changeIndicator(-1) }),
-            React__default.createElement("span", { className: "__datepicker-idicator", onClick: nextIndicator }, indicatorText),
+            React__default.createElement("span", { className: "ui-datepicker-idicator", onClick: nextIndicator }, indicatorText),
             React__default.createElement(Button, { buttonType: "icon", icon: "chevronRight", onClick: () => changeIndicator(1) })),
         currentIndicator === 'month' &&
-            React__default.createElement("ul", { className: "__datepicker-week-title" }, WEEKDAY_NAMES.map((weekdayName) => React__default.createElement("li", { key: weekdayName }, weekdayName))),
-        React__default.createElement("div", { className: "__datepicker-body" }, body)));
+            React__default.createElement("ul", { className: "ui-datepicker-week-title" }, WEEKDAY_NAMES.map((weekdayName) => React__default.createElement("li", { key: weekdayName }, weekdayName))),
+        React__default.createElement("div", { className: "ui-datepicker-body" }, body)));
 }
 
 const InputContainerElement = styled(framerMotion.motion.div) `
@@ -1013,7 +991,7 @@ const InputContainerElement = styled(framerMotion.motion.div) `
     transition: all ${() => getGlobalTheme().transitions.fast};
     
     
-    &&.__input-container-outline {
+    &&.ui-input-container-outline {
         background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'principal' : 'contrast']};
         border: 1px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}32;
         border-radius: ${() => getGlobalTheme().borderRadius};
@@ -1025,7 +1003,7 @@ const InputContainerElement = styled(framerMotion.motion.div) `
         }
     }
 
-    &&.__input-container-downline {
+    &&.ui-input-container-downline {
         background-color: transparent;
         border-bottom: 1px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}32;
 
@@ -1107,7 +1085,7 @@ function Input(props) {
         (_a = inputRef.current) === null || _a === void 0 ? void 0 : _a.addEventListener('input', eventHandler);
         return () => { var _a; return (_a = inputRef.current) === null || _a === void 0 ? void 0 : _a.removeEventListener('input', eventHandler); };
     }, [inputRef.current]);
-    return (React__default.createElement(InputContainerElement, Object.assign({}, props.containerProps, { invert: props.invert, color: props.color, className: `__input-container-${containerType} ${(_a = props.containerProps) === null || _a === void 0 ? void 0 : _a.className}` }),
+    return (React__default.createElement(InputContainerElement, Object.assign({}, props.containerProps, { invert: props.invert, color: props.color, className: `ui-input-container-${containerType} ${(_a = props.containerProps) === null || _a === void 0 ? void 0 : _a.className}` }),
         props.iconLeft && React__default.createElement(Icon, { color: props.color, name: props.iconLeft, invert: props.invert }),
         React__default.createElement(InputElement, Object.assign({}, props, { ref: inputRef })),
         enableClear && React__default.createElement(Button, { buttonType: "icon", icon: "close", onClick: clear, iconSize: "20px", invert: props.invert, style: { margin: 0, padding: 0 } }),
@@ -1152,7 +1130,7 @@ function FormField(props) {
             validateField(props.value || '', props.validated);
         }
     }, [props.validated]);
-    return React__default.createElement(Input, Object.assign({}, props, { color: color, iconRight: iconRight, onBlur: blurValidationHandler, onChange: changeValidationHandler }));
+    return React__default.createElement(Input, Object.assign({}, props, { color: color, iconRight: iconRight, onBlur: blurValidationHandler, onChange: changeValidationHandler, className: `ui-form-input ${props.className}` }));
 }
 
 function useForm(fields) {
@@ -1232,24 +1210,24 @@ const SelectContainerElement = styled.div `
     align-items: center;
     width: calc(100% - 10px);
 
-    &.select-container-outline {
-        background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'principal' : 'contrast']};
-        border: 1px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}32;
+    &.ui-select-container-outline {
+        background-color: ${(props) => getGlobalTheme().colors[props.color || 'primary'][props.invert ? 'principal' : 'contrast']};
+        border: 1px solid ${(props) => getGlobalTheme().colors[props.color || 'primary'][props.invert ? 'contrast' : 'principal']}32;
         border-radius: ${() => getGlobalTheme().borderRadius};
 
             
         &:focus-within {
             box-shadow: ${() => getGlobalTheme().boxShadow.active};
-            border: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
+            border: 2px solid ${(props) => getGlobalTheme().colors[props.color || 'primary'][props.invert ? 'contrast' : 'principal']};
         }
     }
 
-    &.select-container-downline {
+    &.ui-select-container-downline {
         background-color: transparent;
-        border-bottom: 1px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}32;
+        border-bottom: 1px solid ${(props) => getGlobalTheme().colors[props.color || 'primary'][props.invert ? 'contrast' : 'principal']}32;
 
         &:focus-within {
-            border-bottom: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
+            border-bottom: 2px solid ${(props) => getGlobalTheme().colors[props.color || 'primary'][props.invert ? 'contrast' : 'principal']};
         }
     }
 
@@ -1271,26 +1249,26 @@ const SelectListElement = styled.div `
     border-bottom-left-radius: calc(${() => getGlobalTheme().borderRadius} * 0.4);
     border-bottom-right-radius: calc(${() => getGlobalTheme().borderRadius} * 0.4);
     box-shadow: ${() => getGlobalTheme().boxShadow.active};
-    background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'principal' : 'contrast']};
+    background-color: ${(props) => getGlobalTheme().colors[props.color || 'primary'][props.invert ? 'principal' : 'contrast']};
 
-    .select-list-item {
+    .ui-select-list-item {
         width: 100%;
         padding: 5px 5px 5px 15px;
         transition: ${() => getGlobalTheme().transitions.fast};
 
         &:hover {
             cursor: pointer;
-            background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}12;
+            background-color: ${(props) => getGlobalTheme().colors[props.color || 'primary'][props.invert ? 'contrast' : 'principal']}12;
         }
     }
 
-    .select-list-loading {
+    .ui-select-list-loading {
         width: 100%;
         min-height: 40px;
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}0A;
+        background-color: ${(props) => getGlobalTheme().colors[props.color || 'primary'][props.invert ? 'contrast' : 'principal']}0A;
     }
 `;
 
@@ -1349,7 +1327,7 @@ function Select({ data, dataKey, loading, onSelect, onSearch, value, color, inve
         setOpened(!opened);
     };
     const renderListItem = (item, index) => {
-        return React__default.createElement("div", { key: index, onClick: (event) => itemSelectHandler(event, item), className: "select-list-item" }, `${item[dataKey]}`);
+        return React__default.createElement("div", { key: index, onClick: (event) => itemSelectHandler(event, item), className: "ui-select-list-item" }, `${item[dataKey]}`);
     };
     React.useEffect(() => {
         const closeHandler = (event) => {
@@ -1384,18 +1362,18 @@ function Select({ data, dataKey, loading, onSelect, onSearch, value, color, inve
         setInputValue(value ? `${value[dataKey]}` : '');
         setFilteredData(data.filter(item => `${item[dataKey]}`.match(value ? `${value[dataKey]}` : '')));
     }, [value]);
-    return (React__default.createElement(SelectContainerElement, { color: color, invert: invert, ref: containerRef, className: `select-container-${containerType ? containerType : 'downline'}` },
+    return (React__default.createElement(SelectContainerElement, { color: color, invert: invert, ref: containerRef, className: `ui-select-container-${containerType || 'downline'}` },
         React__default.createElement(InputElement, { value: inputValue, onChange: inputChangeHandler, onFocus: focusHandler, placeholder: placeholder }),
         React__default.createElement(Button, { buttonType: "icon", icon: "chevronDown", iconSize: "20px", onClick: togglerHandler, animate: buttonAnimationController }),
         opened &&
-            React__default.createElement(SelectListElement, { color: color, invert: invert, className: `select-list-container` },
+            React__default.createElement(SelectListElement, { color: color, invert: invert, className: `ui-select-list-container` },
                 filteredData.map(renderListItem),
                 loading &&
-                    React__default.createElement("div", { className: "select-list-loading" },
+                    React__default.createElement("div", { className: "ui-select-list-loading" },
                         React__default.createElement(Spinners.circles, { width: "40px", height: "40px" }),
                         React__default.createElement("span", null, "Carregando mais dados...")),
                 !loading && filteredData.length < 1 &&
-                    React__default.createElement("div", { className: "select-list-loading" },
+                    React__default.createElement("div", { className: "ui-select-list-loading" },
                         React__default.createElement("span", null, "Nenhum item encontrado")))));
 }
 
@@ -1407,7 +1385,7 @@ const TabsLayoutElement = styled(framerMotion.motion.section) `
     
     display: flex;
     flex-direction: column;
-    .tabs-header {
+    .ui-tabs-header {
         position: relative;
         display: flex;
         justify-content: center;
@@ -1417,7 +1395,7 @@ const TabsLayoutElement = styled(framerMotion.motion.section) `
         background-color: ${() => getGlobalTheme().colors.primary.principal};
         box-shadow: ${() => getGlobalTheme().boxShadow.normal};
         color: ${() => getGlobalTheme().colors.primary.contrast}33;
-        .tab {
+        .ui-tabs-tab {
             flex: 1;
             display: flex;
             justify-content: center;
@@ -1429,7 +1407,7 @@ const TabsLayoutElement = styled(framerMotion.motion.section) `
             text-transform: uppercase;
             overflow: hidden;
         }
-        .tab-selector {
+        .ui-tabs-tab-selector {
             position: absolute;
             bottom: 0;
             left: 0;
@@ -1437,11 +1415,11 @@ const TabsLayoutElement = styled(framerMotion.motion.section) `
             background-color: ${() => getGlobalTheme().colors.primary.contrast};
             z-index: 3;
         }
-        .tab-selected {
+        .ui-tabs-tab-selected {
             color: ${() => getGlobalTheme().colors.primary.contrast};
         }
     }
-    .tab-body-container {
+    .ui-tabs-tab-body {
         flex: 1 1 100%;
         width: 100%;
         justify-self: stretch;
@@ -1457,7 +1435,7 @@ const TabElement = styled(framerMotion.motion.div) `
 `;
 
 function Tab(props) {
-    return (React__default.createElement(TabElement, Object.assign({}, props, { className: `tab-body ${props.className}` }), props.children));
+    return (React__default.createElement(TabElement, Object.assign({}, props, { className: `ui-tabs-tab-body ${props.className}` }), props.children));
 }
 
 const TableElement = styled.table `
@@ -1481,7 +1459,7 @@ const TableElement = styled.table `
         max-width: 1024px;
     }
 
-    .loading-container {
+    .ui-table-loading-container {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -1576,18 +1554,18 @@ function Table({ data, children, loading, config }) {
         Object.entries(baseConfig.rowEvents).forEach(([key, event]) => events[key] = (nativeEvent) => event ? event(nativeEvent, element) : undefined);
         return React__default.createElement("tr", Object.assign({ key: index }, baseConfig.rowProps, events), mappedChildren.map((column) => React__default.cloneElement(column, column.props, column.props.children(element, index))));
     };
-    return (React__default.createElement(TableElement, null,
+    return (React__default.createElement(TableElement, { className: "ui-table" },
         (data.length > 0 && !loading) &&
-            React__default.createElement(TableHeaderElement, null,
+            React__default.createElement(TableHeaderElement, { className: "ui-table-header" },
                 React__default.createElement("tr", null, mappedChildren.map((child) => React__default.createElement("th", Object.assign({ key: child.props.name, style: { flex: child.props.flex, minWidth: child.props.minwidth, maxWidth: child.props.maxwidth } }, child.props), child.props.name)))),
         (data.length > 0 && !loading) &&
-            React__default.createElement(TableBodyElement, { onScroll: baseConfig.onScroll }, data.map(renderLine)),
+            React__default.createElement(TableBodyElement, { onScroll: baseConfig.onScroll, className: "ui-table-body" }, data.map(renderLine)),
         (data.length === 0 && !loading) &&
-            React__default.createElement(framerMotion.motion.tbody, { className: "loading-container" },
+            React__default.createElement(framerMotion.motion.tbody, { className: "ui-table-loading-container" },
                 React__default.createElement("tr", null,
                     React__default.createElement("td", null, baseConfig.emptyMessage))),
         loading &&
-            React__default.createElement(framerMotion.motion.tbody, { className: "loading-container" },
+            React__default.createElement(framerMotion.motion.tbody, { className: "ui-table-loading-container" },
                 React__default.createElement("tr", null,
                     React__default.createElement("td", null,
                         React__default.createElement(Spinners.circles, { width: "200px", height: "200px" }),
@@ -1618,13 +1596,13 @@ function Tabs({ index, children, onTabChange }) {
         }
     }, [index]);
     const renderTab = (element, index) => {
-        return React__default.createElement("div", { key: index, className: `tab ${tabIndex === index ? 'tab-selected' : ''}`, onClick: () => setTabIndex(index) }, element.props.title);
+        return React__default.createElement("div", { key: index, className: `ui-tabs-tab ${tabIndex === index ? 'ui-tabs-tab-selected' : ''}`, onClick: () => setTabIndex(index) }, element.props.title);
     };
-    return (React__default.createElement(TabsLayoutElement, { className: "tabs-layout" },
-        React__default.createElement(framerMotion.motion.header, { className: "tabs-header" },
+    return (React__default.createElement(TabsLayoutElement, { className: "ui-tabs" },
+        React__default.createElement(framerMotion.motion.header, { className: "ui-tabs-header" },
             Array.isArray(children) ? children.map(renderTab) : renderTab(children, 0),
-            React__default.createElement(framerMotion.motion.div, { className: "tab-selector", style: { width: `calc(100% / ${childrenLenght})` }, animate: selectorController })),
-        React__default.createElement(framerMotion.motion.div, { className: "tab-body-container", animate: bodyController },
+            React__default.createElement(framerMotion.motion.div, { className: "ui-tabs-tab-selector", style: { width: `calc(100% / ${childrenLenght})` }, animate: selectorController })),
+        React__default.createElement(framerMotion.motion.div, { className: "ui-tabs-tab-body", animate: bodyController },
             React__default.createElement(ScrollableContainer, { flexDirection: "column" }, Array.isArray(children) ? children[tabIndex] : children))));
 }
 
@@ -1639,7 +1617,7 @@ const ModalBaseElement = styled.div `
     align-items: center;
     z-index: 99;
 
-    .__overlay {
+    .ui-modal-overlay {
         position: absolute;
         width: 100%;
         height: 100%;
@@ -1649,7 +1627,7 @@ const ModalBaseElement = styled.div `
         opacity: 0;
     }
 
-    .__container {
+    .ui-modal-container {
         position: absolute;
         display: flex;
         justify-content: center;
@@ -1681,11 +1659,12 @@ const ModalCloseButton = styled(Icon) `
 `;
 
 const DEFAULT_MODAL_CONFIG = {
-    id: '__default-modal',
+    id: 'ui-modal-default',
     disableBackdropClose: false,
     disableCloseButton: false,
     preventScroll: true,
-    rootElement: 'body'
+    rootElement: 'body',
+    containerProps: {}
 };
 class ModalController extends AsideController {
     constructor(content, options) {
@@ -1753,9 +1732,9 @@ class ModalController extends AsideController {
     }
     createReactElement() {
         return (React__default.createElement(ModalBaseElement, null,
-            React__default.createElement(framerMotion.motion.div, { className: "__overlay", onClick: () => (this.config.disableBackdropClose ? undefined : this.close('backdrop')), animate: this.overlayControls }),
-            React__default.createElement(framerMotion.motion.div, { className: "__container", animate: this.containerControls },
-                !this.config.disableCloseButton && React__default.createElement(ModalCloseButton, { onClick: () => this.close('closeButton'), width: "30px", height: "30px", name: "close" }),
+            React__default.createElement(framerMotion.motion.div, { className: "ui-modal-overlay", onClick: () => (this.config.disableBackdropClose ? undefined : this.close('backdrop')), animate: this.overlayControls }),
+            React__default.createElement(framerMotion.motion.div, Object.assign({ className: "ui-modal-container" }, this.config.containerProps, { animate: this.containerControls }),
+                !this.config.disableCloseButton && React__default.createElement(ModalCloseButton, { className: "ui-modal-btn-close", onClick: () => this.close('closeButton'), width: "30px", height: "30px", name: "close" }),
                 this.content)));
     }
 }
@@ -1779,11 +1758,11 @@ const OverflowElement = styled(framerMotion.motion.div) `
     background-color: ${() => getGlobalTheme().colors.primary.contrast};
     padding: 5px;
 
-    &.__bottom {
+    &.ui-overflow-bottom {
         top: 100%;
     }
 
-    &.__top {
+    &.ui-overflow-top {
         bottom: 100%;
     }
 `;
@@ -1791,13 +1770,13 @@ const OverflowElementArrow = styled.div `
     position: absolute;
     border: 5px solid transparent;
 
-    &.__bottom {
+    &.ui-overflow-bottom {
         left: calc(50% - 5px);
         top: -10px;
         border-bottom-color: ${() => getGlobalTheme().colors.primary.contrast};
     }
 
-    &.__top {
+    &.ui-overflow-top {
         left: calc(50% - 5px);
         bottom: -10px;
         border-top-color: ${() => getGlobalTheme().colors.primary.contrast};
@@ -1805,7 +1784,7 @@ const OverflowElementArrow = styled.div `
 `;
 
 const DEFAULT_CONFIG = {
-    id: '__default-pop-up',
+    id: 'ui-overflow-default',
     position: 'bottom',
     rootElement: 'body'
 };
@@ -1877,9 +1856,9 @@ class OverflowController extends AsideController {
         });
     }
     createReactElement() {
-        return (React__default.createElement(OverflowElement, { ref: this.contentRef, className: `__${this.config.position}`, animate: this.containerControls },
+        return (React__default.createElement(OverflowElement, { ref: this.contentRef, className: `ui-overflow-${this.config.position}`, animate: this.containerControls },
             this.content,
-            React__default.createElement(OverflowElementArrow, { ref: this.contentArrowRef, className: `__${this.config.position}` })));
+            React__default.createElement(OverflowElementArrow, { ref: this.contentArrowRef, className: `ui-overflow-${this.config.position}` })));
     }
     updateContainer(parent) {
         if (parent)
@@ -1912,13 +1891,13 @@ class OverflowController extends AsideController {
             const minContentOut = contentBounding.height * 0.1;
             if (contentBounding.top < -minContentOut) {
                 this.config.position = 'bottom';
-                this.contentRef.current.classList.replace('__top', '__bottom');
-                this.contentArrowRef.current.classList.replace('__top', '__bottom');
+                this.contentRef.current.classList.replace('ui-overflow-top', 'ui-overflow-bottom');
+                this.contentArrowRef.current.classList.replace('ui-overflow-top', 'ui-overflow-bottom');
             }
             else if (contentBounding.bottom > window.innerHeight + minContentOut) {
                 this.config.position = 'top';
-                this.contentRef.current.classList.replace('__bottom', '__top');
-                this.contentArrowRef.current.classList.replace('__bottom', '__top');
+                this.contentRef.current.classList.replace('ui-overflow-bottom', 'ui-overflow-top');
+                this.contentArrowRef.current.classList.replace('ui-overflow-bottom', 'ui-overflow-top');
             }
         }
     }
@@ -1968,7 +1947,7 @@ const ToastElement = styled(framerMotion.motion.div) `
 `;
 
 const DEFAULT_CONFIG$1 = {
-    id: '__default-pop-up',
+    id: 'ui-toast-default',
     color: 'primary',
     timeout: 2000,
     rootElement: 'body'
@@ -2071,12 +2050,11 @@ const IconButton = styled(framerMotion.motion.button) `
         text-transform: uppercase;
     }
 
-    .__icon {
+    .ui-btn-icon {
         flex: 1;
         margin: 5px;
     }
 `;
-
 const BaseButton = styled(framerMotion.motion.button) `
     all: unset;
     padding: 10px 25px;
@@ -2091,7 +2069,7 @@ const BaseButton = styled(framerMotion.motion.button) `
     justify-content: center;
     position: relative;
 
-    &&.__button-outline {    
+    &&.ui-btn-outline {    
         background: transparent;
         color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
         -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
@@ -2118,7 +2096,7 @@ const BaseButton = styled(framerMotion.motion.button) `
         }
     }
 
-    &&.__button-solid {
+    &&.ui-btn-solid {
         background: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
         -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'principal' : 'contrast'] : getGlobalTheme().colors['primary'][props.invert ? 'principal' : 'contrast']};
         border: 1px solid transparent;
@@ -2146,6 +2124,11 @@ const BaseButton = styled(framerMotion.motion.button) `
             color: ${(props) => props.color ? getGlobalTheme().colors[props.color].contrast : getGlobalTheme().colors['primary'].contrast};
         }
     }
+
+    .ui-btn-solid-icon,
+    .ui-btn-outline-icon {
+        margin-right: 15px
+    }
 `;
 
 function Button(props) {
@@ -2155,14 +2138,14 @@ function Button(props) {
             if (!!!props.icon)
                 throw new Error('Square button icon not provided');
             return (React__default.createElement(IconButton, Object.assign({}, props),
-                React__default.createElement(Icon, { name: props.icon, color: props.color, invert: props.invert, height: props.iconSize, width: props.iconSize, className: "__icon" }),
+                React__default.createElement(Icon, { name: props.icon, color: props.color, invert: props.invert, height: props.iconSize, width: props.iconSize, className: "ui-btn-icon" }),
                 props.text && React__default.createElement("span", null, props.text)));
         case 'outline':
         case 'solid':
         default:
-            return (React__default.createElement(BaseButton, Object.assign({}, props, { className: `__button-${buttonType} ${props.className}` }),
-                props.icon && React__default.createElement(Icon, { name: props.icon, color: props.color, invert: (buttonType === 'solid' || props.invert), height: props.iconSize, width: props.iconSize, style: { marginRight: '15px' } }),
-                props.text && React__default.createElement("span", null, props.text)));
+            return (React__default.createElement(BaseButton, Object.assign({}, props, { className: `ui-btn-${buttonType} ${props.className}` }),
+                props.icon && React__default.createElement(Icon, { name: props.icon, color: props.color, invert: (buttonType === 'solid' || props.invert), height: props.iconSize, width: props.iconSize, className: `ui-btn-${buttonType}-icon` }),
+                props.text && React__default.createElement("span", { className: `ui-btn-${buttonType}-text` }, props.text)));
     }
 }
 

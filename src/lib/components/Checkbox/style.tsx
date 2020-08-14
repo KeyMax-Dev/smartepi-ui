@@ -15,7 +15,7 @@ const CheckboxElement = styled(motion.div)`
         cursor: pointer;
     }
 
-    &&.__checkbox-true {
+    &&.ui-checkbox-true {
         border-color: transparent;
         background-color: ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal};
 
@@ -24,17 +24,12 @@ const CheckboxElement = styled(motion.div)`
         }
     }
 
-    &&.__checkbox-false {
+    &&.ui-checkbox-false {
         border-color: ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal}32;
 
         &:hover {
             background-color: ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal}32;
         }
-    }
-
-    label {
-        margin: 3px;
-        color: ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'].principal};
     }
 `;
 

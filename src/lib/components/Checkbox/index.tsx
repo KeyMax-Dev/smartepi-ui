@@ -17,7 +17,7 @@ export interface CheckboxProps extends HTMLMotionProps<'div'> {
     value?: boolean;
 }
 
-export default function Checkbox(props: CheckboxProps) {
+export default function Checkbox(props: CheckboxProps): JSX.Element {
 
     const size = props.size ? props.size : getGlobalTheme().defaultIconSize;
     const [value, setValue] = useState<boolean>(!!props.value);
@@ -25,7 +25,7 @@ export default function Checkbox(props: CheckboxProps) {
     const animationController = useAnimation();
     const iconName = props.icon ? props.icon : 'check';
 
-    const toggle = (currentEvent: React.MouseEvent<HTMLDivElement>) => {
+    const toggle = (currentEvent: React.MouseEvent<HTMLDivElement>): void => {
         setValue(!value);
         setEvent({ ...currentEvent, value });
     };
@@ -44,7 +44,13 @@ export default function Checkbox(props: CheckboxProps) {
     }, [value]);
 
     return (
-        <CheckboxElement className={`__checkbox-${value}`} style={{ width: size, height: size }} onClick={toggle} color={props.color}>
+        <CheckboxElement
+            {...props}
+            className={`ui-checkbox-${value} ${props.className || ''}`}
+            style={{ width: size, height: size }}
+            onClick={toggle}
+            color={props.color}
+        >
             <Icon initial={{ opacity: 0 }} name={iconName} invert={value} width={`calc(${size} - 30%)`} height={`calc(${size} - 30%)`} color={props.color} animate={animationController} />
         </CheckboxElement>
     );

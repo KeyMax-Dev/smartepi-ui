@@ -18,24 +18,24 @@ export const SelectContainerElement = styled.div<SelectThemeProps>`
     align-items: center;
     width: calc(100% - 10px);
 
-    &.select-container-outline {
-        background-color: ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'principal' : 'contrast']};
-        border: 1px solid ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}32;
+    &.ui-select-container-outline {
+        background-color: ${(props): string => getGlobalTheme().colors[props.color || 'primary'][props.invert ? 'principal' : 'contrast']};
+        border: 1px solid ${(props): string => getGlobalTheme().colors[props.color || 'primary'][props.invert ? 'contrast' : 'principal']}32;
         border-radius: ${() => getGlobalTheme().borderRadius};
 
             
         &:focus-within {
             box-shadow: ${() => getGlobalTheme().boxShadow.active};
-            border: 2px solid ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
+            border: 2px solid ${(props): string => getGlobalTheme().colors[props.color || 'primary'][props.invert ? 'contrast' : 'principal']};
         }
     }
 
-    &.select-container-downline {
+    &.ui-select-container-downline {
         background-color: transparent;
-        border-bottom: 1px solid ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}32;
+        border-bottom: 1px solid ${(props): string => getGlobalTheme().colors[props.color || 'primary'][props.invert ? 'contrast' : 'principal']}32;
 
         &:focus-within {
-            border-bottom: 2px solid ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
+            border-bottom: 2px solid ${(props): string => getGlobalTheme().colors[props.color || 'primary'][props.invert ? 'contrast' : 'principal']};
         }
     }
 
@@ -58,25 +58,25 @@ export const SelectListElement = styled.div<SelectThemeProps>`
     border-bottom-left-radius: calc(${() => getGlobalTheme().borderRadius} * 0.4);
     border-bottom-right-radius: calc(${() => getGlobalTheme().borderRadius} * 0.4);
     box-shadow: ${() => getGlobalTheme().boxShadow.active};
-    background-color: ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'principal' : 'contrast']};
+    background-color: ${(props): string => getGlobalTheme().colors[props.color || 'primary'][props.invert ? 'principal' : 'contrast']};
 
-    .select-list-item {
+    .ui-select-list-item {
         width: 100%;
         padding: 5px 5px 5px 15px;
         transition: ${() => getGlobalTheme().transitions.fast};
 
         &:hover {
             cursor: pointer;
-            background-color: ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}12;
+            background-color: ${(props): string => getGlobalTheme().colors[props.color || 'primary'][props.invert ? 'contrast' : 'principal']}12;
         }
     }
 
-    .select-list-loading {
+    .ui-select-list-loading {
         width: 100%;
         min-height: 40px;
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}0A;
+        background-color: ${(props): string => getGlobalTheme().colors[props.color || 'primary'][props.invert ? 'contrast' : 'principal']}0A;
     }
 `;

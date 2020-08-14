@@ -1,9 +1,11 @@
 /// <reference types="react" />
+import { HTMLMotionProps } from 'framer-motion';
 import AsideController, { BaseAsideConfig } from '../aside-controller';
 export declare type ModalConfig = BaseAsideConfig & {
     disableBackdropClose: boolean;
     disableCloseButton: boolean;
     preventScroll: boolean;
+    containerProps: Exclude<HTMLMotionProps<'div'>, 'animate'>;
 };
 export declare class ModalController extends AsideController {
     protected config: ModalConfig;

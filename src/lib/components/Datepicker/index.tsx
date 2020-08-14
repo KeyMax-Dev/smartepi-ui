@@ -40,7 +40,7 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
     const [indicatorText, setIndicatorText] = useState<string>();
     const [selectedDate, setSelectedDate] = useState<Date | undefined>(props.initial);
 
-    const changeIndicator = (d: number) => {
+    const changeIndicator = (d: number): void => {
         switch (currentIndicator) {
             case 'year':
                 setCurrentYear(currentYear + d);
@@ -55,23 +55,23 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
     };
 
     const DayElement = ({ day }: { day: Date }): JSX.Element => {
-        let className = '__datepicker-list-item-container';
+        let className = 'ui-datepicker-list-item-container';
         let disableClick = false;
         if (Date.now() - day.getTime() >= 0 && Date.now() - day.getTime() <= DAY_TIME) {
-            className += ' __datepicker-list-item-today'; // Today class
+            className += ' ui-datepicker-list-item-today'; // Today class
         }
         if (selectedDate && day.toDateString() === selectedDate.toDateString()) {
-            className += ' __datepicker-list-item-selected'; // Selected days class
+            className += ' ui-datepicker-list-item-selected'; // Selected days class
         }
         if (day.getMonth() !== currentMonth) {
-            className += ' __datepicker-list-item-outday'; // Out month days class
+            className += ' ui-datepicker-list-item-outday'; // Out month days class
         }
         if (Date.now() - DAY_TIME - day.getTime() > 0) {
-            className += ' __datepicker-list-item-unavaliable'; // Unavaliable or past days class
+            className += ' ui-datepicker-list-item-unavaliable'; // Unavaliable or past days class
             disableClick = true;
         }
 
-        const selectDay = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+        const selectDay = (event: React.MouseEvent<HTMLLIElement, MouseEvent>): void => {
             event.stopPropagation();
             setSelectedDate(day);
             if (day.getMonth() !== currentMonth) setCurrentMonth(day.getMonth());
@@ -82,25 +82,25 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
     };
 
     const WeekElement = ({ week }: { week: Date[] }): JSX.Element => {
-        return <ul className="__datepicker-week-container">{week.map((day, index) => <DayElement key={index} day={day} />)}</ul>;
+        return <ul className="ui-datepicker-week-container">{week.map((day, index) => <DayElement key={index} day={day} />)}</ul>;
     };
 
     const MonthElement = ({ date = new Date(currentYear) }: { date: Date }): JSX.Element => {
-        let className = '__datepicker-list-item-container';
+        let className = 'ui-datepicker-list-item-container';
         let disableClick = false;
         if (new Date().getMonth() === date.getMonth() && new Date().getFullYear() === date.getFullYear()) {
-            className += ' __datepicker-list-item-today';
+            className += ' ui-datepicker-list-item-today';
         }
         if (new Date().getFullYear() > date.getFullYear() || (new Date().getMonth() > date.getMonth() && new Date().getFullYear() === date.getFullYear())) {
-            className += ' __datepicker-list-item-unavaliable';
+            className += ' ui-datepicker-list-item-unavaliable';
             disableClick = true;
         } else {
             if (selectedDate && date.getFullYear() === selectedDate.getFullYear() && date.getMonth() === selectedDate.getMonth()) {
-                className += ' __datepicker-list-item-selected';
+                className += ' ui-datepicker-list-item-selected';
             }
         }
 
-        const selectMonth = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+        const selectMonth = (event: React.MouseEvent<HTMLLIElement, MouseEvent>): void => {
             event.stopPropagation();
             setCurrentIndicator('month');
             setCurrentMonth(date.getMonth());
@@ -110,13 +110,13 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
     };
 
     const YearElement = ({ fullYear }: { fullYear: number }): JSX.Element => {
-        let className = '__datepicker-list-item-container';
+        let className = 'ui-datepicker-list-item-container';
         let disableClick = false;
         if (new Date().getFullYear() === fullYear) {
-            className += ' __datepicker-list-item-today';
+            className += ' ui-datepicker-list-item-today';
         }
         if (new Date().getFullYear() > fullYear) {
-            className += ' __datepicker-list-item-unavaliable';
+            className += ' ui-datepicker-list-item-unavaliable';
             disableClick = true;
         } else {
             if (selectedDate && fullYear === selectedDate.getFullYear()) {
@@ -124,7 +124,7 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
             }
         }
 
-        const selectYear = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+        const selectYear = (event: React.MouseEvent<HTMLLIElement, MouseEvent>): void => {
             event.stopPropagation();
             setCurrentIndicator('year');
             setCurrentYear(fullYear);
@@ -134,7 +134,7 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
     };
 
 
-    const fillMonth = (date = new Date(currentYear, currentMonth)) => {
+    const fillMonth = (date = new Date(currentYear, currentMonth)): JSX.Element[] => {
         setCurrentYear(date.getFullYear());
         setCurrentMonth(date.getMonth());
         setIndicatorText(MONTH_NAMES[date.getMonth()] + ' ' + date.getFullYear());
@@ -144,7 +144,7 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
         return monthDays.map((week, index) => <WeekElement key={index} week={week} />);
     };
 
-    const fillYear = (fullYear = currentYear) => {
+    const fillYear = (fullYear = currentYear): JSX.Element[] => {
         setCurrentIndicator('year');
         setCurrentYear(fullYear);
 
@@ -155,14 +155,14 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
                 const index = i * 3 + j;
                 aux.push(<MonthElement date={new Date(fullYear, index)} key={index} />);
             }
-            list.push(<ul className="__datepicker-week-container" key={i}>{aux}</ul>);
+            list.push(<ul className="ui-datepicker-week-container" key={i}>{aux}</ul>);
         }
 
         setIndicatorText(fullYear.toString());
         return list;
     };
 
-    const fillDecade = (from = currentYear) => {
+    const fillDecade = (from = currentYear): JSX.Element[] => {
         setCurrentIndicator('decade');
         from = Math.floor(from / 10) * 10;
         setCurrentYear(from);
@@ -174,14 +174,14 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
                 const fullYear = from + i * 2 + j;
                 aux.push(<YearElement fullYear={fullYear} key={fullYear} />);
             }
-            list.push(<ul className="__datepicker-week-container" key={i}>{aux}</ul>);
+            list.push(<ul className="ui-datepicker-week-container" key={i}>{aux}</ul>);
         }
 
         setIndicatorText(`${from} - ${from + 9}`);
         return list;
     };
 
-    const nextIndicator = () => {
+    const nextIndicator = (): void => {
         switch (currentIndicator) {
             case 'month':
                 return setCurrentIndicator('year');
@@ -205,17 +205,17 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
 
     return (
         <DatepickerElement width={props.width ? props.width : DEFAULT_WIDTH} height={props.height ? props.height : DEFAULT_HEIGHT}>
-            <div className="__datepicker-header">
+            <div className="ui-datepicker-header">
                 <Button buttonType="icon" icon="chevronLeft" onClick={() => changeIndicator(-1)} />
-                <span className="__datepicker-idicator" onClick={nextIndicator}>{indicatorText}</span>
+                <span className="ui-datepicker-idicator" onClick={nextIndicator}>{indicatorText}</span>
                 <Button buttonType="icon" icon="chevronRight" onClick={() => changeIndicator(1)} />
             </div>
             {currentIndicator === 'month' &&
-                <ul className="__datepicker-week-title">
+                <ul className="ui-datepicker-week-title">
                     {WEEKDAY_NAMES.map((weekdayName) => <li key={weekdayName}>{weekdayName}</li> )}
                 </ul>
             }
-            <div className="__datepicker-body">{body}</div>
+            <div className="ui-datepicker-body">{body}</div>
         </DatepickerElement>
     );
 }

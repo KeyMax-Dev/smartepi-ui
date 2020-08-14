@@ -15,7 +15,7 @@ export const DatepickerElement = styled.div<DatepickerElementProps>`
     display: flex;
     flex-direction: column;
 
-    .__datepicker-header {
+    .ui-datepicker-header {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -25,13 +25,13 @@ export const DatepickerElement = styled.div<DatepickerElementProps>`
         }
     }
 
-    .__datepicker-body {
+    .ui-datepicker-body {
         flex: 1;
         display: flex;
         flex-direction: column;
     }
 
-    .__datepicker-indicator {
+    .ui-datepicker-indicator {
         flex: 1;
         display: flex;
         justify-content: center;
@@ -42,7 +42,7 @@ export const DatepickerElement = styled.div<DatepickerElementProps>`
     }
 
         
-    .__datepicker-list-item-container {
+    .ui-datepicker-list-item-container {
         all: unset;
         flex: 1;
         display: flex;
@@ -60,11 +60,11 @@ export const DatepickerElement = styled.div<DatepickerElementProps>`
         }
     }
 
-    .__datepicker-list-item-outday {
+    .ui-datepicker-list-item-outday {
         opacity: 0.3;
     }
 
-    .__datepicker-list-item-unavaliable {
+    .ui-datepicker-list-item-unavaliable {
         cursor: not-allowed;
         color: ${() => getGlobalTheme().colors.danger.principal};
         -webkit-text-fill-color: ${() => getGlobalTheme().colors.danger.principal};
@@ -76,7 +76,7 @@ export const DatepickerElement = styled.div<DatepickerElementProps>`
         }
     }
 
-    .__datepicker-list-item-today::after {
+    .ui-datepicker-list-item-today::after {
         content: " ";
         width: 100%;
         height: 100%;
@@ -88,14 +88,14 @@ export const DatepickerElement = styled.div<DatepickerElementProps>`
         left: -3px;
     }
 
-    .__datepicker-week-container {
+    .ui-datepicker-week-container {
         all: unset;
         flex: 1;
         display: flex;
         align-items: stretch;
     }
 
-    .__datepicker-week-title {
+    .ui-datepicker-week-title {
         all: unset;
         display: flex;
         min-height: 30px;
@@ -114,7 +114,7 @@ export const DatepickerElement = styled.div<DatepickerElementProps>`
         }
     }
 
-    .__datepicker-list-item-selected {
+    .ui-datepicker-list-item-selected {
         background-color: ${() => getGlobalTheme().colors.secondary.principal};
         color: ${() => getGlobalTheme().colors.secondary.contrast};
         -webkit-text-fill-color: ${() => getGlobalTheme().colors.secondary.contrast};

@@ -39,16 +39,16 @@ export default function Tabs({ index, children, onTabChange }: TabsHeaderProps):
     }, [index]);
 
     const renderTab = (element: ReactElement, index: number): JSX.Element => {
-        return <div key={index} className={`tab ${tabIndex === index ? 'tab-selected' : ''}`} onClick={(): void => setTabIndex(index)}>{element.props.title}</div>;
+        return <div key={index} className={`ui-tabs-tab ${tabIndex === index ? 'ui-tabs-tab-selected' : ''}`} onClick={(): void => setTabIndex(index)}>{element.props.title}</div>;
     };
 
     return (
-        <TabsLayoutElement className="tabs-layout">
-            <motion.header className="tabs-header">
+        <TabsLayoutElement className="ui-tabs">
+            <motion.header className="ui-tabs-header">
                 {Array.isArray(children) ? children.map(renderTab) : renderTab(children, 0)}
-                <motion.div className="tab-selector" style={{ width: `calc(100% / ${childrenLenght})` }} animate={selectorController} />
+                <motion.div className="ui-tabs-tab-selector" style={{ width: `calc(100% / ${childrenLenght})` }} animate={selectorController} />
             </motion.header>
-            <motion.div className="tab-body-container" animate={bodyController} >
+            <motion.div className="ui-tabs-tab-body" animate={bodyController} >
                 <ScrollableContainer flexDirection="column">
                     {Array.isArray(children) ? children[tabIndex] : children}
                 </ScrollableContainer>

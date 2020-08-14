@@ -24,7 +24,7 @@ export const TableElement = styled.table`
         max-width: 1024px;
     }
 
-    .loading-container {
+    .ui-table-loading-container {
         display: flex;
         justify-content: center;
         align-items: center;

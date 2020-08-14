@@ -10,7 +10,7 @@ export const TabsLayoutElement = styled(motion.section)`
     
     display: flex;
     flex-direction: column;
-    .tabs-header {
+    .ui-tabs-header {
         position: relative;
         display: flex;
         justify-content: center;
@@ -20,7 +20,7 @@ export const TabsLayoutElement = styled(motion.section)`
         background-color: ${() => getGlobalTheme().colors.primary.principal};
         box-shadow: ${() => getGlobalTheme().boxShadow.normal};
         color: ${() => getGlobalTheme().colors.primary.contrast}33;
-        .tab {
+        .ui-tabs-tab {
             flex: 1;
             display: flex;
             justify-content: center;
@@ -32,7 +32,7 @@ export const TabsLayoutElement = styled(motion.section)`
             text-transform: uppercase;
             overflow: hidden;
         }
-        .tab-selector {
+        .ui-tabs-tab-selector {
             position: absolute;
             bottom: 0;
             left: 0;
@@ -40,11 +40,11 @@ export const TabsLayoutElement = styled(motion.section)`
             background-color: ${() => getGlobalTheme().colors.primary.contrast};
             z-index: 3;
         }
-        .tab-selected {
+        .ui-tabs-tab-selected {
             color: ${() => getGlobalTheme().colors.primary.contrast};
         }
     }
-    .tab-body-container {
+    .ui-tabs-tab-body {
         flex: 1 1 100%;
         width: 100%;
         justify-self: stretch;

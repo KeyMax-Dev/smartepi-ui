@@ -10,7 +10,7 @@ export type OverflowConfig = BaseAsideConfig & {
 }
 
 const DEFAULT_CONFIG: OverflowConfig = {
-    id: '__default-pop-up',
+    id: 'ui-overflow-default',
     position: 'bottom',
     rootElement: 'body'
 };
@@ -92,9 +92,9 @@ export class OverflowController extends AsideController {
 
     protected createReactElement(): JSX.Element {
         return (
-            <OverflowElement ref={this.contentRef as React.MutableRefObject<HTMLDivElement>} className={`__${this.config.position}`} animate={this.containerControls}>
+            <OverflowElement ref={this.contentRef as React.MutableRefObject<HTMLDivElement>} className={`ui-overflow-${this.config.position}`} animate={this.containerControls}>
                 {this.content}
-                <OverflowElementArrow ref={this.contentArrowRef as React.MutableRefObject<HTMLDivElement>} className={`__${this.config.position}`} />
+                <OverflowElementArrow ref={this.contentArrowRef as React.MutableRefObject<HTMLDivElement>} className={`ui-overflow-${this.config.position}`} />
             </OverflowElement>
         );
     }
@@ -130,12 +130,12 @@ export class OverflowController extends AsideController {
             const minContentOut = contentBounding.height * 0.1;
             if (contentBounding.top < -minContentOut) {
                 this.config.position = 'bottom';
-                this.contentRef.current.classList.replace('__top', '__bottom');
-                this.contentArrowRef.current.classList.replace('__top', '__bottom');
+                this.contentRef.current.classList.replace('ui-overflow-top', 'ui-overflow-bottom');
+                this.contentArrowRef.current.classList.replace('ui-overflow-top', 'ui-overflow-bottom');
             } else if (contentBounding.bottom > window.innerHeight + minContentOut) {
                 this.config.position = 'top';
-                this.contentRef.current.classList.replace('__bottom', '__top');
-                this.contentArrowRef.current.classList.replace('__bottom', '__top');
+                this.contentRef.current.classList.replace('ui-overflow-bottom', 'ui-overflow-top');
+                this.contentArrowRef.current.classList.replace('ui-overflow-bottom', 'ui-overflow-top');
             } 
         }
     }
