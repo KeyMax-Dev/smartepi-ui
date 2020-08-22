@@ -73,13 +73,13 @@ const TableData = [
 export default function ComponentsLibrary(): JSX.Element {
 
     const [theme, _setTheme] = useState(LightTheme);
-    const setTheme = (theme) => {
+    const setTheme = (theme): void => {
         setGlobalTheme(theme);
         _setTheme(theme);
     };
 
     const [showComponent, _setShowComponent] = useState<{ [componentName: string]: boolean }>({});
-    const setShowComponent = (componentName: string) => {
+    const setShowComponent = (componentName: string): void => {
         const aux = { [componentName]: !!!showComponent[componentName] };
         _setShowComponent({ ...showComponent, ...aux });
     };
@@ -230,7 +230,7 @@ export default function ComponentsLibrary(): JSX.Element {
                 </Tabs>
             </ComponentExpandable>
             <ComponentExpandable componentName="Table">
-                <Table data={TableData} loading={true} >
+                <Table data={TableData} >
                     <TableColumn name="ID" key="id" minwidth="100px">
                         {(item) => <div>{item.id}</div>}
                     </TableColumn>

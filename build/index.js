@@ -1493,6 +1493,19 @@ const TableHeaderElement = styled.thead `
         font-size: ${() => getGlobalTheme().font.h2.fontSize};
         font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
         text-align: center;
+
+        max-width: calc(100% - 10px);
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+    }
+
+    @media screen and (max-width: 600px) {
+        height: 40px;
+        th {
+            font-size: calc(${() => getGlobalTheme().font.h2.fontSize} * 0.5);
+        }
     }
 `;
 const TableBodyElement = styled.tbody `
@@ -1510,6 +1523,14 @@ const TableBodyElement = styled.tbody `
     justify-content: flex-start;
     tr {        
         border-bottom: 1px solid ${() => getGlobalTheme().colors.primary.principal}32;
+        * {
+            max-width: 100%;
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        top: 40px;
+        font-size: 0.8rem;
     }
 `;
 const TableColumnElement = styled.td `
