@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { getGlobalTheme } from "../../assets/themes";
 import { InputProps } from './index';
@@ -6,7 +6,6 @@ import { InputProps } from './index';
 export const InputContainerElement = styled(motion.div)<InputProps>`
     min-width: 300px;
     height: 50px;
-    padding: 5px;
     margin: 5px;
     display: flex;
     justify-content: center;
@@ -15,23 +14,23 @@ export const InputContainerElement = styled(motion.div)<InputProps>`
     
     
     &&.ui-input-container-outline {
-        background-color: ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'principal' : 'contrast']};
-        border: 1px solid ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}32;
+        background-color: ${({color, invert}): string => getGlobalTheme().colors[color || 'primary'][invert ? 'principal' : 'contrast']};
+        border: 1px solid ${({color, invert}): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}32;
         border-radius: ${() => getGlobalTheme().borderRadius};
 
             
         &:focus-within {
             box-shadow: ${() => getGlobalTheme().boxShadow.active};
-            border: 2px solid ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
+            border: 2px solid ${({color, invert}): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
         }
     }
 
     &&.ui-input-container-downline {
         background-color: transparent;
-        border-bottom: 1px solid ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}32;
+        border-bottom: 1px solid ${({color, invert}): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}32;
 
         &:focus-within {
-            border-bottom: 2px solid ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
+            border-bottom: 2px solid ${({color, invert}): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
         }
     }
 
@@ -42,7 +41,7 @@ export const InputContainerElement = styled(motion.div)<InputProps>`
 `;
 
 export const InputElement = styled(motion.input)<InputProps>`
-    color: ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
+    color: ${({color, invert}): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
     background-color: transparent;
     flex: 1;
     flex-shrink: 1;
@@ -56,7 +55,7 @@ export const InputElement = styled(motion.input)<InputProps>`
     
     &::placeholder {
         transition: all ${() => getGlobalTheme().transitions.avarage};
-        color: ${(props): string => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}7A;
+        color: ${({color, invert}): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}7A;
     }
     &:focus {
         &::placeholder {

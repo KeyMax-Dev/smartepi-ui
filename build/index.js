@@ -983,7 +983,6 @@ function Datepicker(props) {
 const InputContainerElement = styled(framerMotion.motion.div) `
     min-width: 300px;
     height: 50px;
-    padding: 5px;
     margin: 5px;
     display: flex;
     justify-content: center;
@@ -992,23 +991,23 @@ const InputContainerElement = styled(framerMotion.motion.div) `
     
     
     &&.ui-input-container-outline {
-        background-color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'principal' : 'contrast']};
-        border: 1px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}32;
+        background-color: ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'principal' : 'contrast']};
+        border: 1px solid ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}32;
         border-radius: ${() => getGlobalTheme().borderRadius};
 
             
         &:focus-within {
             box-shadow: ${() => getGlobalTheme().boxShadow.active};
-            border: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
+            border: 2px solid ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
         }
     }
 
     &&.ui-input-container-downline {
         background-color: transparent;
-        border-bottom: 1px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}32;
+        border-bottom: 1px solid ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}32;
 
         &:focus-within {
-            border-bottom: 2px solid ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
+            border-bottom: 2px solid ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
         }
     }
 
@@ -1018,7 +1017,7 @@ const InputContainerElement = styled(framerMotion.motion.div) `
     }
 `;
 const InputElement = styled(framerMotion.motion.input) `
-    color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']};
+    color: ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
     background-color: transparent;
     flex: 1;
     flex-shrink: 1;
@@ -1032,7 +1031,7 @@ const InputElement = styled(framerMotion.motion.input) `
     
     &::placeholder {
         transition: all ${() => getGlobalTheme().transitions.avarage};
-        color: ${(props) => getGlobalTheme().colors[props.color ? props.color : 'primary'][props.invert ? 'contrast' : 'principal']}7A;
+        color: ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}7A;
     }
     &:focus {
         &::placeholder {
@@ -1204,34 +1203,39 @@ const SelectInputElement = styled.input `
     flex: 1;
 `;
 const SelectContainerElement = styled.div `
+    min-width: 300px;
+    height: 50px;
+    margin: 5px;
     position: relative;
     display: flex;
     justify-content: center;
-    align-items: center;
-    width: calc(100% - 10px);
+    align-items: stretch;
 
     &.ui-select-container-outline {
-        background-color: ${(props) => getGlobalTheme().colors[props.color || 'primary'][props.invert ? 'principal' : 'contrast']};
-        border: 1px solid ${(props) => getGlobalTheme().colors[props.color || 'primary'][props.invert ? 'contrast' : 'principal']}32;
+        background-color: ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'principal' : 'contrast']};
+        border: 1px solid ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}32;
         border-radius: ${() => getGlobalTheme().borderRadius};
 
             
         &:focus-within {
             box-shadow: ${() => getGlobalTheme().boxShadow.active};
-            border: 2px solid ${(props) => getGlobalTheme().colors[props.color || 'primary'][props.invert ? 'contrast' : 'principal']};
+            border: 2px solid ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
         }
     }
 
     &.ui-select-container-downline {
         background-color: transparent;
-        border-bottom: 1px solid ${(props) => getGlobalTheme().colors[props.color || 'primary'][props.invert ? 'contrast' : 'principal']}32;
+        border-bottom: 1px solid ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}32;
 
         &:focus-within {
-            border-bottom: 2px solid ${(props) => getGlobalTheme().colors[props.color || 'primary'][props.invert ? 'contrast' : 'principal']};
+            border-bottom: 2px solid ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
         }
     }
 
-    margin: 5px;
+    @media screen and (max-width: 600px) {   
+        width: calc(100% - 30px);
+        min-width: 250px;
+    }
 `;
 const SelectListElement = styled.div `
     position: absolute;
@@ -1249,7 +1253,7 @@ const SelectListElement = styled.div `
     border-bottom-left-radius: calc(${() => getGlobalTheme().borderRadius} * 0.4);
     border-bottom-right-radius: calc(${() => getGlobalTheme().borderRadius} * 0.4);
     box-shadow: ${() => getGlobalTheme().boxShadow.active};
-    background-color: ${(props) => getGlobalTheme().colors[props.color || 'primary'][props.invert ? 'principal' : 'contrast']};
+    background-color: ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'principal' : 'contrast']};
 
     .ui-select-list-item {
         width: 100%;
@@ -1258,7 +1262,7 @@ const SelectListElement = styled.div `
 
         &:hover {
             cursor: pointer;
-            background-color: ${(props) => getGlobalTheme().colors[props.color || 'primary'][props.invert ? 'contrast' : 'principal']}12;
+            background-color: ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}12;
         }
     }
 
@@ -1268,7 +1272,7 @@ const SelectListElement = styled.div `
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: ${(props) => getGlobalTheme().colors[props.color || 'primary'][props.invert ? 'contrast' : 'principal']}0A;
+        background-color: ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}0A;
     }
 `;
 
