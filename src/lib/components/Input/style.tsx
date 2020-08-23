@@ -8,7 +8,7 @@ export const InputContainerElement = styled(motion.div)<InputProps>`
     height: 50px;
     margin: 5px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     transition: all ${() => getGlobalTheme().transitions.fast};
     
@@ -33,10 +33,26 @@ export const InputContainerElement = styled(motion.div)<InputProps>`
             border-bottom: 2px solid ${({color, invert}): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
         }
     }
+    
+    .__icon-right {
+        margin-right: 5px;
+    }
+
+    .__icon-left {
+        margin-left: 5px;
+    }
 
     @media screen and (max-width: 600px) {   
         width: calc(100% - 30px);
         min-width: 250px;
+
+        .__icon-right {
+            margin-right: 3px;
+        }
+
+        .__icon-left {
+            margin-left: 3px;
+        }
     }
 `;
 
@@ -44,7 +60,6 @@ export const InputElement = styled(motion.input)<InputProps>`
     color: ${({color, invert}): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
     background-color: transparent;
     flex: 1;
-    flex-shrink: 1;
     border: none;
     outline: none;
     font-size: ${() => getGlobalTheme().font.input.fontSize};
@@ -65,6 +80,6 @@ export const InputElement = styled(motion.input)<InputProps>`
 
     @media screen and (max-width: 600px) {   
         margin: 0 3px;
-        min-width: 130px;
+        min-width: 150px;
     }
 `;

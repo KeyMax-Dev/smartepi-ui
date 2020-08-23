@@ -846,7 +846,6 @@ function Datepicker(props) {
     };
     const DayElement = ({ day }) => {
         let className = 'ui-datepicker-list-item-container';
-        let disableClick = false;
         if (Date.now() - day.getTime() >= 0 && Date.now() - day.getTime() <= DAY_TIME) {
             className += ' ui-datepicker-list-item-today'; // Today class
         }
@@ -856,10 +855,6 @@ function Datepicker(props) {
         if (day.getMonth() !== currentMonth) {
             className += ' ui-datepicker-list-item-outday'; // Out month days class
         }
-        if (Date.now() - DAY_TIME - day.getTime() > 0) {
-            className += ' ui-datepicker-list-item-unavaliable'; // Unavaliable or past days class
-            disableClick = true;
-        }
         const selectDay = (event) => {
             event.stopPropagation();
             setSelectedDate(day);
@@ -868,54 +863,40 @@ function Datepicker(props) {
             if (props.onDaySelected)
                 props.onDaySelected(day);
         };
-        return React__default.createElement("li", { onClick: disableClick ? undefined : selectDay, className: className }, day.getDate());
+        return React__default.createElement("li", { onClick: selectDay, className: className }, day.getDate());
     };
     const WeekElement = ({ week }) => {
         return React__default.createElement("ul", { className: "ui-datepicker-week-container" }, week.map((day, index) => React__default.createElement(DayElement, { key: index, day: day })));
     };
     const MonthElement = ({ date = new Date(currentYear) }) => {
         let className = 'ui-datepicker-list-item-container';
-        let disableClick = false;
         if (new Date().getMonth() === date.getMonth() && new Date().getFullYear() === date.getFullYear()) {
             className += ' ui-datepicker-list-item-today';
         }
-        if (new Date().getFullYear() > date.getFullYear() || (new Date().getMonth() > date.getMonth() && new Date().getFullYear() === date.getFullYear())) {
-            className += ' ui-datepicker-list-item-unavaliable';
-            disableClick = true;
-        }
-        else {
-            if (selectedDate && date.getFullYear() === selectedDate.getFullYear() && date.getMonth() === selectedDate.getMonth()) {
-                className += ' ui-datepicker-list-item-selected';
-            }
+        if (selectedDate && date.getFullYear() === selectedDate.getFullYear() && date.getMonth() === selectedDate.getMonth()) {
+            className += ' ui-datepicker-list-item-selected';
         }
         const selectMonth = (event) => {
             event.stopPropagation();
             setCurrentIndicator('month');
             setCurrentMonth(date.getMonth());
         };
-        return React__default.createElement("li", { onClick: disableClick ? undefined : selectMonth, className: className }, MONTH_NAMES[date.getMonth()]);
+        return React__default.createElement("li", { onClick: selectMonth, className: className }, MONTH_NAMES[date.getMonth()]);
     };
     const YearElement = ({ fullYear }) => {
         let className = 'ui-datepicker-list-item-container';
-        let disableClick = false;
         if (new Date().getFullYear() === fullYear) {
             className += ' ui-datepicker-list-item-today';
         }
-        if (new Date().getFullYear() > fullYear) {
-            className += ' ui-datepicker-list-item-unavaliable';
-            disableClick = true;
-        }
-        else {
-            if (selectedDate && fullYear === selectedDate.getFullYear()) {
-                className += ' datepicker-list-item-selected'; // Selected days class
-            }
+        if (selectedDate && fullYear === selectedDate.getFullYear()) {
+            className += ' datepicker-list-item-selected'; // Selected days class
         }
         const selectYear = (event) => {
             event.stopPropagation();
             setCurrentIndicator('year');
             setCurrentYear(fullYear);
         };
-        return React__default.createElement("li", { onClick: disableClick ? undefined : selectYear, className: className }, fullYear);
+        return React__default.createElement("li", { onClick: selectYear, className: className }, fullYear);
     };
     const fillMonth = (date = new Date(currentYear, currentMonth)) => {
         setCurrentYear(date.getFullYear());
@@ -991,7 +972,7 @@ const InputContainerElement = styled(framerMotion.motion.div) `
     height: 50px;
     margin: 5px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     transition: all ${() => getGlobalTheme().transitions.fast};
     
@@ -1016,17 +997,32 @@ const InputContainerElement = styled(framerMotion.motion.div) `
             border-bottom: 2px solid ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
         }
     }
+    
+    .__icon-right {
+        margin-right: 5px;
+    }
+
+    .__icon-left {
+        margin-left: 5px;
+    }
 
     @media screen and (max-width: 600px) {   
         width: calc(100% - 30px);
         min-width: 250px;
+
+        .__icon-right {
+            margin-right: 3px;
+        }
+
+        .__icon-left {
+            margin-left: 3px;
+        }
     }
 `;
 const InputElement = styled(framerMotion.motion.input) `
     color: ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
     background-color: transparent;
     flex: 1;
-    flex-shrink: 1;
     border: none;
     outline: none;
     font-size: ${() => getGlobalTheme().font.input.fontSize};
@@ -1047,7 +1043,7 @@ const InputElement = styled(framerMotion.motion.input) `
 
     @media screen and (max-width: 600px) {   
         margin: 0 3px;
-        min-width: 130px;
+        min-width: 150px;
     }
 `;
 
@@ -1091,11 +1087,11 @@ function Input(props) {
         return () => { var _a; return (_a = inputRef.current) === null || _a === void 0 ? void 0 : _a.removeEventListener('input', eventHandler); };
     }, [inputRef.current]);
     return (React__default.createElement(InputContainerElement, Object.assign({}, props.containerProps, { invert: props.invert, color: props.color, className: `ui-input-container-${containerType} ${(_a = props.containerProps) === null || _a === void 0 ? void 0 : _a.className}` }),
-        props.iconLeft && React__default.createElement(Icon, { color: props.color, name: props.iconLeft, invert: props.invert, width: "25px", height: "25px", style: { marginLeft: '10px' } }),
+        props.iconLeft && React__default.createElement(Icon, { color: props.color, name: props.iconLeft, invert: props.invert, width: "25px", height: "25px", className: "__icon-left" }),
         React__default.createElement(InputElement, Object.assign({}, props, { ref: inputRef })),
         enableClear && React__default.createElement(Button, { buttonType: "icon", icon: "close", onClick: clear, iconSize: "20px", invert: props.invert, style: { margin: '0 10px 0 0', padding: 0 } }),
         props.enableDatepicker && React__default.createElement(Button, { buttonType: "icon", icon: "calendar", invert: props.invert, onClick: (event) => datepicker.open(event.currentTarget), iconSize: "20px", style: { margin: '0 10px 0 0', padding: 0 } }),
-        props.iconRight && React__default.createElement(Icon, { color: props.color, name: props.iconRight, invert: props.invert, width: "25x", height: "25px", style: { marginRight: '10px' } })));
+        props.iconRight && React__default.createElement(Icon, { color: props.color, name: props.iconRight, invert: props.invert, width: "25px", height: "25px", className: "__icon-right" })));
 }
 
 function FormField(props) {
