@@ -12,7 +12,7 @@ interface TabsHeaderProps {
 
 export default function Tabs({ index, children, onTabChange }: TabsHeaderProps): JSX.Element {
 
-    const [tabIndex, setTabIndex] = useState(index || 0);
+    const [tabIndex, setTabIndex] = useState(index === undefined ? 0 : index);
     const selectorController = useAnimation();
     const bodyController = useAnimation();
     const childrenLenght = Array.isArray(children) ? children.length : 1;
@@ -33,7 +33,7 @@ export default function Tabs({ index, children, onTabChange }: TabsHeaderProps):
     }, [tabIndex]);
 
     useEffect(() => {
-        if (index) {
+        if (index !== undefined) {
             setTabIndex(index);
         }
     }, [index]);

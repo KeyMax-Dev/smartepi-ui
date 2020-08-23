@@ -1598,7 +1598,7 @@ function Table({ data, children, loading, config }) {
 }
 
 function Tabs({ index, children, onTabChange }) {
-    const [tabIndex, setTabIndex] = React.useState(index || 0);
+    const [tabIndex, setTabIndex] = React.useState(index === undefined ? 0 : index);
     const selectorController = framerMotion.useAnimation();
     const bodyController = framerMotion.useAnimation();
     const childrenLenght = Array.isArray(children) ? children.length : 1;
@@ -1616,7 +1616,7 @@ function Tabs({ index, children, onTabChange }) {
             onTabChange(tabIndex);
     }, [tabIndex]);
     React.useEffect(() => {
-        if (index) {
+        if (index !== undefined) {
             setTabIndex(index);
         }
     }, [index]);
