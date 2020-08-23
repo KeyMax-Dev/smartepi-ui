@@ -9,7 +9,7 @@ export const InputContainerElement = styled(motion.div)<InputProps>`
     margin: 5px;
     display: flex;
     justify-content: center;
-    align-items: stretch;
+    align-items: center;
     transition: all ${() => getGlobalTheme().transitions.fast};
     
     

@@ -140,7 +140,7 @@ export default function ComponentsLibrary(): JSX.Element {
                 <Button buttonType="solid" text="Solid Secondary" color="secondary" />
                 <Button buttonType="solid" text="Solid Danger" color="danger" />
                 <Button buttonType="solid" text="Solid Danger Disabled" disabled color="danger" />
-                <Button buttonType="solid" text="Solid with Icon" icon="account" />
+                <Button buttonType="solid" text="Solid with Icon" icon="pencil" />
                 <Button buttonType="solid" text="Solid with Icon with iconSize" icon="account" iconSize="80px" />
                 <Button buttonType="outline" text="Outline" />
                 <Button buttonType="outline" text="Outline Disabled" disabled />
@@ -168,11 +168,11 @@ export default function ComponentsLibrary(): JSX.Element {
             <ComponentExpandable componentName="Inputs">
                 <Input />
                 <Input invert />
-                <Input iconRight="account" />
+                <Input iconRight="pencil" />
                 <Input enableClear />
                 <Input enableClear invert />
                 <Input enableDatepicker />
-                <Input enableClear iconLeft="account" />
+                <Input enableClear iconLeft="pencil" />
                 <Input enableClear iconLeft="account" iconRight="account" />
                 <Input containerType="outline" invert />
                 <Input invert containerType="outline" enableClear />
