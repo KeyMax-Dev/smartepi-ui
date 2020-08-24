@@ -277,6 +277,8 @@ class AsideController {
             return;
         this.container = document.createElement('aside');
         this.container.setAttribute('id', this.config.id);
+        this.container.style.position = 'fixed';
+        this.container.style.zIndex = '99';
     }
     renderReactElement() {
         if (this.status === 'opening' || this.status === 'opened') {
@@ -1657,7 +1659,6 @@ const ModalBaseElement = styled.div `
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 99;
 
     .ui-modal-overlay {
         position: absolute;
@@ -1794,8 +1795,7 @@ const OverflowElement = styled(framerMotion.motion.div) `
     opacity: 0;
     max-width: calc(100vw - 20px);
     max-height: calc(100vh - 20px);
-    z-index: 99;
-
+    
     border-radius: ${() => getGlobalTheme().borderRadius};
     box-shadow: ${() => getGlobalTheme().boxShadow.normal};
     background-color: ${() => getGlobalTheme().colors.primary.contrast};
@@ -1969,7 +1969,6 @@ const ToastElement = styled(framerMotion.motion.div) `
     left: calc(50% - 512px);
     padding: 15px;
     bottom: -100px;
-    z-index: 99;
 
     display: flex;
     justify-content: center;

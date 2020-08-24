@@ -12,7 +12,6 @@ export const ToastElement = styled(motion.div)<ToastProps>`
     left: calc(50% - 512px);
     padding: 15px;
     bottom: -100px;
-    z-index: 99;
 
     display: flex;
     justify-content: center;

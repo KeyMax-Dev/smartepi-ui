@@ -84,7 +84,7 @@ export default function ComponentsLibrary(): JSX.Element {
         _setShowComponent({ ...showComponent, ...aux });
     };
 
-    const modal = useModal(<div>Modal Service</div>);
+    const modal = useModal(<div><Input enableDatepicker/></div>);
     modal.onOpen(() => console.log('on open event!'));
     modal.onClose((reason) => console.log('on close event!', reason));
     const toast = useToast(<span>Toast Service</span>);

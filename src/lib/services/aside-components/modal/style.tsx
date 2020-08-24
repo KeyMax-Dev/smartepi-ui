@@ -11,7 +11,6 @@ export const ModalBaseElement = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 99;
 
     .ui-modal-overlay {
         position: absolute;

@@ -47,6 +47,8 @@ export default abstract class AsideController {
         if (this.container || typeof document === 'undefined') return;
         this.container = document.createElement('aside');
         this.container.setAttribute('id', this.config.id);
+        this.container.style.position = 'fixed';
+        this.container.style.zIndex = '99';
     }
 
     protected renderReactElement(): void {
