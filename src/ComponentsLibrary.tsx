@@ -168,7 +168,7 @@ export default function ComponentsLibrary(): JSX.Element {
             <ComponentExpandable componentName="Inputs">
                 <Input />
                 <Input invert />
-                <Input iconRight="pencil" />
+                <Input iconRight="calendar" />
                 <Input enableClear />
                 <Input enableClear invert />
                 <Input enableDatepicker />

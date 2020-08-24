@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { getGlobalTheme } from "../../assets/themes";
 import { InputProps } from './index';
 
-export const InputContainerElement = styled(motion.div)<InputProps>`
+export const InputContainerElement = styled(motion.div) <InputProps>`
     min-width: 300px;
     height: 50px;
     margin: 5px;
@@ -14,32 +14,42 @@ export const InputContainerElement = styled(motion.div)<InputProps>`
     
     
     &&.ui-input-container-outline {
-        background-color: ${({color, invert}): string => getGlobalTheme().colors[color || 'primary'][invert ? 'principal' : 'contrast']};
-        border: 1px solid ${({color, invert}): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}32;
+        background-color: ${({ color, invert }): string => getGlobalTheme().colors[color || 'primary'][invert ? 'principal' : 'contrast']};
+        border: 1px solid ${({ color, invert }): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}32;
         border-radius: ${() => getGlobalTheme().borderRadius};
 
             
         &:focus-within {
             box-shadow: ${() => getGlobalTheme().boxShadow.active};
-            border: 2px solid ${({color, invert}): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
+            border: 2px solid ${({ color, invert }): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
         }
     }
 
     &&.ui-input-container-downline {
         background-color: transparent;
-        border-bottom: 1px solid ${({color, invert}): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}32;
+        border-bottom: 1px solid ${({ color, invert }): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}32;
 
         &:focus-within {
-            border-bottom: 2px solid ${({color, invert}): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
+            border-bottom: 2px solid ${({ color, invert }): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
         }
     }
     
     .__icon-right {
-        margin-right: 5px;
+        margin: 0 5px 0 0;
+        padding: 0;
+
+        .ui-btn-icon {
+            margin: 0 !important;
+        }
     }
 
     .__icon-left {
-        margin-left: 5px;
+        margin: 0 0 0 5px;
+        padding: 0;
+        
+        .ui-btn-icon {
+            margin: 0 !important;
+        }
     }
 
     @media screen and (max-width: 600px) {   
@@ -47,17 +57,17 @@ export const InputContainerElement = styled(motion.div)<InputProps>`
         min-width: 250px;
 
         .__icon-right {
-            margin-right: 3px;
+            margin: 0 3px 0 0;
         }
 
         .__icon-left {
-            margin-left: 3px;
+            margin: 0 0 0 3px;
         }
     }
 `;
 
-export const InputElement = styled(motion.input)<InputProps>`
-    color: ${({color, invert}): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
+export const InputElement = styled(motion.input) <InputProps>`
+    color: ${({ color, invert }): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
     background-color: transparent;
     flex: 1;
     border: none;
@@ -70,7 +80,7 @@ export const InputElement = styled(motion.input)<InputProps>`
     
     &::placeholder {
         transition: all ${() => getGlobalTheme().transitions.avarage};
-        color: ${({color, invert}): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}7A;
+        color: ${({ color, invert }): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}7A;
     }
     &:focus {
         &::placeholder {

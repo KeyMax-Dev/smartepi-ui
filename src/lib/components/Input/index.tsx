@@ -63,8 +63,8 @@ export default function Input(props: InputProps): JSX.Element {
         <InputContainerElement {...props.containerProps} invert={props.invert} color={props.color} className={`ui-input-container-${containerType} ${props.containerProps?.className}`}>
             {props.iconLeft && <Icon color={props.color} name={props.iconLeft} invert={props.invert} width="25px" height="25px" className="__icon-left" />}
             <InputElement {...props} ref={inputRef as React.MutableRefObject<HTMLInputElement>} />
-            {enableClear && <Button buttonType="icon" icon="close" onClick={clear} iconSize="20px" invert={props.invert} style={{ margin: '0 10px 0 0', padding: 0 }} />}
-            {props.enableDatepicker && <Button buttonType="icon" icon="calendar" invert={props.invert} onClick={(event) => datepicker.open(event.currentTarget as HTMLElement)} iconSize="20px" style={{ margin: '0 10px 0 0', padding: 0 }} />}
+            {enableClear && <Button buttonType="icon" icon="close" onClick={clear} iconSize="25px" invert={props.invert} className="__icon-right"/>}
+            {props.enableDatepicker && <Button buttonType="icon" icon="calendar" invert={props.invert} onClick={(event) => datepicker.open(event.currentTarget as HTMLElement)} iconSize="25px" className="__icon-right"/>}
             {props.iconRight && <Icon color={props.color} name={props.iconRight} invert={props.invert} width="25px" height="25px" className="__icon-right" />}
         </InputContainerElement>
     );

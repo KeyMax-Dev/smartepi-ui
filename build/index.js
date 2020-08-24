@@ -999,11 +999,21 @@ const InputContainerElement = styled(framerMotion.motion.div) `
     }
     
     .__icon-right {
-        margin-right: 5px;
+        margin: 0 5px 0 0;
+        padding: 0;
+
+        .ui-btn-icon {
+            margin: 0 !important;
+        }
     }
 
     .__icon-left {
-        margin-left: 5px;
+        margin: 0 0 0 5px;
+        padding: 0;
+        
+        .ui-btn-icon {
+            margin: 0 !important;
+        }
     }
 
     @media screen and (max-width: 600px) {   
@@ -1011,11 +1021,11 @@ const InputContainerElement = styled(framerMotion.motion.div) `
         min-width: 250px;
 
         .__icon-right {
-            margin-right: 3px;
+            margin: 0 3px 0 0;
         }
 
         .__icon-left {
-            margin-left: 3px;
+            margin: 0 0 0 3px;
         }
     }
 `;
@@ -1089,8 +1099,8 @@ function Input(props) {
     return (React__default.createElement(InputContainerElement, Object.assign({}, props.containerProps, { invert: props.invert, color: props.color, className: `ui-input-container-${containerType} ${(_a = props.containerProps) === null || _a === void 0 ? void 0 : _a.className}` }),
         props.iconLeft && React__default.createElement(Icon, { color: props.color, name: props.iconLeft, invert: props.invert, width: "25px", height: "25px", className: "__icon-left" }),
         React__default.createElement(InputElement, Object.assign({}, props, { ref: inputRef })),
-        enableClear && React__default.createElement(Button, { buttonType: "icon", icon: "close", onClick: clear, iconSize: "20px", invert: props.invert, style: { margin: '0 10px 0 0', padding: 0 } }),
-        props.enableDatepicker && React__default.createElement(Button, { buttonType: "icon", icon: "calendar", invert: props.invert, onClick: (event) => datepicker.open(event.currentTarget), iconSize: "20px", style: { margin: '0 10px 0 0', padding: 0 } }),
+        enableClear && React__default.createElement(Button, { buttonType: "icon", icon: "close", onClick: clear, iconSize: "25px", invert: props.invert, className: "__icon-right" }),
+        props.enableDatepicker && React__default.createElement(Button, { buttonType: "icon", icon: "calendar", invert: props.invert, onClick: (event) => datepicker.open(event.currentTarget), iconSize: "25px", className: "__icon-right" }),
         props.iconRight && React__default.createElement(Icon, { color: props.color, name: props.iconRight, invert: props.invert, width: "25px", height: "25px", className: "__icon-right" })));
 }
 
