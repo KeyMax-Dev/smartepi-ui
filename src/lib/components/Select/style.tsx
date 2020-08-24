@@ -53,7 +53,8 @@ export const SelectListElement = styled.div<SelectThemeProps>`
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
-    z-index: 2;
+    z-index: 10;
+    margin-bottom: 15px;
 
     top: 40px;
     left: 4px;

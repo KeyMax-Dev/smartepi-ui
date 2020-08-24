@@ -11,6 +11,8 @@ interface SelectProps<T> {
     loading?: boolean;
     onSelect?: (event: React.MouseEvent<HTMLDivElement>, item: T) => void;
     onSearch?: (value: string) => void;
+    onOpen?: () => void;
+    onClose?: () => void;
     value?: T;
     color?: string;
     invert?: boolean;
@@ -21,14 +23,14 @@ interface SelectProps<T> {
 const SEARCH_LIMIT_TIME = 500;
 let SEARCH_TIMER: number;
 
-export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, value, color, invert, placeholder, containerType }: SelectProps<T>): JSX.Element {
+export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, onOpen, onClose, value, color, invert, placeholder, containerType }: SelectProps<T>): JSX.Element {
 
     const [inputValue, setInputValue] = useState<string>(value ? `${value[dataKey]}` : '');
     const [selected, setSelected] = useState<T | undefined>(value);
     const [opened, setOpened] = useState<boolean>(false);
     const [filteredData, setFilteredData] = useState<T[]>(data);
     const buttonAnimationController = useAnimation();
-    const containerRef = useRef<any>();
+    const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (value) {
@@ -80,12 +82,14 @@ export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, 
         };
 
         if (opened) {
+            if (onOpen) onOpen();
             if (onSearch) onSearch(inputValue);
             buttonAnimationController.start({ rotate: 180, transition: { duration: 0.1, ease: 'backInOut' } });
 
             window.addEventListener('click', closeHandler);
             return () => window.removeEventListener('click', closeHandler);
         } else {
+            if (onClose) onClose();
             if (!selected) {
                 setSelected(value);
                 setInputValue(value ? `${value[dataKey]}` : '');
@@ -95,7 +99,6 @@ export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, 
             }
             buttonAnimationController.start({ rotate: 0, transition: { duration: 0.1, ease: 'backInOut' } });
         }
-
     }, [opened]);
 
     useEffect(() => {

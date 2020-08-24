@@ -1255,7 +1255,8 @@ const SelectListElement = styled.div `
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
-    z-index: 2;
+    z-index: 10;
+    margin-bottom: 15px;
 
     top: 40px;
     left: 4px;
@@ -1306,13 +1307,13 @@ const Spinners = {
 
 const SEARCH_LIMIT_TIME = 500;
 let SEARCH_TIMER;
-function Select({ data, dataKey, loading, onSelect, onSearch, value, color, invert, placeholder, containerType }) {
+function Select({ data, dataKey, loading, onSelect, onSearch, onOpen, onClose, value, color, invert, placeholder, containerType }) {
     const [inputValue, setInputValue] = React.useState(value ? `${value[dataKey]}` : '');
     const [selected, setSelected] = React.useState(value);
     const [opened, setOpened] = React.useState(false);
     const [filteredData, setFilteredData] = React.useState(data);
     const buttonAnimationController = framerMotion.useAnimation();
-    const containerRef = React.useRef();
+    const containerRef = React.useRef(null);
     React.useEffect(() => {
         if (value) {
             setInputValue(`${value[dataKey]}`);
@@ -1352,6 +1353,8 @@ function Select({ data, dataKey, loading, onSelect, onSearch, value, color, inve
             }
         };
         if (opened) {
+            if (onOpen)
+                onOpen();
             if (onSearch)
                 onSearch(inputValue);
             buttonAnimationController.start({ rotate: 180, transition: { duration: 0.1, ease: 'backInOut' } });
@@ -1359,6 +1362,8 @@ function Select({ data, dataKey, loading, onSelect, onSearch, value, color, inve
             return () => window.removeEventListener('click', closeHandler);
         }
         else {
+            if (onClose)
+                onClose();
             if (!selected) {
                 setSelected(value);
                 setInputValue(value ? `${value[dataKey]}` : '');
@@ -1789,6 +1794,7 @@ const OverflowElement = styled(framerMotion.motion.div) `
     opacity: 0;
     max-width: calc(100vw - 20px);
     max-height: calc(100vh - 20px);
+    z-index: 99;
 
     border-radius: ${() => getGlobalTheme().borderRadius};
     box-shadow: ${() => getGlobalTheme().boxShadow.normal};

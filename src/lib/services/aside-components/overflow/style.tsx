@@ -11,6 +11,7 @@ export const OverflowElement = styled(motion.div)`
     opacity: 0;
     max-width: calc(100vw - 20px);
     max-height: calc(100vh - 20px);
+    z-index: 99;
 
     border-radius: ${() => getGlobalTheme().borderRadius};
     box-shadow: ${() => getGlobalTheme().boxShadow.normal};
