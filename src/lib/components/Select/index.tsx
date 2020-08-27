@@ -88,16 +88,18 @@ export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, 
             buttonAnimationController.start({ rotate: 180, transition: { duration: 0.1, ease: 'backInOut' } });
 
             setFilteredData(data);
+            setInputValue('');
 
             window.addEventListener('click', closeHandler);
             return () => window.removeEventListener('click', closeHandler);
         } else {
             if (onClose) onClose();
             if (!selected) {
+                console.log('git', value);
                 setSelected(value);
-                setInputValue(value ? `${value[dataKey]}` : '');
                 setFilteredData(data);
             }
+            setInputValue(value ? `${value[dataKey]}` : '');
             buttonAnimationController.start({ rotate: 0, transition: { duration: 0.1, ease: 'backInOut' } });
         }
     }, [opened]);
