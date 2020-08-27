@@ -49,7 +49,7 @@ export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, 
         const value = `${event.target.value}`;
         setInputValue(value);
         setSelected(undefined);
-        
+
         setFilteredData(data.filter(item => `${item[dataKey]}`.match(value)));
 
         clearTimeout(SEARCH_TIMER);
@@ -103,7 +103,9 @@ export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, 
     }, [opened]);
 
     useEffect(() => {
-        setFilteredData(data.filter(item => `${item[dataKey]}`.match(inputValue)));
+        if (!loading) {
+            setFilteredData(data.filter(item => `${item[dataKey]}`.match(inputValue)));
+        }
     }, [data]);
 
     useEffect(() => {

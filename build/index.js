@@ -1376,7 +1376,9 @@ function Select({ data, dataKey, loading, onSelect, onSearch, onOpen, onClose, v
         }
     }, [opened]);
     React.useEffect(() => {
-        setFilteredData(data.filter(item => `${item[dataKey]}`.match(inputValue)));
+        if (!loading) {
+            setFilteredData(data.filter(item => `${item[dataKey]}`.match(inputValue)));
+        }
     }, [data]);
     React.useEffect(() => {
         setSelected(value);
