@@ -2,7 +2,7 @@
 import { InputProps } from '../Input';
 import InputValidator from '../../services/input-validator/input-validator';
 declare type FormPrototype = {
-    [key: string]: string | number | undefined;
+    [key: string]: string | number | undefined | Date;
 };
 declare type Field<T extends FormPrototype> = {
     initial?: string;

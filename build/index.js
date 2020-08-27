@@ -147,7 +147,7 @@ class Required {
         this.errorName = 'Required';
     }
     validate(text) {
-        return text.length > 1;
+        return text.length > 0;
     }
 }
 class MinLength {
@@ -678,9 +678,9 @@ function Checkbox(props) {
 }
 
 const DatepickerElement = styled.div `
-    width: ${(props) => props.width};
+    width: ${({ width }) => width};
     max-width: 100%;
-    height: ${(props) => props.height};
+    height: ${({ height }) => height};
     max-height: 100%;
     display: flex;
     flex-direction: column;
@@ -785,14 +785,14 @@ const DatepickerElement = styled.div `
     }
 
     .ui-datepicker-list-item-selected {
-        background-color: ${() => getGlobalTheme().colors.secondary.principal};
-        color: ${() => getGlobalTheme().colors.secondary.contrast};
-        -webkit-text-fill-color: ${() => getGlobalTheme().colors.secondary.contrast};
+        background-color: ${() => getGlobalTheme().colors.success.principal};
+        color: ${() => getGlobalTheme().colors.success.contrast};
+        -webkit-text-fill-color: ${() => getGlobalTheme().colors.success.contrast};
 
         &:hover {
-            background-color: ${() => getGlobalTheme().colors.secondary.principal}32;
-            color: ${() => getGlobalTheme().colors.secondary.contrast};
-            -webkit-text-fill-color: ${() => getGlobalTheme().colors.secondary.contrast};
+            background-color: ${() => getGlobalTheme().colors.success.principal}32;
+            color: ${() => getGlobalTheme().colors.success.contrast};
+            -webkit-text-fill-color: ${() => getGlobalTheme().colors.success.contrast};
         }
         
         &::after  {
@@ -800,7 +800,7 @@ const DatepickerElement = styled.div `
             position: absolute;
             width: 100%;
             height: 100%;
-            border: 3px solid ${() => getGlobalTheme().colors.secondary.principal};
+            border: 3px solid ${() => getGlobalTheme().colors.success.principal};
             border-radius: 5px;
             top: -3px;
             left: -3px;
@@ -1082,10 +1082,10 @@ function Input(props) {
             const input = inputRef.current;
             const setValue = (_a = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')) === null || _a === void 0 ? void 0 : _a.set;
             if (setValue) {
-                setValue.call(input, date);
+                setValue.call(input, date.toLocaleDateString());
                 input.dispatchEvent(new Event('input', { bubbles: true }));
                 // eslint-disable-next-line
-                datepicker.close();
+                // datepicker.close();
             }
         }
     };
@@ -1100,7 +1100,7 @@ function Input(props) {
     }, [inputRef.current]);
     return (React__default.createElement(InputContainerElement, Object.assign({}, props.containerProps, { invert: props.invert, color: props.color, className: `ui-input-container-${containerType} ${(_a = props.containerProps) === null || _a === void 0 ? void 0 : _a.className}` }),
         props.iconLeft && React__default.createElement(Icon, { color: props.color, name: props.iconLeft, invert: props.invert, width: "25px", height: "25px", className: "__icon-left" }),
-        React__default.createElement(InputElement, Object.assign({}, props, { ref: inputRef })),
+        React__default.createElement(InputElement, Object.assign({}, props, { ref: inputRef, disabled: props.enableDatepicker })),
         enableClear && React__default.createElement(Button, { buttonType: "icon", icon: "close", onClick: clear, iconSize: "25px", invert: props.invert, className: "__icon-right" }),
         props.enableDatepicker && React__default.createElement(Button, { buttonType: "icon", icon: "calendar", invert: props.invert, onClick: (event) => datepicker.open(event.currentTarget), iconSize: "25px", className: "__icon-right" }),
         props.iconRight && React__default.createElement(Icon, { color: props.color, name: props.iconRight, invert: props.invert, width: "25px", height: "25px", className: "__icon-right" })));
@@ -1358,7 +1358,7 @@ function Select({ data, dataKey, loading, onSelect, onSearch, onOpen, onClose, v
             if (onOpen)
                 onOpen();
             if (onSearch)
-                onSearch(inputValue);
+                onSearch('');
             buttonAnimationController.start({ rotate: 180, transition: { duration: 0.1, ease: 'backInOut' } });
             window.addEventListener('click', closeHandler);
             return () => window.removeEventListener('click', closeHandler);
@@ -1369,10 +1369,7 @@ function Select({ data, dataKey, loading, onSelect, onSearch, onOpen, onClose, v
             if (!selected) {
                 setSelected(value);
                 setInputValue(value ? `${value[dataKey]}` : '');
-                setFilteredData(data.filter(item => `${item[dataKey]}`.match(value ? `${value[dataKey]}` : '')));
-            }
-            else {
-                setFilteredData(data.filter(item => `${item[dataKey]}`.match(inputValue)));
+                setFilteredData(data);
             }
             buttonAnimationController.start({ rotate: 0, transition: { duration: 0.1, ease: 'backInOut' } });
         }
@@ -1383,7 +1380,6 @@ function Select({ data, dataKey, loading, onSelect, onSearch, onOpen, onClose, v
     React.useEffect(() => {
         setSelected(value);
         setInputValue(value ? `${value[dataKey]}` : '');
-        setFilteredData(data.filter(item => `${item[dataKey]}`.match(value ? `${value[dataKey]}` : '')));
     }, [value]);
     return (React__default.createElement(SelectContainerElement, { color: color, invert: invert, ref: containerRef, className: `ui-select-container-${containerType || 'downline'}` },
         React__default.createElement(InputElement, { value: inputValue, onChange: inputChangeHandler, onFocus: focusHandler, placeholder: placeholder }),

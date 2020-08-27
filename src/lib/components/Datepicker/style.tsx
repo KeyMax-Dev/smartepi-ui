@@ -8,9 +8,9 @@ export interface DatepickerElementProps {
 }
 
 export const DatepickerElement = styled.div<DatepickerElementProps>`
-    width: ${(props) => props.width};
+    width: ${({ width }) => width};
     max-width: 100%;
-    height: ${(props) => props.height};
+    height: ${({ height }) => height};
     max-height: 100%;
     display: flex;
     flex-direction: column;
@@ -115,14 +115,14 @@ export const DatepickerElement = styled.div<DatepickerElementProps>`
     }
 
     .ui-datepicker-list-item-selected {
-        background-color: ${() => getGlobalTheme().colors.secondary.principal};
-        color: ${() => getGlobalTheme().colors.secondary.contrast};
-        -webkit-text-fill-color: ${() => getGlobalTheme().colors.secondary.contrast};
+        background-color: ${() => getGlobalTheme().colors.success.principal};
+        color: ${() => getGlobalTheme().colors.success.contrast};
+        -webkit-text-fill-color: ${() => getGlobalTheme().colors.success.contrast};
 
         &:hover {
-            background-color: ${() => getGlobalTheme().colors.secondary.principal}32;
-            color: ${() => getGlobalTheme().colors.secondary.contrast};
-            -webkit-text-fill-color: ${() => getGlobalTheme().colors.secondary.contrast};
+            background-color: ${() => getGlobalTheme().colors.success.principal}32;
+            color: ${() => getGlobalTheme().colors.success.contrast};
+            -webkit-text-fill-color: ${() => getGlobalTheme().colors.success.contrast};
         }
         
         &::after  {
@@ -130,7 +130,7 @@ export const DatepickerElement = styled.div<DatepickerElementProps>`
             position: absolute;
             width: 100%;
             height: 100%;
-            border: 3px solid ${() => getGlobalTheme().colors.secondary.principal};
+            border: 3px solid ${() => getGlobalTheme().colors.success.principal};
             border-radius: 5px;
             top: -3px;
             left: -3px;

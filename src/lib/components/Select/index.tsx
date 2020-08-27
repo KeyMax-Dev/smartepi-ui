@@ -83,7 +83,7 @@ export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, 
 
         if (opened) {
             if (onOpen) onOpen();
-            if (onSearch) onSearch(inputValue);
+            if (onSearch) onSearch('');
             buttonAnimationController.start({ rotate: 180, transition: { duration: 0.1, ease: 'backInOut' } });
 
             window.addEventListener('click', closeHandler);
@@ -93,9 +93,7 @@ export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, 
             if (!selected) {
                 setSelected(value);
                 setInputValue(value ? `${value[dataKey]}` : '');
-                setFilteredData(data.filter(item => `${item[dataKey]}`.match(value ? `${value[dataKey]}` : '')));
-            } else {
-                setFilteredData(data.filter(item => `${item[dataKey]}`.match(inputValue)));
+                setFilteredData(data);
             }
             buttonAnimationController.start({ rotate: 0, transition: { duration: 0.1, ease: 'backInOut' } });
         }
@@ -108,7 +106,6 @@ export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, 
     useEffect(() => {
         setSelected(value);
         setInputValue(value ? `${value[dataKey]}` : '');
-        setFilteredData(data.filter(item => `${item[dataKey]}`.match(value ? `${value[dataKey]}` : '')));
     }, [value]);
 
     return (

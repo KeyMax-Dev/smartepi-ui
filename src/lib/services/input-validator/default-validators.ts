@@ -3,7 +3,7 @@ import InputValidator from "./input-validator";
 class Required implements InputValidator {
     errorName = 'Required';
     validate(text: string): boolean {
-        return text.length > 1;
+        return text.length > 0;
     }
 }
 
