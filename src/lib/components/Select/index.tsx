@@ -49,10 +49,11 @@ export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, 
         const value = `${event.target.value}`;
         setInputValue(value);
         setSelected(undefined);
+        
+        setFilteredData(data.filter(item => `${item[dataKey]}`.match(value)));
 
         clearTimeout(SEARCH_TIMER);
         SEARCH_TIMER = setTimeout(() => {
-            setFilteredData(data.filter(item => `${item[dataKey]}`.match(value)));
             if (onSearch) onSearch(value);
         }, SEARCH_LIMIT_TIME);
     };
@@ -85,6 +86,8 @@ export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, 
             if (onOpen) onOpen();
             if (onSearch) onSearch('');
             buttonAnimationController.start({ rotate: 180, transition: { duration: 0.1, ease: 'backInOut' } });
+
+            setFilteredData(data);
 
             window.addEventListener('click', closeHandler);
             return () => window.removeEventListener('click', closeHandler);

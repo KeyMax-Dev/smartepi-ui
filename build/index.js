@@ -1332,9 +1332,9 @@ function Select({ data, dataKey, loading, onSelect, onSearch, onOpen, onClose, v
         const value = `${event.target.value}`;
         setInputValue(value);
         setSelected(undefined);
+        setFilteredData(data.filter(item => `${item[dataKey]}`.match(value)));
         clearTimeout(SEARCH_TIMER);
         SEARCH_TIMER = setTimeout(() => {
-            setFilteredData(data.filter(item => `${item[dataKey]}`.match(value)));
             if (onSearch)
                 onSearch(value);
         }, SEARCH_LIMIT_TIME);
@@ -1360,6 +1360,7 @@ function Select({ data, dataKey, loading, onSelect, onSearch, onOpen, onClose, v
             if (onSearch)
                 onSearch('');
             buttonAnimationController.start({ rotate: 180, transition: { duration: 0.1, ease: 'backInOut' } });
+            setFilteredData(data);
             window.addEventListener('click', closeHandler);
             return () => window.removeEventListener('click', closeHandler);
         }
