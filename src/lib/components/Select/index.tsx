@@ -50,7 +50,7 @@ export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, 
         setInputValue(value);
         setSelected(undefined);
 
-        setFilteredData(data.filter(item => `${item[dataKey]}`.match(value)));
+        setFilteredData(data.filter(item => `${item[dataKey]}`.toLocaleLowerCase().match(value.toLocaleLowerCase())));
 
         clearTimeout(SEARCH_TIMER);
         SEARCH_TIMER = setTimeout(() => {
@@ -106,7 +106,7 @@ export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, 
 
     useEffect(() => {
         if (!loading) {
-            setFilteredData(data.filter(item => `${item[dataKey]}`.match(inputValue)));
+            setFilteredData(data.filter(item => `${item[dataKey]}`.toLocaleLowerCase().match(inputValue.toLocaleLowerCase())));
         }
     }, [data]);
 

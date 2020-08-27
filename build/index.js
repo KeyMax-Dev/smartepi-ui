@@ -1332,7 +1332,7 @@ function Select({ data, dataKey, loading, onSelect, onSearch, onOpen, onClose, v
         const value = `${event.target.value}`;
         setInputValue(value);
         setSelected(undefined);
-        setFilteredData(data.filter(item => `${item[dataKey]}`.match(value)));
+        setFilteredData(data.filter(item => `${item[dataKey]}`.toLocaleLowerCase().match(value.toLocaleLowerCase())));
         clearTimeout(SEARCH_TIMER);
         SEARCH_TIMER = setTimeout(() => {
             if (onSearch)
@@ -1379,7 +1379,7 @@ function Select({ data, dataKey, loading, onSelect, onSearch, onOpen, onClose, v
     }, [opened]);
     React.useEffect(() => {
         if (!loading) {
-            setFilteredData(data.filter(item => `${item[dataKey]}`.match(inputValue)));
+            setFilteredData(data.filter(item => `${item[dataKey]}`.toLocaleLowerCase().match(inputValue.toLocaleLowerCase())));
         }
     }, [data]);
     React.useEffect(() => {
