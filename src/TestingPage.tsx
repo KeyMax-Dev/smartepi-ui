@@ -38,6 +38,10 @@ export default function TestingPage(): JSX.Element {
         { key: 'date', validators: [new Validators.Required()], inputProps: { placeholder: 'date', containerType: 'outline', enableDatepicker: true } },
     ]);
 
+    const formConfirmHandler = (): void => {
+        console.log(getErrors(), getValues());
+    };
+
     return (
         <div>
             <StyledDiv>
@@ -45,7 +49,7 @@ export default function TestingPage(): JSX.Element {
                 <Select<DataType> containerType="outline" dataKey="name" data={DATA} onSearch={(value) => console.log(value)} placeholder="placeholder" />
             </StyledDiv>
             {form}
-            <Button text="validate" onClick={() => console.log(getErrors(), getValues())} />
+            <Button text="validate" onClick={formConfirmHandler} />
             <Button text="open toast" onClick={() => toast.open()} />
         </div>
     );

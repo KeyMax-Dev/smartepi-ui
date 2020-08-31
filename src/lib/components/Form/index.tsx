@@ -17,6 +17,7 @@ type FieldState = {
     hasError: false | string[];
     validated?: boolean;
     value: string;
+    validators: InputValidator[];
 }
 
 type FieldStates<T extends FormPrototype> = { [K in keyof T]: FieldState };
@@ -33,7 +34,7 @@ export default function useForm<T extends FormPrototype>(fields: Field<T>[]): Fo
 
     const [fieldStates, setFieldStates] = useState<{ [K in keyof T]: FieldState }>(
         fields.reduce((obj, cur) => ({ ...obj,
-            [cur.key]: { value: cur.initial || '', hasError: validate(cur.initial || '', ...cur.validators) } }),
+            [cur.key]: { value: cur.initial || '', hasError: validate(cur.initial || '', ...cur.validators), validators: cur.validators } }),
             {} as { [K in keyof T]: FieldState })
     );
 
@@ -63,6 +64,7 @@ export default function useForm<T extends FormPrototype>(fields: Field<T>[]): Fo
         let newFieldStates: FieldStates<T> = {} as FieldStates<T>;
         let hasError: { [K in keyof T]?: string[] } = {};
         for (const key in fieldStates) {
+            fieldStates[key].hasError = validate(fieldStates[key].value, ...fieldStates[key].validators);
             const state = { ...fieldStates[key], validated: true };
             newFieldStates = { ...newFieldStates, [key]: state };
             if (fieldStates[key].hasError) hasError = { ...hasError, [key]: fieldStates[key].hasError };

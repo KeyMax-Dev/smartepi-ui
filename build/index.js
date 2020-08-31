@@ -1147,7 +1147,7 @@ function FormField(props) {
 }
 
 function useForm(fields) {
-    const [fieldStates, setFieldStates] = React.useState(fields.reduce((obj, cur) => (Object.assign(Object.assign({}, obj), { [cur.key]: { value: cur.initial || '', hasError: validate(cur.initial || '', ...cur.validators) } })), {}));
+    const [fieldStates, setFieldStates] = React.useState(fields.reduce((obj, cur) => (Object.assign(Object.assign({}, obj), { [cur.key]: { value: cur.initial || '', hasError: validate(cur.initial || '', ...cur.validators), validators: cur.validators } })), {}));
     const validationChangeHandler = (key, hasError) => {
         const state = Object.assign(Object.assign({}, fieldStates[key]), { hasError });
         setFieldStates(Object.assign(Object.assign({}, fieldStates), { [key]: state }));
@@ -1161,6 +1161,7 @@ function useForm(fields) {
         let newFieldStates = {};
         let hasError = {};
         for (const key in fieldStates) {
+            fieldStates[key].hasError = validate(fieldStates[key].value, ...fieldStates[key].validators);
             const state = Object.assign(Object.assign({}, fieldStates[key]), { validated: true });
             newFieldStates = Object.assign(Object.assign({}, newFieldStates), { [key]: state });
             if (fieldStates[key].hasError)

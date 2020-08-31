@@ -14,6 +14,7 @@ declare type FieldState = {
     hasError: false | string[];
     validated?: boolean;
     value: string;
+    validators: InputValidator[];
 };
 declare type FieldStates<T extends FormPrototype> = {
     [K in keyof T]: FieldState;
