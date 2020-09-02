@@ -1577,8 +1577,8 @@ const TableBodyElement = styled.tbody `
 `;
 const TableColumnElement = styled.td `
     flex: ${({ flex }) => flex || 'initial'};
-    min-width: ${({ minwidth: minWidth }) => minWidth || 'initial'};
-    max-width: ${({ maxwidth: maxWidth }) => maxWidth || 'initial'};
+    min-width: ${({ minwidth }) => minwidth || 'initial'} !important;
+    max-width: ${({ maxwidth }) => maxwidth || 'initial'} !important;
     display: flex;
     justify-content: center;
     align-items: center;

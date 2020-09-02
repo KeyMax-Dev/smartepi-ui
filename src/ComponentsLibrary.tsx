@@ -231,10 +231,10 @@ export default function ComponentsLibrary(): JSX.Element {
             </ComponentExpandable>
             <ComponentExpandable componentName="Table">
                 <Table data={TableData} >
-                    <TableColumn name="ID" key="id" minwidth="100px">
+                    <TableColumn name="ID" key="id" minwidth="300px">
                         {(item) => <div>{item.id}</div>}
                     </TableColumn>
-                    <TableColumn name="Data" key="data" flex={1} minwidth="300px">
+                    <TableColumn name="Data" key="data" flex={1} maxwidth="100px" minwidth="100px">
                         {(item) =>
                             <div style={{ width: '100%', display: 'flex', justifyContent: 'space-around' }}>
                                 <span><b>Value1:</b> {item.data.value1}</span>
