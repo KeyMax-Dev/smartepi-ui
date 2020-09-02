@@ -419,6 +419,8 @@ const ChevronRightSVG = React__default.createElement("svg", { xmlns: "http://www
     React__default.createElement("path", { d: "M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" }));
 const ChevronUpSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z" }));
+const ClockCheckSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
+    React__default.createElement("path", { d: "M23.5 17L18.5 22L15 18.5L16.5 17L18.5 19L22 15.5L23.5 17M13.1 19.9C12.7 20 12.4 20 12 20C7.6 20 4 16.4 4 12S7.6 4 12 4 20 7.6 20 12C20 12.4 20 12.7 19.9 13.1C20.6 13.2 21.2 13.4 21.8 13.7C21.9 13.1 22 12.6 22 12C22 6.5 17.5 2 12 2S2 6.5 2 12C2 17.5 6.5 22 12 22C12.6 22 13.2 21.9 13.7 21.8C13.4 21.3 13.2 20.6 13.1 19.9M15.6 14.1L12.5 12.3V7H11V13L14.5 15.1C14.8 14.7 15.2 14.4 15.6 14.1Z" }));
 const CloseSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" }));
 const CloudSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
@@ -522,6 +524,7 @@ const Icons = {
     chevronLeft: ChevronLeftSVG,
     chevronRight: ChevronRightSVG,
     chevronUp: ChevronUpSVG,
+    clockCheck: ClockCheckSVG,
     close: CloseSVG,
     cloud: CloudSVG,
     cloudAlert: CloudAlertSVG,
@@ -577,6 +580,136 @@ function Badge(props) {
     return (React__default.createElement(BadgeElement, Object.assign({}, props, { color: color }),
         props.icon && React__default.createElement(Icon, { className: "ui-badge-icon", name: props.icon, invert: true, width: "15pt", height: "unset", color: color }),
         props.text && React__default.createElement("span", { className: "ui-badge-text" }, props.text)));
+}
+
+const IconButton = styled(framerMotion.motion.button) `
+    all: unset;
+    background: transparent;
+    color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
+    -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
+    padding: 5px;
+    border-radius: ${() => getGlobalTheme().borderRadius};
+    margin: 3px;
+    transition: all ${() => getGlobalTheme().transitions.fast};
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    &:active {
+        transform: scale(0.96);
+    }
+
+    span {
+        max-width: 80px;
+        text-align: center;
+        font-size: calc(${() => getGlobalTheme().font.h2.fontSize} * 0.45);
+        font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
+        text-overflow: ellipsis;
+        overflow: hidden;
+        text-transform: uppercase;
+    }
+
+    .ui-btn-icon {
+        flex: 1;
+        margin: 5px;
+    }
+`;
+const BaseButton = styled(framerMotion.motion.button) `
+    all: unset;
+    padding: 10px 25px;
+    min-height: 38px;
+    border-radius: ${() => getGlobalTheme().borderRadius};
+    margin: 3px;
+    transition: all ${() => getGlobalTheme().transitions.fast};
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    &&.ui-btn-outline {    
+        background: transparent;
+        color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
+        -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
+        border: 1px solid ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
+
+        &:active {
+            background: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']}20;
+        }
+
+        &:disabled {
+            opacity: 0.15;
+            cursor: default;
+
+            &:active {
+                transform: none;
+                background: transparent;
+            }
+        }
+
+        span {
+            max-width: 300px;
+            flex: 1;
+            text-align: center;
+        }
+    }
+
+    &&.ui-btn-solid {
+        background: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
+        -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'principal' : 'contrast'] : getGlobalTheme().colors['primary'][props.invert ? 'principal' : 'contrast']};
+        border: 1px solid transparent;
+        box-shadow: ${() => getGlobalTheme().boxShadow.normal};
+
+        &:active {
+            box-shadow: ${() => getGlobalTheme().boxShadow.active};
+            transform: scale(0.96);
+        }
+
+        &:disabled {
+            opacity: 0.3;
+            cursor: default;
+            box-shadow: none;
+            &:active {
+                transform: none;
+                box-shadow: none;
+            }
+        }
+    
+        span {
+            max-width: 300px;
+            flex: 1;
+            text-align: center;
+            color: ${(props) => props.color ? getGlobalTheme().colors[props.color].contrast : getGlobalTheme().colors['primary'].contrast};
+        }
+    }
+
+    .ui-btn-solid-icon,
+    .ui-btn-outline-icon {
+        margin-right: 15px
+    }
+`;
+
+function Button(props) {
+    const buttonType = props.buttonType ? props.buttonType : 'solid';
+    switch (buttonType) {
+        case 'icon':
+            if (!!!props.icon)
+                throw new Error('Square button icon not provided');
+            return (React__default.createElement(IconButton, Object.assign({}, props),
+                React__default.createElement(Icon, { name: props.icon, color: props.color, invert: props.invert, height: props.iconSize, width: props.iconSize, className: "ui-btn-icon" }),
+                props.text && React__default.createElement("span", null, props.text)));
+        case 'outline':
+        case 'solid':
+        default:
+            return (React__default.createElement(BaseButton, Object.assign({}, props, { className: `ui-btn-${buttonType} ${props.className}` }),
+                props.icon && React__default.createElement(Icon, { name: props.icon, color: props.color, invert: (buttonType === 'solid' || props.invert), height: props.iconSize, width: props.iconSize, className: `ui-btn-${buttonType}-icon` }),
+                props.text && React__default.createElement("span", { className: `ui-btn-${buttonType}-text` }, props.text)));
+    }
 }
 
 const CardBaseElement = styled(framerMotion.motion.div) `
@@ -2082,136 +2215,6 @@ class ToastController extends AsideController {
 function useToast(content, options) {
     const [toast] = React.useState(new ToastController(content, options));
     return toast;
-}
-
-const IconButton = styled(framerMotion.motion.button) `
-    all: unset;
-    background: transparent;
-    color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
-    -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
-    padding: 5px;
-    border-radius: ${() => getGlobalTheme().borderRadius};
-    margin: 3px;
-    transition: all ${() => getGlobalTheme().transitions.fast};
-    cursor: pointer;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-
-    &:active {
-        transform: scale(0.96);
-    }
-
-    span {
-        max-width: 80px;
-        text-align: center;
-        font-size: calc(${() => getGlobalTheme().font.h2.fontSize} * 0.45);
-        font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
-        text-overflow: ellipsis;
-        overflow: hidden;
-        text-transform: uppercase;
-    }
-
-    .ui-btn-icon {
-        flex: 1;
-        margin: 5px;
-    }
-`;
-const BaseButton = styled(framerMotion.motion.button) `
-    all: unset;
-    padding: 10px 25px;
-    min-height: 38px;
-    border-radius: ${() => getGlobalTheme().borderRadius};
-    margin: 3px;
-    transition: all ${() => getGlobalTheme().transitions.fast};
-    cursor: pointer;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-
-    &&.ui-btn-outline {    
-        background: transparent;
-        color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
-        -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
-        border: 1px solid ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
-
-        &:active {
-            background: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']}20;
-        }
-
-        &:disabled {
-            opacity: 0.15;
-            cursor: default;
-
-            &:active {
-                transform: none;
-                background: transparent;
-            }
-        }
-
-        span {
-            max-width: 300px;
-            flex: 1;
-            text-align: center;
-        }
-    }
-
-    &&.ui-btn-solid {
-        background: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'contrast' : 'principal'] : getGlobalTheme().colors['primary'][props.invert ? 'contrast' : 'principal']};
-        -webkit-text-fill-color: ${(props) => props.color ? getGlobalTheme().colors[props.color][props.invert ? 'principal' : 'contrast'] : getGlobalTheme().colors['primary'][props.invert ? 'principal' : 'contrast']};
-        border: 1px solid transparent;
-        box-shadow: ${() => getGlobalTheme().boxShadow.normal};
-
-        &:active {
-            box-shadow: ${() => getGlobalTheme().boxShadow.active};
-            transform: scale(0.96);
-        }
-
-        &:disabled {
-            opacity: 0.3;
-            cursor: default;
-            box-shadow: none;
-            &:active {
-                transform: none;
-                box-shadow: none;
-            }
-        }
-    
-        span {
-            max-width: 300px;
-            flex: 1;
-            text-align: center;
-            color: ${(props) => props.color ? getGlobalTheme().colors[props.color].contrast : getGlobalTheme().colors['primary'].contrast};
-        }
-    }
-
-    .ui-btn-solid-icon,
-    .ui-btn-outline-icon {
-        margin-right: 15px
-    }
-`;
-
-function Button(props) {
-    const buttonType = props.buttonType ? props.buttonType : 'solid';
-    switch (buttonType) {
-        case 'icon':
-            if (!!!props.icon)
-                throw new Error('Square button icon not provided');
-            return (React__default.createElement(IconButton, Object.assign({}, props),
-                React__default.createElement(Icon, { name: props.icon, color: props.color, invert: props.invert, height: props.iconSize, width: props.iconSize, className: "ui-btn-icon" }),
-                props.text && React__default.createElement("span", null, props.text)));
-        case 'outline':
-        case 'solid':
-        default:
-            return (React__default.createElement(BaseButton, Object.assign({}, props, { className: `ui-btn-${buttonType} ${props.className}` }),
-                props.icon && React__default.createElement(Icon, { name: props.icon, color: props.color, invert: (buttonType === 'solid' || props.invert), height: props.iconSize, width: props.iconSize, className: `ui-btn-${buttonType}-icon` }),
-                props.text && React__default.createElement("span", { className: `ui-btn-${buttonType}-text` }, props.text)));
-    }
 }
 
 exports.Animations = Animations;
