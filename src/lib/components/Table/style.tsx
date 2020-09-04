@@ -6,6 +6,7 @@ import { getGlobalTheme } from "../../assets/themes";
 export const TableElement = styled.table`
     flex: 1 1 100%;
     width: 100%;
+    height: 100%;
     min-height: 100px;
     justify-self: flex-start;
     align-self: flex-start;
@@ -88,6 +89,18 @@ export const TableBodyElement = styled.tbody`
         border-bottom: 1px solid ${() => getGlobalTheme().colors.primary.principal}32;
         * {
             max-width: 100%;
+        }
+    }
+
+    .ui-table-inner-loading-container {
+        border-bottom: unset;
+        margin: 15px 0;
+
+        td {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center;
         }
     }
 

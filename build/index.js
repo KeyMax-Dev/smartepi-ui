@@ -1508,6 +1508,7 @@ function Tab(props) {
 const TableElement = styled.table `
     flex: 1 1 100%;
     width: 100%;
+    height: 100%;
     min-height: 100px;
     justify-self: flex-start;
     align-self: flex-start;
@@ -1591,6 +1592,18 @@ const TableBodyElement = styled.tbody `
         }
     }
 
+    .ui-table-inner-loading-container {
+        border-bottom: unset;
+        margin: 15px 0;
+
+        td {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center;
+        }
+    }
+
     @media screen and (max-width: 600px) {
         top: 40px;
         font-size: 0.8rem;
@@ -1619,6 +1632,7 @@ const DEFAULT_TABLE_CONFIG = {
     rowProps: {},
     rowEvents: {},
     loadingMessage: 'Carregando dados...',
+    innerLoadingMessage: 'Carregando mais dados...',
     emptyMessage: 'Nenhum dado para ser exibido.'
 };
 const mapChildren = (children) => {
@@ -1643,16 +1657,22 @@ function Table({ data, children, loading, config }) {
         return React__default.createElement("tr", Object.assign({ key: index }, baseConfig.rowProps, events), mappedChildren.map((column) => React__default.cloneElement(column, column.props, column.props.children(element, index))));
     };
     return (React__default.createElement(TableElement, { className: "ui-table" },
-        (data.length > 0 && !loading) &&
+        (data.length > 0) &&
             React__default.createElement(TableHeaderElement, { className: "ui-table-header" },
                 React__default.createElement("tr", null, mappedChildren.map((child) => React__default.createElement("th", Object.assign({ key: child.props.name, style: { flex: child.props.flex, minWidth: child.props.minwidth, maxWidth: child.props.maxwidth } }, child.props), child.props.name)))),
-        (data.length > 0 && !loading) &&
-            React__default.createElement(TableBodyElement, { onScroll: baseConfig.onScroll, className: "ui-table-body" }, data.map(renderLine)),
+        (data.length > 0) &&
+            React__default.createElement(TableBodyElement, { onScroll: baseConfig.onScroll, className: "ui-table-body" },
+                data.map(renderLine),
+                loading &&
+                    React__default.createElement("tr", { className: "ui-table-inner-loading-container" },
+                        React__default.createElement("td", null,
+                            React__default.createElement(Spinners.circles, { width: "100px", height: "100px" }),
+                            baseConfig.innerLoadingMessage))),
         (data.length === 0 && !loading) &&
             React__default.createElement(framerMotion.motion.tbody, { className: "ui-table-loading-container" },
                 React__default.createElement("tr", null,
                     React__default.createElement("td", null, baseConfig.emptyMessage))),
-        loading &&
+        (data.length === 0 && loading) &&
             React__default.createElement(framerMotion.motion.tbody, { className: "ui-table-loading-container" },
                 React__default.createElement("tr", null,
                     React__default.createElement("td", null,

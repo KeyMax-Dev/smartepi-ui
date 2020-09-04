@@ -1,4 +1,4 @@
-import { Select, useForm, Validators, Button, useToast } from './lib';
+import { Select, useForm, Validators, Button, useToast, Table, TableColumn } from './lib';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
@@ -25,11 +25,22 @@ type FormType = {
     date: Date;
 }
 
+const TableContainer = styled.div`
+    width: 100%;
+    height: 400px;
+`;
+
+const TableData = [
+    { id: 0, data: { value1: 'data1', value2: 'data2' } },
+    { id: 2, data: { value1: 'data3', value2: 'data4' } },
+    { id: 3, data: { value1: 'data5', value2: 'data6' } },
+];
+
 export default function TestingPage(): JSX.Element {
     const [selected, setSelected] = useState<DataType>();
 
-    const toast = useToast(<span></span>, { color: 'danger'});
-    
+    const toast = useToast(<span></span>, { color: 'danger' });
+
     toast.setContent('Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam dolorem nam ducimus, laudantium eos distinctio, architecto doloremque, mollitia non aliquam fugiat? Aperiam rerum obcaecati reprehenderit dignissimos aut beatae adipisci voluptatibus.');
 
     const [form, getErrors, getValues] = useForm<FormType>([
@@ -51,6 +62,22 @@ export default function TestingPage(): JSX.Element {
             {form}
             <Button text="validate" onClick={formConfirmHandler} />
             <Button text="open toast" onClick={() => toast.open()} />
+
+            <TableContainer>
+                <Table data={[]}>
+                    <TableColumn name="ID" key="id" minwidth="300px">
+                        {(item) => <div>{item.id}</div>}
+                    </TableColumn>
+                    <TableColumn name="Data" key="data" flex={1} maxwidth="100px" minwidth="100px">
+                        {(item) =>
+                            <div style={{ width: '100%', display: 'flex', justifyContent: 'space-around' }}>
+                                <span><b>Value1:</b> {item.data.value1}</span>
+                                <span><b>Value2:</b> {item.data.value2}</span>
+                            </div>
+                        }
+                    </TableColumn>
+                </Table>
+            </TableContainer>
         </div>
     );
 }

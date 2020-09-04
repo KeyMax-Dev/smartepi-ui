@@ -20,6 +20,7 @@ declare type TableConfig = {
     rowEvents: TableRowEvents;
     onScroll?: (event: React.UIEvent<HTMLTableSectionElement>) => void;
     loadingMessage: string;
+    innerLoadingMessage: string;
     emptyMessage: string;
 };
 interface TableProps {

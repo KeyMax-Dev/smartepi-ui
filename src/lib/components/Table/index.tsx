@@ -20,6 +20,7 @@ type TableConfig = {
     rowEvents: TableRowEvents;
     onScroll?: (event: React.UIEvent<HTMLTableSectionElement>) => void;
     loadingMessage: string;
+    innerLoadingMessage: string;
     emptyMessage: string;
 }
 
@@ -27,6 +28,7 @@ const DEFAULT_TABLE_CONFIG: TableConfig = {
     rowProps: {},
     rowEvents: {},
     loadingMessage: 'Carregando dados...',
+    innerLoadingMessage: 'Carregando mais dados...',
     emptyMessage: 'Nenhum dado para ser exibido.'
 };
 
@@ -66,16 +68,24 @@ export default function Table({ data, children, loading, config }: TableProps): 
 
     return (
         <TableElement className="ui-table">
-            {(data.length > 0 && !loading) &&
+            {(data.length > 0) &&
                 <TableHeaderElement className="ui-table-header">
                     <tr>
                         {mappedChildren.map((child: TableColumnReactElement) => <th key={child.props.name} style={{ flex: child.props.flex, minWidth: child.props.minwidth, maxWidth: child.props.maxwidth }} {...child.props}>{child.props.name}</th>)}
                     </tr>
                 </TableHeaderElement>
             }
-            {(data.length > 0 && !loading) &&
+            {(data.length > 0) &&
                 <TableBodyElement onScroll={baseConfig.onScroll} className="ui-table-body">
                     {data.map(renderLine)}
+                    {loading &&
+                        <tr className="ui-table-inner-loading-container">
+                            <td>
+                                <Spinners.circles width="100px" height="100px" />
+                                {baseConfig.innerLoadingMessage}
+                            </td>
+                        </tr>
+                    }
                 </TableBodyElement>
             }
             {(data.length === 0 && !loading) &&
@@ -85,7 +95,7 @@ export default function Table({ data, children, loading, config }: TableProps): 
                     </td></tr>
                 </motion.tbody>
             }
-            {loading &&
+            {(data.length === 0 && loading) &&
                 <motion.tbody className="ui-table-loading-container">
                     <tr><td>
                         <Spinners.circles width="200px" height="200px" />
