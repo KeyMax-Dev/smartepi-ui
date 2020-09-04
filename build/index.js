@@ -1124,7 +1124,7 @@ function Input(props) {
             const input = inputRef.current;
             const setValue = (_a = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')) === null || _a === void 0 ? void 0 : _a.set;
             if (setValue) {
-                setValue.call(input, date.toLocaleDateString());
+                setValue.call(input, date.toLocaleDateString('pt-br'));
                 input.dispatchEvent(new Event('input', { bubbles: true }));
                 // eslint-disable-next-line
                 // datepicker.close();
