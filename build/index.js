@@ -492,6 +492,8 @@ const LinuxSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org
 const ListSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M3,4H7V8H3V4M9,5V7H21V5H9M3,10H7V14H3V10M9,11V13H21V11H9M3,16H7V20H3V16M9,17V19H21V17H9" }));
 const ListCheckSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
+    React__default.createElement("path", { d: "M14,10H2V12H14V10M14,6H2V8H14V6M2,16H10V14H2V16M21.5,11.5L23,13L16,20L11.5,15.5L13,14L16,17L21.5,11.5Z" }));
+const ListSelectSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M3,5H9V11H3V5M5,7V9H7V7H5M11,7H21V9H11V7M11,15H21V17H11V15M5,20L1.5,16.5L2.91,15.09L5,17.17L9.59,12.59L11,14L5,20Z" }));
 const MagnifySVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" }));
@@ -581,6 +583,7 @@ const Icons = {
     linux: LinuxSVG,
     list: ListSVG,
     listCheck: ListCheckSVG,
+    listSelect: ListSelectSVG,
     magnify: MagnifySVG,
     mapMarker: MapMarkerSVG,
     microsoftWindows: MicrosoftWindowsSVG,
