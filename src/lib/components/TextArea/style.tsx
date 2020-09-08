@@ -18,7 +18,7 @@ export const TextAreaContainerElement = styled(motion.div)<TextAreaContainerProp
     width: fit-content;
     max-width: 100%;
 
-    &&.ui-input-container-outline {
+    &&.ui-textarea-container-outline {
         background-color: ${({ color, invert }): string => getGlobalTheme().colors[color || 'primary'][invert ? 'principal' : 'contrast']};
         border: 1px solid ${({ color, invert }): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}32;
         border-radius: ${() => getGlobalTheme().borderRadius};
@@ -30,7 +30,7 @@ export const TextAreaContainerElement = styled(motion.div)<TextAreaContainerProp
         }
     }
 
-    &&.ui-input-container-downline {
+    &&.ui-textarea-container-downline {
         background-color: transparent;
         border-bottom: 1px solid ${({ color, invert }): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}32;
 

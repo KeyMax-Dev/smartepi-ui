@@ -1155,7 +1155,7 @@ function Input(props) {
         (_a = inputRef.current) === null || _a === void 0 ? void 0 : _a.addEventListener('input', eventHandler);
         return () => { var _a; return (_a = inputRef.current) === null || _a === void 0 ? void 0 : _a.removeEventListener('input', eventHandler); };
     }, [inputRef.current]);
-    return (React__default.createElement(InputContainerElement, Object.assign({}, props.containerProps, { invert: props.invert, color: props.color, className: `ui-input-container-${containerType} ${(_a = props.containerProps) === null || _a === void 0 ? void 0 : _a.className}` }),
+    return (React__default.createElement(InputContainerElement, Object.assign({}, props.containerProps, { invert: props.invert, color: props.color, className: `ui-input-container-${containerType} ${((_a = props.containerProps) === null || _a === void 0 ? void 0 : _a.className) || ''}` }),
         props.iconLeft && React__default.createElement(Icon, { color: props.color, name: props.iconLeft, invert: props.invert, width: "25px", height: "25px", className: "__icon-left" }),
         React__default.createElement(InputElement, Object.assign({}, props, { ref: inputRef, disabled: props.enableDatepicker })),
         enableClear && React__default.createElement(Button, { buttonType: "icon", icon: "close", onClick: clear, iconSize: "25px", invert: props.invert, className: "__icon-right" }),
@@ -1768,7 +1768,7 @@ const TextAreaContainerElement = styled(framerMotion.motion.div) `
     width: fit-content;
     max-width: 100%;
 
-    &&.ui-input-container-outline {
+    &&.ui-textarea-container-outline {
         background-color: ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'principal' : 'contrast']};
         border: 1px solid ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}32;
         border-radius: ${() => getGlobalTheme().borderRadius};
@@ -1780,7 +1780,7 @@ const TextAreaContainerElement = styled(framerMotion.motion.div) `
         }
     }
 
-    &&.ui-input-container-downline {
+    &&.ui-textarea-container-downline {
         background-color: transparent;
         border-bottom: 1px solid ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}32;
 
@@ -1824,7 +1824,7 @@ const TextAreaContainerElement = styled(framerMotion.motion.div) `
 const DEFAULT_TYPE$1 = 'downline';
 function TextArea(_a) {
     var { icon, containerProps, containerType, invert, color } = _a, props = __rest(_a, ["icon", "containerProps", "containerType", "invert", "color"]);
-    return (React__default.createElement(TextAreaContainerElement, Object.assign({}, containerProps, { invert: invert, color: color, className: `ui-input-container-${containerType || DEFAULT_TYPE$1} ${containerProps === null || containerProps === void 0 ? void 0 : containerProps.className}` }),
+    return (React__default.createElement(TextAreaContainerElement, Object.assign({}, containerProps, { invert: invert, color: color, className: `ui-textarea-container-${containerType || DEFAULT_TYPE$1} ${(containerProps === null || containerProps === void 0 ? void 0 : containerProps.className) || ''}` }),
         React__default.createElement("textarea", Object.assign({}, props)),
         icon && React__default.createElement(Icon, { color: color, name: icon, invert: invert, width: "25px", height: "25px", className: "__icon" })));
 }

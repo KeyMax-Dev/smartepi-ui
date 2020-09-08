@@ -60,7 +60,7 @@ export default function Input(props: InputProps): JSX.Element {
     }, [inputRef.current]);
 
     return (
-        <InputContainerElement {...props.containerProps} invert={props.invert} color={props.color} className={`ui-input-container-${containerType} ${props.containerProps?.className}`}>
+        <InputContainerElement {...props.containerProps} invert={props.invert} color={props.color} className={`ui-input-container-${containerType} ${props.containerProps?.className || ''}`}>
             {props.iconLeft && <Icon color={props.color} name={props.iconLeft} invert={props.invert} width="25px" height="25px" className="__icon-left" />}
             <InputElement {...props} ref={inputRef as React.MutableRefObject<HTMLInputElement>} disabled={props.enableDatepicker} />
             {enableClear && <Button buttonType="icon" icon="close" onClick={clear} iconSize="25px" invert={props.invert} className="__icon-right"/>}
