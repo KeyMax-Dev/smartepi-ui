@@ -1,4 +1,4 @@
-import { Select, useForm, Validators, Button, useToast, Table, TableColumn } from './lib';
+import { Select, useForm, Validators, Button, useToast, Table, TableColumn, TextArea } from './lib';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
@@ -27,7 +27,7 @@ type FormType = {
 
 const TableContainer = styled.div`
     width: 100%;
-    height: 400px;
+    height: 200px;
 `;
 
 const TableData = [
@@ -64,7 +64,7 @@ export default function TestingPage(): JSX.Element {
             <Button text="open toast" onClick={() => toast.open()} />
 
             <TableContainer>
-                <Table data={[]}>
+                <Table data={TableData}>
                     <TableColumn name="ID" key="id" minwidth="300px">
                         {(item) => <div>{item.id}</div>}
                     </TableColumn>
@@ -78,6 +78,9 @@ export default function TestingPage(): JSX.Element {
                     </TableColumn>
                 </Table>
             </TableContainer>
+
+            <TextArea icon="pencil" containerType="outline" />
+            <TextArea icon="pencil" />
         </div>
     );
 }

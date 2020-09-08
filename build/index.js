@@ -1729,6 +1729,106 @@ function Tabs({ index, children, onTabChange }) {
             React__default.createElement(ScrollableContainer, { flexDirection: "column" }, Array.isArray(children) ? children[tabIndex] : children))));
 }
 
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+function __rest(s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+}
+
+const TextAreaContainerElement = styled(framerMotion.motion.div) `
+    padding: 5px;
+    margin: 3px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all ${() => getGlobalTheme().transitions.fast};
+    position: relative;
+    width: fit-content;
+    max-width: 100%;
+
+    &&.ui-input-container-outline {
+        background-color: ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'principal' : 'contrast']};
+        border: 1px solid ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}32;
+        border-radius: ${() => getGlobalTheme().borderRadius};
+
+            
+        &:focus-within {
+            box-shadow: ${() => getGlobalTheme().boxShadow.active};
+            border: 2px solid ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
+        }
+    }
+
+    &&.ui-input-container-downline {
+        background-color: transparent;
+        border-bottom: 1px solid ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}32;
+
+        &:focus-within {
+            border-bottom: 2px solid ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
+        }
+    }
+
+    textarea {
+        min-width: 286px;
+        width: 100%;
+        max-width: 100%;
+        min-height: 82px;
+        height: 100%;
+        max-height: 100%;
+        color: ${() => getGlobalTheme().colors.primary.principal};
+        border: none;
+        outline: none;
+        font-size: ${() => getGlobalTheme().font.input.fontSize};
+        font-weight: ${() => getGlobalTheme().font.input.fontWeight};
+        text-align: ${() => getGlobalTheme().font.input.textAlign};
+        font-family: ${() => getGlobalTheme().font.input.fontFamily};
+        
+        &::placeholder {
+            transition: all ${() => getGlobalTheme().transitions.avarage};
+        }
+        &:focus {
+            &::placeholder {
+                color: transparent;
+            }
+        }
+    }
+    .__icon {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        opacity: 0.3;
+    }
+`;
+
+const DEFAULT_TYPE$1 = 'downline';
+function TextArea(_a) {
+    var { icon, containerProps, containerType, invert, color } = _a, props = __rest(_a, ["icon", "containerProps", "containerType", "invert", "color"]);
+    return (React__default.createElement(TextAreaContainerElement, Object.assign({}, containerProps, { invert: invert, color: color, className: `ui-input-container-${containerType || DEFAULT_TYPE$1} ${containerProps === null || containerProps === void 0 ? void 0 : containerProps.className}` }),
+        React__default.createElement("textarea", Object.assign({}, props)),
+        icon && React__default.createElement(Icon, { color: color, name: icon, invert: invert, width: "25px", height: "25px", className: "__icon" })));
+}
+
 const ModalBaseElement = styled.div `
     position: fixed;
     width: 100%;
@@ -2294,6 +2394,7 @@ exports.Tab = Tab;
 exports.Table = Table;
 exports.TableColumn = TableColumn;
 exports.Tabs = Tabs;
+exports.TextArea = TextArea;
 exports.ToastController = ToastController;
 exports.Validators = Validators;
 exports.getGlobalTheme = getGlobalTheme;
