@@ -8,7 +8,7 @@ import Animations from '../../assets/animations';
 type TableItem = { [key: string]: unknown };
 type TableColumnReactElement = React.ReactElement<TableColumnProps, typeof TableColumn>;
 type TableChild = TableColumnReactElement | boolean | null | undefined;
-type DOMEvents = Exclude<keyof HTMLMotionProps<'tr'>, 'children' | 'dangerouslySetInnerHTML'>;
+type DOMEvents = Exclude<keyof React.DOMAttributes<HTMLTableRowElement>, 'children' | 'dangerouslySetInnerHTML'>;
 type TableRowEvent = React.SyntheticEvent;
 
 export type TableRowEventHandler = (event: TableRowEvent, tableItem: any) => void;

@@ -6,7 +6,7 @@ declare type TableItem = {
 };
 declare type TableColumnReactElement = React.ReactElement<TableColumnProps, typeof TableColumn>;
 declare type TableChild = TableColumnReactElement | boolean | null | undefined;
-declare type DOMEvents = Exclude<keyof HTMLMotionProps<'tr'>, 'children' | 'dangerouslySetInnerHTML'>;
+declare type DOMEvents = Exclude<keyof React.DOMAttributes<HTMLTableRowElement>, 'children' | 'dangerouslySetInnerHTML'>;
 declare type TableRowEvent = React.SyntheticEvent;
 export declare type TableRowEventHandler = (event: TableRowEvent, tableItem: any) => void;
 export declare type TableRowProps = Omit<HTMLMotionProps<'tr'>, DOMEvents>;
