@@ -1669,7 +1669,7 @@ function Table({ data, children, loading, config }) {
     const renderLine = (element, index) => {
         const events = {};
         Object.entries(baseConfig.rowEvents).forEach(([key, event]) => events[key] = (nativeEvent) => event ? event(nativeEvent, element) : undefined);
-        return React__default.createElement("tr", Object.assign({ key: index }, baseConfig.rowProps, events), mappedChildren.map((column) => React__default.cloneElement(column, column.props, column.props.children(element, index))));
+        return (React__default.createElement(framerMotion.motion.tr, Object.assign({ key: index, initial: Animations.ListItemInitial, animate: Animations.ListItemIn(index) }, baseConfig.rowProps, events), mappedChildren.map((column) => React__default.cloneElement(column, column.props, column.props.children(element, index)))));
     };
     return (React__default.createElement(TableElement, { className: "ui-table" },
         (data.length > 0) &&
@@ -1956,8 +1956,8 @@ class ModalController extends AsideController {
         return (React__default.createElement(ModalBaseElement, null,
             React__default.createElement(framerMotion.motion.div, { className: "ui-modal-overlay", onClick: () => (this.config.disableBackdropClose ? undefined : this.close('backdrop')), animate: this.overlayControls }),
             React__default.createElement(framerMotion.motion.div, Object.assign({ className: "ui-modal-container" }, this.config.containerProps, { animate: this.containerControls }),
-                !this.config.disableCloseButton && React__default.createElement(ModalCloseButton, { className: "ui-modal-btn-close", onClick: () => this.close('closeButton'), width: "30px", height: "30px", name: "close" }),
-                this.content)));
+                this.content,
+                !this.config.disableCloseButton && React__default.createElement(ModalCloseButton, { className: "ui-modal-btn-close", onClick: () => this.close('closeButton'), width: "30px", height: "30px", name: "close" }))));
     }
 }
 function useModal(content, options) {

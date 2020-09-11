@@ -97,8 +97,8 @@ export class ModalController extends AsideController {
             <ModalBaseElement>
                 <motion.div className="ui-modal-overlay" onClick={(): Promise<void> | undefined => (this.config.disableBackdropClose ? undefined : this.close('backdrop'))} animate={this.overlayControls} />
                 <motion.div className="ui-modal-container" {...this.config.containerProps} animate={this.containerControls}>
-                    {!this.config.disableCloseButton && <ModalCloseButton className="ui-modal-btn-close" onClick={(): Promise<void> => this.close('closeButton')} width="30px" height="30px" name="close" />}
                     {this.content}
+                    {!this.config.disableCloseButton && <ModalCloseButton className="ui-modal-btn-close" onClick={(): Promise<void> => this.close('closeButton')} width="30px" height="30px" name="close" />}
                 </motion.div>
             </ModalBaseElement>
         );

@@ -1,17 +1,18 @@
-import { motion } from 'framer-motion';
+import { HTMLMotionProps, motion } from 'framer-motion';
 import { TableElement, TableBodyElement, TableHeaderElement } from "./style";
 import React, { EventHandler } from 'react';
 import Spinners from '../../assets/svgs/spinners';
 import TableColumn, { TableColumnProps } from './table-column';
+import Animations from '../../assets/animations';
 
 type TableItem = { [key: string]: unknown };
 type TableColumnReactElement = React.ReactElement<TableColumnProps, typeof TableColumn>;
 type TableChild = TableColumnReactElement | boolean | null | undefined;
-type DOMEvents = Exclude<keyof React.DOMAttributes<HTMLTableRowElement>, 'children' | 'dangerouslySetInnerHTML'>;
+type DOMEvents = Exclude<keyof HTMLMotionProps<'tr'>, 'children' | 'dangerouslySetInnerHTML'>;
 type TableRowEvent = React.SyntheticEvent;
 
 export type TableRowEventHandler = (event: TableRowEvent, tableItem: any) => void;
-export type TableRowProps = Omit<React.ComponentProps<'tr'>, DOMEvents>;
+export type TableRowProps = Omit<HTMLMotionProps<'tr'>, DOMEvents>;
 export type TableRowEvents = Partial<{ [K in DOMEvents]: TableRowEventHandler }>;
 export type TableBodyEvents = Partial<{ [K in DOMEvents]: React.SyntheticEvent }>;
 
@@ -61,9 +62,16 @@ export default function Table({ data, children, loading, config }: TableProps): 
         Object.entries(baseConfig.rowEvents).forEach(([key, event]) =>
             events[key] = (nativeEvent: TableRowEvent): void => event ? event(nativeEvent, element) : undefined);
 
-        return <tr key={index} {...baseConfig.rowProps} {...events}>{
-            mappedChildren.map((column: TableColumnReactElement) => React.cloneElement(column, column.props, column.props.children(element, index)))
-        }</tr>;
+        return (
+            <motion.tr
+                key={index}
+                initial={Animations.ListItemInitial}
+                animate={Animations.ListItemIn(index)}
+                {...baseConfig.rowProps}
+                {...events}>
+                {mappedChildren.map((column: TableColumnReactElement) => React.cloneElement(column, column.props, column.props.children(element, index)))}
+            </motion.tr>
+        );
     };
 
     return (
