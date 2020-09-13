@@ -1674,7 +1674,6 @@ function Table({ data, children, loading, config }) {
         return (React__default.createElement(framerMotion.motion.tr, Object.assign({ key: index, initial: Animations.ListItemInitial, animate: Animations.ListItemIn(index < animationIndex ? 0 : (index - animationIndex) / ((data === null || data === void 0 ? void 0 : data.length) - animationIndex)) }, baseConfig.rowProps, events), mappedChildren.map((column) => React__default.cloneElement(column, column.props, column.props.children(element, index)))));
     };
     React.useEffect(() => {
-        console.log(data.length);
         if (data.length > 0) {
             setAnimationIndex(data.length - 1);
         }
@@ -1685,7 +1684,7 @@ function Table({ data, children, loading, config }) {
     React.useEffect(() => {
         if (data.length > 0 && loading) {
             if (tableBodyRef.current) {
-                tableBodyRef.current.scrollTo({ top: tableBodyRef.current.scrollHeight, behavior: 'smooth' });
+                tableBodyRef.current.scrollTo({ top: tableBodyRef.current.scrollHeight });
             }
         }
     }, [loading]);
