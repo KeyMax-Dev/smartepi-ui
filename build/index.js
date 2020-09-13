@@ -1666,17 +1666,35 @@ const mapChildren = (children) => {
 function Table({ data, children, loading, config }) {
     const mappedChildren = mapChildren(children);
     const baseConfig = Object.assign({}, DEFAULT_TABLE_CONFIG, config);
+    const [animationIndex, setAnimationIndex] = React.useState(0);
+    const tableBodyRef = React.useRef(null);
     const renderLine = (element, index) => {
         const events = {};
         Object.entries(baseConfig.rowEvents).forEach(([key, event]) => events[key] = (nativeEvent) => event ? event(nativeEvent, element) : undefined);
-        return (React__default.createElement(framerMotion.motion.tr, Object.assign({ key: index, initial: Animations.ListItemInitial, animate: Animations.ListItemIn(index) }, baseConfig.rowProps, events), mappedChildren.map((column) => React__default.cloneElement(column, column.props, column.props.children(element, index)))));
+        return (React__default.createElement(framerMotion.motion.tr, Object.assign({ key: index, initial: Animations.ListItemInitial, animate: Animations.ListItemIn(index < animationIndex ? 0 : (index - animationIndex) / ((data === null || data === void 0 ? void 0 : data.length) - animationIndex)) }, baseConfig.rowProps, events), mappedChildren.map((column) => React__default.cloneElement(column, column.props, column.props.children(element, index)))));
     };
+    React.useEffect(() => {
+        console.log(data.length);
+        if (data.length > 0) {
+            setAnimationIndex(data.length - 1);
+        }
+        else {
+            setAnimationIndex(0);
+        }
+    }, [data]);
+    React.useEffect(() => {
+        if (data.length > 0 && loading) {
+            if (tableBodyRef.current) {
+                tableBodyRef.current.scrollTo({ top: tableBodyRef.current.scrollHeight, behavior: 'smooth' });
+            }
+        }
+    }, [loading]);
     return (React__default.createElement(TableElement, { className: "ui-table" },
         (data.length > 0) &&
             React__default.createElement(TableHeaderElement, { className: "ui-table-header" },
                 React__default.createElement("tr", null, mappedChildren.map((child) => React__default.createElement("th", Object.assign({ key: child.props.name, style: { flex: child.props.flex, minWidth: child.props.minwidth, maxWidth: child.props.maxwidth } }, child.props), child.props.name)))),
         (data.length > 0) &&
-            React__default.createElement(TableBodyElement, { onScroll: baseConfig.onScroll, className: "ui-table-body" },
+            React__default.createElement(TableBodyElement, { onScroll: baseConfig.onScroll, className: "ui-table-body", ref: tableBodyRef },
                 data.map(renderLine),
                 loading &&
                     React__default.createElement("tr", { className: "ui-table-inner-loading-container" },

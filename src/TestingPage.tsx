@@ -27,7 +27,7 @@ type FormType = {
 
 const TableContainer = styled.div`
     width: 100%;
-    height: 200px;
+    height: 500px;
 `;
 
 const TableData = [
@@ -38,6 +38,8 @@ const TableData = [
 
 export default function TestingPage(): JSX.Element {
     const [selected, setSelected] = useState<DataType>();
+    const [loading, setLoading] = useState<boolean>(false);
+    const [tableData, setTableData] = useState<any[]>(TableData);
 
     const toast = useToast(<span></span>, { color: 'danger' });
 
@@ -53,6 +55,14 @@ export default function TestingPage(): JSX.Element {
         console.log(getErrors(), getValues());
     };
 
+    const increaseListClickHandler = (): void => {
+        setLoading(true);
+        setTimeout(() => {
+            setTableData([...tableData, ...tableData]);
+            setLoading(false);
+        }, 500);
+    };
+
     return (
         <div>
             <StyledDiv>
@@ -64,7 +74,7 @@ export default function TestingPage(): JSX.Element {
             <Button text="open toast" onClick={() => toast.open()} />
 
             <TableContainer>
-                <Table data={TableData}>
+                <Table data={tableData} loading={loading}>
                     <TableColumn name="ID" key="id" minwidth="300px">
                         {(item) => <div>{item.id}</div>}
                     </TableColumn>
@@ -79,8 +89,10 @@ export default function TestingPage(): JSX.Element {
                 </Table>
             </TableContainer>
 
-            <TextArea icon="pencil" containerType="outline" />
-            <TextArea icon="pencil" />
+            {!loading && <Button text="increase list" onClick={increaseListClickHandler} />}
+
+            {/* <TextArea icon="pencil" containerType="outline" />
+            <TextArea icon="pencil" /> */}
         </div>
     );
 }

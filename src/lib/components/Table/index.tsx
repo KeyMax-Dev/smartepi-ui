@@ -1,6 +1,6 @@
 import { HTMLMotionProps, motion } from 'framer-motion';
 import { TableElement, TableBodyElement, TableHeaderElement } from "./style";
-import React, { EventHandler } from 'react';
+import React, { EventHandler, useEffect, useRef, useState } from 'react';
 import Spinners from '../../assets/svgs/spinners';
 import TableColumn, { TableColumnProps } from './table-column';
 import Animations from '../../assets/animations';
@@ -56,23 +56,41 @@ export default function Table({ data, children, loading, config }: TableProps): 
 
     const mappedChildren: TableColumnReactElement[] = mapChildren(children);
     const baseConfig = Object.assign({}, DEFAULT_TABLE_CONFIG, config);
+    const [animationIndex, setAnimationIndex] = useState<number>(0);
+    const tableBodyRef = useRef<HTMLTableSectionElement>(null);
 
     const renderLine = (element: TableItem, index: number): JSX.Element => {
         const events: { [key: string]: EventHandler<TableRowEvent> } = {};
         Object.entries(baseConfig.rowEvents).forEach(([key, event]) =>
             events[key] = (nativeEvent: TableRowEvent): void => event ? event(nativeEvent, element) : undefined);
-
         return (
             <motion.tr
                 key={index}
                 initial={Animations.ListItemInitial}
-                animate={Animations.ListItemIn(index)}
+                animate={Animations.ListItemIn(index < animationIndex ? 0 : (index - animationIndex) / (data?.length - animationIndex))}
                 {...baseConfig.rowProps}
                 {...events}>
                 {mappedChildren.map((column: TableColumnReactElement) => React.cloneElement(column, column.props, column.props.children(element, index)))}
             </motion.tr>
         );
     };
+
+    useEffect(() => {
+        console.log(data.length);
+        if (data.length > 0) {
+            setAnimationIndex(data.length - 1);
+        } else {
+            setAnimationIndex(0);
+        }
+    }, [data]);
+
+    useEffect(() => {
+        if (data.length > 0 && loading) {
+            if (tableBodyRef.current) {
+                tableBodyRef.current.scrollTo({ top: tableBodyRef.current.scrollHeight, behavior: 'smooth' });
+            }
+        };
+    }, [loading]);
 
     return (
         <TableElement className="ui-table">
@@ -84,7 +102,7 @@ export default function Table({ data, children, loading, config }: TableProps): 
                 </TableHeaderElement>
             }
             {(data.length > 0) &&
-                <TableBodyElement onScroll={baseConfig.onScroll} className="ui-table-body">
+                <TableBodyElement onScroll={baseConfig.onScroll} className="ui-table-body" ref={tableBodyRef}>
                     {data.map(renderLine)}
                     {loading &&
                         <tr className="ui-table-inner-loading-container">
