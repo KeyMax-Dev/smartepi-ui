@@ -76,7 +76,6 @@ export default function Table({ data, children, loading, config }: TableProps): 
     };
 
     useEffect(() => {
-        console.log(data.length);
         if (data.length > 0) {
             setAnimationIndex(data.length - 1);
         } else {
@@ -87,7 +86,7 @@ export default function Table({ data, children, loading, config }: TableProps): 
     useEffect(() => {
         if (data.length > 0 && loading) {
             if (tableBodyRef.current) {
-                tableBodyRef.current.scrollTo({ top: tableBodyRef.current.scrollHeight, behavior: 'smooth' });
+                tableBodyRef.current.scrollTo({ top: tableBodyRef.current.scrollHeight });
             }
         };
     }, [loading]);
