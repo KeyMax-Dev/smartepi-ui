@@ -1686,7 +1686,7 @@ function Table({ data, children, loading, config }) {
     React.useEffect(() => {
         if (data.length > 0 && loading) {
             if (tableBodyRef.current) {
-                tableBodyRef.current.scrollTo({ top: tableBodyRef.current.scrollHeight });
+                tableBodyRef.current.scrollTo({ top: tableBodyRef.current.scrollHeight, behavior: 'smooth' });
             }
         }
     }, [loading]);
