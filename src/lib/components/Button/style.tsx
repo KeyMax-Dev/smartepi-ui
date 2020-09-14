@@ -79,6 +79,7 @@ export const BaseButton = styled(motion.button) <ButtonProps>`
             max-width: 300px;
             flex: 1;
             text-align: center;
+            font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
         }
     }
 
@@ -108,6 +109,7 @@ export const BaseButton = styled(motion.button) <ButtonProps>`
             flex: 1;
             text-align: center;
             color: ${(props): string => props.color ? getGlobalTheme().colors[props.color].contrast : getGlobalTheme().colors['primary'].contrast};
+            font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
         }
     }
 

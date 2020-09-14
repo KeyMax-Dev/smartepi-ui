@@ -30,7 +30,7 @@ class Email implements InputValidator {
     emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
     
     validate(text: string): boolean {
-        return this.emailRegexp.test(text);
+        return text.length === 0 || this.emailRegexp.test(text);
     }
 }
 

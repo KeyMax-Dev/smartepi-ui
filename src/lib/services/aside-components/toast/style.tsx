@@ -19,14 +19,13 @@ export const ToastElement = styled(motion.div)<ToastProps>`
 
     background-color: ${(props): string => getGlobalTheme().colors[props.color].principal};
     color: ${(props): string => getGlobalTheme().colors[props.color].contrast};
-    font-size: ${() => getGlobalTheme().font.h2.fontSize};
-    font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
+    font-size: ${() => getGlobalTheme().font.p1.fontSize};
+    font-weight: ${() => getGlobalTheme().font.p1.fontWeight};
     border-radius: ${() => getGlobalTheme().borderRadius};
     box-shadow: ${() => getGlobalTheme().boxShadow.normal};
 
     @media screen and (max-width: 1024px) {
         width: calc(100% - 30px);
         left: 15px;
-        font-size: calc(${() => getGlobalTheme().font.h2.fontSize} / 2);
     }
 `;

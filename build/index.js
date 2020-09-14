@@ -43,7 +43,7 @@ const LightTheme = {
         primary: { principal: '#000000', contrast: '#FFFFFF' },
         secondary: { principal: '#BB86FC', contrast: '#6200EE' },
         danger: { principal: '#D40000', contrast: '#FFFFFF' },
-        success: { principal: '#00D415', contrast: '#FFFFFF' }
+        success: { principal: '#00D415', contrast: '#000000' }
     },
     defaultIconSize: '40px',
     transitions: {
@@ -59,25 +59,25 @@ const LightTheme = {
     font: {
         h1: {
             fontSize: '2rem',
-            fontWeight: 400,
+            fontWeight: 600,
             lineHeight: '1.8rem',
             textAlign: 'center'
         },
         h2: {
             fontSize: '1.5rem',
-            fontWeight: 300,
+            fontWeight: 500,
             lineHeight: '1.8rem',
             textAlign: 'center'
         },
         input: {
             fontSize: '1.2rem',
-            fontWeight: 300,
+            fontWeight: 400,
             textAlign: 'left',
             fontFamily: `-apple-system, BlinkMacSystemFont, 'Quicksand', 'Segoe UI', 'Roboto'`
         },
         p1: {
             fontSize: '1.2rem',
-            fontWeight: 300,
+            fontWeight: 400,
             lineHeight: '1.2rem',
             textAlign: 'left'
         }
@@ -174,7 +174,7 @@ class Email {
         this.emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
     }
     validate(text) {
-        return this.emailRegexp.test(text);
+        return text.length === 0 || this.emailRegexp.test(text);
     }
 }
 const Validators = {
@@ -1477,6 +1477,8 @@ const TabsLayoutElement = styled(framerMotion.motion.section) `
         background-color: ${() => getGlobalTheme().colors.primary.principal};
         box-shadow: ${() => getGlobalTheme().boxShadow.normal};
         color: ${() => getGlobalTheme().colors.primary.contrast}33;
+        font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
+        
         .ui-tabs-tab {
             flex: 1;
             display: flex;
@@ -2172,15 +2174,14 @@ const ToastElement = styled(framerMotion.motion.div) `
 
     background-color: ${(props) => getGlobalTheme().colors[props.color].principal};
     color: ${(props) => getGlobalTheme().colors[props.color].contrast};
-    font-size: ${() => getGlobalTheme().font.h2.fontSize};
-    font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
+    font-size: ${() => getGlobalTheme().font.p1.fontSize};
+    font-weight: ${() => getGlobalTheme().font.p1.fontWeight};
     border-radius: ${() => getGlobalTheme().borderRadius};
     box-shadow: ${() => getGlobalTheme().boxShadow.normal};
 
     @media screen and (max-width: 1024px) {
         width: calc(100% - 30px);
         left: 15px;
-        font-size: calc(${() => getGlobalTheme().font.h2.fontSize} / 2);
     }
 `;
 
@@ -2331,6 +2332,7 @@ const BaseButton = styled(framerMotion.motion.button) `
             max-width: 300px;
             flex: 1;
             text-align: center;
+            font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
         }
     }
 
@@ -2360,6 +2362,7 @@ const BaseButton = styled(framerMotion.motion.button) `
             flex: 1;
             text-align: center;
             color: ${(props) => props.color ? getGlobalTheme().colors[props.color].contrast : getGlobalTheme().colors['primary'].contrast};
+            font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
         }
     }
 
