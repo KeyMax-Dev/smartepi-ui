@@ -5,44 +5,44 @@ import Spinners from '../../assets/svgs/spinners';
 import TableColumn, { TableColumnProps } from './table-column';
 import Animations from '../../assets/animations';
 
-type TableItem = { [key: string]: unknown };
-type TableColumnReactElement = React.ReactElement<TableColumnProps, typeof TableColumn>;
-type TableChild = TableColumnReactElement | boolean | null | undefined;
+type TableColumnReactElement<T> = React.ReactElement<TableColumnProps<T>, typeof TableColumn>;
+type TableChild<T> = TableColumnReactElement<T> | boolean | null | undefined;
 type DOMEvents = Exclude<keyof React.DOMAttributes<HTMLTableRowElement>, 'children' | 'dangerouslySetInnerHTML'>;
 type TableRowEvent = React.SyntheticEvent;
 
-export type TableRowEventHandler = (event: TableRowEvent, tableItem: any) => void;
+export type TableRowEventHandler<T> = (event: TableRowEvent, tableItem: T) => void;
 export type TableRowProps = Omit<HTMLMotionProps<'tr'>, DOMEvents>;
-export type TableRowEvents = Partial<{ [K in DOMEvents]: TableRowEventHandler }>;
-export type TableBodyEvents = Partial<{ [K in DOMEvents]: React.SyntheticEvent }>;
+export type TableRowEvents<T> = Partial<{ [K in DOMEvents]: TableRowEventHandler<T> }>;
+export type TableBodyProps = React.ComponentProps<'tbody'>;
 
-type TableConfig = {
+interface TableConfig<T> {
     rowProps: TableRowProps;
-    rowEvents: TableRowEvents;
-    onScroll?: (event: React.UIEvent<HTMLTableSectionElement>) => void;
+    rowEvents: TableRowEvents<T>;
+    bodyProps: TableBodyProps;
     loadingMessage: string;
     innerLoadingMessage: string;
     emptyMessage: string;
 }
 
-const DEFAULT_TABLE_CONFIG: TableConfig = {
+const DEFAULT_TABLE_CONFIG: TableConfig<{}> = {
     rowProps: {},
     rowEvents: {},
+    bodyProps: {},
     loadingMessage: 'Carregando dados...',
     innerLoadingMessage: 'Carregando mais dados...',
     emptyMessage: 'Nenhum dado para ser exibido.'
 };
 
-interface TableProps {
-    data: TableItem[];
-    children: TableChild | TableChild[];
+interface TableProps<T = {}> {
+    data: T[];
+    children: TableChild<T> | TableChild<T>[];
     loading?: boolean;
-    config?: Partial<TableConfig>;
+    config?: Partial<TableConfig<T>>;
 }
 
-const mapChildren = (children: TableChild | TableChild[]): TableColumnReactElement[] => {
+function mapChildren<T>(children: TableChild<T>| TableChild<T>[]): TableColumnReactElement<T>[] {
     if (Array.isArray(children)) {
-        return children.filter((ele): ele is TableColumnReactElement => typeof ele === 'object' && ele?.type === TableColumn);
+        return children.filter((ele): ele is TableColumnReactElement<T> => typeof ele === 'object' && ele?.type === TableColumn);
     } else {
         if (typeof children === 'object') {
             return children?.type === TableColumn ? [children] : [];
@@ -52,14 +52,14 @@ const mapChildren = (children: TableChild | TableChild[]): TableColumnReactEleme
     }
 };
 
-export default function Table({ data, children, loading, config }: TableProps): JSX.Element {
+export default function Table<T>({ data, children, loading, config }: TableProps<T>): JSX.Element {
 
-    const mappedChildren: TableColumnReactElement[] = mapChildren(children);
+    const mappedChildren: TableColumnReactElement<T>[] = mapChildren(children);
     const baseConfig = Object.assign({}, DEFAULT_TABLE_CONFIG, config);
     const [animationIndex, setAnimationIndex] = useState<number>(0);
     const tableBodyRef = useRef<HTMLTableSectionElement>(null);
 
-    const renderLine = (element: TableItem, index: number): JSX.Element => {
+    const renderLine = (element: T, index: number): JSX.Element => {
         const events: { [key: string]: EventHandler<TableRowEvent> } = {};
         Object.entries(baseConfig.rowEvents).forEach(([key, event]) =>
             events[key] = (nativeEvent: TableRowEvent): void => event ? event(nativeEvent, element) : undefined);
@@ -70,7 +70,7 @@ export default function Table({ data, children, loading, config }: TableProps): 
                 animate={Animations.ListItemIn(index < animationIndex ? 0 : (index - animationIndex) / (data?.length - animationIndex))}
                 {...baseConfig.rowProps}
                 {...events}>
-                {mappedChildren.map((column: TableColumnReactElement) => React.cloneElement(column, column.props, column.props.children(element, index)))}
+                {mappedChildren.map((column: TableColumnReactElement<T>) => React.cloneElement(column, column.props, column.props.children(element, index)))}
             </motion.tr>
         );
     };
@@ -96,12 +96,20 @@ export default function Table({ data, children, loading, config }: TableProps): 
             {(data.length > 0) &&
                 <TableHeaderElement className="ui-table-header">
                     <tr>
-                        {mappedChildren.map((child: TableColumnReactElement) => <th key={child.props.name} style={{ flex: child.props.flex, minWidth: child.props.minwidth, maxWidth: child.props.maxwidth }} {...child.props}>{child.props.name}</th>)}
+                        {mappedChildren.map((child: TableColumnReactElement<T>) =>
+                            <th
+                                key={child.props.name}
+                                style={{ flex: child.props.flex, minWidth: child.props.minwidth, maxWidth: child.props.maxwidth }}
+                                {...child.props}
+                            >
+                                {child.props.name}
+                            </th>
+                        )}
                     </tr>
                 </TableHeaderElement>
             }
             {(data.length > 0) &&
-                <TableBodyElement onScroll={baseConfig.onScroll} className="ui-table-body" ref={tableBodyRef}>
+                <TableBodyElement {...baseConfig.bodyProps} className={`ui-table-body ${baseConfig.bodyProps.className || ''}`} ref={tableBodyRef}>
                     {data.map(renderLine)}
                     {loading &&
                         <tr className="ui-table-inner-loading-container">
@@ -114,19 +122,19 @@ export default function Table({ data, children, loading, config }: TableProps): 
                 </TableBodyElement>
             }
             {(data.length === 0 && !loading) &&
-                <motion.tbody className="ui-table-loading-container">
+                <tbody {...baseConfig.bodyProps} className="ui-table-loading-container">
                     <tr><td>
                         {baseConfig.emptyMessage}
                     </td></tr>
-                </motion.tbody>
+                </tbody>
             }
             {(data.length === 0 && loading) &&
-                <motion.tbody className="ui-table-loading-container">
+                <tbody {...baseConfig.bodyProps}  className="ui-table-loading-container">
                     <tr><td>
                         <Spinners.circles width="200px" height="200px" />
                         {baseConfig.loadingMessage}
                     </td></tr>
-                </motion.tbody>
+                </tbody>
             }
         </TableElement>
     );

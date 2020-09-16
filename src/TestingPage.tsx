@@ -30,7 +30,15 @@ const TableContainer = styled.div`
     height: 500px;
 `;
 
-const TableData = [
+type TableDataType = {
+    id: number;
+    data: {
+        value1: string;
+        value2: string;
+    };
+}
+
+const TableData: TableDataType[] = [
     { id: 0, data: { value1: 'data1', value2: 'data2' } },
     { id: 2, data: { value1: 'data3', value2: 'data4' } },
     { id: 3, data: { value1: 'data5', value2: 'data6' } },
@@ -86,6 +94,7 @@ export default function TestingPage(): JSX.Element {
                             </div>
                         }
                     </TableColumn>
+                    <div></div>
                 </Table>
             </TableContainer>
 
