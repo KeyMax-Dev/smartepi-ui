@@ -20,6 +20,8 @@ export const TabsLayoutElement = styled(motion.section)`
         background-color: ${() => getGlobalTheme().colors.primary.principal};
         box-shadow: ${() => getGlobalTheme().boxShadow.normal};
         color: ${() => getGlobalTheme().colors.primary.contrast}33;
+        font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
+        
         .ui-tabs-tab {
             flex: 1;
             display: flex;

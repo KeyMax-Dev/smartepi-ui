@@ -5,7 +5,7 @@ const LightTheme: Theme = {
         primary: {principal: '#000000', contrast: '#FFFFFF'},
         secondary: {principal: '#BB86FC', contrast: '#6200EE'},
         danger: {principal: '#D40000', contrast: '#FFFFFF'},
-        success: {principal: '#00D415', contrast: '#FFFFFF'}
+        success: {principal: '#00D415', contrast: '#000000'}
     },
     defaultIconSize: '40px',
     transitions: {
@@ -21,25 +21,25 @@ const LightTheme: Theme = {
     font: {
         h1: {
             fontSize: '2rem',
-            fontWeight: 400,
+            fontWeight: 600,
             lineHeight: '1.8rem',
             textAlign: 'center'
         },
         h2: {
             fontSize: '1.5rem',
-            fontWeight: 300,
+            fontWeight: 500,
             lineHeight: '1.8rem',
             textAlign: 'center'
         }, 
         input: {
             fontSize: '1.2rem',
-            fontWeight: 300,
+            fontWeight: 400,
             textAlign: 'left',
             fontFamily: `-apple-system, BlinkMacSystemFont, 'Quicksand', 'Segoe UI', 'Roboto'`
         },
         p1: {
             fontSize: '1.2rem',
-            fontWeight: 300,
+            fontWeight: 400,
             lineHeight: '1.2rem',
             textAlign: 'left'
         }

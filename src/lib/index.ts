@@ -22,6 +22,7 @@ import Tab from './components/Tabs/tab';
 import Table, { TableRowProps, TableRowEvents, TableRowEventHandler } from './components/Table';
 import TableColumn from './components/Table/table-column';
 import Tabs from './components/Tabs';
+import TextArea from './components/TextArea';
 import Theme from './types/Theme';
 import useForm from './components/Form';
 import useModal, { ModalController, ModalConfig } from './services/aside-components/modal';
@@ -55,6 +56,7 @@ export {
     Table,
     TableColumn,
     Tabs,
+    TextArea,
     ToastController,
     useForm,
     useModal,

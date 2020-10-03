@@ -35,7 +35,7 @@ function styleInject(css, ref) {
   }
 }
 
-var css_248z = "@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_300.ttf\") format(\"truetype\");\r\n  font-weight: 300;\r\n  font-style: normal;\r\n}\r\n\r\n@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_400.ttf\") format(\"truetype\");\r\n  font-weight: 400;\r\n  font-style: normal;\r\n}\r\n\r\n@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_500.ttf\") format(\"truetype\");\r\n  font-weight: 500;\r\n  font-style: normal;\r\n}\r\n\r\n@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_700.ttf\") format(\"truetype\");\r\n  font-weight: 700;\r\n  font-style: normal;\r\n}\r\n\r\n* {\r\n  box-sizing: border-box;\r\n}\r\n\r\nbody {\r\n  margin: 0;\r\n  font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto';\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  background-color: #fff;\r\n}\r\n\r\n*::-webkit-scrollbar {\r\n  width: 6px;\r\n  height: 6px;\r\n}\r\n\r\n*::-webkit-scrollbar-track {\r\n  background-color: transparent;\r\n}\r\n\r\n*::-webkit-scrollbar-thumb {\r\n  background-color: #00000033;\r\n}\r\n\r\ncode {\r\n  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;\r\n}\r\n\r\na {\r\n  text-decoration: none;\r\n}\r\n\r\n.ui-grid-horizontal {\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\r\n  flex: 1;\r\n  width: 100%;\r\n}\r\n\r\n.ui-grid-vertical {\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: center;\r\n  align-items: center;\r\n  flex: 1;\r\n}";
+var css_248z = "@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_300.ttf\") format(\"truetype\");\r\n  font-weight: 300;\r\n  font-style: normal;\r\n}\r\n\r\n@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_400.ttf\") format(\"truetype\");\r\n  font-weight: 400;\r\n  font-style: normal;\r\n}\r\n\r\n@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_500.ttf\") format(\"truetype\");\r\n  font-weight: 500;\r\n  font-style: normal;\r\n}\r\n\r\n@font-face {\r\n  font-family: \"Quicksand\";\r\n  src: url(\"assets/extra-files/fonts/Quicksand_700.ttf\") format(\"truetype\");\r\n  font-weight: 700;\r\n  font-style: normal;\r\n}\r\n\r\n* {\r\n  box-sizing: border-box;\r\n}\r\n\r\nbody {\r\n  margin: 0;\r\n  font-family: 'Quicksand', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen',\r\n    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'sans-serif';\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  background-color: #fff;\r\n}\r\n\r\n*::-webkit-scrollbar {\r\n  width: 6px;\r\n  height: 6px;\r\n}\r\n\r\n*::-webkit-scrollbar-track {\r\n  background-color: transparent;\r\n}\r\n\r\n*::-webkit-scrollbar-thumb {\r\n  background-color: #00000033;\r\n}\r\n\r\ncode {\r\n  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;\r\n}\r\n\r\na {\r\n  text-decoration: none;\r\n}\r\n\r\n.ui-grid-horizontal {\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\r\n  flex: 1;\r\n  width: 100%;\r\n}\r\n\r\n.ui-grid-vertical {\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: center;\r\n  align-items: center;\r\n  flex: 1;\r\n}";
 styleInject(css_248z);
 
 const LightTheme = {
@@ -43,7 +43,7 @@ const LightTheme = {
         primary: { principal: '#000000', contrast: '#FFFFFF' },
         secondary: { principal: '#BB86FC', contrast: '#6200EE' },
         danger: { principal: '#D40000', contrast: '#FFFFFF' },
-        success: { principal: '#00D415', contrast: '#FFFFFF' }
+        success: { principal: '#00D415', contrast: '#000000' }
     },
     defaultIconSize: '40px',
     transitions: {
@@ -59,25 +59,25 @@ const LightTheme = {
     font: {
         h1: {
             fontSize: '2rem',
-            fontWeight: 400,
+            fontWeight: 600,
             lineHeight: '1.8rem',
             textAlign: 'center'
         },
         h2: {
             fontSize: '1.5rem',
-            fontWeight: 300,
+            fontWeight: 500,
             lineHeight: '1.8rem',
             textAlign: 'center'
         },
         input: {
             fontSize: '1.2rem',
-            fontWeight: 300,
+            fontWeight: 400,
             textAlign: 'left',
             fontFamily: `-apple-system, BlinkMacSystemFont, 'Quicksand', 'Segoe UI', 'Roboto'`
         },
         p1: {
             fontSize: '1.2rem',
-            fontWeight: 300,
+            fontWeight: 400,
             lineHeight: '1.2rem',
             textAlign: 'left'
         }
@@ -174,7 +174,7 @@ class Email {
         this.emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
     }
     validate(text) {
-        return this.emailRegexp.test(text);
+        return text.length === 0 || this.emailRegexp.test(text);
     }
 }
 const Validators = {
@@ -407,6 +407,8 @@ const AlertDecagramSVG = React__default.createElement("svg", { xmlns: "http://ww
     React__default.createElement("path", { d: "M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M13,17H11V15H13V17M13,13H11V7H13V13Z" }));
 const AtSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M12,15C12.81,15 13.5,14.7 14.11,14.11C14.7,13.5 15,12.81 15,12C15,11.19 14.7,10.5 14.11,9.89C13.5,9.3 12.81,9 12,9C11.19,9 10.5,9.3 9.89,9.89C9.3,10.5 9,11.19 9,12C9,12.81 9.3,13.5 9.89,14.11C10.5,14.7 11.19,15 12,15M12,2C14.75,2 17.1,3 19.05,4.95C21,6.9 22,9.25 22,12V13.45C22,14.45 21.65,15.3 21,16C20.3,16.67 19.5,17 18.5,17C17.3,17 16.31,16.5 15.56,15.5C14.56,16.5 13.38,17 12,17C10.63,17 9.45,16.5 8.46,15.54C7.5,14.55 7,13.38 7,12C7,10.63 7.5,9.45 8.46,8.46C9.45,7.5 10.63,7 12,7C13.38,7 14.55,7.5 15.54,8.46C16.5,9.45 17,10.63 17,12V13.45C17,13.86 17.16,14.22 17.46,14.53C17.76,14.84 18.11,15 18.5,15C18.92,15 19.27,14.84 19.57,14.53C19.87,14.22 20,13.86 20,13.45V12C20,9.81 19.23,7.93 17.65,6.35C16.07,4.77 14.19,4 12,4C9.81,4 7.93,4.77 6.35,6.35C4.77,7.93 4,9.81 4,12C4,14.19 4.77,16.07 6.35,17.65C7.93,19.23 9.81,20 12,20H17V22H12C9.25,22 6.9,21 4.95,19.05C3,17.1 2,14.75 2,12C2,9.25 3,6.9 4.95,4.95C6.9,3 9.25,2 12,2Z" }));
+const CancelSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
+    React__default.createElement("path", { d: "M12 2C17.5 2 22 6.5 22 12S17.5 22 12 22 2 17.5 2 12 6.5 2 12 2M12 4C10.1 4 8.4 4.6 7.1 5.7L18.3 16.9C19.3 15.5 20 13.8 20 12C20 7.6 16.4 4 12 4M16.9 18.3L5.7 7.1C4.6 8.4 4 10.1 4 12C4 16.4 7.6 20 12 20C13.9 20 15.6 19.4 16.9 18.3Z" }));
 const CalendarSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z" }));
 const CashUsdSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
@@ -431,6 +433,8 @@ const ChevronRightSVG = React__default.createElement("svg", { xmlns: "http://www
     React__default.createElement("path", { d: "M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" }));
 const ChevronUpSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z" }));
+const ClockSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
+    React__default.createElement("path", { d: "M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z" }));
 const ClockCheckSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M23.5 17L18.5 22L15 18.5L16.5 17L18.5 19L22 15.5L23.5 17M13.1 19.9C12.7 20 12.4 20 12 20C7.6 20 4 16.4 4 12S7.6 4 12 4 20 7.6 20 12C20 12.4 20 12.7 19.9 13.1C20.6 13.2 21.2 13.4 21.8 13.7C21.9 13.1 22 12.6 22 12C22 6.5 17.5 2 12 2S2 6.5 2 12C2 17.5 6.5 22 12 22C12.6 22 13.2 21.9 13.7 21.8C13.4 21.3 13.2 20.6 13.1 19.9M15.6 14.1L12.5 12.3V7H11V13L14.5 15.1C14.8 14.7 15.2 14.4 15.6 14.1Z" }));
 const CloseSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
@@ -457,6 +461,10 @@ const EmailSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org
     React__default.createElement("path", { d: "M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z" }));
 const ExitSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M13.34,8.17C12.41,8.17 11.65,7.4 11.65,6.47A1.69,1.69 0 0,1 13.34,4.78C14.28,4.78 15.04,5.54 15.04,6.47C15.04,7.4 14.28,8.17 13.34,8.17M10.3,19.93L4.37,18.75L4.71,17.05L8.86,17.9L10.21,11.04L8.69,11.64V14.5H7V10.54L11.4,8.67L12.07,8.59C12.67,8.59 13.17,8.93 13.5,9.44L14.36,10.79C15.04,12 16.39,12.82 18,12.82V14.5C16.14,14.5 14.44,13.67 13.34,12.4L12.84,14.94L14.61,16.63V23H12.92V17.9L11.14,16.21L10.3,19.93M21,23H19V3H6V16.11L4,15.69V1H21V23M6,23H4V19.78L6,20.2V23Z" }));
+const EyeSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
+    React__default.createElement("path", { d: "M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9M12,4.5C17,4.5 21.27,7.61 23,12C21.27,16.39 17,19.5 12,19.5C7,19.5 2.73,16.39 1,12C2.73,7.61 7,4.5 12,4.5M3.18,12C4.83,15.36 8.24,17.5 12,17.5C15.76,17.5 19.17,15.36 20.82,12C19.17,8.64 15.76,6.5 12,6.5C8.24,6.5 4.83,8.64 3.18,12Z" }));
+const EyeOffSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
+    React__default.createElement("path", { d: "M2,5.27L3.28,4L20,20.72L18.73,22L15.65,18.92C14.5,19.3 13.28,19.5 12,19.5C7,19.5 2.73,16.39 1,12C1.69,10.24 2.79,8.69 4.19,7.46L2,5.27M12,9A3,3 0 0,1 15,12C15,12.35 14.94,12.69 14.83,13L11,9.17C11.31,9.06 11.65,9 12,9M12,4.5C17,4.5 21.27,7.61 23,12C22.18,14.08 20.79,15.88 19,17.19L17.58,15.76C18.94,14.82 20.06,13.54 20.82,12C19.17,8.64 15.76,6.5 12,6.5C10.91,6.5 9.84,6.68 8.84,7L7.3,5.47C8.74,4.85 10.33,4.5 12,4.5M3.18,12C4.83,15.36 8.24,17.5 12,17.5C12.69,17.5 13.37,17.43 14,17.29L11.72,15C10.29,14.85 9.15,13.71 9,12.28L5.6,8.87C4.61,9.72 3.78,10.78 3.18,12Z" }));
 const FileSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M13,9V3.5L18.5,9M6,2C4.89,2 4,2.89 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2H6Z" }));
 const FileCompareSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
@@ -490,6 +498,8 @@ const LinuxSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org
 const ListSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M3,4H7V8H3V4M9,5V7H21V5H9M3,10H7V14H3V10M9,11V13H21V11H9M3,16H7V20H3V16M9,17V19H21V17H9" }));
 const ListCheckSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
+    React__default.createElement("path", { d: "M14,10H2V12H14V10M14,6H2V8H14V6M2,16H10V14H2V16M21.5,11.5L23,13L16,20L11.5,15.5L13,14L16,17L21.5,11.5Z" }));
+const ListSelectSVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M3,5H9V11H3V5M5,7V9H7V7H5M11,7H21V9H11V7M11,15H21V17H11V15M5,20L1.5,16.5L2.91,15.09L5,17.17L9.59,12.59L11,14L5,20Z" }));
 const MagnifySVG = React__default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
     React__default.createElement("path", { d: "M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" }));
@@ -537,6 +547,7 @@ const Icons = {
     alertDecagram: AlertDecagramSVG,
     at: AtSVG,
     calendar: CalendarSVG,
+    cancel: CancelSVG,
     cashUsd: CashUsdSVG,
     cashPlus: CashPlusSVG,
     check: CheckSVG,
@@ -548,6 +559,7 @@ const Icons = {
     chevronLeft: ChevronLeftSVG,
     chevronRight: ChevronRightSVG,
     chevronUp: ChevronUpSVG,
+    clock: ClockSVG,
     clockCheck: ClockCheckSVG,
     close: CloseSVG,
     cloud: CloudSVG,
@@ -561,6 +573,8 @@ const Icons = {
     dotsVertical: DotsVerticalSVG,
     email: EmailSVG,
     exit: ExitSVG,
+    eye: EyeSVG,
+    eyeOff: EyeOffSVG,
     file: FileSVG,
     fileCompare: FileCompareSVG,
     fileDownload: FileDownloadSVG,
@@ -578,6 +592,7 @@ const Icons = {
     linux: LinuxSVG,
     list: ListSVG,
     listCheck: ListCheckSVG,
+    listSelect: ListSelectSVG,
     magnify: MagnifySVG,
     mapMarker: MapMarkerSVG,
     microsoftWindows: MicrosoftWindowsSVG,
@@ -1133,7 +1148,7 @@ function Input(props) {
             const input = inputRef.current;
             const setValue = (_a = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')) === null || _a === void 0 ? void 0 : _a.set;
             if (setValue) {
-                setValue.call(input, date.toLocaleDateString());
+                setValue.call(input, date.toLocaleDateString('pt-br'));
                 input.dispatchEvent(new Event('input', { bubbles: true }));
                 // eslint-disable-next-line
                 // datepicker.close();
@@ -1149,7 +1164,7 @@ function Input(props) {
         (_a = inputRef.current) === null || _a === void 0 ? void 0 : _a.addEventListener('input', eventHandler);
         return () => { var _a; return (_a = inputRef.current) === null || _a === void 0 ? void 0 : _a.removeEventListener('input', eventHandler); };
     }, [inputRef.current]);
-    return (React__default.createElement(InputContainerElement, Object.assign({}, props.containerProps, { invert: props.invert, color: props.color, className: `ui-input-container-${containerType} ${(_a = props.containerProps) === null || _a === void 0 ? void 0 : _a.className}` }),
+    return (React__default.createElement(InputContainerElement, Object.assign({}, props.containerProps, { invert: props.invert, color: props.color, className: `ui-input-container-${containerType} ${((_a = props.containerProps) === null || _a === void 0 ? void 0 : _a.className) || ''}` }),
         props.iconLeft && React__default.createElement(Icon, { color: props.color, name: props.iconLeft, invert: props.invert, width: "25px", height: "25px", className: "__icon-left" }),
         React__default.createElement(InputElement, Object.assign({}, props, { ref: inputRef, disabled: props.enableDatepicker })),
         enableClear && React__default.createElement(Button, { buttonType: "icon", icon: "close", onClick: clear, iconSize: "25px", invert: props.invert, className: "__icon-right" }),
@@ -1471,6 +1486,8 @@ const TabsLayoutElement = styled(framerMotion.motion.section) `
         background-color: ${() => getGlobalTheme().colors.primary.principal};
         box-shadow: ${() => getGlobalTheme().boxShadow.normal};
         color: ${() => getGlobalTheme().colors.primary.contrast}33;
+        font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
+        
         .ui-tabs-tab {
             flex: 1;
             display: flex;
@@ -1517,6 +1534,7 @@ function Tab(props) {
 const TableElement = styled.table `
     flex: 1 1 100%;
     width: 100%;
+    height: 100%;
     min-height: 100px;
     justify-self: flex-start;
     align-self: flex-start;
@@ -1600,6 +1618,18 @@ const TableBodyElement = styled.tbody `
         }
     }
 
+    .ui-table-inner-loading-container {
+        border-bottom: unset;
+        margin: 15px 0;
+
+        td {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center;
+        }
+    }
+
     @media screen and (max-width: 600px) {
         top: 40px;
         font-size: 0.8rem;
@@ -1628,6 +1658,7 @@ const DEFAULT_TABLE_CONFIG = {
     rowProps: {},
     rowEvents: {},
     loadingMessage: 'Carregando dados...',
+    innerLoadingMessage: 'Carregando mais dados...',
     emptyMessage: 'Nenhum dado para ser exibido.'
 };
 const mapChildren = (children) => {
@@ -1646,22 +1677,45 @@ const mapChildren = (children) => {
 function Table({ data, children, loading, config }) {
     const mappedChildren = mapChildren(children);
     const baseConfig = Object.assign({}, DEFAULT_TABLE_CONFIG, config);
+    const [animationIndex, setAnimationIndex] = React.useState(0);
+    const tableBodyRef = React.useRef(null);
     const renderLine = (element, index) => {
         const events = {};
         Object.entries(baseConfig.rowEvents).forEach(([key, event]) => events[key] = (nativeEvent) => event ? event(nativeEvent, element) : undefined);
-        return React__default.createElement("tr", Object.assign({ key: index }, baseConfig.rowProps, events), mappedChildren.map((column) => React__default.cloneElement(column, column.props, column.props.children(element, index))));
+        return (React__default.createElement(framerMotion.motion.tr, Object.assign({ key: index, initial: Animations.ListItemInitial, animate: Animations.ListItemIn(index < animationIndex ? 0 : (index - animationIndex) / ((data === null || data === void 0 ? void 0 : data.length) - animationIndex)) }, baseConfig.rowProps, events), mappedChildren.map((column) => React__default.cloneElement(column, column.props, column.props.children(element, index)))));
     };
+    React.useEffect(() => {
+        if (data.length > 0) {
+            setAnimationIndex(data.length - 1);
+        }
+        else {
+            setAnimationIndex(0);
+        }
+    }, [data]);
+    React.useEffect(() => {
+        if (data.length > 0 && loading) {
+            if (tableBodyRef.current) {
+                tableBodyRef.current.scrollTo({ top: tableBodyRef.current.scrollHeight, behavior: 'smooth' });
+            }
+        }
+    }, [loading]);
     return (React__default.createElement(TableElement, { className: "ui-table" },
-        (data.length > 0 && !loading) &&
+        (data.length > 0) &&
             React__default.createElement(TableHeaderElement, { className: "ui-table-header" },
                 React__default.createElement("tr", null, mappedChildren.map((child) => React__default.createElement("th", Object.assign({ key: child.props.name, style: { flex: child.props.flex, minWidth: child.props.minwidth, maxWidth: child.props.maxwidth } }, child.props), child.props.name)))),
-        (data.length > 0 && !loading) &&
-            React__default.createElement(TableBodyElement, { onScroll: baseConfig.onScroll, className: "ui-table-body" }, data.map(renderLine)),
+        (data.length > 0) &&
+            React__default.createElement(TableBodyElement, { onScroll: baseConfig.onScroll, className: "ui-table-body", ref: tableBodyRef },
+                data.map(renderLine),
+                loading &&
+                    React__default.createElement("tr", { className: "ui-table-inner-loading-container" },
+                        React__default.createElement("td", null,
+                            React__default.createElement(Spinners.circles, { width: "100px", height: "100px" }),
+                            baseConfig.innerLoadingMessage))),
         (data.length === 0 && !loading) &&
             React__default.createElement(framerMotion.motion.tbody, { className: "ui-table-loading-container" },
                 React__default.createElement("tr", null,
                     React__default.createElement("td", null, baseConfig.emptyMessage))),
-        loading &&
+        (data.length === 0 && loading) &&
             React__default.createElement(framerMotion.motion.tbody, { className: "ui-table-loading-container" },
                 React__default.createElement("tr", null,
                     React__default.createElement("td", null,
@@ -1701,6 +1755,106 @@ function Tabs({ index, children, onTabChange }) {
             React__default.createElement(framerMotion.motion.div, { className: "ui-tabs-tab-selector", style: { width: `calc(100% / ${childrenLenght})` }, animate: selectorController })),
         React__default.createElement(framerMotion.motion.div, { className: "ui-tabs-tab-body", animate: bodyController },
             React__default.createElement(ScrollableContainer, { flexDirection: "column" }, Array.isArray(children) ? children[tabIndex] : children))));
+}
+
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+function __rest(s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+}
+
+const TextAreaContainerElement = styled(framerMotion.motion.div) `
+    padding: 5px;
+    margin: 3px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all ${() => getGlobalTheme().transitions.fast};
+    position: relative;
+    width: fit-content;
+    max-width: 100%;
+
+    &&.ui-textarea-container-outline {
+        background-color: ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'principal' : 'contrast']};
+        border: 1px solid ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}32;
+        border-radius: ${() => getGlobalTheme().borderRadius};
+
+            
+        &:focus-within {
+            box-shadow: ${() => getGlobalTheme().boxShadow.active};
+            border: 2px solid ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
+        }
+    }
+
+    &&.ui-textarea-container-downline {
+        background-color: transparent;
+        border-bottom: 1px solid ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}32;
+
+        &:focus-within {
+            border-bottom: 2px solid ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
+        }
+    }
+
+    textarea {
+        min-width: 286px;
+        width: 100%;
+        max-width: 100%;
+        min-height: 82px;
+        height: 100%;
+        max-height: 100%;
+        color: ${() => getGlobalTheme().colors.primary.principal};
+        border: none;
+        outline: none;
+        font-size: ${() => getGlobalTheme().font.input.fontSize};
+        font-weight: ${() => getGlobalTheme().font.input.fontWeight};
+        text-align: ${() => getGlobalTheme().font.input.textAlign};
+        font-family: ${() => getGlobalTheme().font.input.fontFamily};
+        
+        &::placeholder {
+            transition: all ${() => getGlobalTheme().transitions.avarage};
+        }
+        &:focus {
+            &::placeholder {
+                color: transparent;
+            }
+        }
+    }
+    .__icon {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        opacity: 0.3;
+    }
+`;
+
+const DEFAULT_TYPE$1 = 'downline';
+function TextArea(_a) {
+    var { icon, containerProps, containerType, invert, color } = _a, props = __rest(_a, ["icon", "containerProps", "containerType", "invert", "color"]);
+    return (React__default.createElement(TextAreaContainerElement, Object.assign({}, containerProps, { invert: invert, color: color, className: `ui-textarea-container-${containerType || DEFAULT_TYPE$1} ${(containerProps === null || containerProps === void 0 ? void 0 : containerProps.className) || ''}` }),
+        React__default.createElement("textarea", Object.assign({}, props)),
+        icon && React__default.createElement(Icon, { color: color, name: icon, invert: invert, width: "25px", height: "25px", className: "__icon" })));
 }
 
 const ModalBaseElement = styled.div `
@@ -1830,8 +1984,8 @@ class ModalController extends AsideController {
         return (React__default.createElement(ModalBaseElement, null,
             React__default.createElement(framerMotion.motion.div, { className: "ui-modal-overlay", onClick: () => (this.config.disableBackdropClose ? undefined : this.close('backdrop')), animate: this.overlayControls }),
             React__default.createElement(framerMotion.motion.div, Object.assign({ className: "ui-modal-container" }, this.config.containerProps, { animate: this.containerControls }),
-                !this.config.disableCloseButton && React__default.createElement(ModalCloseButton, { className: "ui-modal-btn-close", onClick: () => this.close('closeButton'), width: "30px", height: "30px", name: "close" }),
-                this.content)));
+                this.content,
+                !this.config.disableCloseButton && React__default.createElement(ModalCloseButton, { className: "ui-modal-btn-close", onClick: () => this.close('closeButton'), width: "30px", height: "30px", name: "close" }))));
     }
 }
 function useModal(content, options) {
@@ -2029,15 +2183,14 @@ const ToastElement = styled(framerMotion.motion.div) `
 
     background-color: ${(props) => getGlobalTheme().colors[props.color].principal};
     color: ${(props) => getGlobalTheme().colors[props.color].contrast};
-    font-size: ${() => getGlobalTheme().font.h2.fontSize};
-    font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
+    font-size: ${() => getGlobalTheme().font.p1.fontSize};
+    font-weight: ${() => getGlobalTheme().font.p1.fontWeight};
     border-radius: ${() => getGlobalTheme().borderRadius};
     box-shadow: ${() => getGlobalTheme().boxShadow.normal};
 
     @media screen and (max-width: 1024px) {
         width: calc(100% - 30px);
         left: 15px;
-        font-size: calc(${() => getGlobalTheme().font.h2.fontSize} / 2);
     }
 `;
 
@@ -2188,6 +2341,7 @@ const BaseButton = styled(framerMotion.motion.button) `
             max-width: 300px;
             flex: 1;
             text-align: center;
+            font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
         }
     }
 
@@ -2217,6 +2371,7 @@ const BaseButton = styled(framerMotion.motion.button) `
             flex: 1;
             text-align: center;
             color: ${(props) => props.color ? getGlobalTheme().colors[props.color].contrast : getGlobalTheme().colors['primary'].contrast};
+            font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
         }
     }
 
@@ -2268,6 +2423,7 @@ exports.Tab = Tab;
 exports.Table = Table;
 exports.TableColumn = TableColumn;
 exports.Tabs = Tabs;
+exports.TextArea = TextArea;
 exports.ToastController = ToastController;
 exports.Validators = Validators;
 exports.getGlobalTheme = getGlobalTheme;
