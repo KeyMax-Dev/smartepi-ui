@@ -4,7 +4,7 @@
 	"private": true,
 	"main": "build/index.js",
 	"scripts": {
-		"dev": "react-scripts start",
+		"start": "react-scripts start",
 		"format": "prettier --write src",
 		"build": "rollup -c && cp -r src/lib/assets/extra-files build/assets/extra-files",
 		"build:clean": "npm i && rm -rf build && npm run build"
@@ -20,6 +20,7 @@
 		"@rollup/plugin-typescript": "^4.1.2",
 		"@types/react": "^16.9.35",
 		"@types/react-dom": "^16.9.8",
+		"@types/react-router-dom": "^5.1.8",
 		"@types/styled-components": "^5.1.0",
 		"framer-motion": "^1.11.0",
 		"prettier": "^2.3.2",
@@ -50,5 +51,7 @@
 			"react-dom"
 		]
 	},
-	"dependencies": {}
+	"dependencies": {
+		"react-router-dom": "^5.2.0"
+	}
 }

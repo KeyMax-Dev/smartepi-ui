@@ -1,9 +1,5 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import ComponentsLibrary from "./ComponentsLibrary";
-import TestingPage from "./TestingPage";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { App } from './app/main';
 
-ReactDOM.render(
-  <ComponentsLibrary />,
-  document.getElementById('root')
-);
+ReactDOM.render(<App />, document.getElementById('root'));
