@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useForm, Validators } from '../../../lib';
+import { useForm, Validators, Button } from '../../../lib';
 
 const Container = styled.div`
 	display: flex;
@@ -18,6 +18,10 @@ export const FormPage = (): JSX.Element => {
 				new Validators.MinLength(4),
 			],
 			initial: 'valor inicial',
+			inputProps: {
+				placeholder: 'name',
+				enableClear: true,
+			},
 		},
 		{
 			key: 'password',
@@ -28,16 +32,24 @@ export const FormPage = (): JSX.Element => {
 			],
 			inputProps: {
 				type: 'password',
-				placeholder: 'Password',
+				placeholder:
+					'Password Password Password Password Password Password',
 				containerType: 'outline',
+				enableClear: true,
 			},
 		},
 	]);
+
+	const clickHandler = (): void => {
+		console.log('errors', getErrors());
+		console.log('values', getValues());
+	};
 
 	return (
 		<Container>
 			<h1>Form Page</h1>
 			{form}
+			<Button onClick={clickHandler} text="Validate" />
 		</Container>
 	);
 };

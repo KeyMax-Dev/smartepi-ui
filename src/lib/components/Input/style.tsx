@@ -6,11 +6,12 @@ import { InputProps } from './index';
 export const InputContainerElement = styled(motion.div)<InputProps>`
 	min-width: 300px;
 	height: 50px;
-	margin: 5px;
+	margin: 15px 5px 5px 5px;
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
 	transition: all ${() => getGlobalTheme().transitions.fast};
+	position: relative;
 
 	&&.ui-input-container-outline {
 		background-color: ${({ color, invert }): string =>
@@ -99,20 +100,46 @@ export const InputElement = styled(motion.input)<InputProps>`
 	margin: 0 10px;
 
 	&::placeholder {
-		transition: all ${() => getGlobalTheme().transitions.avarage};
-		color: ${({ color, invert }): string =>
-			getGlobalTheme().colors[color || 'primary'][
-				invert ? 'contrast' : 'principal'
-			]}7A;
-	}
-	&:focus {
-		&::placeholder {
-			color: transparent;
-		}
+		visibility: hidden;
 	}
 
 	@media screen and (max-width: 600px) {
 		margin: 0 3px;
 		min-width: 150px;
+	}
+`;
+
+export interface InputLabelProps extends InputProps {
+	active?: boolean;
+}
+
+export const InputLabelElement = styled.label<InputLabelProps>`
+	position: absolute;
+	left: 0;
+	right: 0;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	padding: 0 12px;
+	pointer-events: none;
+
+	height: 100%;
+
+	top: ${({ active }) => (active ? '-15px' : '0px')};
+	font-size: ${({ active }) => (active ? '10px' : '16px')};
+
+	transition: all ${() => getGlobalTheme().transitions.avarage};
+
+	color: ${({ color, invert }): string =>
+		getGlobalTheme().colors[color || 'primary'][
+			invert ? 'contrast' : 'principal'
+		]}7A;
+
+	text {
+		display: -webkit-box;
+		-webkit-line-clamp: 1;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		max-width: 100%;
 	}
 `;

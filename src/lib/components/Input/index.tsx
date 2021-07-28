@@ -7,7 +7,11 @@ import React, {
 } from 'react';
 import Icon from '../Icon';
 import { HTMLMotionProps } from 'framer-motion';
-import { InputElement, InputContainerElement } from './style';
+import {
+	InputElement,
+	InputContainerElement,
+	InputLabelElement,
+} from './style';
 import Button from '../Button';
 import { useOverflow, Datepicker } from '../..';
 
@@ -36,6 +40,7 @@ export default function Input(props: InputProps): JSX.Element {
 	const [enableClear, setEnableClear] = useState<boolean>(
 		!!props.value && !!props.enableClear
 	);
+	const [isFocused, setIsFocused] = useState<boolean>(false);
 
 	const clear = (): void => {
 		if (inputRef.current) {
@@ -70,6 +75,16 @@ export default function Input(props: InputProps): JSX.Element {
 		<Datepicker onDaySelected={onDatepickerSelect} />
 	);
 
+	const onFocus = (event: FocusEvent<HTMLInputElement>): void => {
+		setIsFocused(true);
+		if (props.onFocus) props.onFocus(event);
+	};
+
+	const onBlur = (event: FocusEvent<HTMLInputElement>): void => {
+		setIsFocused(false);
+		if (props.onBlur) props.onBlur(event);
+	};
+
 	useEffect(() => {
 		if (props.getRef)
 			props.getRef(inputRef as React.MutableRefObject<HTMLInputElement>);
@@ -92,6 +107,15 @@ export default function Input(props: InputProps): JSX.Element {
 				props.containerProps?.className || ''
 			}`}
 		>
+			{props.placeholder && (
+				<InputLabelElement
+					active={isFocused || (props.value as string)?.length > 0}
+					color={props.color}
+					invert={props.invert}
+				>
+					<text>{props.placeholder}</text>
+				</InputLabelElement>
+			)}
 			{props.iconLeft && (
 				<Icon
 					color={props.color}
@@ -106,6 +130,8 @@ export default function Input(props: InputProps): JSX.Element {
 				{...props}
 				ref={inputRef as React.MutableRefObject<HTMLInputElement>}
 				disabled={props.enableDatepicker}
+				onFocus={onFocus}
+				onBlur={onBlur}
 			/>
 			{enableClear && (
 				<Button
