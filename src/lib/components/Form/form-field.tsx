@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Input, { InputProps } from '../Input';
-import InputValidator, {
-	InputValueType,
-} from '../../services/input-validator/input-validator';
+import InputValidator from '../../services/input-validator/input-validator';
 import { validate } from '../../services/input-validator';
+import { FieldState } from '.';
 
 export interface FormFieldProps extends InputProps {
-	key: string;
-	onValidationChange: (value: false | string[]) => void;
+	state: FieldState;
 	validators: InputValidator[];
-	validated?: boolean;
 }
 
 export default function FormField(props: FormFieldProps): JSX.Element {
@@ -17,60 +14,44 @@ export default function FormField(props: FormFieldProps): JSX.Element {
 	const [iconRight, setIconRight] = useState<string | undefined>(
 		props.iconRight
 	);
-	const [validated, setValidated] = useState<boolean>(
-		props.validated || false
-	);
+	const [state, setState] = props.state;
 
-	const validateField = (
-		value: InputValueType,
-		forceErrorState?: boolean
-	): false | string[] => {
-		const validation = validate(value, ...props.validators);
-
-		if (validation) {
-			if (validated || forceErrorState) {
-				setColor('danger');
-				setIconRight('alert');
-				setValidated(true);
-			}
-		} else {
-			setColor(props.color);
-			setIconRight(props.iconRight);
-			if (!validated) setValidated(true);
-		}
-
-		props.onValidationChange(validation);
-		return validation;
-	};
-
-	const blurValidationHandler = (
-		event: React.FocusEvent<HTMLInputElement>
-	): void => {
-		validateField(event.target.value, true);
+	const blurHandler = (event: React.FocusEvent<HTMLInputElement>): void => {
+		setState({ ...state, validated: true });
 		if (props.onBlur) props.onBlur(event);
 	};
 
-	const changeValidationHandler = (
+	const changeHandler = (
 		event: React.ChangeEvent<HTMLInputElement>
 	): void => {
-		validateField(event.target.value);
+		setState({
+			...state,
+			value: event.target.value,
+			hasError: validate(event.target.value, ...props.validators),
+		});
 		if (props.onChange) props.onChange(event);
 	};
 
 	useEffect(() => {
-		if (props.validated) {
-			validateField(props.value || '', props.validated);
+		if (state.hasError && state.validated) {
+			setColor('danger');
+			setIconRight('alert');
+			setState({ ...state, validated: true });
+		} else {
+			setColor(props.color);
+			setIconRight(props.iconRight);
 		}
-	}, [props.validated]);
+	}, [state.hasError, state.validated]);
 
 	return (
 		<Input
 			{...props}
 			color={color}
 			iconRight={iconRight}
-			onBlur={blurValidationHandler}
-			onChange={changeValidationHandler}
+			onBlur={blurHandler}
+			onChange={changeHandler}
 			className={`ui-form-input ${props.className}`}
+			value={state.value}
 		/>
 	);
 }

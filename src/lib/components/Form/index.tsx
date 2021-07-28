@@ -1,107 +1,106 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import FormField from './form-field';
 import { InputProps } from '../Input';
+import Input from '../Input';
 import InputValidator from '../../services/input-validator/input-validator';
 import { validate } from './../../services/input-validator/index';
 
 type FormPrototype = { [key: string]: string | number | undefined | Date };
 
-type Field<T extends FormPrototype> = {
-	initial?: string;
-	inputProps?: InputProps;
+type FieldProps<T extends FormPrototype> = {
 	key: keyof T;
 	validators: InputValidator[];
+	initialValue?: string;
 };
 
-type FieldState = {
+type Field = {
 	hasError: false | string[];
 	validated?: boolean;
 	value: string;
 	validators: InputValidator[];
 };
 
-type FieldStates<T extends FormPrototype> = { [K in keyof T]: FieldState };
+export type FieldState = [Field, Dispatch<SetStateAction<Field>>];
+
+type FormState<T extends FormPrototype> = { [K in keyof T]: FieldState };
+
+type FormElements<T extends FormPrototype> = {
+	[key in keyof T]?: typeof Input;
+};
 
 type Form<T extends FormPrototype> = [
-	JSX.Element | JSX.Element[],
+	FormElements<T>,
 	() => null | { [K in keyof T]?: string[] },
 	() => T,
-	FieldStates<T>
+	FormState<T>
 ];
 
+const FormElement = <T extends FormPrototype>(
+	props: InputProps & {
+		formState: FormState<T>;
+		id: keyof T;
+		validators: InputValidator[];
+		initialValue: string;
+	}
+): JSX.Element => {
+	const state = useState<Field>({
+		hasError: validate(props.initialValue, ...props.validators),
+		value: props.initialValue,
+		validators: props.validators,
+	});
+	props.formState[props.id] = state;
+	return <FormField {...props} state={state} />;
+};
+
 export default function useForm<T extends FormPrototype>(
-	fields: Field<T>[]
+	fields: FieldProps<T>[]
 ): Form<T> {
-	const [fieldStates, setFieldStates] = useState<
-		{ [K in keyof T]: FieldState }
-	>(
-		fields.reduce(
-			(obj, cur) => ({
-				...obj,
-				[cur.key]: {
-					value: cur.initial || '',
-					hasError: validate(cur.initial || '', ...cur.validators),
-					validators: cur.validators,
-				},
-			}),
-			{} as { [K in keyof T]: FieldState }
-		)
+	const fieldStates = {} as FormState<T>;
+
+	const formElements: FormElements<T> = fields.reduce(
+		(res, { key, validators, initialValue }) => {
+			return {
+				...res,
+				// eslint-disable-next-line
+				[key]: (props: InputProps): JSX.Element => (
+					<FormElement
+						{...props}
+						formState={fieldStates}
+						id={`${key}`}
+						validators={validators}
+						initialValue={initialValue || ''}
+					/>
+				),
+			};
+		},
+		{}
 	);
 
-	const validationChangeHandler = (
-		key: string,
-		hasError: false | string[]
-	): void => {
-		const state = { ...fieldStates[key], hasError };
-		setFieldStates({ ...fieldStates, [key]: state });
-	};
-
-	const valueChangeHandler = (key: string, value: string): void => {
-		const state = { ...fieldStates[key], value };
-		setFieldStates({ ...fieldStates, [key]: state });
-	};
-
-	const formElement = fields.map(({ key, inputProps, validators }) => (
-		<FormField
-			{...inputProps}
-			key={key as string}
-			onValidationChange={(value) =>
-				validationChangeHandler(key as string, value)
-			}
-			onChange={(event) =>
-				valueChangeHandler(key as string, event.target.value)
-			}
-			value={fieldStates[key].value}
-			validators={validators}
-			validated={fieldStates[key].validated}
-		/>
-	));
-
 	const getErrors = (): null | { [K in keyof T]?: string[] } => {
-		let newFieldStates: FieldStates<T> = {} as FieldStates<T>;
-		let hasError: { [K in keyof T]?: string[] } = {};
+		let totalErrors: { [K in keyof T]?: string[] } = {};
 		for (const key in fieldStates) {
-			fieldStates[key].hasError = validate(
-				fieldStates[key].value,
-				...fieldStates[key].validators
-			);
-			const state = { ...fieldStates[key], validated: true };
-			newFieldStates = { ...newFieldStates, [key]: state };
-			if (fieldStates[key].hasError)
-				hasError = { ...hasError, [key]: fieldStates[key].hasError };
+			const [state, setState] = fieldStates[key];
+
+			const hasError = validate(state.value, ...state.validators);
+
+			setState({ ...state, hasError, validated: true });
+			if (hasError) {
+				totalErrors = {
+					...totalErrors,
+					[key]: state.hasError,
+				};
+			}
 		}
 
-		setFieldStates(newFieldStates);
-		if (Object.entries(hasError).length > 0) return hasError;
+		if (Object.entries(totalErrors).length > 0) return totalErrors;
 		else return null;
 	};
 
 	const getValues = (): T => {
-		return Object.entries(fieldStates).reduce(
-			(obj, curr) => ({ ...obj, [curr[0]]: curr[1].value }),
-			{} as T
-		);
+		return Object.entries(fieldStates).reduce((obj, [key, [state]]) => {
+			return { ...obj, [key]: state.value };
+		}, {} as T);
 	};
 
-	return [formElement, getErrors, getValues, fieldStates];
+	return [formElements, getErrors, getValues, fieldStates];
 }

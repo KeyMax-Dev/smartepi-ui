@@ -17,11 +17,7 @@ export const FormPage = (): JSX.Element => {
 				new Validators.Required(),
 				new Validators.MinLength(4),
 			],
-			initial: 'valor inicial',
-			inputProps: {
-				placeholder: 'name',
-				enableClear: true,
-			},
+			initialValue: 'initial value',
 		},
 		{
 			key: 'password',
@@ -30,13 +26,10 @@ export const FormPage = (): JSX.Element => {
 				new Validators.MinLength(3),
 				new Validators.MaxLength(6),
 			],
-			inputProps: {
-				type: 'password',
-				placeholder:
-					'Password Password Password Password Password Password',
-				containerType: 'outline',
-				enableClear: true,
-			},
+		},
+		{
+			key: 'datepicker',
+			validators: [],
 		},
 	]);
 
@@ -48,7 +41,15 @@ export const FormPage = (): JSX.Element => {
 	return (
 		<Container>
 			<h1>Form Page</h1>
-			{form}
+
+			<form.name placeholder="Name" enableClear />
+			<form.password
+				placeholder="Password Password Password Password Password Password"
+				containerType="outline"
+				type="password"
+			/>
+			<form.datepicker placeholder="Date" enableDatepicker />
+
 			<Button onClick={clickHandler} text="Validate" />
 		</Container>
 	);
