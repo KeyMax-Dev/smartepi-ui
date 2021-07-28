@@ -1,10 +1,4 @@
-import React, {
-	useEffect,
-	useRef,
-	useState,
-	ChangeEvent,
-	FocusEvent,
-} from 'react';
+import React, { useEffect, useRef, useState, FocusEvent } from 'react';
 import Icon from '../Icon';
 import { HTMLMotionProps } from 'framer-motion';
 import {
@@ -37,9 +31,6 @@ export default function Input(props: InputProps): JSX.Element {
 		? props.containerType
 		: DEFAULT_TYPE;
 	const inputRef = useRef<HTMLInputElement>();
-	const [enableClear, setEnableClear] = useState<boolean>(
-		!!props.value && !!props.enableClear
-	);
 	const [isFocused, setIsFocused] = useState<boolean>(false);
 
 	const clear = (): void => {
@@ -88,15 +79,9 @@ export default function Input(props: InputProps): JSX.Element {
 	useEffect(() => {
 		if (props.getRef)
 			props.getRef(inputRef as React.MutableRefObject<HTMLInputElement>);
-
-		const eventHandler = (event: any): void =>
-			setEnableClear(
-				event.target.value.length > 0 && !!props.enableClear
-			);
-		inputRef.current?.addEventListener('input', eventHandler);
-		return () =>
-			inputRef.current?.removeEventListener('input', eventHandler);
 	}, [inputRef.current]);
+
+	const hasText = !!inputRef.current?.value?.length || !!props.value;
 
 	return (
 		<InputContainerElement
@@ -109,11 +94,11 @@ export default function Input(props: InputProps): JSX.Element {
 		>
 			{props.placeholder && (
 				<InputLabelElement
-					active={isFocused || (props.value as string)?.length > 0}
+					active={isFocused || hasText}
 					color={props.color}
 					invert={props.invert}
 				>
-					<text>{props.placeholder}</text>
+					<div>{props.placeholder}</div>
 				</InputLabelElement>
 			)}
 			{props.iconLeft && (
@@ -133,7 +118,7 @@ export default function Input(props: InputProps): JSX.Element {
 				onFocus={onFocus}
 				onBlur={onBlur}
 			/>
-			{enableClear && (
+			{props.enableClear && hasText && (
 				<Button
 					buttonType="icon"
 					icon="close"

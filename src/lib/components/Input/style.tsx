@@ -135,7 +135,7 @@ export const InputLabelElement = styled.label<InputLabelProps>`
 			invert ? 'contrast' : 'principal'
 		]}7A;
 
-	text {
+	div {
 		display: -webkit-box;
 		-webkit-line-clamp: 1;
 		-webkit-box-orient: vertical;
