@@ -3,14 +3,17 @@ import { TabElement } from './style';
 import { HTMLMotionProps } from 'framer-motion';
 
 export interface TabProps extends HTMLMotionProps<'div'> {
-    title: string;
-    children: React.ReactNode;
+	title: string;
+	children: React.ReactNode;
 }
 
 export default function Tab(props: TabProps): JSX.Element {
-    return (
-        <TabElement {...props} className={`ui-tabs-tab-body ${props.className}`}>
-            {props.children}
-        </TabElement>
-    );
+	return (
+		<TabElement
+			{...props}
+			className={`ui-tabs-tab-body ${props.className}`}
+		>
+			{props.children}
+		</TabElement>
+	);
 }

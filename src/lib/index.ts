@@ -1,7 +1,16 @@
 import './index.css';
 
-import { LightTheme, DarkTheme, setGlobalTheme, getGlobalTheme } from './assets/themes';
-import { validate, Validators, InputValidator } from './services/input-validator';
+import {
+	LightTheme,
+	DarkTheme,
+	setGlobalTheme,
+	getGlobalTheme,
+} from './assets/themes';
+import {
+	validate,
+	Validators,
+	InputValidator,
+} from './services/input-validator';
 import Animations from './assets/animations';
 import AsideController from './services/aside-components/aside-controller';
 import Badge from './components/Badge';
@@ -19,61 +28,74 @@ import ScrollableContainer from './components/ScrollableContainer';
 import Select from './components/Select';
 import Spinners from './assets/svgs/spinners';
 import Tab from './components/Tabs/tab';
-import Table, { TableRowProps, TableRowEvents, TableRowEventHandler } from './components/Table';
+import Table, {
+	TableRowProps,
+	TableRowEvents,
+	TableRowEventHandler,
+} from './components/Table';
 import TableColumn from './components/Table/table-column';
 import Tabs from './components/Tabs';
 import TextArea from './components/TextArea';
 import Theme from './types/Theme';
 import useForm from './components/Form';
-import useModal, { ModalController, ModalConfig } from './services/aside-components/modal';
-import useOverflow, { OverflowController, OverflowConfig } from './services/aside-components/overflow';
-import useToast, { ToastController, ToastConfig } from './services/aside-components/toast';
+import useModal, {
+	ModalController,
+	ModalConfig,
+} from './services/aside-components/modal';
+import useOverflow, {
+	OverflowController,
+	OverflowConfig,
+} from './services/aside-components/overflow';
+import useToast, {
+	ToastController,
+	ToastConfig,
+} from './services/aside-components/toast';
 
 export {
-    Animations,
-    AsideController,
-    Badge,
-    Button,
-    CardBase,
-    Checkbox,
-    DarkTheme,
-    Datepicker,
-    Form,
-    FormField,
-    getGlobalTheme,
-    Icon,
-    Icons,
-    ImageAvatar,
-    Input,
-    LightTheme,
-    ModalController,
-    OverflowController,
-    ScrollableContainer,
-    Select,
-    setGlobalTheme,
-    Spinners,
-    Tab,
-    Table,
-    TableColumn,
-    Tabs,
-    TextArea,
-    ToastController,
-    useForm,
-    useModal,
-    useOverflow,
-    useToast,
-    validate,
-    Validators
+	Animations,
+	AsideController,
+	Badge,
+	Button,
+	CardBase,
+	Checkbox,
+	DarkTheme,
+	Datepicker,
+	Form,
+	FormField,
+	getGlobalTheme,
+	Icon,
+	Icons,
+	ImageAvatar,
+	Input,
+	LightTheme,
+	ModalController,
+	OverflowController,
+	ScrollableContainer,
+	Select,
+	setGlobalTheme,
+	Spinners,
+	Tab,
+	Table,
+	TableColumn,
+	Tabs,
+	TextArea,
+	ToastController,
+	useForm,
+	useModal,
+	useOverflow,
+	useToast,
+	validate,
+	Validators,
 };
 
 export type {
-    CheckboxToggleEvent,
-    InputValidator,
-    ModalConfig,
-    OverflowConfig,
-    TableRowEventHandler,
-    TableRowEvents,
-    TableRowProps,
-    Theme,
-    ToastConfig
+	CheckboxToggleEvent,
+	InputValidator,
+	ModalConfig,
+	OverflowConfig,
+	TableRowEventHandler,
+	TableRowEvents,
+	TableRowProps,
+	Theme,
+	ToastConfig,
 };

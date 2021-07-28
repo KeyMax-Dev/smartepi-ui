@@ -1,95 +1,118 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { getGlobalTheme } from "../../assets/themes";
+import { getGlobalTheme } from '../../assets/themes';
 import { InputProps } from './index';
 
-export const InputContainerElement = styled(motion.div) <InputProps>`
-    min-width: 300px;
-    height: 50px;
-    margin: 5px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    transition: all ${() => getGlobalTheme().transitions.fast};
-    
-    
-    &&.ui-input-container-outline {
-        background-color: ${({ color, invert }): string => getGlobalTheme().colors[color || 'primary'][invert ? 'principal' : 'contrast']};
-        border: 1px solid ${({ color, invert }): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}32;
-        border-radius: ${() => getGlobalTheme().borderRadius};
+export const InputContainerElement = styled(motion.div)<InputProps>`
+	min-width: 300px;
+	height: 50px;
+	margin: 5px;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	transition: all ${() => getGlobalTheme().transitions.fast};
 
-            
-        &:focus-within {
-            box-shadow: ${() => getGlobalTheme().boxShadow.active};
-            border: 2px solid ${({ color, invert }): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
-        }
-    }
+	&&.ui-input-container-outline {
+		background-color: ${({ color, invert }): string =>
+			getGlobalTheme().colors[color || 'primary'][
+				invert ? 'principal' : 'contrast'
+			]};
+		border: 1px solid
+			${({ color, invert }): string =>
+				getGlobalTheme().colors[color || 'primary'][
+					invert ? 'contrast' : 'principal'
+				]}32;
+		border-radius: ${() => getGlobalTheme().borderRadius};
 
-    &&.ui-input-container-downline {
-        background-color: transparent;
-        border-bottom: 1px solid ${({ color, invert }): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}32;
+		&:focus-within {
+			box-shadow: ${() => getGlobalTheme().boxShadow.active};
+			border: 2px solid
+				${({ color, invert }): string =>
+					getGlobalTheme().colors[color || 'primary'][
+						invert ? 'contrast' : 'principal'
+					]};
+		}
+	}
 
-        &:focus-within {
-            border-bottom: 2px solid ${({ color, invert }): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
-        }
-    }
-    
-    .__icon-right {
-        margin: 0 5px 0 0;
-        padding: 0;
+	&&.ui-input-container-downline {
+		background-color: transparent;
+		border-bottom: 1px solid
+			${({ color, invert }): string =>
+				getGlobalTheme().colors[color || 'primary'][
+					invert ? 'contrast' : 'principal'
+				]}32;
 
-        .ui-btn-icon {
-            margin: 0 !important;
-        }
-    }
+		&:focus-within {
+			border-bottom: 2px solid
+				${({ color, invert }): string =>
+					getGlobalTheme().colors[color || 'primary'][
+						invert ? 'contrast' : 'principal'
+					]};
+		}
+	}
 
-    .__icon-left {
-        margin: 0 0 0 5px;
-        padding: 0;
-        
-        .ui-btn-icon {
-            margin: 0 !important;
-        }
-    }
+	.__icon-right {
+		margin: 0 5px 0 0;
+		padding: 0;
 
-    @media screen and (max-width: 600px) {   
-        width: calc(100% - 30px);
-        min-width: 250px;
+		.ui-btn-icon {
+			margin: 0 !important;
+		}
+	}
 
-        .__icon-right {
-            margin: 0 3px 0 0;
-        }
+	.__icon-left {
+		margin: 0 0 0 5px;
+		padding: 0;
 
-        .__icon-left {
-            margin: 0 0 0 3px;
-        }
-    }
+		.ui-btn-icon {
+			margin: 0 !important;
+		}
+	}
+
+	@media screen and (max-width: 600px) {
+		width: calc(100% - 30px);
+		min-width: 250px;
+
+		.__icon-right {
+			margin: 0 3px 0 0;
+		}
+
+		.__icon-left {
+			margin: 0 0 0 3px;
+		}
+	}
 `;
 
-export const InputElement = styled(motion.input) <InputProps>`
-    color: ${({ color, invert }): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
-    background-color: transparent;
-    flex: 1;
-    border: none;
-    outline: none;
-    font-size: ${() => getGlobalTheme().font.input.fontSize};
-    font-weight: ${() => getGlobalTheme().font.input.fontWeight};
-    text-align: ${() => getGlobalTheme().font.input.textAlign};
-    font-family: ${() => getGlobalTheme().font.input.fontFamily};
-    margin: 0 10px;
-    
-    &::placeholder {
-        transition: all ${() => getGlobalTheme().transitions.avarage};
-        color: ${({ color, invert }): string => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}7A;
-    }
-    &:focus {
-        &::placeholder {
-            color: transparent;
-        }
-    }
+export const InputElement = styled(motion.input)<InputProps>`
+	color: ${({ color, invert }): string =>
+		getGlobalTheme().colors[color || 'primary'][
+			invert ? 'contrast' : 'principal'
+		]};
+	background-color: transparent;
+	flex: 1;
+	border: none;
+	outline: none;
+	font-size: ${() => getGlobalTheme().font.input.fontSize};
+	font-weight: ${() => getGlobalTheme().font.input.fontWeight};
+	text-align: ${() => getGlobalTheme().font.input.textAlign};
+	font-family: ${() => getGlobalTheme().font.input.fontFamily};
+	margin: 0 10px;
 
-    @media screen and (max-width: 600px) {   
-        margin: 0 3px;
-        min-width: 150px;
-    }
+	&::placeholder {
+		transition: all ${() => getGlobalTheme().transitions.avarage};
+		color: ${({ color, invert }): string =>
+			getGlobalTheme().colors[color || 'primary'][
+				invert ? 'contrast' : 'principal'
+			]}7A;
+	}
+	&:focus {
+		&::placeholder {
+			color: transparent;
+		}
+	}
+
+	@media screen and (max-width: 600px) {
+		margin: 0 3px;
+		min-width: 150px;
+	}
 `;

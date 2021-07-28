@@ -1,29 +1,22 @@
 {
-    "compilerOptions": {
-        "declaration": true,
-        "declarationDir": "../../build",
-        "strict": true,
-        "allowSyntheticDefaultImports": true,
-        "sourceMap": true,
-        "noUnusedParameters": true,
-        "strictNullChecks": true,
-        "moduleResolution": "node",
-        "noImplicitAny": true,
-        "target": "es6",
-        "jsx": "react",
-        "typeRoots": [
-            "node_modules/@types"
-        ],
-        "module": "esnext",
-        "lib": ["dom", "esnext"],
-        "esModuleInterop": true,
-        "rootDir": "./",
-    },
-    "include": [
-        "./**/*"
-    ],
-    "exclude": [
-        "**/*.spec.ts",
-        "**/node_modules"
-    ]
+	"compilerOptions": {
+		"declaration": true,
+		"declarationDir": "../../build",
+		"strict": true,
+		"allowSyntheticDefaultImports": true,
+		"sourceMap": true,
+		"noUnusedParameters": true,
+		"strictNullChecks": true,
+		"moduleResolution": "node",
+		"noImplicitAny": true,
+		"target": "es6",
+		"jsx": "react",
+		"typeRoots": ["node_modules/@types"],
+		"module": "esnext",
+		"lib": ["dom", "esnext"],
+		"esModuleInterop": true,
+		"rootDir": "./"
+	},
+	"include": ["./**/*"],
+	"exclude": ["**/*.spec.ts", "**/node_modules"]
 }
