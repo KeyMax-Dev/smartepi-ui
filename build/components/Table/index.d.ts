@@ -30,5 +30,5 @@ interface TableProps {
     loading?: boolean;
     config?: Partial<TableConfig>;
 }
-export default function Table({ data, children, loading, config }: TableProps): JSX.Element;
+export default function Table({ data, children, loading, config, }: TableProps): JSX.Element;
 export {};

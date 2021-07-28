@@ -1,5 +1,5 @@
 import React from 'react';
-import { HTMLMotionProps } from "framer-motion";
+import { HTMLMotionProps } from 'framer-motion';
 export declare type CheckboxToggleEvent = Partial<React.MouseEvent<HTMLDivElement>> & {
     value: boolean;
 };

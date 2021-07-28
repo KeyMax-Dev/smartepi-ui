@@ -27,5 +27,5 @@ import useForm from './components/Form';
 import useModal, { ModalController, ModalConfig } from './services/aside-components/modal';
 import useOverflow, { OverflowController, OverflowConfig } from './services/aside-components/overflow';
 import useToast, { ToastController, ToastConfig } from './services/aside-components/toast';
-export { Animations, AsideController, Badge, Button, CardBase, Checkbox, DarkTheme, Datepicker, Form, FormField, getGlobalTheme, Icon, Icons, ImageAvatar, Input, LightTheme, ModalController, OverflowController, ScrollableContainer, Select, setGlobalTheme, Spinners, Tab, Table, TableColumn, Tabs, TextArea, ToastController, useForm, useModal, useOverflow, useToast, validate, Validators };
-export type { CheckboxToggleEvent, InputValidator, ModalConfig, OverflowConfig, TableRowEventHandler, TableRowEvents, TableRowProps, Theme, ToastConfig };
+export { Animations, AsideController, Badge, Button, CardBase, Checkbox, DarkTheme, Datepicker, Form, FormField, getGlobalTheme, Icon, Icons, ImageAvatar, Input, LightTheme, ModalController, OverflowController, ScrollableContainer, Select, setGlobalTheme, Spinners, Tab, Table, TableColumn, Tabs, TextArea, ToastController, useForm, useModal, useOverflow, useToast, validate, Validators, };
+export type { CheckboxToggleEvent, InputValidator, ModalConfig, OverflowConfig, TableRowEventHandler, TableRowEvents, TableRowProps, Theme, ToastConfig, };

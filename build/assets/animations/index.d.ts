@@ -1,4 +1,4 @@
-import { TargetAndTransition } from "framer-motion";
+import { TargetAndTransition } from 'framer-motion';
 declare const Animations: {
     HeaderIn: TargetAndTransition;
     HeaderOut: TargetAndTransition;

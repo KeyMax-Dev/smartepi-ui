@@ -1,10 +1,9 @@
 /// <reference types="react" />
 import { InputProps } from '../Input';
 import InputValidator from '../../services/input-validator/input-validator';
+import { FieldState } from '.';
 export interface FormFieldProps extends InputProps {
-    key: string;
-    onValidationChange: (value: false | string[]) => void;
+    state: FieldState;
     validators: InputValidator[];
-    validated?: boolean;
 }
 export default function FormField(props: FormFieldProps): JSX.Element;

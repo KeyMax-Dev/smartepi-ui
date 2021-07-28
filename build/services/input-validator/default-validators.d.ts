@@ -1,4 +1,4 @@
-import InputValidator from "./input-validator";
+import InputValidator from './input-validator';
 declare class Required implements InputValidator {
     errorName: string;
     validate(text: string): boolean;

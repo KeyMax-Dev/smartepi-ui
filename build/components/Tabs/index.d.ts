@@ -5,5 +5,5 @@ interface TabsHeaderProps {
     children: React.ReactElement<TabProps, typeof Tab> | React.ReactElement<TabProps, typeof Tab>[];
     onTabChange?: (index: number) => void;
 }
-export default function Tabs({ index, children, onTabChange }: TabsHeaderProps): JSX.Element;
+export default function Tabs({ index, children, onTabChange, }: TabsHeaderProps): JSX.Element;
 export {};

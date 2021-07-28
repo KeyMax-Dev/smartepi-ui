@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import AsideController, { BaseAsideConfig } from "../aside-controller";
+import AsideController, { BaseAsideConfig } from '../aside-controller';
 export declare type ToastConfig = BaseAsideConfig & {
     color: string;
     timeout: number;

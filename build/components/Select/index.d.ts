@@ -13,5 +13,5 @@ interface SelectProps<T> {
     placeholder?: string;
     containerType?: 'outline' | 'downline';
 }
-export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, onOpen, onClose, value, color, invert, placeholder, containerType }: SelectProps<T>): JSX.Element;
+export default function Select<T>({ data, dataKey, loading, onSelect, onSearch, onOpen, onClose, value, color, invert, placeholder, containerType, }: SelectProps<T>): JSX.Element;
 export {};
