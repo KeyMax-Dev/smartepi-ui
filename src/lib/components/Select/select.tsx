@@ -198,6 +198,7 @@ export function Select<T>({
 				<Button
 					buttonType="icon"
 					icon="close"
+					// @ts-expect-error
 					onClick={(event) => onSelect && onSelect(event, undefined)}
 					iconSize="25px"
 					invert={invert}

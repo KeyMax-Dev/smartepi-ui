@@ -6,7 +6,7 @@ export interface SelectProps<T> {
 	loading?: boolean;
 	onSelect?: (
 		event: React.MouseEvent<HTMLDivElement | HTMLButtonElement>,
-		item: T | undefined
+		item: T
 	) => void;
 	onSearch?: (value: string) => void;
 	onOpen?: () => void;
