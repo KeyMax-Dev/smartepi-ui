@@ -6,7 +6,7 @@ import { InputProps } from './index';
 export const InputContainerElement = styled(motion.div)<InputProps>`
 	min-width: 300px;
 	height: 50px;
-	margin: 15px 5px 5px 5px;
+	margin: 5px;
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
@@ -53,7 +53,7 @@ export const InputContainerElement = styled(motion.div)<InputProps>`
 	}
 
 	.__icon-right {
-		margin: 0 5px 0 0;
+		margin: 10px 5px 0 0;
 		padding: 0;
 
 		.ui-btn-icon {
@@ -62,7 +62,7 @@ export const InputContainerElement = styled(motion.div)<InputProps>`
 	}
 
 	.__icon-left {
-		margin: 0 0 0 5px;
+		margin: 10px 0 0 5px;
 		padding: 0;
 
 		.ui-btn-icon {
@@ -97,7 +97,7 @@ export const InputElement = styled(motion.input)<InputProps>`
 	font-weight: ${() => getGlobalTheme().font.input.fontWeight};
 	text-align: ${() => getGlobalTheme().font.input.textAlign};
 	font-family: ${() => getGlobalTheme().font.input.fontFamily};
-	margin: 0 10px;
+	margin: 10px 10px 0px 10px;
 
 	&::placeholder {
 		visibility: hidden;
