@@ -1087,7 +1087,7 @@ function ImageAvatar(props) {
 const InputContainerElement = styled(framerMotion.motion.div) `
 	min-width: 300px;
 	height: 50px;
-	margin: 15px 5px 5px 5px;
+	margin: 5px;
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
@@ -1119,7 +1119,7 @@ const InputContainerElement = styled(framerMotion.motion.div) `
 	}
 
 	.__icon-right {
-		margin: 0 5px 0 0;
+		margin: 10px 5px 0 0;
 		padding: 0;
 
 		.ui-btn-icon {
@@ -1128,7 +1128,7 @@ const InputContainerElement = styled(framerMotion.motion.div) `
 	}
 
 	.__icon-left {
-		margin: 0 0 0 5px;
+		margin: 10px 0 0 5px;
 		padding: 0;
 
 		.ui-btn-icon {
@@ -1159,7 +1159,7 @@ const InputElement = styled(framerMotion.motion.input) `
 	font-weight: ${() => getGlobalTheme().font.input.fontWeight};
 	text-align: ${() => getGlobalTheme().font.input.textAlign};
 	font-family: ${() => getGlobalTheme().font.input.fontFamily};
-	margin: 0 10px;
+	margin: 10px 10px 0px 10px;
 
 	&::placeholder {
 		visibility: hidden;
@@ -2225,8 +2225,11 @@ const SelectContainerElement = styled.div `
 		}
 	}
 
-	.ui-icon-right {
+	.ui-icon-right,
+	.ui-select-button {
 		max-width: 5px;
+		margin-top: 10px;
+		margin-right: 10px;
 	}
 
 	@media screen and (max-width: 600px) {
@@ -2372,7 +2375,7 @@ function Select({ data, dataKey, loading, onSelect, onSearch, onOpen, onClose, v
         placeholder && (React__default.createElement(InputLabelElement, { active: !!selected || opened, color: color, invert: invert },
             React__default.createElement("div", null, placeholder))),
         React__default.createElement(InputElement, { value: inputValue, onChange: inputChangeHandler, onFocus: focusHandler, placeholder: placeholder }),
-        React__default.createElement(Button, { buttonType: "icon", icon: "chevronDown", iconSize: "20px", onClick: togglerHandler, animate: buttonAnimationController }),
+        React__default.createElement(Button, { buttonType: "icon", icon: "chevronDown", iconSize: "20px", onClick: togglerHandler, animate: buttonAnimationController, className: "ui-select-button" }),
         opened && (React__default.createElement(SelectListElement, { color: color, invert: invert, className: `ui-select-list-container` },
             filteredData.map(renderListItem),
             loading && (React__default.createElement("div", { className: "ui-select-list-loading" },
@@ -2380,7 +2383,9 @@ function Select({ data, dataKey, loading, onSelect, onSearch, onOpen, onClose, v
                 React__default.createElement("span", null, "Carregando mais dados..."))),
             !loading && filteredData.length < 1 && (React__default.createElement("div", { className: "ui-select-list-loading" },
                 React__default.createElement("span", null, "Nenhum item encontrado"))))),
-        enableClear && selected && (React__default.createElement(Button, { buttonType: "icon", icon: "close", onClick: (event) => onSelect && onSelect(event, undefined), iconSize: "25px", invert: invert, className: "ui-icon-right" }))));
+        enableClear && selected && (React__default.createElement(Button, { buttonType: "icon", icon: "close", 
+            // @ts-expect-error
+            onClick: (event) => onSelect && onSelect(event, undefined), iconSize: "25px", invert: invert, className: "ui-icon-right" }))));
 }
 
 const IconButton = styled(framerMotion.motion.button) `

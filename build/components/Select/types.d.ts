@@ -3,7 +3,7 @@ export interface SelectProps<T> {
     data: T[];
     dataKey: keyof T;
     loading?: boolean;
-    onSelect?: (event: React.MouseEvent<HTMLDivElement | HTMLButtonElement>, item: T | undefined) => void;
+    onSelect?: (event: React.MouseEvent<HTMLDivElement | HTMLButtonElement>, item: T) => void;
     onSearch?: (value: string) => void;
     onOpen?: () => void;
     onClose?: () => void;
