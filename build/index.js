@@ -1272,91 +1272,6 @@ const ScrollableContainer = styled(framerMotion.motion.div) `
 	align-items: center;
 `;
 
-const SelectInputElement = styled.input `
-	flex: 1;
-`;
-const SelectContainerElement = styled.div `
-	min-width: 300px;
-	height: 50px;
-	margin: 5px;
-	position: relative;
-	display: flex;
-	justify-content: center;
-	align-items: stretch;
-
-	&.ui-select-container-outline {
-		background-color: ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'principal' : 'contrast']};
-		border: 1px solid
-			${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}32;
-		border-radius: ${() => getGlobalTheme().borderRadius};
-
-		&:focus-within {
-			box-shadow: ${() => getGlobalTheme().boxShadow.active};
-			border: 2px solid
-				${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
-		}
-	}
-
-	&.ui-select-container-downline {
-		background-color: transparent;
-		border-bottom: 1px solid
-			${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}32;
-
-		&:focus-within {
-			border-bottom: 2px solid
-				${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
-		}
-	}
-
-	@media screen and (max-width: 600px) {
-		width: calc(100% - 30px);
-		min-width: 250px;
-	}
-`;
-const SelectListElement = styled.div `
-	position: absolute;
-	display: flex;
-	justify-content: flex-start;
-	align-items: flex-start;
-	flex-direction: column;
-	z-index: 10;
-	margin-bottom: 15px;
-
-	top: 40px;
-	left: 4px;
-	right: 4px;
-	max-height: 23vh;
-	overflow-y: auto;
-	border-bottom-left-radius: calc(
-		${() => getGlobalTheme().borderRadius} * 0.4
-	);
-	border-bottom-right-radius: calc(
-		${() => getGlobalTheme().borderRadius} * 0.4
-	);
-	box-shadow: ${() => getGlobalTheme().boxShadow.active};
-	background-color: ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'principal' : 'contrast']};
-
-	.ui-select-list-item {
-		width: 100%;
-		padding: 5px 5px 5px 15px;
-		transition: ${() => getGlobalTheme().transitions.fast};
-
-		&:hover {
-			cursor: pointer;
-			background-color: ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}12;
-		}
-	}
-
-	.ui-select-list-loading {
-		width: 100%;
-		min-height: 40px;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		background-color: ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}0A;
-	}
-`;
-
 const CirclesSVG = (props) => (React__default.createElement("svg", Object.assign({ width: "45", height: "45", viewBox: "0 0 45 45", xmlns: "http://www.w3.org/2000/svg", stroke: "#000" }, props),
     React__default.createElement("g", { fill: "none", fillRule: "evenodd", transform: "translate(1 1)", strokeWidth: "2" },
         React__default.createElement("circle", { cx: "22", cy: "22", r: "6", strokeOpacity: "0" },
@@ -1372,108 +1287,6 @@ const CirclesSVG = (props) => (React__default.createElement("svg", Object.assign
 const Spinners = {
     circles: CirclesSVG,
 };
-
-const SEARCH_LIMIT_TIME = 500;
-let SEARCH_TIMER;
-function Select({ data, dataKey, loading, onSelect, onSearch, onOpen, onClose, value, color, invert, placeholder, containerType, }) {
-    const [inputValue, setInputValue] = React.useState(value ? `${value[dataKey]}` : '');
-    const [selected, setSelected] = React.useState(value);
-    const [opened, setOpened] = React.useState(false);
-    const [filteredData, setFilteredData] = React.useState(data);
-    const buttonAnimationController = framerMotion.useAnimation();
-    const containerRef = React.useRef(null);
-    React.useEffect(() => {
-        if (value) {
-            setInputValue(`${value[dataKey]}`);
-        }
-    }, [value]);
-    const itemSelectHandler = (event, item) => {
-        setSelected(item);
-        setInputValue(`${item[dataKey]}`);
-        setOpened(false);
-        if (onSelect)
-            onSelect(event, item);
-    };
-    const inputChangeHandler = (event) => {
-        const value = `${event.target.value}`;
-        setInputValue(value);
-        setSelected(undefined);
-        setFilteredData(data.filter((item) => `${item[dataKey]}`
-            .toLocaleLowerCase()
-            .match(value.toLocaleLowerCase())));
-        clearTimeout(SEARCH_TIMER);
-        SEARCH_TIMER = setTimeout(() => {
-            if (onSearch)
-                onSearch(value);
-        }, SEARCH_LIMIT_TIME);
-    };
-    const focusHandler = () => {
-        setOpened(true);
-    };
-    const togglerHandler = () => {
-        setOpened(!opened);
-    };
-    const renderListItem = (item, index) => {
-        return (React__default.createElement("div", { key: index, onClick: (event) => itemSelectHandler(event, item), className: "ui-select-list-item" }, `${item[dataKey]}`));
-    };
-    React.useEffect(() => {
-        const closeHandler = (event) => {
-            if (containerRef.current &&
-                !containerRef.current.contains(event.target)) {
-                setOpened(false);
-            }
-        };
-        if (opened) {
-            if (onOpen)
-                onOpen();
-            if (onSearch)
-                onSearch('');
-            buttonAnimationController.start({
-                rotate: 180,
-                transition: { duration: 0.1, ease: 'backInOut' },
-            });
-            setFilteredData(data);
-            setInputValue('');
-            window.addEventListener('click', closeHandler);
-            return () => window.removeEventListener('click', closeHandler);
-        }
-        else {
-            if (onClose)
-                onClose();
-            if (!selected) {
-                console.log('git', value);
-                setSelected(value);
-                setFilteredData(data);
-            }
-            setInputValue(value ? `${value[dataKey]}` : '');
-            buttonAnimationController.start({
-                rotate: 0,
-                transition: { duration: 0.1, ease: 'backInOut' },
-            });
-        }
-    }, [opened]);
-    React.useEffect(() => {
-        if (!loading) {
-            setFilteredData(data.filter((item) => `${item[dataKey]}`
-                .toLocaleLowerCase()
-                .match(inputValue.toLocaleLowerCase())));
-        }
-    }, [data]);
-    React.useEffect(() => {
-        setSelected(value);
-        setInputValue(value ? `${value[dataKey]}` : '');
-    }, [value]);
-    return (React__default.createElement(SelectContainerElement, { color: color, invert: invert, ref: containerRef, className: `ui-select-container-${containerType || 'downline'}` },
-        React__default.createElement(InputElement, { value: inputValue, onChange: inputChangeHandler, onFocus: focusHandler, placeholder: placeholder }),
-        React__default.createElement(Button, { buttonType: "icon", icon: "chevronDown", iconSize: "20px", onClick: togglerHandler, animate: buttonAnimationController }),
-        opened && (React__default.createElement(SelectListElement, { color: color, invert: invert, className: `ui-select-list-container` },
-            filteredData.map(renderListItem),
-            loading && (React__default.createElement("div", { className: "ui-select-list-loading" },
-                React__default.createElement(Spinners.circles, { width: "40px", height: "40px" }),
-                React__default.createElement("span", null, "Carregando mais dados..."))),
-            !loading && filteredData.length < 1 && (React__default.createElement("div", { className: "ui-select-list-loading" },
-                React__default.createElement("span", null, "Nenhum item encontrado")))))));
-}
 
 const TabsLayoutElement = styled(framerMotion.motion.section) `
 	flex: 1 1 100%;
@@ -2374,6 +2187,200 @@ function useForm(fields) {
         }, {});
     };
     return [formElements, getErrors, getValues, fieldStates];
+}
+
+const SelectInputElement = styled.input `
+	flex: 1;
+`;
+const SelectContainerElement = styled.div `
+	min-width: 300px;
+	height: 50px;
+	margin: 5px;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: stretch;
+
+	&.ui-select-container-outline {
+		background-color: ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'principal' : 'contrast']};
+		border: 1px solid
+			${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}32;
+		border-radius: ${() => getGlobalTheme().borderRadius};
+
+		&:focus-within {
+			box-shadow: ${() => getGlobalTheme().boxShadow.active};
+			border: 2px solid
+				${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
+		}
+	}
+
+	&.ui-select-container-downline {
+		background-color: transparent;
+		border-bottom: 1px solid
+			${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}32;
+
+		&:focus-within {
+			border-bottom: 2px solid
+				${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']};
+		}
+	}
+
+	.ui-icon-right {
+		max-width: 5px;
+	}
+
+	@media screen and (max-width: 600px) {
+		width: calc(100% - 30px);
+		min-width: 250px;
+	}
+`;
+const SelectListElement = styled.div `
+	position: absolute;
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	flex-direction: column;
+	z-index: 10;
+	margin-bottom: 15px;
+
+	top: 40px;
+	left: 4px;
+	right: 4px;
+	max-height: 23vh;
+	overflow-y: auto;
+	border-bottom-left-radius: calc(
+		${() => getGlobalTheme().borderRadius} * 0.4
+	);
+	border-bottom-right-radius: calc(
+		${() => getGlobalTheme().borderRadius} * 0.4
+	);
+	box-shadow: ${() => getGlobalTheme().boxShadow.active};
+	background-color: ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'principal' : 'contrast']};
+
+	.ui-select-list-item {
+		width: 100%;
+		padding: 5px 5px 5px 15px;
+		transition: ${() => getGlobalTheme().transitions.fast};
+
+		&:hover {
+			cursor: pointer;
+			background-color: ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}12;
+		}
+	}
+
+	.ui-select-list-loading {
+		width: 100%;
+		min-height: 40px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: ${({ color, invert }) => getGlobalTheme().colors[color || 'primary'][invert ? 'contrast' : 'principal']}0A;
+	}
+`;
+
+const SEARCH_LIMIT_TIME = 500;
+let SEARCH_TIMER;
+function Select({ data, dataKey, loading, onSelect, onSearch, onOpen, onClose, value, color, invert, placeholder, containerType, enableClear, }) {
+    const [inputValue, setInputValue] = React.useState(value ? `${value[dataKey]}` : '');
+    const [selected, setSelected] = React.useState(value);
+    const [opened, setOpened] = React.useState(false);
+    const [filteredData, setFilteredData] = React.useState(data);
+    const buttonAnimationController = framerMotion.useAnimation();
+    const containerRef = React.useRef(null);
+    React.useEffect(() => {
+        if (value) {
+            setInputValue(`${value[dataKey]}`);
+        }
+    }, [value]);
+    const itemSelectHandler = (event, item) => {
+        setSelected(item);
+        setInputValue(`${item[dataKey]}`);
+        setOpened(false);
+        if (onSelect)
+            onSelect(event, item);
+    };
+    const inputChangeHandler = (event) => {
+        const value = `${event.target.value}`;
+        setInputValue(value);
+        setSelected(undefined);
+        setFilteredData(data.filter((item) => `${item[dataKey]}`
+            .toLocaleLowerCase()
+            .match(value.toLocaleLowerCase())));
+        clearTimeout(SEARCH_TIMER);
+        SEARCH_TIMER = setTimeout(() => {
+            if (onSearch)
+                onSearch(value);
+        }, SEARCH_LIMIT_TIME);
+    };
+    const focusHandler = () => {
+        setOpened(true);
+    };
+    const togglerHandler = () => {
+        setOpened(!opened);
+    };
+    const renderListItem = (item, index) => {
+        return (React__default.createElement("div", { key: index, onClick: (event) => itemSelectHandler(event, item), className: "ui-select-list-item" }, `${item[dataKey]}`));
+    };
+    React.useEffect(() => {
+        const closeHandler = (event) => {
+            if (containerRef.current &&
+                !containerRef.current.contains(event.target)) {
+                setOpened(false);
+            }
+        };
+        if (opened) {
+            if (onOpen)
+                onOpen();
+            if (onSearch)
+                onSearch('');
+            buttonAnimationController.start({
+                rotate: 180,
+                transition: { duration: 0.1, ease: 'backInOut' },
+            });
+            setFilteredData(data);
+            setInputValue('');
+            window.addEventListener('click', closeHandler);
+            return () => window.removeEventListener('click', closeHandler);
+        }
+        else {
+            if (onClose)
+                onClose();
+            if (!selected) {
+                console.log('git', value);
+                setSelected(value);
+                setFilteredData(data);
+            }
+            setInputValue(value ? `${value[dataKey]}` : '');
+            buttonAnimationController.start({
+                rotate: 0,
+                transition: { duration: 0.1, ease: 'backInOut' },
+            });
+        }
+    }, [opened]);
+    React.useEffect(() => {
+        if (!loading) {
+            setFilteredData(data.filter((item) => `${item[dataKey]}`
+                .toLocaleLowerCase()
+                .match(inputValue.toLocaleLowerCase())));
+        }
+    }, [data]);
+    React.useEffect(() => {
+        setSelected(value);
+        setInputValue(value ? `${value[dataKey]}` : '');
+    }, [value]);
+    return (React__default.createElement(SelectContainerElement, { color: color, invert: invert, ref: containerRef, className: `ui-select-container-${containerType || 'downline'}` },
+        placeholder && (React__default.createElement(InputLabelElement, { active: !!selected || opened, color: color, invert: invert },
+            React__default.createElement("div", null, placeholder))),
+        React__default.createElement(InputElement, { value: inputValue, onChange: inputChangeHandler, onFocus: focusHandler, placeholder: placeholder }),
+        React__default.createElement(Button, { buttonType: "icon", icon: "chevronDown", iconSize: "20px", onClick: togglerHandler, animate: buttonAnimationController }),
+        opened && (React__default.createElement(SelectListElement, { color: color, invert: invert, className: `ui-select-list-container` },
+            filteredData.map(renderListItem),
+            loading && (React__default.createElement("div", { className: "ui-select-list-loading" },
+                React__default.createElement(Spinners.circles, { width: "40px", height: "40px" }),
+                React__default.createElement("span", null, "Carregando mais dados..."))),
+            !loading && filteredData.length < 1 && (React__default.createElement("div", { className: "ui-select-list-loading" },
+                React__default.createElement("span", null, "Nenhum item encontrado"))))),
+        enableClear && selected && (React__default.createElement(Button, { buttonType: "icon", icon: "close", onClick: (event) => onSelect && onSelect(event, undefined), iconSize: "25px", invert: invert, className: "ui-icon-right" }))));
 }
 
 const IconButton = styled(framerMotion.motion.button) `
