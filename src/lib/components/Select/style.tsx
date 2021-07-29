@@ -58,8 +58,11 @@ export const SelectContainerElement = styled.div<SelectThemeProps>`
 		}
 	}
 
-	.ui-icon-right {
+	.ui-icon-right,
+	.ui-select-button {
 		max-width: 5px;
+		margin-top: 10px;
+		margin-right: 10px;
 	}
 
 	@media screen and (max-width: 600px) {

@@ -173,6 +173,7 @@ export function Select<T>({
 				iconSize="20px"
 				onClick={togglerHandler}
 				animate={buttonAnimationController}
+				className="ui-select-button"
 			/>
 			{opened && (
 				<SelectListElement
