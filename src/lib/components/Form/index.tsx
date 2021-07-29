@@ -25,7 +25,7 @@ export type FieldState = [Field, Dispatch<SetStateAction<Field>>];
 type FormState<T extends FormPrototype> = { [K in keyof T]: FieldState };
 
 type FormElements<T extends FormPrototype> = {
-	[key in keyof T]?: typeof Input;
+	[key in keyof T]: typeof Input;
 };
 
 type Form<T extends FormPrototype> = [
@@ -73,7 +73,7 @@ export default function useForm<T extends FormPrototype>(
 				),
 			};
 		},
-		{}
+		{} as FormElements<T>
 	);
 
 	const getErrors = (): null | { [K in keyof T]?: string[] } => {
