@@ -23,7 +23,6 @@ import Icons from './assets/svgs/icons';
 import ImageAvatar from './components/ImageAvatar';
 import Input from './components/Input';
 import ScrollableContainer from './components/ScrollableContainer';
-import Select from './components/Select';
 import Spinners from './assets/svgs/spinners';
 import Tab from './components/Tabs/tab';
 import Table, {
@@ -66,7 +65,6 @@ export {
 	ModalController,
 	OverflowController,
 	ScrollableContainer,
-	Select,
 	setGlobalTheme,
 	Spinners,
 	Tab,
@@ -94,4 +92,4 @@ export type {
 	ToastConfig,
 };
 
-export * from './components/Form';
+export * from './components';

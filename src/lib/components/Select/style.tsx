@@ -58,6 +58,10 @@ export const SelectContainerElement = styled.div<SelectThemeProps>`
 		}
 	}
 
+	.ui-icon-right {
+		max-width: 5px;
+	}
+
 	@media screen and (max-width: 600px) {
 		width: calc(100% - 30px);
 		min-width: 250px;
