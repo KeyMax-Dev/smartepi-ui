@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Input, { InputProps } from '../Input';
-import InputValidator from '../../services/input-validator/input-validator';
-import { validate } from '../../services/input-validator';
-import { FieldState } from '.';
+import { InputValidator, validate } from '../../services/input-validator';
+import { FormFieldState } from './types';
 
 export interface FormFieldProps extends InputProps {
-	state: FieldState;
+	state: FormFieldState;
 	validators: InputValidator[];
 }
 
-export default function FormField(props: FormFieldProps): JSX.Element {
+export function FormField(props: FormFieldProps): JSX.Element {
 	const [color, setColor] = useState<string | undefined>(props.color);
 	const [iconRight, setIconRight] = useState<string | undefined>(
 		props.iconRight

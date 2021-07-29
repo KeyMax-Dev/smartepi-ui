@@ -18,8 +18,6 @@ import Button from './components/Button';
 import CardBase from './components/CardBase';
 import Checkbox, { CheckboxToggleEvent } from './components/Checkbox';
 import Datepicker from './components/Datepicker';
-import Form from './components/Form';
-import FormField from './components/Form/form-field';
 import Icon from './components/Icon';
 import Icons from './assets/svgs/icons';
 import ImageAvatar from './components/ImageAvatar';
@@ -37,7 +35,6 @@ import TableColumn from './components/Table/table-column';
 import Tabs from './components/Tabs';
 import TextArea from './components/TextArea';
 import Theme from './types/Theme';
-import useForm from './components/Form';
 import useModal, {
 	ModalController,
 	ModalConfig,
@@ -60,8 +57,6 @@ export {
 	Checkbox,
 	DarkTheme,
 	Datepicker,
-	Form,
-	FormField,
 	getGlobalTheme,
 	Icon,
 	Icons,
@@ -80,7 +75,6 @@ export {
 	Tabs,
 	TextArea,
 	ToastController,
-	useForm,
 	useModal,
 	useOverflow,
 	useToast,
@@ -99,3 +93,5 @@ export type {
 	Theme,
 	ToastConfig,
 };
+
+export * from './components/Form';
