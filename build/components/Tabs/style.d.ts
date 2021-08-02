@@ -1,2 +1,0 @@
-export declare const TabsLayoutElement: import("styled-components").StyledComponent<import("framer-motion").ForwardRefComponent<HTMLElement, import("framer-motion").HTMLMotionProps<"ruby">>, any, {}, never>;
-export declare const TabElement: import("styled-components").StyledComponent<import("framer-motion").ForwardRefComponent<HTMLDivElement, import("framer-motion").HTMLMotionProps<"div">>, any, {}, never>;

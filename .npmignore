@@ -8,3 +8,4 @@ src
 .prettierrc
 rollup.config.js
 tsconfig.json
+.github
