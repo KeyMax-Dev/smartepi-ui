@@ -101,6 +101,7 @@ export const InputElement = styled(motion.input)<InputProps>`
 
 	&::placeholder {
 		visibility: hidden;
+		color: transparent;
 	}
 
 	@media screen and (max-width: 600px) {
