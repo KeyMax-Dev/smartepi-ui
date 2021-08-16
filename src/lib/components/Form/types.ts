@@ -1,6 +1,6 @@
-import Input from '../Input';
-import InputValidator from '../../services/input-validator/input-validator';
 import { Dispatch, SetStateAction } from 'react';
+import InputValidator from '../../services/input-validator/input-validator';
+import Input from '../Input';
 
 export type FormPrototype = {
 	[key: string]: string | number | undefined | Date;
@@ -42,3 +42,7 @@ export type Form<T extends FormPrototype> = [
 	() => T,
 	FormState<T>
 ];
+
+export type FormMemory = {
+	[key: string]: FormState<any>;
+};

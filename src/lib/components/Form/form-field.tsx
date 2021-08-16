@@ -1,19 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import Input, { InputProps } from '../Input';
 import { InputValidator, validate } from '../../services/input-validator';
-import { FormFieldState } from './types';
+import { FormFieldType, FormPrototype, FormState } from './types';
 
-export interface FormFieldProps extends InputProps {
-	state: FormFieldState;
+export interface FormFieldProps<T extends FormPrototype> extends InputProps {
+	formState: FormState<T>;
 	validators: InputValidator[];
+	initialValue: string;
+	stateKey: keyof T;
 }
 
-export function FormField(props: FormFieldProps): JSX.Element {
+export function FormField<T extends FormPrototype>(
+	props: FormFieldProps<T>
+): JSX.Element {
 	const [color, setColor] = useState<string | undefined>(props.color);
 	const [iconRight, setIconRight] = useState<string | undefined>(
 		props.iconRight
 	);
-	const [state, setState] = props.state;
+	const [state, setState] = useState<FormFieldType>(
+		props.formState[props.stateKey]
+			? props.formState[props.stateKey][0]
+			: {
+					hasError: validate(props.initialValue, ...props.validators),
+					value: props.initialValue,
+					validators: props.validators,
+			  }
+	);
 
 	const blurHandler = (event: React.FocusEvent<HTMLInputElement>): void => {
 		setState({ ...state, validated: true });
@@ -41,6 +53,10 @@ export function FormField(props: FormFieldProps): JSX.Element {
 			setIconRight(props.iconRight);
 		}
 	}, [state.hasError, state.validated]);
+
+	useEffect(() => {
+		props.formState[props.stateKey] = [state, setState];
+	});
 
 	return (
 		<Input

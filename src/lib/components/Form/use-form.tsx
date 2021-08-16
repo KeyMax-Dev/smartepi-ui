@@ -1,37 +1,22 @@
-import React, { useState } from 'react';
-import { InputValidator, validate } from '../../services/input-validator';
+import React from 'react';
+import { validate } from '../../services/input-validator';
 import { InputProps } from '../Input';
-import {
-	FormFieldType,
-	FormPrototype,
-	FormState,
-	FormFieldProps,
-	FormElements,
-	Form,
-} from './types';
 import { FormField } from './form-field';
+import {
+	Form,
+	FormElements,
+	FormFieldProps,
+	FormMemory,
+	FormPrototype,
+} from './types';
 
-const FormElement = <T extends FormPrototype>(
-	props: InputProps & {
-		formState: FormState<T>;
-		id: keyof T;
-		validators: InputValidator[];
-		initialValue: string;
-	}
-): JSX.Element => {
-	const state = useState<FormFieldType>({
-		hasError: validate(props.initialValue, ...props.validators),
-		value: props.initialValue,
-		validators: props.validators,
-	});
-	props.formState[props.id] = state;
-	return <FormField {...props} state={state} />;
-};
-
+const formMemory: FormMemory = {};
 export function useForm<T extends FormPrototype>(
-	fields: FormFieldProps<T>[]
+	fields: FormFieldProps<T>[],
+	formKey = 'formKey'
 ): Form<T> {
-	const fieldStates = {} as FormState<T>;
+	if (!formMemory[formKey]) formMemory[formKey] = {};
+	const fieldStates = formMemory[formKey];
 
 	const formElements: FormElements<T> = fields.reduce(
 		(res, { key, validators, initialValue }) => {
@@ -39,12 +24,12 @@ export function useForm<T extends FormPrototype>(
 				...res,
 				// eslint-disable-next-line
 				[key]: (props: InputProps): JSX.Element => (
-					<FormElement
+					<FormField
 						{...props}
-						formState={fieldStates}
-						id={`${key}`}
 						validators={validators}
 						initialValue={initialValue || ''}
+						formState={fieldStates}
+						stateKey={key}
 					/>
 				),
 			};
