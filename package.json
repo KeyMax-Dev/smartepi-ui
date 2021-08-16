@@ -50,8 +50,5 @@
 			"react",
 			"react-dom"
 		]
-	},
-	"publishConfig": {
-		"registry": "https://npm.pkg.github.com/@KeyMax-Dev"
 	}
 }
