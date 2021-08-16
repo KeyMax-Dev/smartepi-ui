@@ -18,7 +18,7 @@ export const ImageAvatarElement = styled.div<ImageAvatarProps>`
 	border-radius: 50%;
 	background-image: url(${(props): string =>
 		props.src ? props.src : DefaultImage});
-	background-size: cover;
+	background-size: contain;
 	background-repeat: no-repeat;
 	background-position: center;
 	margin: 3px;
