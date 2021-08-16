@@ -1,6 +1,6 @@
 {
 	"name": "@keymax-dev/smartepi-ui",
-	"version": "0.2.4",
+	"version": "0.2.5",
 	"main": "build/index.js",
 	"scripts": {
 		"start": "react-scripts start",
