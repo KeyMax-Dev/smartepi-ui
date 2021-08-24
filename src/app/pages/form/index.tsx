@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button, useForm, Validators } from '../../../lib';
 
@@ -10,6 +11,7 @@ const Container = styled.div`
 `;
 
 export const FormPage = (): JSX.Element => {
+	const history = useHistory();
 	const [form1, getErrors1, getValues1] = useForm(
 		[
 			{
@@ -104,6 +106,7 @@ export const FormPage = (): JSX.Element => {
 
 			{counter}
 			<Button onClick={() => setCounter(counter + 1)} text="Next" />
+			<Button onClick={() => history.push('/select')} text="Other Page" />
 		</Container>
 	);
 };

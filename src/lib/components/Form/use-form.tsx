@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { validate } from '../../services/input-validator';
 import { InputProps } from '../Input';
 import { FormField } from './form-field';
@@ -62,6 +62,12 @@ export function useForm<T extends FormPrototype>(
 			return { ...obj, [key]: state.value };
 		}, {} as T);
 	};
+
+	useEffect(() => {
+		return () => {
+			formMemory[formKey] = {};
+		};
+	}, []);
 
 	return [formElements, getErrors, getValues, fieldStates];
 }
