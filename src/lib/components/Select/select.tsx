@@ -199,7 +199,7 @@ export function Select<T>({
 				<Button
 					buttonType="icon"
 					icon="close"
-					// @ts-expect-error
+					// @ts-expect-error error TS2532: Object is possibly 'undefined'.
 					onClick={(event) => onSelect && onSelect(event, undefined)}
 					iconSize="25px"
 					invert={invert}

@@ -19,6 +19,7 @@ type TableRowEvent = React.SyntheticEvent;
 
 export type TableRowEventHandler = (
 	event: TableRowEvent,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	tableItem: any
 ) => void;
 export type TableRowProps = Omit<HTMLMotionProps<'tr'>, DOMEvents>;

@@ -44,5 +44,6 @@ export type Form<T extends FormPrototype> = [
 ];
 
 export type FormMemory = {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	[key: string]: FormState<any>;
 };

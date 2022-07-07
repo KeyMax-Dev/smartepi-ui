@@ -85,12 +85,8 @@ export const SelectListElement = styled.div<SelectThemeProps>`
 	right: 4px;
 	max-height: 23vh;
 	overflow-y: auto;
-	border-bottom-left-radius: calc(
-		${() => getGlobalTheme().borderRadius} * 0.4
-	);
-	border-bottom-right-radius: calc(
-		${() => getGlobalTheme().borderRadius} * 0.4
-	);
+	border-bottom-left-radius: calc(${() => getGlobalTheme().borderRadius} * 0.4);
+	border-bottom-right-radius: calc(${() => getGlobalTheme().borderRadius} * 0.4);
 	box-shadow: ${() => getGlobalTheme().boxShadow.active};
 	background-color: ${({ color, invert }): string =>
 		getGlobalTheme().colors[color || 'primary'][

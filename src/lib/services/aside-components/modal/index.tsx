@@ -3,7 +3,7 @@ import { motion, useAnimation, HTMLMotionProps } from 'framer-motion';
 import AsideController, { BaseAsideConfig } from '../aside-controller';
 import React, { useState } from 'react';
 
-type ModalStatus = 'opening' | 'open' | 'closing' | 'closed';
+// type ModalStatus = 'opening' | 'open' | 'closing' | 'closed';
 
 export type ModalConfig = BaseAsideConfig & {
 	disableBackdropClose: boolean;
