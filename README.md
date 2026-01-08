@@ -7,6 +7,8 @@
 
 Biblioteca moderna de componentes React com animações fluidas, validação de formulários integrada e design responsivo. SmartEPI UI fornece uma coleção completa de componentes prontos para uso em aplicações corporativas e produtos web.
 
+> **✨ v1.0.0-beta.2**: Agora com suporte completo a Vite e módulos ESM! Styled-components agora é corretamente tratado como dependência externa.
+
 ## ✨ Características
 
 - 🎨 **Componentes Estilizados**: Todos os componentes criados com Styled Components para fácil customização

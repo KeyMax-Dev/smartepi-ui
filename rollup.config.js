@@ -25,18 +25,18 @@ export default {
 	external,
 	output: [
 		{
-			format: "cjs",
-			dir: "./build",
+			format: "esm",
+			file: "./build/index.esm.js",
 			sourcemap: true,
-			name: "smartepi-ui",
 			exports: "named",
-			esModule: false,
-			globals: {
-				react: "React",
-				"react-dom": "ReactDOM",
-				"styled-components": "styled",
-			},
-			assetFileNames: "src/lib/assets/export-files/**/*",
+			assetFileNames: "assets/[name][extname]",
+		},
+		{
+			format: "cjs",
+			file: "./build/index.js",
+			sourcemap: true,
+			exports: "named",
+			assetFileNames: "assets/[name][extname]",
 		},
 	],
 };

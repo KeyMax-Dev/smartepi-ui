@@ -1,8 +1,22 @@
 {
 	"name": "@keymax-dev/smartepi-ui",
-	"version": "1.0.0-beta.1",
+	"version": "1.0.0-beta.2",
 	"type": "module",
 	"main": "build/index.js",
+	"module": "build/index.esm.js",
+	"exports": {
+		".": {
+			"import": "./build/index.esm.js",
+			"require": "./build/index.js",
+			"types": "./build/index.d.ts"
+		},
+		"./assets/*": "./build/assets/*"
+	},
+	"files": [
+		"build",
+		"README.md"
+	],
+	"sideEffects": false,
 	"scripts": {
 		"dev": "vite",
 		"start": "vite",
