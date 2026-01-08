@@ -1,6 +1,6 @@
+import { useAnimation } from 'framer-motion';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { useAnimation } from 'framer-motion';
 
 type BaseStatus = 'opening' | 'opened' | 'closing' | 'closed';
 
@@ -28,7 +28,7 @@ export default abstract class AsideController {
 
 	constructor(
 		protected content: JSX.Element,
-		options?: Partial<BaseAsideConfig>
+		options?: Partial<BaseAsideConfig>,
 	) {
 		this.config = Object.assign({}, DEFAULT_ASIDE_CONFIG, options);
 		this.injectProps({ controller: this });
@@ -73,15 +73,15 @@ export default abstract class AsideController {
 			let elementReference: Element | null;
 			if (this.config.rootElement.startsWith('#')) {
 				elementReference = document.getElementById(
-					this.config.rootElement.replace('#', '')
+					this.config.rootElement.replace('#', ''),
 				);
 			} else if (this.config.rootElement.startsWith('.')) {
 				elementReference = document.getElementsByClassName(
-					this.config.rootElement.replace('.', '')
+					this.config.rootElement.replace('.', ''),
 				)[0];
 			} else {
 				elementReference = document.getElementsByTagName(
-					this.config.rootElement
+					this.config.rootElement,
 				)[0];
 			}
 
@@ -106,15 +106,15 @@ export default abstract class AsideController {
 			let elementReference: Element | null;
 			if (this.config.rootElement.startsWith('#')) {
 				elementReference = document.getElementById(
-					this.config.rootElement.replace('#', '')
+					this.config.rootElement.replace('#', ''),
 				);
 			} else if (this.config.rootElement.startsWith('.')) {
 				elementReference = document.getElementsByClassName(
-					this.config.rootElement.replace('.', '')
+					this.config.rootElement.replace('.', ''),
 				)[0];
 			} else {
 				elementReference = document.getElementsByTagName(
-					this.config.rootElement
+					this.config.rootElement,
 				)[0];
 			}
 

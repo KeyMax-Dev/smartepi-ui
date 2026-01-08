@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 
 export interface SelectProps<T> {
 	data: T[];
@@ -6,7 +6,7 @@ export interface SelectProps<T> {
 	loading?: boolean;
 	onSelect?: (
 		event: React.MouseEvent<HTMLDivElement | HTMLButtonElement>,
-		item: T
+		item: T,
 	) => void;
 	onSearch?: (value: string) => void;
 	onOpen?: () => void;

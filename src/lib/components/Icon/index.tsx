@@ -1,7 +1,6 @@
-import React from 'react';
-import { IconElement } from './style';
+import type { HTMLMotionProps } from 'framer-motion';
 import Icons from './../../assets/svgs/icons';
-import { HTMLMotionProps } from 'framer-motion';
+import { IconElement } from './style';
 
 export interface IconProps extends HTMLMotionProps<'div'> {
 	name: string;

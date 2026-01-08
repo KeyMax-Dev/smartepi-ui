@@ -1,6 +1,6 @@
-import { Dispatch, SetStateAction } from 'react';
-import InputValidator from '../../services/input-validator/input-validator';
-import Input from '../Input';
+import type { Dispatch, SetStateAction } from 'react';
+import type InputValidator from '../../services/input-validator/input-validator';
+import type Input from '../Input';
 
 export type FormPrototype = {
 	[key: string]: string | number | undefined | Date;
@@ -21,7 +21,7 @@ export type FormFieldType = {
 
 export type FormFieldState = [
 	FormFieldType,
-	Dispatch<SetStateAction<FormFieldType>>
+	Dispatch<SetStateAction<FormFieldType>>,
 ];
 
 export type FormState<T extends FormPrototype> = {
@@ -40,7 +40,7 @@ export type Form<T extends FormPrototype> = [
 	FormElements<T>,
 	() => FormErrors<T>,
 	() => T,
-	FormState<T>
+	FormState<T>,
 ];
 
 export type FormMemory = {

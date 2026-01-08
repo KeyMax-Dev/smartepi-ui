@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { DatepickerElement } from './style';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../Button';
+import { DatepickerElement } from './style';
 
 interface DatepickerProps extends React.HTMLProps<HTMLDivElement> {
 	initial?: Date;
@@ -36,7 +37,7 @@ function generateMonthDays(date = new Date()): Date[][] {
 	let day = new Date(
 		firstDay.getFullYear(),
 		firstDay.getMonth(),
-		1 - firstDay.getDay()
+		1 - firstDay.getDay(),
 	);
 	for (let weekcount = 0; weekcount < 6; weekcount++) {
 		monthDays[weekcount] = [];
@@ -52,11 +53,10 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
 	const [body, setBody] = useState<JSX.Element[]>();
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
 	const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
-	const [currentIndicator, setCurrentIndicator] =
-		useState<Indicator>('month');
+	const [currentIndicator, setCurrentIndicator] = useState<Indicator>('month');
 	const [indicatorText, setIndicatorText] = useState<string>();
 	const [selectedDate, setSelectedDate] = useState<Date | undefined>(
-		props.initial
+		props.initial,
 	);
 
 	const changeIndicator = (d: number): void => {
@@ -81,10 +81,7 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
 		) {
 			className += ' ui-datepicker-list-item-today'; // Today class
 		}
-		if (
-			selectedDate &&
-			day.toDateString() === selectedDate.toDateString()
-		) {
+		if (selectedDate && day.toDateString() === selectedDate.toDateString()) {
 			className += ' ui-datepicker-list-item-selected'; // Selected days class
 		}
 		if (day.getMonth() !== currentMonth) {
@@ -92,12 +89,11 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
 		}
 
 		const selectDay = (
-			event: React.MouseEvent<HTMLLIElement, MouseEvent>
+			event: React.MouseEvent<HTMLLIElement, MouseEvent>,
 		): void => {
 			event.stopPropagation();
 			setSelectedDate(day);
-			if (day.getMonth() !== currentMonth)
-				setCurrentMonth(day.getMonth());
+			if (day.getMonth() !== currentMonth) setCurrentMonth(day.getMonth());
 			if (props.onDaySelected) props.onDaySelected(day);
 		};
 
@@ -139,7 +135,7 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
 		}
 
 		const selectMonth = (
-			event: React.MouseEvent<HTMLLIElement, MouseEvent>
+			event: React.MouseEvent<HTMLLIElement, MouseEvent>,
 		): void => {
 			event.stopPropagation();
 			setCurrentIndicator('month');
@@ -163,7 +159,7 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
 		}
 
 		const selectYear = (
-			event: React.MouseEvent<HTMLLIElement, MouseEvent>
+			event: React.MouseEvent<HTMLLIElement, MouseEvent>,
 		): void => {
 			event.stopPropagation();
 			setCurrentIndicator('year');
@@ -178,13 +174,11 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
 	};
 
 	const fillMonth = (
-		date = new Date(currentYear, currentMonth)
+		date = new Date(currentYear, currentMonth),
 	): JSX.Element[] => {
 		setCurrentYear(date.getFullYear());
 		setCurrentMonth(date.getMonth());
-		setIndicatorText(
-			MONTH_NAMES[date.getMonth()] + ' ' + date.getFullYear()
-		);
+		setIndicatorText(`${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`);
 		setCurrentIndicator('month');
 
 		const monthDays = generateMonthDays(date);
@@ -202,17 +196,12 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
 			const aux: JSX.Element[] = [];
 			for (let j = 0; j < 3; j++) {
 				const index = i * 3 + j;
-				aux.push(
-					<MonthElement
-						date={new Date(fullYear, index)}
-						key={index}
-					/>
-				);
+				aux.push(<MonthElement date={new Date(fullYear, index)} key={index} />);
 			}
 			list.push(
 				<ul className="ui-datepicker-week-container" key={i}>
 					{aux}
-				</ul>
+				</ul>,
 			);
 		}
 
@@ -235,7 +224,7 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
 			list.push(
 				<ul className="ui-datepicker-week-container" key={i}>
 					{aux}
-				</ul>
+				</ul>,
 			);
 		}
 
@@ -263,7 +252,7 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
 			case 'decade':
 				return setBody(fillDecade());
 		}
-	}, [currentIndicator, currentYear, currentMonth, selectedDate]);
+	}, [currentIndicator, fillDecade, fillMonth, fillYear]);
 
 	return (
 		<DatepickerElement
@@ -276,10 +265,7 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
 					icon="chevronLeft"
 					onClick={() => changeIndicator(-1)}
 				/>
-				<span
-					className="ui-datepicker-idicator"
-					onClick={nextIndicator}
-				>
+				<span className="ui-datepicker-idicator" onClick={nextIndicator}>
 					{indicatorText}
 				</span>
 				<Button

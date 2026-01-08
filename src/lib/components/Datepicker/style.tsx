@@ -52,8 +52,7 @@ export const DatepickerElement = styled.div<DatepickerElementProps>`
 		transition: all ${() => getGlobalTheme().transitions.fast};
 
 		&:hover {
-			background-color: ${() =>
-				getGlobalTheme().colors.primary.principal}32;
+			background-color: ${() => getGlobalTheme().colors.primary.principal}32;
 			color: ${() => getGlobalTheme().colors.primary.contrast};
 			-webkit-text-fill-color: ${() =>
 				getGlobalTheme().colors.primary.contrast};
@@ -67,8 +66,7 @@ export const DatepickerElement = styled.div<DatepickerElementProps>`
 	.ui-datepicker-list-item-unavaliable {
 		cursor: not-allowed;
 		color: ${() => getGlobalTheme().colors.danger.principal};
-		-webkit-text-fill-color: ${() =>
-			getGlobalTheme().colors.danger.principal};
+		-webkit-text-fill-color: ${() => getGlobalTheme().colors.danger.principal};
 
 		&:hover {
 			background-color: transparent;
@@ -104,8 +102,7 @@ export const DatepickerElement = styled.div<DatepickerElementProps>`
 		padding: 2% 0;
 		align-items: stretch;
 		color: ${() => getGlobalTheme().colors.primary.principal};
-		-webkit-text-fill-color: ${() =>
-			getGlobalTheme().colors.primary.principal};
+		-webkit-text-fill-color: ${() => getGlobalTheme().colors.primary.principal};
 
 		li {
 			all: unset;
@@ -120,12 +117,10 @@ export const DatepickerElement = styled.div<DatepickerElementProps>`
 	.ui-datepicker-list-item-selected {
 		background-color: ${() => getGlobalTheme().colors.success.principal};
 		color: ${() => getGlobalTheme().colors.success.contrast};
-		-webkit-text-fill-color: ${() =>
-			getGlobalTheme().colors.success.contrast};
+		-webkit-text-fill-color: ${() => getGlobalTheme().colors.success.contrast};
 
 		&:hover {
-			background-color: ${() =>
-				getGlobalTheme().colors.success.principal}32;
+			background-color: ${() => getGlobalTheme().colors.success.principal}32;
 			color: ${() => getGlobalTheme().colors.success.contrast};
 			-webkit-text-fill-color: ${() =>
 				getGlobalTheme().colors.success.contrast};

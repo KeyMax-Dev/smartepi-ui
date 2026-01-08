@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import styled from 'styled-components';
 import { getGlobalTheme } from '../../assets/themes';
 
 export const TabsLayoutElement = styled(motion.section)`

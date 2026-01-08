@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { TargetAndTransition } from 'framer-motion';
+import type { TargetAndTransition } from 'framer-motion';
 
 const HeaderIn: TargetAndTransition = {
 	translateY: ['-100%', '0%'],

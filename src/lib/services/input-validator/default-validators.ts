@@ -1,4 +1,4 @@
-import InputValidator from './input-validator';
+import type InputValidator from './input-validator';
 
 class Required implements InputValidator {
 	errorName = 'Required';

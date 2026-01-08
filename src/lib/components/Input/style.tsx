@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { getGlobalTheme } from '../../assets/themes';
-import { InputProps } from './index';
+import type { InputProps } from './index';
 
 export const InputContainerElement = styled(motion.div)<InputProps>`
 	min-width: 300px;

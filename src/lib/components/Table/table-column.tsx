@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { TableColumnElement } from './style';
 
 export interface TableColumnProps extends React.ComponentPropsWithRef<'td'> {

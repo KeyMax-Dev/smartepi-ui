@@ -1,19 +1,19 @@
-import React, { useEffect } from "react";
-import { validate } from "../../services/input-validator";
-import type { InputProps } from "../Input";
-import { FormField } from "./form-field";
+import { useEffect } from 'react';
+import { validate } from '../../services/input-validator';
+import type { InputProps } from '../Input';
+import { FormField } from './form-field';
 import type {
 	Form,
 	FormElements,
 	FormFieldProps,
 	FormMemory,
 	FormPrototype,
-} from "./types";
+} from './types';
 
 const formMemory: FormMemory = {};
 export function useForm<T extends FormPrototype>(
 	fields: FormFieldProps<T>[],
-	formKey = "formKey",
+	formKey = 'formKey',
 ): Form<T> {
 	if (!formMemory[formKey]) formMemory[formKey] = {};
 	const fieldStates = formMemory[formKey];
@@ -26,7 +26,7 @@ export function useForm<T extends FormPrototype>(
 					<FormField
 						{...props}
 						validators={validators}
-						initialValue={initialValue || ""}
+						initialValue={initialValue || ''}
 						formState={fieldStates}
 						stateKey={key}
 					/>
@@ -66,7 +66,7 @@ export function useForm<T extends FormPrototype>(
 		return () => {
 			formMemory[formKey] = {};
 		};
-	}, []);
+	}, [formKey]);
 
 	return [formElements, getErrors, getValues, fieldStates];
 }

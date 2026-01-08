@@ -1,6 +1,5 @@
-import React from 'react';
+import type { HTMLMotionProps } from 'framer-motion';
 import { CardBaseElement } from './style';
-import { HTMLMotionProps } from 'framer-motion';
 
 export interface CardBaseProps extends HTMLMotionProps<'div'> {
 	width?: string;

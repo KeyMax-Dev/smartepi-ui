@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { TableColumnProps } from './table-column';
 import { getGlobalTheme } from '../../assets/themes';
+import type { TableColumnProps } from './table-column';
 
 export const TableElement = styled.table`
 	flex: 1 1 100%;

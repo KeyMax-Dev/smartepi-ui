@@ -1,7 +1,7 @@
-import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { ButtonProps } from '.';
+import styled from 'styled-components';
 import { getGlobalTheme } from '../..';
+import type { ButtonProps } from '.';
 
 export const IconButton = styled(motion.button)<ButtonProps>`
 	all: unset;
@@ -10,18 +10,18 @@ export const IconButton = styled(motion.button)<ButtonProps>`
 		props.color
 			? getGlobalTheme().colors[props.color][
 					props.invert ? 'contrast' : 'principal'
-			  ]
-			: getGlobalTheme().colors['primary'][
+				]
+			: getGlobalTheme().colors.primary[
 					props.invert ? 'contrast' : 'principal'
-			  ]};
+				]};
 	-webkit-text-fill-color: ${(props): string =>
 		props.color
 			? getGlobalTheme().colors[props.color][
 					props.invert ? 'contrast' : 'principal'
-			  ]
-			: getGlobalTheme().colors['primary'][
+				]
+			: getGlobalTheme().colors.primary[
 					props.invert ? 'contrast' : 'principal'
-			  ]};
+				]};
 	padding: 5px;
 	border-radius: ${() => getGlobalTheme().borderRadius};
 	margin: 3px;
@@ -74,37 +74,37 @@ export const BaseButton = styled(motion.button)<ButtonProps>`
 			props.color
 				? getGlobalTheme().colors[props.color][
 						props.invert ? 'contrast' : 'principal'
-				  ]
-				: getGlobalTheme().colors['primary'][
+					]
+				: getGlobalTheme().colors.primary[
 						props.invert ? 'contrast' : 'principal'
-				  ]};
+					]};
 		-webkit-text-fill-color: ${(props): string =>
 			props.color
 				? getGlobalTheme().colors[props.color][
 						props.invert ? 'contrast' : 'principal'
-				  ]
-				: getGlobalTheme().colors['primary'][
+					]
+				: getGlobalTheme().colors.primary[
 						props.invert ? 'contrast' : 'principal'
-				  ]};
+					]};
 		border: 1px solid
 			${(props): string =>
 				props.color
 					? getGlobalTheme().colors[props.color][
 							props.invert ? 'contrast' : 'principal'
-					  ]
-					: getGlobalTheme().colors['primary'][
+						]
+					: getGlobalTheme().colors.primary[
 							props.invert ? 'contrast' : 'principal'
-					  ]};
+						]};
 
 		&:active {
 			background: ${(props): string =>
 				props.color
 					? getGlobalTheme().colors[props.color][
 							props.invert ? 'contrast' : 'principal'
-					  ]
-					: getGlobalTheme().colors['primary'][
+						]
+					: getGlobalTheme().colors.primary[
 							props.invert ? 'contrast' : 'principal'
-					  ]}20;
+						]}20;
 		}
 
 		&:disabled {
@@ -130,18 +130,18 @@ export const BaseButton = styled(motion.button)<ButtonProps>`
 			props.color
 				? getGlobalTheme().colors[props.color][
 						props.invert ? 'contrast' : 'principal'
-				  ]
-				: getGlobalTheme().colors['primary'][
+					]
+				: getGlobalTheme().colors.primary[
 						props.invert ? 'contrast' : 'principal'
-				  ]};
+					]};
 		-webkit-text-fill-color: ${(props): string =>
 			props.color
 				? getGlobalTheme().colors[props.color][
 						props.invert ? 'principal' : 'contrast'
-				  ]
-				: getGlobalTheme().colors['primary'][
+					]
+				: getGlobalTheme().colors.primary[
 						props.invert ? 'principal' : 'contrast'
-				  ]};
+					]};
 		border: 1px solid transparent;
 		box-shadow: ${() => getGlobalTheme().boxShadow.normal};
 
@@ -167,7 +167,7 @@ export const BaseButton = styled(motion.button)<ButtonProps>`
 			color: ${(props): string =>
 				props.color
 					? getGlobalTheme().colors[props.color].contrast
-					: getGlobalTheme().colors['primary'].contrast};
+					: getGlobalTheme().colors.primary.contrast};
 			font-weight: ${() => getGlobalTheme().font.h2.fontWeight};
 		}
 	}

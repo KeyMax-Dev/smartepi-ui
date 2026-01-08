@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import { IconProps } from './index';
-import { getGlobalTheme } from '../../assets/themes';
 import { motion } from 'framer-motion';
+import styled from 'styled-components';
+import { getGlobalTheme } from '../../assets/themes';
+import type { IconProps } from './index';
 
 export const IconElement = styled(motion.div)<IconProps>`
 	width: ${(props): string =>
@@ -24,9 +24,9 @@ export const IconElement = styled(motion.div)<IconProps>`
 			props.color
 				? getGlobalTheme().colors[props.color][
 						props.invert ? 'contrast' : 'principal'
-				  ]
-				: getGlobalTheme().colors['primary'][
+					]
+				: getGlobalTheme().colors.primary[
 						props.invert ? 'contrast' : 'principal'
-				  ]};
+					]};
 	}
 `;

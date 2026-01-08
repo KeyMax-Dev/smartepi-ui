@@ -1,8 +1,10 @@
-import { TabsLayoutElement } from './style';
-import { useAnimation, motion } from 'framer-motion';
-import React, { useState, useEffect, ReactElement } from 'react';
-import Tab, { TabProps } from './tab';
+import { motion, useAnimation } from 'framer-motion';
+import type React from 'react';
+import { type ReactElement, useEffect, useState } from 'react';
 import ScrollableContainer from '../ScrollableContainer';
+import { TabsLayoutElement } from './style';
+import type Tab from './tab';
+import type { TabProps } from './tab';
 
 interface TabsHeaderProps {
 	index?: number;
@@ -35,7 +37,7 @@ export default function Tabs({
 		// });
 
 		if (onTabChange) onTabChange(tabIndex);
-	}, [tabIndex]);
+	}, [tabIndex, childrenLenght, onTabChange, selectorController.start]);
 
 	useEffect(() => {
 		if (index !== undefined) {

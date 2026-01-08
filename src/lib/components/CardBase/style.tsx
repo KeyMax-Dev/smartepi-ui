@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import { CardBaseProps } from '.';
 import { motion } from 'framer-motion';
+import styled from 'styled-components';
 import { getGlobalTheme } from '../../assets/themes';
+import type { CardBaseProps } from '.';
 
 export const CardBaseElement = styled(motion.div)<CardBaseProps>`
 	min-width: ${({ width }) => width || ''};

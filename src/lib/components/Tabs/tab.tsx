@@ -1,6 +1,6 @@
-import React from 'react';
+import type { HTMLMotionProps } from 'framer-motion';
+import type React from 'react';
 import { TabElement } from './style';
-import { HTMLMotionProps } from 'framer-motion';
 
 export interface TabProps extends HTMLMotionProps<'div'> {
 	title: string;
@@ -9,10 +9,7 @@ export interface TabProps extends HTMLMotionProps<'div'> {
 
 export default function Tab(props: TabProps): JSX.Element {
 	return (
-		<TabElement
-			{...props}
-			className={`ui-tabs-tab-body ${props.className}`}
-		>
+		<TabElement {...props} className={`ui-tabs-tab-body ${props.className}`}>
 			{props.children}
 		</TabElement>
 	);

@@ -1,9 +1,9 @@
-import { HTMLMotionProps, motion } from 'framer-motion';
-import { TableElement, TableBodyElement, TableHeaderElement } from './style';
-import React, { EventHandler, useEffect, useRef, useState } from 'react';
-import Spinners from '../../assets/svgs/spinners';
-import TableColumn, { TableColumnProps } from './table-column';
+import { type HTMLMotionProps, motion } from 'framer-motion';
+import React, { type EventHandler, useEffect, useRef, useState } from 'react';
 import Animations from '../../assets/animations';
+import Spinners from '../../assets/svgs/spinners';
+import { TableBodyElement, TableElement, TableHeaderElement } from './style';
+import TableColumn, { type TableColumnProps } from './table-column';
 
 type TableItem = { [key: string]: unknown };
 type TableColumnReactElement = React.ReactElement<
@@ -20,15 +20,15 @@ type TableRowEvent = React.SyntheticEvent;
 export type TableRowEventHandler = (
 	event: TableRowEvent,
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	tableItem: any
+	tableItem: any,
 ) => void;
 export type TableRowProps = Omit<HTMLMotionProps<'tr'>, DOMEvents>;
-export type TableRowEvents = Partial<
-	{ [K in DOMEvents]: TableRowEventHandler }
->;
-export type TableBodyEvents = Partial<
-	{ [K in DOMEvents]: React.SyntheticEvent }
->;
+export type TableRowEvents = Partial<{
+	[K in DOMEvents]: TableRowEventHandler;
+}>;
+export type TableBodyEvents = Partial<{
+	[K in DOMEvents]: React.SyntheticEvent;
+}>;
 
 type TableConfig = {
 	rowProps: TableRowProps;
@@ -55,12 +55,12 @@ interface TableProps {
 }
 
 const mapChildren = (
-	children: TableChild | TableChild[]
+	children: TableChild | TableChild[],
 ): TableColumnReactElement[] => {
 	if (Array.isArray(children)) {
 		return children.filter(
 			(ele): ele is TableColumnReactElement =>
-				typeof ele === 'object' && ele?.type === TableColumn
+				typeof ele === 'object' && ele?.type === TableColumn,
 		);
 	} else {
 		if (typeof children === 'object') {
@@ -87,7 +87,7 @@ export default function Table({
 		Object.entries(baseConfig.rowEvents).forEach(
 			([key, event]) =>
 				(events[key] = (nativeEvent: TableRowEvent): void =>
-					event ? event(nativeEvent, element) : undefined)
+					event ? event(nativeEvent, element) : undefined),
 		);
 		return (
 			<motion.tr
@@ -96,8 +96,7 @@ export default function Table({
 				animate={Animations.ListItemIn(
 					index < animationIndex
 						? 0
-						: (index - animationIndex) /
-								(data?.length - animationIndex)
+						: (index - animationIndex) / (data?.length - animationIndex),
 				)}
 				{...baseConfig.rowProps}
 				{...events}
@@ -106,8 +105,8 @@ export default function Table({
 					React.cloneElement(
 						column,
 						column.props,
-						column.props.children(element, index)
-					)
+						column.props.children(element, index),
+					),
 				)}
 			</motion.tr>
 		);
@@ -130,28 +129,26 @@ export default function Table({
 				});
 			}
 		}
-	}, [loading]);
+	}, [loading, data.length]);
 
 	return (
 		<TableElement className="ui-table">
 			{data.length > 0 && (
 				<TableHeaderElement className="ui-table-header">
 					<tr>
-						{mappedChildren.map(
-							(child: TableColumnReactElement) => (
-								<th
-									key={child.props.name}
-									style={{
-										flex: child.props.flex,
-										minWidth: child.props.minwidth,
-										maxWidth: child.props.maxwidth,
-									}}
-									{...child.props}
-								>
-									{child.props.name}
-								</th>
-							)
-						)}
+						{mappedChildren.map((child: TableColumnReactElement) => (
+							<th
+								key={child.props.name}
+								style={{
+									flex: child.props.flex,
+									minWidth: child.props.minwidth,
+									maxWidth: child.props.maxwidth,
+								}}
+								{...child.props}
+							>
+								{child.props.name}
+							</th>
+						))}
 					</tr>
 				</TableHeaderElement>
 			)}
@@ -165,10 +162,7 @@ export default function Table({
 					{loading && (
 						<tr className="ui-table-inner-loading-container">
 							<td>
-								<Spinners.circles
-									width="100px"
-									height="100px"
-								/>
+								<Spinners.circles width="100px" height="100px" />
 								{baseConfig.innerLoadingMessage}
 							</td>
 						</tr>

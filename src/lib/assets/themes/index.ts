@@ -1,6 +1,6 @@
-import Theme from './../../types/Theme';
-import LightTheme from './light-theme';
+import type Theme from './../../types/Theme';
 import DarkTheme from './dark-theme';
+import LightTheme from './light-theme';
 
 let GlobalTheme: Theme = LightTheme;
 const setGlobalTheme = (theme: Theme): void => {

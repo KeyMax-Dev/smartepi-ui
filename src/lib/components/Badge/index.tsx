@@ -1,7 +1,6 @@
-import React from 'react';
-import { BadgeElement } from './style';
+import type { HTMLMotionProps } from 'framer-motion';
 import Icon from '../Icon';
-import { HTMLMotionProps } from 'framer-motion';
+import { BadgeElement } from './style';
 
 export interface BadgeBaseProps extends HTMLMotionProps<'div'> {
 	icon?: string;

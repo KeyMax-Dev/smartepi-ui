@@ -1,13 +1,13 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { getGlobalTheme } from '../../assets/themes';
-import { motion } from 'framer-motion';
 
 interface TextAreaContainerProps {
 	invert?: boolean;
 }
 
 export const TextAreaContainerElement = styled(
-	motion.div
+	motion.div,
 )<TextAreaContainerProps>`
 	padding: 5px;
 	margin: 3px;

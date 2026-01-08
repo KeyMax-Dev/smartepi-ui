@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import Input, { InputProps } from '../Input';
-import { InputValidator, validate } from '../../services/input-validator';
-import { FormFieldType, FormPrototype, FormState } from './types';
+import type React from 'react';
+import { useEffect, useState } from 'react';
+import { type InputValidator, validate } from '../../services/input-validator';
+import Input, { type InputProps } from '../Input';
+import type { FormFieldType, FormPrototype, FormState } from './types';
 
 export interface FormFieldProps<T extends FormPrototype> extends InputProps {
 	formState: FormState<T>;
@@ -11,11 +12,11 @@ export interface FormFieldProps<T extends FormPrototype> extends InputProps {
 }
 
 export function FormField<T extends FormPrototype>(
-	props: FormFieldProps<T>
+	props: FormFieldProps<T>,
 ): JSX.Element {
 	const [color, setColor] = useState<string | undefined>(props.color);
 	const [iconRight, setIconRight] = useState<string | undefined>(
-		props.iconRight
+		props.iconRight,
 	);
 	const [state, setState] = useState<FormFieldType>(
 		props.formState[props.stateKey]
@@ -24,7 +25,7 @@ export function FormField<T extends FormPrototype>(
 					hasError: validate(props.initialValue, ...props.validators),
 					value: props.initialValue,
 					validators: props.validators,
-			  }
+				},
 	);
 
 	const blurHandler = (event: React.FocusEvent<HTMLInputElement>): void => {
@@ -32,9 +33,7 @@ export function FormField<T extends FormPrototype>(
 		if (props.onBlur) props.onBlur(event);
 	};
 
-	const changeHandler = (
-		event: React.ChangeEvent<HTMLInputElement>
-	): void => {
+	const changeHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
 		setState({
 			...state,
 			value: event.target.value,
@@ -52,7 +51,7 @@ export function FormField<T extends FormPrototype>(
 			setColor(props.color);
 			setIconRight(props.iconRight);
 		}
-	}, [state.hasError, state.validated]);
+	}, [state.hasError, state.validated, props.iconRight, props.color, state]);
 
 	useEffect(() => {
 		props.formState[props.stateKey] = [state, setState];

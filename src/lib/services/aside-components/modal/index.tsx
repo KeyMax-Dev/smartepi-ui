@@ -1,7 +1,7 @@
+import { type HTMLMotionProps, motion, useAnimation } from 'framer-motion';
+import { useState } from 'react';
+import AsideController, { type BaseAsideConfig } from '../aside-controller';
 import { ModalBaseElement, ModalCloseButton } from './style';
-import { motion, useAnimation, HTMLMotionProps } from 'framer-motion';
-import AsideController, { BaseAsideConfig } from '../aside-controller';
-import React, { useState } from 'react';
 
 // type ModalStatus = 'opening' | 'open' | 'closing' | 'closed';
 
@@ -114,9 +114,7 @@ export class ModalController extends AsideController {
 					{!this.config.disableCloseButton && (
 						<ModalCloseButton
 							className="ui-modal-btn-close"
-							onClick={(): Promise<void> =>
-								this.close('closeButton')
-							}
+							onClick={(): Promise<void> => this.close('closeButton')}
 							width="30px"
 							height="30px"
 							name="close"
@@ -130,7 +128,7 @@ export class ModalController extends AsideController {
 
 export default function useModal(
 	content: JSX.Element,
-	options?: Partial<ModalConfig>
+	options?: Partial<ModalConfig>,
 ): ModalController {
 	const [modal] = useState(new ModalController(content, options));
 	return modal;

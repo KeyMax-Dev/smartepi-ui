@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { Select } from '../../../lib';
 
@@ -24,18 +24,18 @@ export const SelectPage = (): JSX.Element => {
 		<Container>
 			<h1>Select Page</h1>
 
-			<Select<typeof dataMock[0]>
+			<Select<(typeof dataMock)[0]>
 				data={dataMock}
 				dataKey="label"
 				value={selectedValue}
-				onSelect={(event, selected) => setSelectedValue(selected)}
+				onSelect={(_event, selected) => setSelectedValue(selected)}
 				placeholder="Selection"
 			/>
-			<Select<typeof dataMock[0]>
+			<Select<(typeof dataMock)[0]>
 				data={dataMock}
 				dataKey="label"
 				value={selectedValue}
-				onSelect={(event, selected) => setSelectedValue(selected)}
+				onSelect={(_event, selected) => setSelectedValue(selected)}
 				placeholder="Selection"
 				enableClear
 			/>

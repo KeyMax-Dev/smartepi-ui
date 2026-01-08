@@ -1,4 +1,4 @@
-import React, { SVGProps } from 'react';
+import type { SVGProps } from 'react';
 
 const CirclesSVG = (props: SVGProps<SVGSVGElement>): JSX.Element => (
 	<svg

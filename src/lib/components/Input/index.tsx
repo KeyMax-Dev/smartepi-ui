@@ -1,21 +1,21 @@
-import type { HTMLMotionProps } from "framer-motion";
-import type React from "react";
-import { type FocusEvent, useEffect, useRef, useState } from "react";
-import { Datepicker, useOverflow } from "../..";
-import Button from "../Button";
-import Icon from "../Icon";
+import type { HTMLMotionProps } from 'framer-motion';
+import type React from 'react';
+import { type FocusEvent, useEffect, useRef, useState } from 'react';
+import { Datepicker, useOverflow } from '../..';
+import Button from '../Button';
+import Icon from '../Icon';
 import {
 	InputContainerElement,
 	InputElement,
 	InputLabelElement,
-} from "./style";
+} from './style';
 
-type ContainerType = "outline" | "downline";
-const DEFAULT_TYPE: ContainerType = "downline";
+type ContainerType = 'outline' | 'downline';
+const DEFAULT_TYPE: ContainerType = 'downline';
 
-export interface InputProps extends HTMLMotionProps<"input"> {
+export interface InputProps extends HTMLMotionProps<'input'> {
 	color?: string;
-	containerProps?: HTMLMotionProps<"div">;
+	containerProps?: HTMLMotionProps<'div'>;
 	containerType?: ContainerType;
 	enableClear?: boolean;
 	enableDatepicker?: boolean;
@@ -39,11 +39,11 @@ export default function Input(props: InputProps): JSX.Element {
 			const input = inputRef.current as HTMLInputElement;
 			const setValue = Object.getOwnPropertyDescriptor(
 				window.HTMLInputElement.prototype,
-				"value",
+				'value',
 			)?.set;
 			if (setValue) {
-				setValue.call(input, "");
-				input.dispatchEvent(new Event("input", { bubbles: true }));
+				setValue.call(input, '');
+				input.dispatchEvent(new Event('input', { bubbles: true }));
 			}
 		}
 	};
@@ -53,11 +53,11 @@ export default function Input(props: InputProps): JSX.Element {
 			const input = inputRef.current as HTMLInputElement;
 			const setValue = Object.getOwnPropertyDescriptor(
 				window.HTMLInputElement.prototype,
-				"value",
+				'value',
 			)?.set;
 			if (setValue) {
-				setValue.call(input, date.toLocaleDateString("pt-br"));
-				input.dispatchEvent(new Event("input", { bubbles: true }));
+				setValue.call(input, date.toLocaleDateString('pt-br'));
+				input.dispatchEvent(new Event('input', { bubbles: true }));
 				// datepicker.close();
 			}
 		}
@@ -79,7 +79,7 @@ export default function Input(props: InputProps): JSX.Element {
 	useEffect(() => {
 		if (props.getRef)
 			props.getRef(inputRef as React.MutableRefObject<HTMLInputElement>);
-	}, [inputRef.current]);
+	}, [props.getRef]);
 
 	const hasText = !!inputRef.current?.value?.length || !!props.value;
 
@@ -89,7 +89,7 @@ export default function Input(props: InputProps): JSX.Element {
 			invert={props.invert}
 			color={props.color}
 			className={`ui-input-container-${containerType} ${
-				props.containerProps?.className || ""
+				props.containerProps?.className || ''
 			}`}
 		>
 			{props.placeholder && (

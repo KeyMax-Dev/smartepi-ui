@@ -1,7 +1,6 @@
-import { HTMLMotionProps } from 'framer-motion';
+import type { HTMLMotionProps } from 'framer-motion';
 import Icon from '../Icon';
-import { IconButton, BaseButton } from './style';
-import React from 'react';
+import { BaseButton, IconButton } from './style';
 
 type ButtonTypes = 'solid' | 'outline' | 'icon' | 'square';
 
@@ -15,14 +14,11 @@ export interface ButtonProps extends HTMLMotionProps<'button'> {
 }
 
 export default function Button(props: ButtonProps): JSX.Element {
-	const buttonType: ButtonTypes = props.buttonType
-		? props.buttonType
-		: 'solid';
+	const buttonType: ButtonTypes = props.buttonType ? props.buttonType : 'solid';
 
 	switch (buttonType) {
 		case 'icon':
-			if (!!!props.icon)
-				throw new Error('Square button icon not provided');
+			if (!props.icon) throw new Error('Square button icon not provided');
 			return (
 				<IconButton {...props}>
 					<Icon
@@ -36,8 +32,6 @@ export default function Button(props: ButtonProps): JSX.Element {
 					{props.text && <span>{props.text}</span>}
 				</IconButton>
 			);
-		case 'outline':
-		case 'solid':
 		default:
 			return (
 				<BaseButton
@@ -55,9 +49,7 @@ export default function Button(props: ButtonProps): JSX.Element {
 						/>
 					)}
 					{props.text && (
-						<span className={`ui-btn-${buttonType}-text`}>
-							{props.text}
-						</span>
+						<span className={`ui-btn-${buttonType}-text`}>{props.text}</span>
 					)}
 				</BaseButton>
 			);

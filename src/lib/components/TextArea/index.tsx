@@ -1,7 +1,7 @@
-import React from 'react';
-import { TextAreaContainerElement } from './style';
+import type { HTMLMotionProps } from 'framer-motion';
+import type React from 'react';
 import Icon from '../Icon';
-import { HTMLMotionProps } from 'framer-motion';
+import { TextAreaContainerElement } from './style';
 
 type ContainerType = 'outline' | 'downline';
 const DEFAULT_TYPE: ContainerType = 'downline';

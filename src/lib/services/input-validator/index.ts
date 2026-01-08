@@ -1,5 +1,6 @@
-import InputValidator, { InputValueType } from './input-validator';
 import Validators from './default-validators';
+import type InputValidator from './input-validator';
+import type { InputValueType } from './input-validator';
 
 const validate = (
 	value: InputValueType,

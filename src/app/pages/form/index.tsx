@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button, useForm, Validators } from '../../../lib';
@@ -16,10 +16,7 @@ export const FormPage = (): JSX.Element => {
 		[
 			{
 				key: 'name',
-				validators: [
-					new Validators.Required(),
-					new Validators.MinLength(4),
-				],
+				validators: [new Validators.Required(), new Validators.MinLength(4)],
 				initialValue: 'initial value',
 			},
 			{
@@ -35,17 +32,14 @@ export const FormPage = (): JSX.Element => {
 				validators: [],
 			},
 		],
-		'form1'
+		'form1',
 	);
 
 	const [form2, getErrors2, getValues2] = useForm(
 		[
 			{
 				key: 'name',
-				validators: [
-					new Validators.Required(),
-					new Validators.MinLength(4),
-				],
+				validators: [new Validators.Required(), new Validators.MinLength(4)],
 				initialValue: 'initial value',
 			},
 			{
@@ -61,7 +55,7 @@ export const FormPage = (): JSX.Element => {
 				validators: [],
 			},
 		],
-		'form2'
+		'form2',
 	);
 
 	const [counter, setCounter] = useState(0);

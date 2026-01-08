@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import styled from 'styled-components';
 import { getGlobalTheme } from '../../assets/themes';
 
 const CheckboxElement = styled(motion.div)`
@@ -18,8 +18,7 @@ const CheckboxElement = styled(motion.div)`
 	&&.ui-checkbox-true {
 		border-color: transparent;
 		background-color: ${(props): string =>
-			getGlobalTheme().colors[props.color ? props.color : 'primary']
-				.principal};
+			getGlobalTheme().colors[props.color ? props.color : 'primary'].principal};
 
 		&:hover {
 			background-color: ${(props): string =>

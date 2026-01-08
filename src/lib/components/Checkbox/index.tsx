@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { HTMLMotionProps, useAnimation } from 'framer-motion';
-import CheckboxElement from './style';
+import { type HTMLMotionProps, useAnimation } from 'framer-motion';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 import { Icon } from '../..';
-import { getGlobalTheme } from '../../assets/themes';
 import Animations from '../../assets/animations';
+import { getGlobalTheme } from '../../assets/themes';
+import CheckboxElement from './style';
 
 export type CheckboxToggleEvent = Partial<React.MouseEvent<HTMLDivElement>> & {
 	value: boolean;
@@ -34,15 +35,19 @@ export default function Checkbox(props: CheckboxProps): JSX.Element {
 	}, [props.value]);
 
 	useEffect(() => {
-		animationController.start(
-			value ? Animations.FadeIn : Animations.FadeOut
-		);
+		animationController.start(value ? Animations.FadeIn : Animations.FadeOut);
 		if (props.onToggle) {
 			props.onToggle(event);
 			setEvent({ value });
 		}
 		return () => animationController.stop();
-	}, [value]);
+	}, [
+		value,
+		animationController.start,
+		animationController.stop,
+		event,
+		props.onToggle,
+	]);
 
 	return (
 		<CheckboxElement

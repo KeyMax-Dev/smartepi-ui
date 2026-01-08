@@ -1,6 +1,6 @@
-import { ImageAvatarProps } from './index';
 import styled from 'styled-components';
 import { getGlobalTheme } from '../../assets/themes';
+import type { ImageAvatarProps } from './index';
 
 export const ImageAvatarElement = styled.div<ImageAvatarProps>`
 	width: ${(props): string =>

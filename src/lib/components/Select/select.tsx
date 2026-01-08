@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { SelectContainerElement, SelectListElement } from './style';
-import { InputElement, InputLabelElement } from '../Input/style';
+import { useAnimation } from 'framer-motion';
+import type React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Spinners from '../../assets/svgs/spinners';
 import Button from '../Button';
-import { useAnimation } from 'framer-motion';
-import { SelectProps } from './types';
+import { InputElement, InputLabelElement } from '../Input/style';
+import { SelectContainerElement, SelectListElement } from './style';
+import type { SelectProps } from './types';
 
 const SEARCH_LIMIT_TIME = 500;
 let SEARCH_TIMER: number;
@@ -25,7 +26,7 @@ export function Select<T>({
 	enableClear,
 }: SelectProps<T>): JSX.Element {
 	const [inputValue, setInputValue] = useState<string>(
-		value ? `${value[dataKey]}` : ''
+		value ? `${value[dataKey]}` : '',
 	);
 	const [selected, setSelected] = useState<T | undefined>(value);
 	const [opened, setOpened] = useState<boolean>(false);
@@ -37,11 +38,11 @@ export function Select<T>({
 		if (value) {
 			setInputValue(`${value[dataKey]}`);
 		}
-	}, [value]);
+	}, [value, dataKey]);
 
 	const itemSelectHandler = (
 		event: React.MouseEvent<HTMLDivElement>,
-		item: T
+		item: T,
 	): void => {
 		setSelected(item);
 		setInputValue(`${item[dataKey]}`);
@@ -50,7 +51,7 @@ export function Select<T>({
 	};
 
 	const inputChangeHandler = (
-		event: React.ChangeEvent<HTMLInputElement>
+		event: React.ChangeEvent<HTMLInputElement>,
 	): void => {
 		const value = `${event.target.value}`;
 		setInputValue(value);
@@ -58,10 +59,8 @@ export function Select<T>({
 
 		setFilteredData(
 			data.filter((item) =>
-				`${item[dataKey]}`
-					.toLocaleLowerCase()
-					.match(value.toLocaleLowerCase())
-			)
+				`${item[dataKey]}`.toLocaleLowerCase().match(value.toLocaleLowerCase()),
+			),
 		);
 
 		clearTimeout(SEARCH_TIMER);
@@ -126,7 +125,17 @@ export function Select<T>({
 				transition: { duration: 0.1, ease: 'backInOut' },
 			});
 		}
-	}, [opened]);
+	}, [
+		opened,
+		buttonAnimationController.start,
+		data,
+		dataKey,
+		onClose,
+		onOpen,
+		onSearch,
+		selected,
+		value,
+	]);
 
 	useEffect(() => {
 		if (!loading) {
@@ -134,16 +143,16 @@ export function Select<T>({
 				data.filter((item) =>
 					`${item[dataKey]}`
 						.toLocaleLowerCase()
-						.match(inputValue.toLocaleLowerCase())
-				)
+						.match(inputValue.toLocaleLowerCase()),
+				),
 			);
 		}
-	}, [data]);
+	}, [data, dataKey, inputValue.toLocaleLowerCase, loading]);
 
 	useEffect(() => {
 		setSelected(value);
 		setInputValue(value ? `${value[dataKey]}` : '');
-	}, [value]);
+	}, [value, dataKey]);
 
 	return (
 		<SelectContainerElement
@@ -200,7 +209,7 @@ export function Select<T>({
 					buttonType="icon"
 					icon="close"
 					// @ts-expect-error error TS2532: Object is possibly 'undefined'.
-					onClick={(event) => onSelect && onSelect(event, undefined)}
+					onClick={(event) => onSelect?.(event, undefined)}
 					iconSize="25px"
 					invert={invert}
 					className="ui-icon-right"
