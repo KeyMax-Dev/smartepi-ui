@@ -1,25 +1,26 @@
-import React, { useEffect, useRef, useState, FocusEvent } from 'react';
-import Icon from '../Icon';
-import { HTMLMotionProps } from 'framer-motion';
+import type { HTMLMotionProps } from "framer-motion";
+import type React from "react";
+import { type FocusEvent, useEffect, useRef, useState } from "react";
+import { Datepicker, useOverflow } from "../..";
+import Button from "../Button";
+import Icon from "../Icon";
 import {
-	InputElement,
 	InputContainerElement,
+	InputElement,
 	InputLabelElement,
-} from './style';
-import Button from '../Button';
-import { useOverflow, Datepicker } from '../..';
+} from "./style";
 
-type ContainerType = 'outline' | 'downline';
-const DEFAULT_TYPE: ContainerType = 'downline';
+type ContainerType = "outline" | "downline";
+const DEFAULT_TYPE: ContainerType = "downline";
 
-export interface InputProps extends HTMLMotionProps<'input'> {
+export interface InputProps extends HTMLMotionProps<"input"> {
 	color?: string;
-	containerProps?: HTMLMotionProps<'div'>;
+	containerProps?: HTMLMotionProps<"div">;
 	containerType?: ContainerType;
 	enableClear?: boolean;
 	enableDatepicker?: boolean;
 	getRef?: (
-		input: React.MutableRefObject<HTMLInputElement> | undefined
+		input: React.MutableRefObject<HTMLInputElement> | undefined,
 	) => void;
 	iconLeft?: string;
 	iconRight?: string;
@@ -30,7 +31,7 @@ export default function Input(props: InputProps): JSX.Element {
 	const containerType: ContainerType = props.containerType
 		? props.containerType
 		: DEFAULT_TYPE;
-	const inputRef = useRef<HTMLInputElement>();
+	const inputRef = useRef<HTMLInputElement>(null);
 	const [isFocused, setIsFocused] = useState<boolean>(false);
 
 	const clear = (): void => {
@@ -38,11 +39,11 @@ export default function Input(props: InputProps): JSX.Element {
 			const input = inputRef.current as HTMLInputElement;
 			const setValue = Object.getOwnPropertyDescriptor(
 				window.HTMLInputElement.prototype,
-				'value'
+				"value",
 			)?.set;
 			if (setValue) {
-				setValue.call(input, '');
-				input.dispatchEvent(new Event('input', { bubbles: true }));
+				setValue.call(input, "");
+				input.dispatchEvent(new Event("input", { bubbles: true }));
 			}
 		}
 	};
@@ -52,18 +53,18 @@ export default function Input(props: InputProps): JSX.Element {
 			const input = inputRef.current as HTMLInputElement;
 			const setValue = Object.getOwnPropertyDescriptor(
 				window.HTMLInputElement.prototype,
-				'value'
+				"value",
 			)?.set;
 			if (setValue) {
-				setValue.call(input, date.toLocaleDateString('pt-br'));
-				input.dispatchEvent(new Event('input', { bubbles: true }));
+				setValue.call(input, date.toLocaleDateString("pt-br"));
+				input.dispatchEvent(new Event("input", { bubbles: true }));
 				// eslint-disable-next-line
 				// datepicker.close();
 			}
 		}
 	};
 	const datepicker = useOverflow(
-		<Datepicker onDaySelected={onDatepickerSelect} />
+		<Datepicker onDaySelected={onDatepickerSelect} />,
 	);
 
 	const onFocus = (event: FocusEvent<HTMLInputElement>): void => {
@@ -89,7 +90,7 @@ export default function Input(props: InputProps): JSX.Element {
 			invert={props.invert}
 			color={props.color}
 			className={`ui-input-container-${containerType} ${
-				props.containerProps?.className || ''
+				props.containerProps?.className || ""
 			}`}
 		>
 			{props.placeholder && (

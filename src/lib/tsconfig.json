@@ -10,13 +10,13 @@
 		"moduleResolution": "node",
 		"noImplicitAny": true,
 		"target": "es6",
-		"jsx": "react",
+		"jsx": "react-jsx",
 		"typeRoots": ["node_modules/@types"],
 		"module": "esnext",
 		"lib": ["dom", "esnext"],
 		"esModuleInterop": true,
 		"rootDir": "./"
 	},
-	"include": ["./**/*"],
+	"include": ["./**/*", "./jsx-global.d.ts"],
 	"exclude": ["**/*.spec.ts", "**/node_modules"]
 }

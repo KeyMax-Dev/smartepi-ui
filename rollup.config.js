@@ -8,6 +8,9 @@ const external = Object.keys(pkg.peerDependencies).concat([
 	"path",
 	"fs",
 	"typescript",
+	"react/jsx-runtime",
+	"react/jsx-dev-runtime",
+	"react-dom/client",
 ]);
 
 console.log("external packages:", external);
