@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   publish-gpr:
@@ -14,7 +17,7 @@ jobs:
         with:
           node-version: 24
           registry-url: https://npm.pkg.github.com/
-          scope: '@KeyMax-Dev'
+          scope: "@KeyMax-Dev"
       - run: npm install
       - run: npm run build
       - run: npm publish
