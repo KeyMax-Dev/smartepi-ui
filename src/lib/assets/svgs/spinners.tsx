@@ -1,6 +1,6 @@
 import type { SVGProps } from 'react';
 
-const CirclesSVG = (props: SVGProps<SVGSVGElement>): JSX.Element => (
+const CirclesSVG = (props: SVGProps<SVGSVGElement>): React.ReactElement => (
 	<svg
 		width="45"
 		height="45"

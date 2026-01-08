@@ -24,7 +24,7 @@ export function Select<T>({
 	placeholder,
 	containerType,
 	enableClear,
-}: SelectProps<T>): JSX.Element {
+}: SelectProps<T>): React.ReactElement {
 	const [inputValue, setInputValue] = useState<string>(
 		value ? `${value[dataKey]}` : '',
 	);
@@ -77,7 +77,7 @@ export function Select<T>({
 		setOpened(!opened);
 	};
 
-	const renderListItem = (item: T, index: number): JSX.Element => {
+	const renderListItem = (item: T, index: number): React.ReactElement => {
 		return (
 			<div
 				key={index}

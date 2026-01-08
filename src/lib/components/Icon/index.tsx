@@ -10,6 +10,6 @@ export interface IconProps extends HTMLMotionProps<'div'> {
 	width?: string;
 }
 
-export default function Icon(props: IconProps): JSX.Element {
+export default function Icon(props: IconProps): React.ReactElement {
 	return <IconElement {...props}>{Icons[props.name]}</IconElement>;
 }

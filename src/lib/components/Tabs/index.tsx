@@ -18,7 +18,7 @@ export default function Tabs({
 	index,
 	children,
 	onTabChange,
-}: TabsHeaderProps): JSX.Element {
+}: TabsHeaderProps): React.ReactElement {
 	const [tabIndex, setTabIndex] = useState(index === undefined ? 0 : index);
 	const selectorController = useAnimation();
 	const bodyController = useAnimation();
@@ -48,7 +48,7 @@ export default function Tabs({
 	const renderTab = (
 		element: ReactElement<TabProps>,
 		index: number,
-	): JSX.Element => {
+	): React.ReactElement => {
 		return (
 			<div
 				key={index}

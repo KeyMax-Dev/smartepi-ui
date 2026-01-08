@@ -13,7 +13,7 @@ export interface FormFieldProps<T extends FormPrototype> extends InputProps {
 
 export function FormField<T extends FormPrototype>(
 	props: FormFieldProps<T>,
-): JSX.Element {
+): React.ReactElement {
 	const [color, setColor] = useState<string | undefined>(props.color);
 	const [iconRight, setIconRight] = useState<string | undefined>(
 		props.iconRight,

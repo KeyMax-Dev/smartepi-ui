@@ -10,7 +10,7 @@ const Container = styled.div`
 	align-items: center;
 `;
 
-export const FormPage = (): JSX.Element => {
+export const FormPage = (): React.ReactElement => {
 	const navigate = useNavigate();
 	const [form1, getErrors1, getValues1] = useForm(
 		[

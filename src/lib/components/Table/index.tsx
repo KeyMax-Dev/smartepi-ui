@@ -75,13 +75,16 @@ export default function Table({
 	children,
 	loading,
 	config,
-}: TableProps): JSX.Element {
+}: TableProps): React.ReactElement {
 	const mappedChildren: TableColumnReactElement[] = mapChildren(children);
 	const baseConfig = Object.assign({}, DEFAULT_TABLE_CONFIG, config);
 	const [animationIndex, setAnimationIndex] = useState<number>(0);
 	const tableBodyRef = useRef<HTMLTableSectionElement>(null);
 
-	const renderLine = (element: TableItem, index: number): JSX.Element => {
+	const renderLine = (
+		element: TableItem,
+		index: number,
+	): React.ReactElement => {
 		const events: { [key: string]: EventHandler<TableRowEvent> } = {};
 		Object.entries(baseConfig.rowEvents).forEach(
 			([key, event]) =>

@@ -49,8 +49,8 @@ function generateMonthDays(date = new Date()): Date[][] {
 	return monthDays;
 }
 
-export default function Datepicker(props: DatepickerProps): JSX.Element {
-	const [body, setBody] = useState<JSX.Element[]>();
+export default function Datepicker(props: DatepickerProps): React.ReactElement {
+	const [body, setBody] = useState<React.ReactElement[]>();
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
 	const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
 	const [currentIndicator, setCurrentIndicator] = useState<Indicator>('month');
@@ -73,7 +73,7 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
 		}
 	};
 
-	const DayElement = ({ day }: { day: Date }): JSX.Element => {
+	const DayElement = ({ day }: { day: Date }): React.ReactElement => {
 		let className = 'ui-datepicker-list-item-container';
 		if (
 			Date.now() - day.getTime() >= 0 &&
@@ -104,7 +104,7 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
 		);
 	};
 
-	const WeekElement = ({ week }: { week: Date[] }): JSX.Element => {
+	const WeekElement = ({ week }: { week: Date[] }): React.ReactElement => {
 		return (
 			<ul className="ui-datepicker-week-container">
 				{week.map((day) => (
@@ -118,7 +118,7 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
 		date = new Date(currentYear),
 	}: {
 		date: Date;
-	}): JSX.Element => {
+	}): React.ReactElement => {
 		let className = 'ui-datepicker-list-item-container';
 		if (
 			new Date().getMonth() === date.getMonth() &&
@@ -149,7 +149,11 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
 		);
 	};
 
-	const YearElement = ({ fullYear }: { fullYear: number }): JSX.Element => {
+	const YearElement = ({
+		fullYear,
+	}: {
+		fullYear: number;
+	}): React.ReactElement => {
 		let className = 'ui-datepicker-list-item-container';
 		if (new Date().getFullYear() === fullYear) {
 			className += ' ui-datepicker-list-item-today';
@@ -174,7 +178,7 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
 	};
 
 	const fillMonth = useCallback(
-		(date = new Date(currentYear, currentMonth)): JSX.Element[] => {
+		(date = new Date(currentYear, currentMonth)): React.ReactElement[] => {
 			setCurrentYear(date.getFullYear());
 			setCurrentMonth(date.getMonth());
 			setIndicatorText(`${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`);
@@ -189,13 +193,13 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
 	);
 
 	const fillYear = useCallback(
-		(fullYear = currentYear): JSX.Element[] => {
+		(fullYear = currentYear): React.ReactElement[] => {
 			setCurrentIndicator('year');
 			setCurrentYear(fullYear);
 
-			const list: JSX.Element[] = [];
+			const list: React.ReactElement[] = [];
 			for (let i = 0; i < 4; i++) {
-				const aux: JSX.Element[] = [];
+				const aux: React.ReactElement[] = [];
 				for (let j = 0; j < 3; j++) {
 					const index = i * 3 + j;
 					aux.push(
@@ -216,14 +220,14 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
 	);
 
 	const fillDecade = useCallback(
-		(from = currentYear): JSX.Element[] => {
+		(from = currentYear): React.ReactElement[] => {
 			setCurrentIndicator('decade');
 			from = Math.floor(from / 10) * 10;
 			setCurrentYear(from);
 
-			const list: JSX.Element[] = [];
+			const list: React.ReactElement[] = [];
 			for (let i = 0; i < 5; i++) {
-				const aux: JSX.Element[] = [];
+				const aux: React.ReactElement[] = [];
 				for (let j = 0; j < 2; j++) {
 					const fullYear = from + i * 2 + j;
 					aux.push(<YearElement fullYear={fullYear} key={fullYear} />);

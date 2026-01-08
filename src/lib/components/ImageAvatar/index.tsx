@@ -8,7 +8,9 @@ export interface ImageAvatarProps extends React.HTMLAttributes<HTMLDivElement> {
 	src?: string;
 }
 
-export default function ImageAvatar(props: ImageAvatarProps): JSX.Element {
+export default function ImageAvatar(
+	props: ImageAvatarProps,
+): React.ReactElement {
 	const [image, setImage] = useState(DefaultImage);
 
 	useEffect(() => {

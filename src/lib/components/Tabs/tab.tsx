@@ -7,7 +7,7 @@ export interface TabProps extends HTMLMotionProps<'div'> {
 	children: React.ReactNode;
 }
 
-export default function Tab(props: TabProps): JSX.Element {
+export default function Tab(props: TabProps): React.ReactElement {
 	return (
 		<TabElement {...props} className={`ui-tabs-tab-body ${props.className}`}>
 			{props.children}

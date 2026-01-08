@@ -25,7 +25,7 @@ export class ModalController extends AsideController {
 	protected config: ModalConfig;
 	private readonly overlayControls = useAnimation();
 
-	constructor(content: JSX.Element, options?: Partial<ModalConfig>) {
+	constructor(content: React.ReactElement, options?: Partial<ModalConfig>) {
 		super(content, options);
 		this.config = Object.assign({}, DEFAULT_MODAL_CONFIG, options);
 		this.injectProps({ controller: this });
@@ -93,7 +93,7 @@ export class ModalController extends AsideController {
 		this.renderReactElement();
 	}
 
-	protected createReactElement(): JSX.Element {
+	protected createReactElement(): React.ReactElement {
 		return (
 			<ModalBaseElement>
 				<motion.div
@@ -127,7 +127,7 @@ export class ModalController extends AsideController {
 }
 
 export default function useModal(
-	content: JSX.Element,
+	content: React.ReactElement,
 	options?: Partial<ModalConfig>,
 ): ModalController {
 	const [modal] = useState(new ModalController(content, options));

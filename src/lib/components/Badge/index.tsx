@@ -8,7 +8,7 @@ export interface BadgeBaseProps extends HTMLMotionProps<'div'> {
 	color?: string;
 }
 
-export default function Badge(props: BadgeBaseProps): JSX.Element {
+export default function Badge(props: BadgeBaseProps): React.ReactElement {
 	const color = props.color ? props.color : 'primary';
 
 	return (

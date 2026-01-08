@@ -19,7 +19,7 @@ export interface CheckboxProps
 	value?: boolean;
 }
 
-export default function Checkbox(props: CheckboxProps): JSX.Element {
+export default function Checkbox(props: CheckboxProps): React.ReactElement {
 	const size = props.size ? props.size : getGlobalTheme().defaultIconSize;
 	const [value, setValue] = useState<boolean>(!!props.value);
 	const [event, setEvent] = useState<CheckboxToggleEvent>({ value });

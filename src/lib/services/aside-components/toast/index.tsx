@@ -32,7 +32,7 @@ export class ToastController extends AsideController {
 		}
 	};
 
-	constructor(content: JSX.Element, options?: Partial<ToastConfig>) {
+	constructor(content: React.ReactElement, options?: Partial<ToastConfig>) {
 		super(content, options);
 
 		this.config = Object.assign({}, DEFAULT_CONFIG, options);
@@ -90,12 +90,12 @@ export class ToastController extends AsideController {
 		}, 200);
 	}
 
-	public setContent(newContent: JSX.Element | string): void {
+	public setContent(newContent: React.ReactElement | string): void {
 		this.content =
 			typeof newContent === 'string' ? <span>{newContent}</span> : newContent;
 	}
 
-	protected createReactElement(): JSX.Element {
+	protected createReactElement(): React.ReactElement {
 		return (
 			<ToastElement
 				color={this.config.color}
@@ -108,7 +108,7 @@ export class ToastController extends AsideController {
 }
 
 export default function useToast(
-	content: JSX.Element,
+	content: React.ReactElement,
 	options?: Partial<ToastConfig>,
 ): ToastController {
 	const [toast] = useState(new ToastController(content, options));

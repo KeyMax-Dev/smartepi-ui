@@ -27,7 +27,7 @@ export interface InputProps extends HTMLMotionProps<'input'> {
 	invert?: boolean;
 }
 
-export default function Input(props: InputProps): JSX.Element {
+export default function Input(props: InputProps): React.ReactElement {
 	const {
 		containerProps,
 		containerType: propsContainerType,

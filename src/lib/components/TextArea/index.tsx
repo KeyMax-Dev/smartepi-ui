@@ -22,7 +22,7 @@ export default function TextArea({
 	invert,
 	color,
 	...props
-}: TextAreaProps): JSX.Element {
+}: TextAreaProps): React.ReactElement {
 	return (
 		<TextAreaContainerElement
 			{...containerProps}

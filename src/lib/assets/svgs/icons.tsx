@@ -813,7 +813,7 @@ const WorkerSVG = (
 	</svg>
 );
 
-const Icons: { [key: string]: JSX.Element } = {
+const Icons: { [key: string]: React.ReactElement } = {
 	account: AccountSVG,
 	accountCircle: AccountCircleSVG,
 	accountCog: AccountCogSVG,

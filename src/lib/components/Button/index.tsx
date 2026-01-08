@@ -13,7 +13,7 @@ export interface ButtonProps extends HTMLMotionProps<'button'> {
 	text?: string;
 }
 
-export default function Button(props: ButtonProps): JSX.Element {
+export default function Button(props: ButtonProps): React.ReactElement {
 	const buttonType: ButtonTypes = props.buttonType ? props.buttonType : 'solid';
 
 	switch (buttonType) {

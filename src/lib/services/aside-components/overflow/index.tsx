@@ -38,7 +38,7 @@ export class OverflowController extends AsideController {
 		this.container?.removeEventListener('mouseleave', this.hoverLeaveListener);
 	};
 
-	constructor(content: JSX.Element, options?: Partial<OverflowConfig>) {
+	constructor(content: React.ReactElement, options?: Partial<OverflowConfig>) {
 		super(content, options);
 		this.config = Object.assign({}, DEFAULT_CONFIG, options);
 	}
@@ -92,7 +92,7 @@ export class OverflowController extends AsideController {
 		});
 	}
 
-	protected createReactElement(): JSX.Element {
+	protected createReactElement(): React.ReactElement {
 		return (
 			<OverflowElement
 				ref={this.contentRef as React.MutableRefObject<HTMLDivElement>}
@@ -185,7 +185,7 @@ export class OverflowController extends AsideController {
 }
 
 export default function useOverflow(
-	content: JSX.Element,
+	content: React.ReactElement,
 	options?: Partial<OverflowConfig>,
 ): OverflowController {
 	const [overflow] = useState(new OverflowController(content, options));

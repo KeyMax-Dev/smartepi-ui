@@ -8,6 +8,6 @@ export interface CardBaseProps extends HTMLMotionProps<'div'> {
 	invert?: boolean;
 }
 
-export default function CardBase(props: CardBaseProps): JSX.Element {
+export default function CardBase(props: CardBaseProps): React.ReactElement {
 	return <CardBaseElement {...props} />;
 }

@@ -16,7 +16,7 @@ const dataMock = [
 	{ value: '4', label: 'Option 4' },
 ];
 
-export const SelectPage = (): JSX.Element => {
+export const SelectPage = (): React.ReactElement => {
 	const [selectedValue, setSelectedValue] = useState<any>();
 
 	return (

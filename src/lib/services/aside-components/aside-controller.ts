@@ -22,12 +22,12 @@ export default abstract class AsideController {
 	protected onopen: (() => void) | undefined;
 	protected onclose: ((reason: unknown) => void) | undefined;
 
-	protected abstract createReactElement(): JSX.Element;
+	protected abstract createReactElement(): React.ReactElement;
 	protected abstract open(...args: unknown[]): void;
 	protected abstract close(...args: unknown[]): void;
 
 	constructor(
-		protected content: JSX.Element,
+		protected content: React.ReactElement,
 		options?: Partial<BaseAsideConfig>,
 	) {
 		this.config = Object.assign({}, DEFAULT_ASIDE_CONFIG, options);

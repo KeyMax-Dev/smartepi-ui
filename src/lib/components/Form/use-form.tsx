@@ -20,7 +20,7 @@ export function useForm<T extends FormPrototype>(
 
 	const formElements: FormElements<T> = fields.reduce(
 		(res, { key, validators, initialValue }) => {
-			res[key] = (props: InputProps): JSX.Element => (
+			res[key] = (props: InputProps): React.ReactElement => (
 				<FormField
 					{...props}
 					validators={validators}
