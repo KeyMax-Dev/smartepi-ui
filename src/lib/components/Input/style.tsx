@@ -1,9 +1,18 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { getGlobalTheme } from '../../assets/themes';
-import type { InputProps } from './index';
 
-export const InputContainerElement = styled(motion.div)<InputProps>`
+interface InputContainerProps {
+	color?: string;
+	invert?: boolean;
+}
+
+interface InputElementProps {
+	color?: string;
+	invert?: boolean;
+}
+
+export const InputContainerElement = styled(motion.div)<InputContainerProps>`
 	min-width: 300px;
 	height: 50px;
 	margin: 5px;
@@ -84,7 +93,7 @@ export const InputContainerElement = styled(motion.div)<InputProps>`
 	}
 `;
 
-export const InputElement = styled(motion.input)<InputProps>`
+export const InputElement = styled(motion.input)<InputElementProps>`
 	color: ${({ color, invert }): string =>
 		getGlobalTheme().colors[color || 'primary'][
 			invert ? 'contrast' : 'principal'
@@ -110,7 +119,9 @@ export const InputElement = styled(motion.input)<InputProps>`
 	}
 `;
 
-export interface InputLabelProps extends InputProps {
+export interface InputLabelProps {
+	color?: string;
+	invert?: boolean;
 	active?: boolean;
 }
 

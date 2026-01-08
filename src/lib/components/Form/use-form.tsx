@@ -56,7 +56,7 @@ export function useForm<T extends FormPrototype>(
 
 	const getValues = (): T => {
 		return Object.entries(fieldStates).reduce((obj, [key, [state]]) => {
-			obj[key as keyof T] = state.value;
+			(obj as Record<string, unknown>)[key] = state.value;
 			return obj;
 		}, {} as T);
 	};

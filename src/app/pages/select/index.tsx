@@ -17,7 +17,6 @@ const dataMock = [
 ];
 
 export const SelectPage = (): JSX.Element => {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const [selectedValue, setSelectedValue] = useState<any>();
 
 	return (

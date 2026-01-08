@@ -10,7 +10,8 @@ export type CheckboxToggleEvent = Partial<React.MouseEvent<HTMLDivElement>> & {
 	value: boolean;
 };
 
-export interface CheckboxProps extends HTMLMotionProps<'div'> {
+export interface CheckboxProps
+	extends Omit<HTMLMotionProps<'div'>, 'onToggle'> {
 	icon?: string;
 	color?: string;
 	size?: string;
@@ -49,9 +50,11 @@ export default function Checkbox(props: CheckboxProps): JSX.Element {
 		props.onToggle,
 	]);
 
+	const { onToggle, ...checkboxProps } = props;
+
 	return (
 		<CheckboxElement
-			{...props}
+			{...checkboxProps}
 			className={`ui-checkbox-${value} ${props.className || ''}`}
 			style={{ width: size, height: size }}
 			onClick={toggle}

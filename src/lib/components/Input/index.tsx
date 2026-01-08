@@ -28,9 +28,20 @@ export interface InputProps extends HTMLMotionProps<'input'> {
 }
 
 export default function Input(props: InputProps): JSX.Element {
-	const containerType: ContainerType = props.containerType
-		? props.containerType
-		: DEFAULT_TYPE;
+	const {
+		containerProps,
+		containerType: propsContainerType,
+		enableClear,
+		enableDatepicker,
+		getRef,
+		iconLeft,
+		iconRight,
+		invert,
+		color,
+		...inputMotionProps
+	} = props;
+
+	const containerType: ContainerType = propsContainerType || DEFAULT_TYPE;
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [isFocused, setIsFocused] = useState<boolean>(false);
 
@@ -68,71 +79,70 @@ export default function Input(props: InputProps): JSX.Element {
 
 	const onFocus = (event: FocusEvent<HTMLInputElement>): void => {
 		setIsFocused(true);
-		if (props.onFocus) props.onFocus(event);
+		if (inputMotionProps.onFocus) inputMotionProps.onFocus(event);
 	};
 
 	const onBlur = (event: FocusEvent<HTMLInputElement>): void => {
 		setIsFocused(false);
-		if (props.onBlur) props.onBlur(event);
+		if (inputMotionProps.onBlur) inputMotionProps.onBlur(event);
 	};
 
 	useEffect(() => {
-		if (props.getRef)
-			props.getRef(inputRef as React.MutableRefObject<HTMLInputElement>);
-	}, [props.getRef]);
+		if (getRef) getRef(inputRef as React.RefObject<HTMLInputElement>);
+	}, [getRef]);
 
-	const hasText = !!inputRef.current?.value?.length || !!props.value;
+	const hasText = !!inputRef.current?.value?.length || !!inputMotionProps.value;
 
 	return (
 		<InputContainerElement
-			{...props.containerProps}
-			invert={props.invert}
-			color={props.color}
+			{...containerProps}
+			invert={invert}
+			color={color}
 			className={`ui-input-container-${containerType} ${
-				props.containerProps?.className || ''
+				containerProps?.className || ''
 			}`}
 		>
-			{props.placeholder && (
+			{inputMotionProps.placeholder && (
 				<InputLabelElement
 					active={isFocused || hasText}
-					color={props.color}
-					invert={props.invert}
+					color={color}
+					invert={invert}
 				>
-					<div>{props.placeholder}</div>
+					<div>{inputMotionProps.placeholder}</div>
 				</InputLabelElement>
 			)}
-			{props.iconLeft && (
+			{iconLeft && (
 				<Icon
-					color={props.color}
-					name={props.iconLeft}
-					invert={props.invert}
+					color={color}
+					name={iconLeft}
+					invert={invert}
 					width="25px"
 					height="25px"
 					className="__icon-left"
 				/>
 			)}
 			<InputElement
-				{...props}
-				ref={inputRef as React.MutableRefObject<HTMLInputElement>}
-				disabled={props.enableDatepicker}
+				{...inputMotionProps}
+				ref={inputRef as React.RefObject<HTMLInputElement>}
+				disabled={enableDatepicker}
 				onFocus={onFocus}
 				onBlur={onBlur}
 			/>
-			{props.enableClear && hasText && (
+			{enableClear && hasText && (
 				<Button
 					buttonType="icon"
 					icon="close"
 					onClick={clear}
 					iconSize="25px"
-					invert={props.invert}
+					invert={invert}
 					className="__icon-right"
 				/>
 			)}
-			{props.enableDatepicker && (
+			{enableDatepicker && (
 				<Button
 					buttonType="icon"
 					icon="calendar"
-					invert={props.invert}
+					invert={invert}
 					onClick={(event) =>
 						datepicker.open(event.currentTarget as HTMLElement)
 					}
@@ -140,11 +150,11 @@ export default function Input(props: InputProps): JSX.Element {
 					className="__icon-right"
 				/>
 			)}
-			{props.iconRight && (
+			{iconRight && (
 				<Icon
-					color={props.color}
-					name={props.iconRight}
-					invert={props.invert}
+					color={color}
+					name={iconRight}
+					invert={invert}
 					width="25px"
 					height="25px"
 					className="__icon-right"

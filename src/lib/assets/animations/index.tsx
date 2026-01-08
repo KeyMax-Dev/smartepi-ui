@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import type { TargetAndTransition } from 'framer-motion';
 
 const HeaderIn: TargetAndTransition = {
@@ -18,7 +17,6 @@ const HeaderOut: TargetAndTransition = {
 	},
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const HeaderInitial: any = {
 	translateY: '-100%',
 };
@@ -35,14 +33,13 @@ const FadeIn: TargetAndTransition = {
 	transition: { duration: 0.3, ease: 'backOut' },
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const FadeInitial: any = {
 	opacity: 0,
 };
 
 const ListItemInitial = { opacity: 0 };
 
-const ListItemIn = (index = 0) => ({
+const ListItemIn = (index = 0): TargetAndTransition => ({
 	opacity: 1,
 	transition: { delay: index * 0.05, duration: 0.2, ease: 'easeOut' },
 });

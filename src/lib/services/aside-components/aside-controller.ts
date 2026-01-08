@@ -39,12 +39,14 @@ export default abstract class AsideController {
 	}
 
 	public injectProps(props: { [key: string]: unknown }): void {
-		this.content = React.cloneElement(this.content, {
-			...this.content.props,
-			...props,
-		});
-		if (this.status === 'opened') {
-			this.renderReactElement();
+		if (this.content) {
+			this.content = React.cloneElement(this.content, {
+				...(this.content.props || {}),
+				...props,
+			});
+			if (this.status === 'opened') {
+				this.renderReactElement();
+			}
 		}
 	}
 
@@ -58,6 +60,7 @@ export default abstract class AsideController {
 
 	protected renderReactElement(): void {
 		if (this.status === 'opening' || this.status === 'opened') {
+			// @ts-expect-error - ReactDOM.render is deprecated in React 18+ but needed for legacy code
 			ReactDOM.render(this.createReactElement(), this.container);
 		} else {
 			throw new Error('Bad time react element render.');
@@ -101,6 +104,7 @@ export default abstract class AsideController {
 
 	protected removeNode(): boolean {
 		try {
+			// @ts-expect-error - unmountComponentAtNode is deprecated in React 18+ but needed for legacy code
 			ReactDOM.unmountComponentAtNode(this.container as HTMLElement);
 
 			let elementReference: Element | null;

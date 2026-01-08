@@ -45,7 +45,10 @@ export default function Tabs({
 		}
 	}, [index]);
 
-	const renderTab = (element: ReactElement, index: number): JSX.Element => {
+	const renderTab = (
+		element: ReactElement<TabProps>,
+		index: number,
+	): JSX.Element => {
 		return (
 			<div
 				key={index}
