@@ -151,16 +151,15 @@ export function HomePage(): React.JSX.Element {
 				<p>Este é um modal criado com o componente useModal.</p>
 				<p>Você pode adicionar qualquer conteúdo React aqui!</p>
 				<ButtonGroup>
-					<Button onClick={() => modal.close()}>Fechar</Button>
+					<Button text="Fechar" onClick={() => modal.close()} />
 					<Button
 						color="success"
 						onClick={() => {
 							toast.success('Ação confirmada!');
 							modal.close();
 						}}
-					>
-						Confirmar
-					</Button>
+						text="Confirmar"
+					/>
 				</ButtonGroup>
 			</CardBase>,
 		);
@@ -182,30 +181,30 @@ export function HomePage(): React.JSX.Element {
 						<CardBase>
 							<h3>Botões</h3>
 							<ButtonGroup>
-								<Button onClick={() => toast.info('Botão primary clicado!')}>
-									Primary
-								</Button>
+								<Button
+									text="Primary"
+									onClick={() => toast.info('Botão primary clicado!')}
+								/>
 								<Button
 									color="secondary"
+									text="Secondary"
 									onClick={() => toast.info('Botão secondary!')}
-								>
-									Secondary
-								</Button>
+								/>
 								<Button
 									color="success"
+									text="Success"
 									onClick={() => toast.success('Sucesso!')}
-								>
-									Success
-								</Button>
-								<Button color="danger" onClick={() => toast.error('Erro!')}>
-									Danger
-								</Button>
+								/>
+								<Button
+									text="Danger"
+									color="danger"
+									onClick={() => toast.error('Erro!')}
+								/>
 								<Button
 									color="secondary"
+									text="Secondary"
 									onClick={() => toast.warning('Atenção!')}
-								>
-									Secondary
-								</Button>
+								/>
 							</ButtonGroup>
 							<ButtonGroup>
 								<Button buttonType="icon" icon="settings" iconSize="30px" />
@@ -298,16 +297,13 @@ export function HomePage(): React.JSX.Element {
 							</Checkbox>
 
 							<ButtonGroup style={{ marginTop: '20px' }}>
-								<Button onClick={handleSubmit} color="success">
-									Enviar
-								</Button>
+								<Button text="Enviar" onClick={handleSubmit} color="success" />
 								<Button
 									onClick={() => form.reset()}
 									color="secondary"
+									text="Limpar"
 									buttonType="outline"
-								>
-									Limpar
-								</Button>
+								/>
 							</ButtonGroup>
 						</Form>
 					</CardBase>
@@ -395,7 +391,7 @@ export function HomePage(): React.JSX.Element {
 						<CardBase>
 							<h3>Modais</h3>
 							<p>Clique no botão para abrir um modal:</p>
-							<Button onClick={showModal}>Abrir Modal</Button>
+							<Button color="success" text="Abrir Modal" onClick={showModal} />
 						</CardBase>
 
 						<CardBase>
@@ -404,24 +400,24 @@ export function HomePage(): React.JSX.Element {
 								<Button
 									onClick={() => toast.success('Operação bem-sucedida!')}
 									color="success"
-								>
-									Success Toast
-								</Button>
+									text="Success Toast"
+								/>
 								<Button
 									onClick={() => toast.error('Ocorreu um erro!')}
 									color="danger"
-								>
-									Error Toast
-								</Button>
+									text="Error Toast"
+								/>
 								<Button
 									onClick={() => toast.warning('Atenção necessária!')}
 									color="secondary"
-								>
-									Warning Toast
-								</Button>
-								<Button onClick={() => toast.info('Informação útil!')}>
-									Info Toast
-								</Button>
+									text="Warning Toast"
+								/>
+								<Button
+									onClick={() => toast.info('Informação útil!')}
+									color="primary"
+									style={{ border: '1px solid', borderColor: '#FFF' }}
+									text="Info Toast"
+								/>
 							</ButtonGroup>
 						</CardBase>
 					</Grid>

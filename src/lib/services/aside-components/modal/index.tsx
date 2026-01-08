@@ -33,28 +33,38 @@ export class ModalController extends AsideController {
 
 	public open(): Promise<void> {
 		if (this.status !== 'closed') return Promise.resolve();
-		if (!this.appendNode()) return Promise.reject('append failed');
+		
+		this.status = 'opening';
+		
+		if (!this.appendNode()) {
+			this.status = 'closed';
+			return Promise.reject('append failed');
+		}
 
 		if (this.config.preventScroll) {
 			document.body.style.overflow = 'hidden';
 		}
 
-		// Animation
-		this.containerControls.start({
-			opacity: [0, 1],
-			scale: [0.5, 1],
-			transition: { delay: 0.1, duration: 0.2, ease: 'backOut' },
-		});
-		return this.overlayControls
-			.start({
+		// Force immediate render
+		setTimeout(() => {
+			// Animation
+			this.containerControls.start({
 				opacity: [0, 1],
-				transition: { duration: 0.4 },
-			})
-			.then(() => {
-				this.status = 'opened';
-				if (this.onopen) this.onopen();
-				return Promise.resolve();
+				scale: [0.5, 1],
+				transition: { duration: 0.3, ease: 'backOut' },
 			});
+			this.overlayControls
+				.start({
+					opacity: [0, 1],
+					transition: { duration: 0.3 },
+				})
+				.then(() => {
+					this.status = 'opened';
+					if (this.onopen) this.onopen();
+				});
+		}, 0);
+		
+		return Promise.resolve();
 	}
 
 	public close(reason?: unknown): Promise<void> {

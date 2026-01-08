@@ -12,7 +12,7 @@ export type ToastConfig = BaseAsideConfig & {
 const DEFAULT_CONFIG: ToastConfig = {
 	id: 'ui-toast-default',
 	color: 'primary',
-	timeout: 2000,
+	timeout: 4000,
 	rootElement: 'body',
 };
 
@@ -51,22 +51,33 @@ export class ToastController extends AsideController {
 			this.root = createRoot(this.container);
 		}
 		this.root?.render(this.createReactElement());
-		setTimeout(() => window.addEventListener('click', this.clickListener));
-		this.hideTimeout = setTimeout(
-			() => this.close('timeout'),
-			this.config.timeout,
-		);
-
+		
 		this.status = 'opening';
-		this.animationController.start({
-			bottom: [-100, 15],
-			opacity: [0, 1],
-			transition: { duration: 0.2, ease: 'backOut' },
-		});
-		this.animationTimeout = setTimeout(() => {
-			this.status = 'opened';
-			if (this.onopen) this.onopen();
-		}, 200);
+		
+		// Force immediate render and animation
+		setTimeout(() => {
+			this.animationController.start({
+				bottom: [-100, 15],
+				opacity: [0, 1],
+				transition: { duration: 0.3, ease: 'backOut' },
+			});
+			
+			// Add click listener after animation starts
+			setTimeout(() => {
+				window.addEventListener('click', this.clickListener);
+			}, 100);
+			
+			this.animationTimeout = setTimeout(() => {
+				this.status = 'opened';
+				if (this.onopen) this.onopen();
+				
+				// Start timeout to close after toast is fully opened
+				this.hideTimeout = setTimeout(
+					() => this.close('timeout'),
+					this.config.timeout,
+				);
+			}, 300);
+		}, 0);
 	}
 
 	public close(reason?: unknown): void {

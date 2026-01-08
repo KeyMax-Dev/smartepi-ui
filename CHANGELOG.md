@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0-beta.4] - 2026-01-08
+
+### Fixed
+- **Modal**: Fixed issue where modal wouldn't appear immediately when opened - now uses setTimeout(0) to force immediate render before animation
+- **Modal**: Status is now set to 'opening' before appendNode to prevent race conditions
+- **Toast**: Fixed delayed appearance by properly sequencing render, animation, and event listener setup
+- **Toast**: Fixed issue where toast would disappear too quickly - timeout now starts AFTER toast is fully opened (after 300ms animation)
+- **Toast**: Increased default timeout from 2000ms to 4000ms for better readability
+- **Toast**: Animation duration increased from 0.2s to 0.3s for smoother appearance
+
+### Changed
+- Modal animation transition duration changed from 0.2s to 0.3s for smoother effect
+- Toast click listener now added 100ms after animation starts to prevent accidental immediate closes
+
 ## [1.0.0-beta.3] - 2026-01-08
 
 ### Fixed
