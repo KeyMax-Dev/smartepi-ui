@@ -58,7 +58,6 @@ export default function Input(props: InputProps): JSX.Element {
 			if (setValue) {
 				setValue.call(input, date.toLocaleDateString("pt-br"));
 				input.dispatchEvent(new Event("input", { bubbles: true }));
-				// eslint-disable-next-line
 				// datepicker.close();
 			}
 		}

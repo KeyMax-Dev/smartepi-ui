@@ -30,21 +30,14 @@ import Tabs from "./components/Tabs";
 import Tab from "./components/Tabs/tab";
 import TextArea from "./components/TextArea";
 import AsideController from "./services/aside-components/aside-controller";
-import useModal from "./services/aside-components/modal";
-import type {
-	ModalConfig,
-	ModalController,
-} from "./services/aside-components/modal";
-import useOverflow from "./services/aside-components/overflow";
-import type {
-	OverflowConfig,
+import useModal, { ModalController } from "./services/aside-components/modal";
+import type { ModalConfig } from "./services/aside-components/modal";
+import useOverflow, {
 	OverflowController,
 } from "./services/aside-components/overflow";
-import useToast from "./services/aside-components/toast";
-import type {
-	ToastConfig,
-	ToastController,
-} from "./services/aside-components/toast";
+import type { OverflowConfig } from "./services/aside-components/overflow";
+import useToast, { ToastController } from "./services/aside-components/toast";
+import type { ToastConfig } from "./services/aside-components/toast";
 import { Validators, validate } from "./services/input-validator";
 import type { InputValidator } from "./services/input-validator";
 import type Theme from "./types/Theme";
@@ -64,6 +57,8 @@ export {
 	ImageAvatar,
 	Input,
 	LightTheme,
+	ModalController,
+	OverflowController,
 	ScrollableContainer,
 	setGlobalTheme,
 	Spinners,
@@ -72,17 +67,13 @@ export {
 	TableColumn,
 	Tabs,
 	TextArea,
+	ToastController,
 	useModal,
 	useOverflow,
 	useToast,
 	validate,
 	Validators,
 };
-
-// Export classes as both value and type
-export { ModalController } from "./services/aside-components/modal";
-export { OverflowController } from "./services/aside-components/overflow";
-export { ToastController } from "./services/aside-components/toast";
 
 export type {
 	CheckboxToggleEvent,

@@ -4,7 +4,9 @@
 // In React 19 with new JSX transform, prefer using React.ReactElement or letting TypeScript infer types
 declare global {
 	namespace JSX {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		type Element = React.ReactElement<any, any> | null;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		type ElementClass = React.Component<any>;
 		interface ElementAttributesProperty {
 			props: {};
