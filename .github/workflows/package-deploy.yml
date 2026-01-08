@@ -20,6 +20,6 @@ jobs:
           scope: "@KeyMax-Dev"
       - run: npm install
       - run: npm run build
-      - run: npm publish
+      - run: npm publish --tag beta
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
