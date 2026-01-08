@@ -114,28 +114,14 @@ export function Select<T>({
 			return () => window.removeEventListener('click', closeHandler);
 		} else {
 			if (onClose) onClose();
-			if (!selected) {
-				console.log('git', value);
-				setSelected(value);
-				setFilteredData(data);
-			}
+			// Removed setSelected to prevent infinite loop
 			setInputValue(value ? `${value[dataKey]}` : '');
 			buttonAnimationController.start({
 				rotate: 0,
 				transition: { duration: 0.1, ease: 'backInOut' },
 			});
 		}
-	}, [
-		opened,
-		buttonAnimationController.start,
-		data,
-		dataKey,
-		onClose,
-		onOpen,
-		onSearch,
-		selected,
-		value,
-	]);
+	}, [opened, data, dataKey, onClose, onOpen, onSearch, value]);
 
 	useEffect(() => {
 		if (!loading) {
@@ -163,7 +149,7 @@ export function Select<T>({
 		>
 			{placeholder && (
 				<InputLabelElement
-					active={!!selected || opened}
+					$active={!!selected || opened}
 					color={color}
 					invert={invert}
 				>

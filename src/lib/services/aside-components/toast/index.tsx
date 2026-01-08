@@ -21,7 +21,7 @@ export class ToastController extends AsideController {
 	private hideTimeout: number;
 	private animationTimeout: number;
 	private animationController = useAnimation();
-	private root: Root | null = null;
+	root: Root | null = null;
 
 	private clickListener = (event: MouseEvent): void => {
 		if (

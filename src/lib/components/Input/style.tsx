@@ -122,7 +122,7 @@ export const InputElement = styled(motion.input)<InputElementProps>`
 export interface InputLabelProps {
 	color?: string;
 	invert?: boolean;
-	active?: boolean;
+	$active?: boolean;
 }
 
 export const InputLabelElement = styled.label<InputLabelProps>`
@@ -137,8 +137,8 @@ export const InputLabelElement = styled.label<InputLabelProps>`
 
 	height: 100%;
 
-	top: ${({ active }) => (active ? '-15px' : '0px')};
-	font-size: ${({ active }) => (active ? '10px' : '16px')};
+	top: ${({ $active }) => ($active ? '-15px' : '0px')};
+	font-size: ${({ $active }) => ($active ? '10px' : '16px')};
 
 	transition: all ${() => getGlobalTheme().transitions.avarage};
 

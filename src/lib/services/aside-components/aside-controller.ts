@@ -1,6 +1,6 @@
 import { useAnimation } from 'framer-motion';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot, type Root } from 'react-dom/client';
 
 type BaseStatus = 'opening' | 'opened' | 'closing' | 'closed';
 
@@ -17,6 +17,7 @@ const DEFAULT_ASIDE_CONFIG: BaseAsideConfig = {
 export default abstract class AsideController {
 	protected config: BaseAsideConfig;
 	protected container: HTMLElement | null = null;
+	protected root: Root | null = null;
 	protected status: BaseStatus = 'closed';
 	protected readonly containerControls = useAnimation();
 	protected onopen: (() => void) | undefined;
@@ -36,6 +37,11 @@ export default abstract class AsideController {
 
 	public getStatus(): BaseStatus {
 		return this.status;
+	}
+
+	public setContent(newContent: React.ReactElement): void {
+		this.content = newContent;
+		this.injectProps({ controller: this });
 	}
 
 	public injectProps(props: { [key: string]: unknown }): void {
@@ -60,8 +66,10 @@ export default abstract class AsideController {
 
 	protected renderReactElement(): void {
 		if (this.status === 'opening' || this.status === 'opened') {
-			// @ts-expect-error - ReactDOM.render is deprecated in React 18+ but needed for legacy code
-			ReactDOM.render(this.createReactElement(), this.container);
+			if (!this.root && this.container) {
+				this.root = createRoot(this.container);
+			}
+			this.root?.render(this.createReactElement());
 		} else {
 			throw new Error('Bad time react element render.');
 		}
@@ -104,8 +112,8 @@ export default abstract class AsideController {
 
 	protected removeNode(): boolean {
 		try {
-			// @ts-expect-error - unmountComponentAtNode is deprecated in React 18+ but needed for legacy code
-			ReactDOM.unmountComponentAtNode(this.container as HTMLElement);
+			this.root?.unmount();
+			this.root = null;
 
 			let elementReference: Element | null;
 			if (this.config.rootElement.startsWith('#')) {

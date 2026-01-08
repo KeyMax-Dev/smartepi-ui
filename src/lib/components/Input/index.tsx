@@ -104,7 +104,7 @@ export default function Input(props: InputProps): React.ReactElement {
 		>
 			{inputMotionProps.placeholder && (
 				<InputLabelElement
-					active={isFocused || hasText}
+					$active={isFocused || hasText}
 					color={color}
 					invert={invert}
 				>

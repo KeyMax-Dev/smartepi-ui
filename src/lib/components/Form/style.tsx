@@ -7,3 +7,7 @@ export const FormElement = styled(motion.div)`
 	justify-content: center;
 	align-items: center;
 `;
+
+// Export FormElement as Form for backwards compatibility
+export const Form = FormElement;
+export default Form;
