@@ -125,15 +125,16 @@ export function Select<T>({
 
 	useEffect(() => {
 		if (!loading) {
+			const lowerInputValue = inputValue.toLocaleLowerCase();
 			setFilteredData(
 				data.filter((item) =>
 					`${item[dataKey]}`
 						.toLocaleLowerCase()
-						.match(inputValue.toLocaleLowerCase()),
+						.match(lowerInputValue),
 				),
 			);
 		}
-	}, [data, dataKey, inputValue.toLocaleLowerCase, loading]);
+	}, [data, dataKey, inputValue, loading]);
 
 	useEffect(() => {
 		setSelected(value);

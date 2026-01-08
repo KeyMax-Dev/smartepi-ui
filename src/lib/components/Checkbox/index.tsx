@@ -22,13 +22,15 @@ export interface CheckboxProps
 export default function Checkbox(props: CheckboxProps): React.ReactElement {
 	const size = props.size ? props.size : getGlobalTheme().defaultIconSize;
 	const [value, setValue] = useState<boolean>(!!props.value);
-	const [event, setEvent] = useState<CheckboxToggleEvent>({ value });
 	const animationController = useAnimation();
 	const iconName = props.icon ? props.icon : 'check';
 
 	const toggle = (currentEvent: React.MouseEvent<HTMLDivElement>): void => {
-		setValue(!value);
-		setEvent({ ...currentEvent, value });
+		const newValue = !value;
+		setValue(newValue);
+		if (props.onToggle) {
+			props.onToggle({ ...currentEvent, value: newValue });
+		}
 	};
 
 	useEffect(() => {
@@ -37,18 +39,7 @@ export default function Checkbox(props: CheckboxProps): React.ReactElement {
 
 	useEffect(() => {
 		animationController.start(value ? Animations.FadeIn : Animations.FadeOut);
-		if (props.onToggle) {
-			props.onToggle(event);
-			setEvent({ value });
-		}
-		return () => animationController.stop();
-	}, [
-		value,
-		animationController.start,
-		animationController.stop,
-		event,
-		props.onToggle,
-	]);
+	}, [value]);
 
 	const { onToggle, ...checkboxProps } = props;
 
