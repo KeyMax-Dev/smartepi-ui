@@ -20,18 +20,16 @@ export function useForm<T extends FormPrototype>(
 
 	const formElements: FormElements<T> = fields.reduce(
 		(res, { key, validators, initialValue }) => {
-			return {
-				...res,
-				[key]: (props: InputProps): JSX.Element => (
-					<FormField
-						{...props}
-						validators={validators}
-						initialValue={initialValue || ''}
-						formState={fieldStates}
-						stateKey={key}
-					/>
-				),
-			};
+			res[key] = (props: InputProps): JSX.Element => (
+				<FormField
+					{...props}
+					validators={validators}
+					initialValue={initialValue || ''}
+					formState={fieldStates}
+					stateKey={key}
+				/>
+			);
+			return res;
 		},
 		{} as FormElements<T>,
 	);
@@ -58,7 +56,8 @@ export function useForm<T extends FormPrototype>(
 
 	const getValues = (): T => {
 		return Object.entries(fieldStates).reduce((obj, [key, [state]]) => {
-			return { ...obj, [key]: state.value };
+			obj[key as keyof T] = state.value;
+			return obj;
 		}, {} as T);
 	};
 

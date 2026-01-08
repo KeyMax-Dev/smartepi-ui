@@ -1,5 +1,5 @@
 import type React from 'react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Button from '../Button';
 import { DatepickerElement } from './style';
 
@@ -107,8 +107,8 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
 	const WeekElement = ({ week }: { week: Date[] }): JSX.Element => {
 		return (
 			<ul className="ui-datepicker-week-container">
-				{week.map((day, index) => (
-					<DayElement key={index} day={day} />
+				{week.map((day) => (
+					<DayElement key={day.getTime()} day={day} />
 				))}
 			</ul>
 		);
@@ -173,64 +173,73 @@ export default function Datepicker(props: DatepickerProps): JSX.Element {
 		);
 	};
 
-	const fillMonth = (
-		date = new Date(currentYear, currentMonth),
-	): JSX.Element[] => {
-		setCurrentYear(date.getFullYear());
-		setCurrentMonth(date.getMonth());
-		setIndicatorText(`${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`);
-		setCurrentIndicator('month');
+	const fillMonth = useCallback(
+		(date = new Date(currentYear, currentMonth)): JSX.Element[] => {
+			setCurrentYear(date.getFullYear());
+			setCurrentMonth(date.getMonth());
+			setIndicatorText(`${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`);
+			setCurrentIndicator('month');
 
-		const monthDays = generateMonthDays(date);
-		return monthDays.map((week, index) => (
-			<WeekElement key={index} week={week} />
-		));
-	};
+			const monthDays = generateMonthDays(date);
+			return monthDays.map((week) => (
+				<WeekElement key={week[0].getTime()} week={week} />
+			));
+		},
+		[currentYear, currentMonth, WeekElement],
+	);
 
-	const fillYear = (fullYear = currentYear): JSX.Element[] => {
-		setCurrentIndicator('year');
-		setCurrentYear(fullYear);
+	const fillYear = useCallback(
+		(fullYear = currentYear): JSX.Element[] => {
+			setCurrentIndicator('year');
+			setCurrentYear(fullYear);
 
-		const list: JSX.Element[] = [];
-		for (let i = 0; i < 4; i++) {
-			const aux: JSX.Element[] = [];
-			for (let j = 0; j < 3; j++) {
-				const index = i * 3 + j;
-				aux.push(<MonthElement date={new Date(fullYear, index)} key={index} />);
+			const list: JSX.Element[] = [];
+			for (let i = 0; i < 4; i++) {
+				const aux: JSX.Element[] = [];
+				for (let j = 0; j < 3; j++) {
+					const index = i * 3 + j;
+					aux.push(
+						<MonthElement date={new Date(fullYear, index)} key={index} />,
+					);
+				}
+				list.push(
+					<ul className="ui-datepicker-week-container" key={i}>
+						{aux}
+					</ul>,
+				);
 			}
-			list.push(
-				<ul className="ui-datepicker-week-container" key={i}>
-					{aux}
-				</ul>,
-			);
-		}
 
-		setIndicatorText(fullYear.toString());
-		return list;
-	};
+			setIndicatorText(fullYear.toString());
+			return list;
+		},
+		[currentYear, MonthElement],
+	);
 
-	const fillDecade = (from = currentYear): JSX.Element[] => {
-		setCurrentIndicator('decade');
-		from = Math.floor(from / 10) * 10;
-		setCurrentYear(from);
+	const fillDecade = useCallback(
+		(from = currentYear): JSX.Element[] => {
+			setCurrentIndicator('decade');
+			from = Math.floor(from / 10) * 10;
+			setCurrentYear(from);
 
-		const list: JSX.Element[] = [];
-		for (let i = 0; i < 5; i++) {
-			const aux: JSX.Element[] = [];
-			for (let j = 0; j < 2; j++) {
-				const fullYear = from + i * 2 + j;
-				aux.push(<YearElement fullYear={fullYear} key={fullYear} />);
+			const list: JSX.Element[] = [];
+			for (let i = 0; i < 5; i++) {
+				const aux: JSX.Element[] = [];
+				for (let j = 0; j < 2; j++) {
+					const fullYear = from + i * 2 + j;
+					aux.push(<YearElement fullYear={fullYear} key={fullYear} />);
+				}
+				list.push(
+					<ul className="ui-datepicker-week-container" key={i}>
+						{aux}
+					</ul>,
+				);
 			}
-			list.push(
-				<ul className="ui-datepicker-week-container" key={i}>
-					{aux}
-				</ul>,
-			);
-		}
 
-		setIndicatorText(`${from} - ${from + 9}`);
-		return list;
-	};
+			setIndicatorText(`${from} - ${from + 9}`);
+			return list;
+		},
+		[currentYear, YearElement],
+	);
 
 	const nextIndicator = (): void => {
 		switch (currentIndicator) {

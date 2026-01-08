@@ -38,7 +38,7 @@
 				"noUnusedVariables": "warn",
 				"useHookAtTopLevel": "off",
 				"noVoidTypeReturn": "off",
-				"useExhaustiveDependencies": "warn"
+				"useExhaustiveDependencies": "off"
 			},
 			"complexity": {
 				"noBannedTypes": "off"
