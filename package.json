@@ -1,6 +1,6 @@
 {
 	"name": "@keymax-dev/smartepi-ui",
-	"version": "1.0.0-beta.5",
+	"version": "1.0.0-beta.6",
 	"type": "module",
 	"main": "build/index.js",
 	"module": "build/index.esm.js",

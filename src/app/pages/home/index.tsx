@@ -129,7 +129,9 @@ export function HomePage(): React.JSX.Element {
 		},
 		birthdate: {
 			value: '',
-			validators: [(v: string) => (v ? null : 'Data de nascimento é obrigatória')],
+			validators: [
+				(v: string) => (v ? null : 'Data de nascimento é obrigatória'),
+			],
 		},
 		bio: { value: '' },
 		country: { value: '' },
@@ -154,9 +156,15 @@ export function HomePage(): React.JSX.Element {
 	const showDatePicker = () => {
 		modal.setContent(
 			<CardBase style={{ padding: '30px' }}>
-				<h2 style={{ marginTop: 0, marginBottom: '20px' }}>Selecione sua data de nascimento</h2>
+				<h2 style={{ marginTop: 0, marginBottom: '20px' }}>
+					Selecione sua data de nascimento
+				</h2>
 				<Datepicker
-					initial={form.getValues().birthdate ? new Date(form.getValues().birthdate) : undefined}
+					initial={
+						form.getValues().birthdate
+							? new Date(form.getValues().birthdate)
+							: undefined
+					}
 					onDaySelected={(day) => {
 						const formattedDate = day.toLocaleDateString('pt-BR');
 						form.setValue('birthdate', formattedDate);
@@ -298,15 +306,17 @@ export function HomePage(): React.JSX.Element {
 								containerType="outline"
 								iconLeft="lock"
 							/>
-						<Input
-							{...form.getFieldProps('birthdate')}
-							placeholder="Data de nascimento"
-							containerType="outline"
-							iconLeft="calendar"
-							readOnly
-							onClick={showDatePicker}
-							style={{ cursor: 'pointer' }}
-						/>
+
+							<div onClick={showDatePicker} style={{ cursor: 'pointer' }}>
+								<Input
+									{...form.getFieldProps('birthdate')}
+									placeholder="Data de nascimento"
+									containerType="outline"
+									iconLeft="calendar"
+									readOnly
+								/>
+							</div>
+
 							<Select
 								{...form.getFieldProps('country')}
 								placeholder="Selecione um país"
