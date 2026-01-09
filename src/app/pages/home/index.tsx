@@ -6,6 +6,7 @@ import {
 	Button,
 	CardBase,
 	Checkbox,
+	Datepicker,
 	Form,
 	Icon,
 	ImageAvatar,
@@ -92,6 +93,7 @@ const tableData = [
 export function HomePage(): React.JSX.Element {
 	const [_selectedTab, setSelectedTab] = useState(0);
 	const [checkboxValue, setCheckboxValue] = useState(false);
+	const [selectedDate, setSelectedDate] = useState<Date | undefined>();
 	const modal = useModal(<div />);
 	const toastController = useToast(<div />);
 
@@ -310,7 +312,47 @@ export function HomePage(): React.JSX.Element {
 				</Section>
 
 				<Section>
-					<SectionTitle>🗂️ Tabs e Conteúdo</SectionTitle>
+					<SectionTitle>� Datepicker</SectionTitle>
+					<Grid>
+						<CardBase>
+							<h3>Seletor de Data</h3>
+							<Datepicker
+								initial={selectedDate}
+								onDaySelected={(day) => {
+									setSelectedDate(day);
+									toast.success(
+										`Data selecionada: ${day.toLocaleDateString('pt-BR')}`,
+									);
+								}}
+							/>
+							{selectedDate && (
+								<p style={{ marginTop: '15px', textAlign: 'center' }}>
+									<strong>Data selecionada:</strong>{' '}
+									{selectedDate.toLocaleDateString('pt-BR', {
+										weekday: 'long',
+										year: 'numeric',
+										month: 'long',
+										day: 'numeric',
+									})}
+								</p>
+							)}
+						</CardBase>
+
+						<CardBase>
+							<h3>Datepicker Customizado</h3>
+							<Datepicker
+								width="100%"
+								height="350px"
+								onDaySelected={(day) => {
+									toast.info(`Dia ${day.getDate()} selecionado`);
+								}}
+							/>
+						</CardBase>
+					</Grid>
+				</Section>
+
+				<Section>
+					<SectionTitle>�🗂️ Tabs e Conteúdo</SectionTitle>
 					<CardBase>
 						<Tabs onTabChange={setSelectedTab}>
 							<Tab title="Perfil">
