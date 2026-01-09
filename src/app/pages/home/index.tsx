@@ -6,6 +6,7 @@ import {
 	Button,
 	CardBase,
 	Checkbox,
+	Datepicker,
 	Form,
 	Icon,
 	ImageAvatar,
@@ -78,6 +79,7 @@ interface FormData {
 	name: string;
 	email: string;
 	password: string;
+	birthdate: string;
 	bio: string;
 	country: string;
 	terms: boolean;
@@ -92,6 +94,7 @@ const tableData = [
 export function HomePage(): React.JSX.Element {
 	const [_selectedTab, setSelectedTab] = useState(0);
 	const [checkboxValue, setCheckboxValue] = useState(false);
+	const [selectedDate, setSelectedDate] = useState<Date | undefined>();
 	const modal = useModal(<div />);
 	const toastController = useToast(<div />);
 
@@ -124,6 +127,12 @@ export function HomePage(): React.JSX.Element {
 				(v: string) => (v.length >= 6 ? null : 'Mínimo 6 caracteres'),
 			],
 		},
+		birthdate: {
+			value: '',
+			validators: [
+				(v: string) => (v ? null : 'Data de nascimento é obrigatória'),
+			],
+		},
 		bio: { value: '' },
 		country: { value: '' },
 		terms: {
@@ -142,6 +151,36 @@ export function HomePage(): React.JSX.Element {
 		} else {
 			toast.error('Por favor, corrija os erros no formulário');
 		}
+	};
+
+	const showDatePicker = () => {
+		modal.setContent(
+			<CardBase style={{ padding: '30px' }}>
+				<h2 style={{ marginTop: 0, marginBottom: '20px' }}>
+					Selecione sua data de nascimento
+				</h2>
+				<Datepicker
+					initial={
+						form.getValues().birthdate
+							? new Date(form.getValues().birthdate)
+							: undefined
+					}
+					onDaySelected={(day) => {
+						const formattedDate = day.toLocaleDateString('pt-BR');
+						form.setValue('birthdate', formattedDate);
+						toast.success(`Data selecionada: ${formattedDate}`);
+						modal.close();
+					}}
+				/>
+				<Button
+					text="Fechar"
+					onClick={() => modal.close()}
+					color="secondary"
+					style={{ marginTop: '20px', width: '100%' }}
+				/>
+			</CardBase>,
+		);
+		modal.open();
 	};
 
 	const showModal = () => {
@@ -268,6 +307,16 @@ export function HomePage(): React.JSX.Element {
 								iconLeft="lock"
 							/>
 
+							<div onClick={showDatePicker} style={{ cursor: 'pointer' }}>
+								<Input
+									{...form.getFieldProps('birthdate')}
+									placeholder="Data de nascimento"
+									containerType="outline"
+									iconLeft="calendar"
+									readOnly
+								/>
+							</div>
+
 							<Select
 								{...form.getFieldProps('country')}
 								placeholder="Selecione um país"
@@ -310,7 +359,47 @@ export function HomePage(): React.JSX.Element {
 				</Section>
 
 				<Section>
-					<SectionTitle>🗂️ Tabs e Conteúdo</SectionTitle>
+					<SectionTitle>� Datepicker</SectionTitle>
+					<Grid>
+						<CardBase>
+							<h3>Seletor de Data</h3>
+							<Datepicker
+								initial={selectedDate}
+								onDaySelected={(day) => {
+									setSelectedDate(day);
+									toast.success(
+										`Data selecionada: ${day.toLocaleDateString('pt-BR')}`,
+									);
+								}}
+							/>
+							{selectedDate && (
+								<p style={{ marginTop: '15px', textAlign: 'center' }}>
+									<strong>Data selecionada:</strong>{' '}
+									{selectedDate.toLocaleDateString('pt-BR', {
+										weekday: 'long',
+										year: 'numeric',
+										month: 'long',
+										day: 'numeric',
+									})}
+								</p>
+							)}
+						</CardBase>
+
+						<CardBase>
+							<h3>Datepicker Customizado</h3>
+							<Datepicker
+								width="100%"
+								height="350px"
+								onDaySelected={(day) => {
+									toast.info(`Dia ${day.getDate()} selecionado`);
+								}}
+							/>
+						</CardBase>
+					</Grid>
+				</Section>
+
+				<Section>
+					<SectionTitle>�🗂️ Tabs e Conteúdo</SectionTitle>
 					<CardBase>
 						<Tabs onTabChange={setSelectedTab}>
 							<Tab title="Perfil">

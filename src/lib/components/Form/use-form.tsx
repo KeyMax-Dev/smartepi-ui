@@ -102,13 +102,20 @@ function useFormObject<T extends FormPrototype>(
 		};
 	};
 
+	const setValue = (key: keyof T, value: any): void => {
+		const [state] = fieldStates[key as string];
+		if (state) {
+			state.value = value;
+		}
+	};
+
 	useEffect(() => {
 		return () => {
 			formMemory[formKey] = {};
 		};
 	}, [formKey]);
 
-	return { validate: validateForm, getValues, reset, getFieldProps };
+	return { validate: validateForm, getValues, reset, getFieldProps, setValue };
 }
 
 // Sobrecarga: aceita objeto com estrutura { field: { value, validators } }
@@ -120,6 +127,7 @@ export function useForm<T extends FormPrototype>(
 	getValues: () => T;
 	reset: () => void;
 	getFieldProps: (key: keyof T) => any;
+	setValue: (key: keyof T, value: any) => void;
 };
 
 // Sobrecarga original: aceita array
