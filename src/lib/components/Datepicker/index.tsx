@@ -189,7 +189,7 @@ export default function Datepicker(props: DatepickerProps): React.ReactElement {
 				<WeekElement key={week[0].getTime()} week={week} />
 			));
 		},
-		[currentYear, currentMonth, WeekElement],
+		[currentYear, currentMonth],
 	);
 
 	const fillYear = useCallback(
@@ -216,7 +216,7 @@ export default function Datepicker(props: DatepickerProps): React.ReactElement {
 			setIndicatorText(fullYear.toString());
 			return list;
 		},
-		[currentYear, MonthElement],
+		[currentYear],
 	);
 
 	const fillDecade = useCallback(
@@ -242,7 +242,7 @@ export default function Datepicker(props: DatepickerProps): React.ReactElement {
 			setIndicatorText(`${from} - ${from + 9}`);
 			return list;
 		},
-		[currentYear, YearElement],
+		[currentYear],
 	);
 
 	const nextIndicator = (): void => {
